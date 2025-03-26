@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Python for Programmers</title>
+    <link rel="stylesheet" href="../engine/dist/reset.css">
+    <link rel="stylesheet" href="../engine/dist/reveal.css">
+    <link rel="stylesheet" href="../engine/dist/theme/c4ffein.css">
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="../engine/plugin/highlight/github-light-default.css">
+    <link rel="stylesheet" href="../engine/runcss/runcss.min.css">
+    <script src="../engine/runcss/runcss.min.js" defer watch></script>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+    <section>Django Ninja, une alternative à Django Rest Framework inspirée par FastAPI</section>
+	<section data-markdown>
+          <textarea data-template>
+            ### Framework?
+            - Flask
+            - Django
+              - Django Rest Framework
+              - Ninja (pas Jinja)
+          </textarea>
+	</section>
+	<section data-markdown>
+          <textarea data-template>
+            ### Parcours pro (Django) d'un dev
+            - Software Engineer R&D dans une startup
+              - Découvre DRF avec le site marchand
+            - Réalise puis maintient (2 ans) un back Django
+              - DRF puis Ninja
+            - En entreprise, pousse un collègue à migrer
+              - Seulement un des sous-projets
+              - Le seul en Django
+            - Travaille de nouveau à temps plein sur DRF
+          </textarea>
+	</section>
+
+	<section>Django Ninja<br>VS<br>Rest Framework</section>
+        <section>
+          <pre><code class="language-python" data-trim data-noescape>
+            app = FastAPI()
+            
+            
+            @app.get("/")
+            def read_root():
+                return {"Hello": "World"}
+            
+            
+            @app.get("/items/{item_id}")
+            def read_item(item_id: int, q: Union[str, None] = None):
+                return {"item_id": item_id, "q": q}
+          </code></pre>
+        </section>
+	<section><img data-src="images/pydantic.png"></section>
+	<section data-markdown>
+          <textarea data-template>
+            - Multithreading?
+            - Multiprocessing?
+            - Async!
+              - \+ Multiprocessing
+          </textarea>
+	</section>
+	<section><div class="flex flex-col">
+	  <div style="width: 100%;"><pre><code class="language-python" data-trim data-noescape>
+            import time
+
+            @api.get("/say-after")
+            def say_after(request, delay: int, word: str):
+                time.sleep(delay)
+                return {"saying": word}
+	  </code></pre></div>
+          <div style="width: 100%;"><pre><code class="language-python" data-trim data-noescape>
+            import asyncio
+
+            @api.get("/say-after")
+            async def say_after(request, delay: int, word: str):
+                await asyncio.sleep(delay)
+                return {"saying": word}
+	  </code></pre></div>
+	</div></section>
+        <section>
+          <pre><code class="language-python" data-trim data-noescape>
+            def get_user:
+                self.user = UserProfile.objects.filter(
+                    name="django"
+                ).first()
+            await sync_to_async(sync_function)
+
+            ...
+
+            self.user = await UserProfile.objects.filter(
+                name="django"
+            ).afirst()
+          </code></pre>
+        </section>
+        
+	<section><img data-src="images/benchmark.png"></section>
+	<section><img data-src="images/fastapi-async.png"></section>
+	<section><img data-src="images/async-drf.png"></section>
+	<section><img data-src="images/stars.png"></section>
+	<!--section><img data-src="images/adrf-missing.png"></section-->
+	<section data-markdown>
+          <textarea data-template>
+            Que présenter?
+            - Un parcours de migration concret?
+            - Il faut partir d'une base...
+          </textarea>
+	</section>
+	<section><img data-src="images/moada.png"></section>
+	<section><img data-src="images/conduit.png"></section>
+	<section data-markdown>
+          <textarea data-template>
+            ![drf](images/realworld-drf.png)
+            - 3 modèles Django incluant User
+            - KISS
+            - Il y a des tests?..
+          </textarea>
+	</section>
+	<section data-markdown>
+          <textarea data-template>
+            ![drf](images/realworld-drf.png)
+            - accounts
+              - models.py
+              - schemas.py
+              - serializers.py
+              - tests.py
+              - views.py
+            - articles
+              - ...
+            - comments
+              - ...
+          </textarea>
+	</section>
+        <section>
+          <pre><code class="language-python" data-trim data-noescape>
+            def test_profile_detail_view_get(self):
+        
+                response = self.client.get(self.url)
+        
+                self.assertEqual(response.status_code, status.HTTP_200_OK)
+          </code></pre>
+        </section>
+        <section>
+          <pre><code class="language-python" data-trim data-noescape>
+            class ProfileDetailViewTestCase(APITestCase):
+                def setUp(self):
+                    ...
+            
+                def test_profile_detail_view_get_self(self):
+                    response = self.client.get(self.url)
+                    self.assertEqual(
+                        response.status_code,
+                        status.HTTP_200_OK,
+                    )
+                    self.assertEqual(loads(response.content), self.dict)
+          </code></pre>
+        </section>
+        <section>
+          <pre><code class="language-python" data-trim data-noescape>
+                def test_profile_detail_view_get_other_not_followed(self):
+                    response = self.client.get(self.other_url)
+                    self.assertEqual(
+                        response.status_code,
+                        status.HTTP_200_OK,
+                    )
+                    self.assertEqual(
+                        loads(response.content),
+                        self.other_dict,
+                    )
+          </code></pre>
+        </section>
+        <section>
+          <pre><code class="language-python" data-trim data-noescape>
+                def test_profile_detail_view_get_other_followed(self):
+                    self.other_user.followers.add(self.user)
+                    response = self.client.get(self.other_url)
+                    self.assertEqual(
+                        response.status_code,
+                        status.HTTP_200_OK,
+                    )
+                    self.assertEqual(
+                        loads(response.content),
+                        {**self.other_dict, 'following': True},
+                    )
+          </code></pre>
+        </section>
+        <section>
+          <pre><code class="language-python" data-trim data-noescape>
+            class ProfileDetailView(viewsets.ModelViewSet):
+                
+                queryset = User.objects.all()
+                serializer_class = ProfileSerializer
+                permission_classes = [IsAuthenticated]
+                lookup_field = 'username'
+                http_method_names = ['get', 'post', 'delete']
+                
+                def get_permissions(self):
+                    if self.action == 'list':
+                        return [IsAuthenticatedOrReadOnly(),]
+                    return super().get_permissions()
+          </code></pre>
+        </section>
+        <section>
+          <pre><code class="language-python" data-trim data-noescape>
+                def list(self, request, username=None, *args, **kwargs):
+                    try: 
+                        profile = User.objects.get(username=username)
+                        serializer = self.get_serializer(profile)
+                        return Response({"profile": serializer.data})
+            
+                    except Exception:
+                        return Response({"errors": {
+                            "body": [
+                                "Invalid User"
+                            ]
+                        }})
+          </code></pre>
+        </section>
+        <section>
+          <pre><code class="language-python" data-trim data-noescape>
+            class ProfileSerializer(serializers.ModelSerializer):
+                following = serializers.SerializerMethodField()
+                
+                class Meta:
+                    model = User 
+                    fields = ('username', 'bio', 'image', 'following')
+          </code></pre>
+        </section>
+        <section>
+          <pre><code class="language-python" data-trim data-noescape>
+                def get_following(self, obj):
+                    user = self.context.get('request').user
+                    if user.is_authenticated:
+                        return obj.followers.filter(pk=user.id).exists()
+                    return False
+          </code></pre>
+        </section>
+        <section>
+          <pre><code class="language-python" data-trim data-noescape>
+           @router.get('/profiles/{username}', auth=AuthJWT(pass_even=True), response={200: Any, 401: Any, 404: Any})
+           def get_profiles(request, username: str):
+               user = get_object_or_404(User, username=username)
+               return {
+                   'username': user.username,
+                   'bio': user.bio,
+                   'image': user.image,
+                   'following': (
+                       request.user is not None
+                       and request.user.is_authenticated
+                       and user.followers.filter(
+                           pk=request.user.id
+                       ).exists()
+                   )
+               }
+          </code></pre>
+        </section>
+        <section>
+          <pre><code class="language-python" data-trim data-noescape>
+           @router.get('/profiles/{username}', auth=AuthJWT(pass_even=True), response={200: UserResponseSchema, 401: Any, 404: Any})
+           def get_profiles(request, username: str):
+               return ProfileSchema.from_orm(
+                   user = get_object_or_404(User, username=username),
+                   context={"request": request},
+               ).dict()
+          </code></pre>
+        </section>
+        <section>
+          <pre><code class="language-python" data-trim data-noescape>
+            class ProfileSchema(ModelSchema):
+                following: bool
+            
+                class Meta:
+                    model = User
+                    fields = ["username", "bio", "image"]
+            
+                @staticmethod
+                def resolve_following(obj, context) -> str:
+                    user = context.get("request").user
+                    if user.is_authenticated:
+                        return obj.followers.filter(pk=user.id).exists()
+                    return False
+          </code></pre>
+        </section>
+        <section>
+          <pre><code class="language-python" data-trim data-noescape>
+class AuthJWT(HttpBearer, JWTBaseAuthentication):
+    openapi_scheme = "token"
+    user_model = User
+
+    def __init__(self, *args, pass_even=False, **kwargs):
+        self.pass_even = pass_even
+        super().__init__(*args, **kwargs)
+
+    def authenticate(self, request, key):
+        return (
+            self.jwt_authenticate(request, token=key)
+            or self.pass_even
+        )
+          </code></pre>
+        </section>
+        <section>
+          <pre><code class="language-python" data-trim data-noescape>
+api = NinjaAPI()
+api.add_router("/", "accounts.views.router")
+api.add_router("/", "comments.api.router")
+
+...
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    ...
+    path(f'{api_prefix}/', include('articles.urls')),
+    path(f'{api_prefix}/', api.urls),
+]
+          </code></pre>
+        </section>
+	<section data-markdown>
+          <textarea data-template>
+            - Migration encore en cours
+            - Pas de tests cassés = utilisable
+          </textarea>
+	</section>
+	<section data-markdown>
+          <textarea data-template>
+            ### Conclusion
+            - Pour l'utiliser
+              - Peut éliminer les frictions avec DRF
+              - La perf (à vérifier à quel point s'applique)
+              - Pas de gros risque
+            - Pour ne pas l'utiliser
+              - Reste moins maintenu
+              - Reste moins documenté
+              - Equipe connait déjà DRF
+              - La codebase a déjà beaucoup de logique dans les serializers, etc
+          </textarea>
+	</section>
+	<section>
+	  github.com/c4ffein/realworld-django-ninja
+	</section>
+        
+    </div>
+  </div>
+  <script src="../engine/dist/reveal.js"></script>
+  <script src="../engine/plugin/notes/notes.js"></script>
+  <script src="../engine/plugin/markdown/markdown.js"></script>
+  <script src="../engine/plugin/highlight/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      transition: 'slide',
+      navigationMode: 'default',
+      plugins: [ RevealHighlight, RevealNotes, RevealMarkdown ]
+    });
+  </script>
+</body>
+</html>

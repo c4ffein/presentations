@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Python for Programmers</title>
+    <link rel="stylesheet" href="../engine/dist/reset.css">
+    <link rel="stylesheet" href="../engine/dist/reveal.css">
+    <link rel="stylesheet" href="../engine/dist/theme/c4ffein.css">
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="../engine/plugin/highlight/github-light-default.css">
+    <link rel="stylesheet" href="../engine/runcss/runcss.min.css">
+    <script src="../engine/runcss/runcss.min.js" defer watch></script>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <!-- Title Slide -->
+      <section>
+        <h1>Python for Programmers</h1>
+        <h3>A guide for the ones who never tried it</h3>
+        <p>March 2025</p>
+      </section>
+
+      <!-- Introduction -->
+      <section>
+        <section>
+          <h2>Introduction</h2>
+          <h3>Why this guide?</h3>
+          <ul>
+            <li>For developers with Java/C# experience</li>
+            <li>Focus on the bigger picture</li>
+            <li>Understand the "why" behind Python design</li>
+            <li>Accelerate your Python learning journey</li>
+            <li>I wrote a guide guide btw, what should we do?..</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>What IS Python?</h2>
+          <ul>
+            <li>High-level, interpreted programming language</li>
+            <li>Created by Guido van Rossum in 1991</li>
+            <li>Emphasized readability and simplicity</li>
+            <li>De-facto standard for scientific fields, including AI</li>
+            <li>Well-suited for scripts and complete projects</li>
+            <li>Easy to learn, challenging to master</li>
+            <li>Supports multiple programming paradigms</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>The Philosophy of Python</h2>
+          <h3>Zen of Python (import this)</h3>
+          <pre><code class="python">>>> import this
+The Zen of Python, by Tim Peters
+
+Beautiful is better than ugly.
+Explicit is better than implicit.
+Simple is better than complex.
+Complex is better than complicated.
+Flat is better than nested.
+Sparse is better than dense.
+Readability counts.
+...
+</code></pre>
+        </section>
+
+        <section>
+          <h2>Hello World</h2>
+          <p>No boilerplate, always straightforward:</p>
+          <pre><code class="python">print("Hello, World!")</code></pre>
+        </section>
+      </section>
+
+      <!-- Basic Data Types -->
+      <section>
+        <section>
+          <h2>Basic Data Types</h2>
+          <pre><code class="python"># Variables (no type declarations)
+name = "Python"  # str
+age = 30  # int
+price = 19.99  # float
+is_available = True  # bool
+
+# Type checking
+print(type(name))  # &lt;class 'str'&gt;
+print(isinstance(name, str))  # True => Safer!
+</code></pre>
+        </section>
+
+        <section>
+          <h2>Strong, Dynamic Typing</h2>
+          <p>Python is <em>dynamically</em> typed but <em>strongly</em> typed</p>
+          <pre><code class="python"># Python - Raises TypeError
+>>> a = 42
+>>> b = "answer"
+>>> a + b
+Traceback (most recent call last):
+TypeError: unsupported operand type(s) for +: 'int' and 'str'
+</code></pre>
+          <pre><code class="javascript">// JavaScript - Implicit conversion
+> a = 42
+42
+> b = 'answer'
+'answer'
+> a + b
+'42answer'</code></pre>
+        </section>
+      </section>
+
+      <!-- Collections -->
+      <section>
+        <section>
+          <h2>Collections</h2>
+          <p>Container data types to store multiple items</p>
+          <ul>
+            <li>Lists (mutable)</li>
+            <li>Tuples (immutable)</li>
+            <li>Dictionaries (key-value pairs)</li>
+            <li>Sets (unique items)</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Lists</h2>
+          <p>Mutable arrays (not linked lists)</p>
+          <pre><code class="python">l = ["a", "b", "c"]
+l.append("d")  # Add one element
+l.extend(["e", "f"])  # Add multiple elements
+print(l)       # ['a', 'b', 'c', 'd', 'e', 'f']
+print(l[0])    # 'a'
+print(l[1:3])  # ['b', 'c'] - Range indexing
+print(l[-1])   # 'f' - Negative indexing</code></pre>
+        </section>
+
+        <section>
+          <h2>Tuples</h2>
+          <p>Like lists but immutable</p>
+          <pre><code class="python">t = (1, 2, 3)  # Defines a 3 elements tuple
+print(t)       # (1, 2, 3)
+t = (1,)       # Defines a 1 element tuple
+print(t)       # (1,)
+t = 1, 2, 3    # Defines the same 3 elements tuple
+print(t)       # (1, 2, 3)
+t = 1,         # Valid 1 element tuple
+print(t)       # (1,)</code></pre>
+        </section>
+
+        <section>
+          <h2>Dictionaries</h2>
+          <p>Key-value pairs like HashMap (O(1) average operations)</p>
+          <pre><code class="python">AGE = "age"
+user = {
+    "name": "Alice",
+    AGE: 30,  # Variable as key name
+    "languages": ["Python", "Java"],
+}
+print(user["name"])  # prints: Alice</code></pre>
+        </section>
+
+	<section>
+          <h2>Dictionaries - get vs []</h2>
+          <pre><code class="python">user = {}
+>>> user["a"]
+Traceback (most recent call last):
+KeyError: "a"
+>>> print(a.get(3))
+None
+>>> print(a.get(3, 42))
+42
+</code></pre>
+        </section>
+
+        <section>
+          <h2>Sets</h2>
+          <p>Hash table without values (unique elements)</p>
+          <pre><code class="python">unique_numbers = {1, 2, 3, 3, 4}  # Will contain 1, 2, 3, 4
+print(1 in unique_numbers)  # True in nearly constant time</code></pre>
+        </section>
+
+        <section>
+          <p>More collections in <code>collections</code> module</p>
+        </section>
+      </section>
+
+      <!-- Control Flow -->
+      <section>
+        <section>
+          <h2>Control Flow</h2>
+          <h3>If statements</h3>
+          <pre><code class="python">x = 10
+if x > 5:
+    print("x is greater than 5")
+elif x == 5:
+    print("x equals 5")
+else:
+    print("x is less than 5")</code></pre>
+          <h3>Ternary expressions</h3>
+          <pre><code class="python">x = 10
+print("greater" if x > 5 else "equals" if x == 5 else "less")
+</code></pre>
+        </section>
+
+	<section>
+          <h2>For Loops</h2>
+          <pre><code class="python">languages = ["french", "english", "italian"]
+for language in languages:
+    print(language)</code></pre>
+          <h3>Range-based loops</h3>
+          <pre><code class="python">for i in range(5):  # 0 to 4
+    print(i)</code></pre>
+        </section>
+
+        <section>
+          <h2>Inline For</h2>
+          <pre><code class="python"># List comprehension
+[x for x in range(10)]  # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+# Dictionary comprehension
+{k: v for k, v in pairs}  # Creates a dictionary
+
+# Set comprehension
+{x for x in items}  # Creates a set
+
+# Generator expression
+(x for x in range(10))  # Creates a generator</code></pre>
+          <pre><code class="python"># Dict comprehension example
+the_dict = {"a": 3, "b": 4}
+print([k * 2 for k in the_dict.keys()])  # ["aa", "bb"]
+print([v * 2 for v in the_dict.values()])  # [6, 8]
+print({k * 2: v * 2 for k, v in the_dict.items()})
+# {'aa': 6, 'bb': 8}</code></pre>
+        </section>
+
+      <section>
+        <h2>Conditional</h2>
+        <pre><code class="python"># Creating lists with loop logic
+squares = [x * x for x in range(10)]
+# With conditions
+even_squares = [x * x for x in range(10) if x % 2 == 0]
+print(even_squares)  # [0, 4, 16, 36, 64]</code></pre>
+      </section>
+
+
+        <section>
+          <h2>While Loops</h2>
+          <pre><code class="python">count = 0
+while count < 5:
+    print(count)
+    count += 1</code></pre>
+        </section>
+      </section>
+
+      <!-- Functions -->
+      <section>
+        <h2>Functions</h2>
+        <pre><code class="python"># Defining functions
+def greet(name, greeting="Hello"):
+    """Greet a person with a custom greeting."""  # Docstring
+    return f"{greeting}, {name}!"
+
+# Calling functions
+print(greet("Java Developer"))  # Default greeting
+print(greet("Python Novice", "Welcome"))  # Custom greeting
+
+# Variable arguments
+def sum_all(*numbers):
+    return sum(numbers)
+
+print(sum_all(1, 2, 3, 4))  # 10</code></pre>
+      </section>
+
+      <!-- Decorators -->
+      <section>
+        <section>
+          <h2>Decorators</h2>
+          <p>Modify behavior of functions or classes without changing source code</p>
+          <pre><code class="python"># Basic decorator example
+def my_decorator(func):
+    def wrapper(*args, **kwargs):
+        print("Run before the function is called.")
+        result = func(*args, **kwargs)
+        print("Run after the function is called.")
+        return result
+    return wrapper
+
+@my_decorator  # &lt;==== say_hello = my_decorator(say_hello)
+def say_hello(name):
+    return f"Hello, {name}!"
+print(say_hello("Python Developer"))</code></pre>
+        </section>
+
+        <section>
+          <h2>Decorators with Arguments</h2>
+          <pre><code class="python">def repeat(n=1):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            result = None
+            for _ in range(n):
+                result = func(*args, **kwargs)
+            return result
+        return wrapper
+    return decorator
+
+@repeat(3)
+def greet(name):  # This prints "Hello, World!" three times
+    print(f"Hello, {name}!")</code></pre>
+          <p>Common uses: authentication, logging, caching, timing, validation...</p>
+        </section>
+      </section>
+
+      <!-- Classes and Objects -->
+      <section>
+        <section>
+          <h2>Classes and Objects</h2>
+          <pre><code class="python">class Person:
+    species = "Human"
+
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def introduce(self):
+        return (
+            f"Hi, I'm {self.name} "
+            f"and I'm {self.age} years old."
+        )
+</code></pre>
+</section>
+        <section>
+          <h2>Classes and Objects</h2>
+          <pre><code class="python">@staticmethod
+def get_species_info_hardcoded():
+    return "Humans are social beings."
+
+@classmethod
+def get_species_info_from_class(cls):
+    return f"{cls.species} are social beings."
+</code></pre>
+        </section>
+        <section>
+          <h2>Classes and Objects</h2>
+          <pre><code class="python">alice = Person("Alice", 30)
+print(alice.introduce())
+print(Person.get_species_info_hardcoded())
+print(Person.get_species_info_from_class())</code></pre>
+        </section>
+
+        <section>
+          <h2>Inheritance</h2>
+          <pre><code class="python">class Animal:
+    def __init__(self, name):
+        self.name = name
+
+    def speak(self):
+        return "Some sound"
+
+class Dog(Animal):
+    def speak(self):
+        return "Woof!"
+</code></pre>
+        </section>
+        <section>
+          <h2>Inheritance</h2>
+          <pre><code class="python"># Create an instance of the subclass
+dog = Dog("Rex")
+print(dog.name)
+print(dog.speak())
+
+# Multiple inheritance
+class Swimmer:
+    def swim(self):
+        return "Swimming"
+
+class Duck(Animal, Swimmer):
+    def speak(self):
+        return "Quack!"</code></pre>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h2>Abstract Classes</h2>
+          <pre><code class="python">from abc import ABC, abstractmethod
+
+class Animal(ABC):
+    @abstractmethod
+    def make_sound(self):
+        """This method must be implemented by subclasses"""
+        pass
+
+    def eat(self):
+        print("Eating...")
+
+class Dog(Animal):
+    def make_sound(self):
+        return "Woof!"
+</code></pre>
+      </section>
+        <section>
+          <h2>Abstract Classes</h2>
+          <pre><code class="python"># This works
+dog = Dog()
+print(dog.make_sound())  # Woof!
+
+# This would raise TypeError
+# animal = Animal()</code></pre>
+        </section>
+      </section>
+
+      <!-- Lambda Functions -->
+      <section>
+        <h2>Lambda Functions</h2>
+        <p>Anonymous single-expression functions</p>
+        <pre><code class="python">add = lambda a, b: a + b
+print(add(5, 3))  # 8
+
+# Useful with higher-order functions
+numbers = [1, 2, 3, 4, 5]
+squares = list(map(lambda x: x**2, numbers))
+print(squares)  # [1, 4, 9, 16, 25]</code></pre>
+      </section>
+
+      <!-- Exception Handling -->
+      <section>
+        <section>
+          <h2>Exception Handling</h2>
+          <pre><code class="python small-code">class SpecificKindOfValueError(ValueError):
+      """Defines an Exception inheriting from ValueError"""
+      pass
+</code></pre>
+        </section>
+        <section>
+          <h2>Exception Handling</h2>
+          <pre><code class="python small-code">try:
+    do_something()
+except SpecificKindOfValueError:
+    print("Here, handle SpecificKindOfValueError")
+except ValueError:
+    print("Not a valid number")
+except (TypeError, KeyError):
+    print("Type or key error occurred")
+except Exception as e:
+    print(f"Other error: {e}")
+else:
+    print("No exceptions occurred")
+finally:
+    print("This always executes")</code></pre>
+        </section>
+      </section>
+
+      <!-- Modules and Imports -->
+      <section>
+        <h2>Modules and Imports</h2>
+        <pre><code class="python"># Single import
+import math
+print(math.sqrt(16))  # 4.0
+
+# Import specific functions
+from datetime import datetime
+print(datetime.now())
+
+# Import with alias
+import numpy as np
+arr = np.array([1, 2, 3])</code></pre>
+      </section>
+
+      <!-- Context Managers -->
+      <section>
+        <h2>Context Managers</h2>
+        <p>Ensure specific logic executes before and after your code</p>
+        <pre><code class="python"># File handling (automatically closes file)
+with open("example.txt", "w") as file:
+    file.write("Hello, Python!")</code></pre>
+      </section>
+
+      <!-- Asynchronicity -->
+      <section>
+        <section>
+          <h2>Asynchronicity</h2>
+          <p>Using <code>async</code>/<code>await</code> for concurrent operations</p>
+          <pre><code class="python small-code"># Core concepts (sample code - not for execution)
+result = await some_coroutine()
+
+async def my_async_function():
+    pass
+
+results = await asyncio.gather(coro1(), coro2(), coro3())
+
+task = asyncio.create_task(some_coroutine())
+
+async for item in async_iterable:
+    process(item)</code></pre>
+        </section>
+        <section>
+          <h2>Asynchronicity</h2>
+          <p>Entering async context</p>
+          <pre><code class="python small-code"># Run coroutine from non-async context
+asyncio.run(main_coroutine())
+
+coro = main_coroutine(a, b)  # Coroutine with parameters
+print(coro)  # &lt;coroutine object coro at 0x7f1bcc2fb940&gt;
+asyncio.run(coro)  # Pass coroutine between calls
+</code></pre>
+          <p>Consider <code>Trio</code> for better async management</p>
+        </section>
+      </section>
+
+      <!-- Python Downsides -->
+      <section>
+        <h2>Python Downsides</h2>
+        <ul>
+          <li><strong>Performance considerations</strong>
+            <ul>
+              <li>Interpreted with runtime type checking</li>
+              <li>Global Interpreter Lock (GIL) limits multithreading</li>
+              <li><strong>No tail call optimization</strong>
+                <ul>
+                  <li>Recursive functions have limited depth</li>
+                  <li>May need iterative solutions for deep recursion</li>
+                </ul>
+              </li>
+              <li>Rarely matters for most applications</li>
+              <li>Performance-critical code can use C/C++/Rust extensions</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Python Ecosystem -->
+      <section>
+        <section>
+          <h2>Python Ecosystem</h2>
+          <h3>Tooling</h3>
+          <ul>
+            <li><strong>pyproject.toml</strong>: Standard project configuration</li>
+            <li><strong>Package Management</strong>:
+              <ul>
+                <li>pip: Package installer</li>
+                <li>venv: Virtual environments</li>
+                <li>uv: Fast modern alternative from astral.sh</li>
+              </ul>
+            </li>
+            <li><strong>Linting</strong>: ruff (from astral.sh)</li>
+            <li><strong>Typing</strong>: mypy for static type checking</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Type Hints</h2>
+          <pre><code class="python">def greeting(name: str) -> str:
+    return f"Hello, {name}"
+
+age: int = 30
+
+# Types aren't enforced at runtime
+a: int = "0"  # No error
+print(type(a))  # &lt;class 'str'&gt;</code></pre>
+          <p>Benefits: Better code documentation, IDE support, static checking</p>
+        </section>
+      </section>
+
+      <!-- General Conventions -->
+      <section>
+        <section>
+          <h2>General Conventions</h2>
+          <ul>
+            <li><strong>PEP 8</strong>: Official style guide (naming, indentation, etc.)</li>
+            <li><strong>Pythonic Code</strong>: Idiomatic patterns (list comprehensions, context managers)</li>
+            <li><strong>Duck Typing</strong>: "If it walks like a duck and quacks like a duck, it's a duck"</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Underscore Conventions</h2>
+          <ul>
+            <li><code>value</code>: Regular public attribute/method</li>
+            <li><code>_value</code>: "Private by convention" (not enforced)</li>
+            <li><code>__value</code>: Name mangling (becomes <code>_ClassName__value</code>)</li>
+            <li><code>__value__</code>: Special methods controlled by Python (magic/dunder methods)</li>
+            <li><code>value_</code>: Avoid conflicts with Python keywords</li>
+          </ul>
+        </section>
+      </section>
+
+      <!-- Learning with AI -->
+      <section>
+        <h2>Learning Python with AI</h2>
+        <p>Claude (Anthropic) is excellent for learning Python concepts</p>
+        <h3>Example Questions:</h3>
+        <ul>
+          <li>"What is the difference between Python iterator, iterable, and generator?"</li>
+          <li>"What is a Python metaclass?"</li>
+          <li>"Tell me about an advanced Python concept I may not know."</li>
+          <li>"Is there a more pythonic way to write this?"</li>
+        </ul>
+      </section>
+
+      <!-- Further Resources -->
+      <section>
+        <section>
+          <h2>Further Learning Resources</h2>
+          <div class="row">
+            <div class="column">
+              <h3>Documentation & Books</h3>
+              <ul>
+                <li><a href="https://docs.python.org/3/">Official Python Documentation</a></li>
+                <li><a href="https://inventwithpython.com/automate">Automate The Boring Stuff</a></li>
+                <li><a href="https://effectivepython.com/">Effective Python</a></li>
+                <li><a href="https://nostarch.com/pythoncrashcourse2e">Python Crash Course</a></li>
+                <li><a href="https://learnpythonthehardway.org/">Learn Python the Hard Way</a></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section>
+          <h2>Further Learning Resources</h2>
+          <div class="row">
+            <div class="column">
+              <h3>Practice</h3>
+              <ul>
+                <li><a href="https://exercism.org/tracks/python">Exercism</a></li>
+                <li><a href="https://codesignal.com/">CodeSignal</a></li>
+                <li><a href="https://www.hackerrank.com/domains/python">HackerRank</a></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- Thank You -->
+      <section>
+        <h1>Thank you for listening</h1>
+        <h3>Please give honest feedback!</h3>
+      </section>
+    </div>
+  </div>
+  <script src="../engine/dist/reveal.js"></script>
+  <script src="../engine/plugin/notes/notes.js"></script>
+  <script src="../engine/plugin/markdown/markdown.js"></script>
+  <script src="../engine/plugin/highlight/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      transition: 'slide',
+      navigationMode: 'default',
+      plugins: [ RevealHighlight, RevealNotes, RevealMarkdown ]
+    });
+  </script>
+</body>
+</html>
