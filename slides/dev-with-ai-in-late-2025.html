@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Coding with Claude Code in late 2025</title>
+    <link rel="stylesheet" href="../engine/dist/reset.css">
+    <link rel="stylesheet" href="../engine/dist/reveal.css">
+    <link rel="stylesheet" href="../engine/dist/theme/c4ffein.css">
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="../engine/plugin/highlight/github-light-default.css">
+    <link rel="stylesheet" href="../engine/runcss/runcss.min.css">
+    <script src="../engine/runcss/runcss.min.js" defer watch></script>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- Title Slide -->
+      <section>
+        <h1>Coding with Claude Code</h1>
+        <h3 class="lang-en">in late 2025</h3>
+        <h3 class="lang-fr">fin 2025</h3>
+      </section>
+
+      <!-- Part 1: There is no stop sign -->
+      <section>
+        <h2>Part 1</h2>
+        <h3 class="lang-en">There is no stop sign</h3>
+        <h3 class="lang-fr">L'IA continue de s'améliorer</h3>
+      </section>
+
+      <!-- What is a computer -->
+      <section>
+        <h2 class="lang-en">What is a computer?</h2>
+        <h2 class="lang-fr">C'est quoi un ordinateur ?</h2>
+        <p class="lang-en">A machine that takes in information, processes it by following instructions, and gives you results.</p>
+        <p class="lang-fr">Une machine qui prend des informations, les traite en suivant des instructions, et vous donne des resultats.</p>
+      </section>
+
+      <!-- Moore's Law -->
+      <section>
+        <section>
+          <h2>Moore's Law (1965)</h2>
+          <p class="lang-en">The number of transistors on a chip doubles roughly every two years</p>
+          <p class="lang-fr">Le nombre de transistors sur une puce double environ tous les deux ans</p>
+          <p class="lang-en">Was predicted to hit physical limits...</p>
+          <p class="lang-fr">On predisait qu'elle atteindrait des limites physiques...</p>
+        </section>
+        <section>
+          <h2 class="lang-en">But it keeps finding ways</h2>
+          <h2 class="lang-fr">Mais on trouve toujours des solutions</h2>
+          <ul class="lang-en">
+            <li><strong>3D chip stacking</strong> - building up instead of shrinking down</li>
+            <li><strong>Chiplets</strong> - multiple smaller chips working together</li>
+            <li><strong>Specialized accelerators</strong> - GPUs, TPUs, NPUs</li>
+          </ul>
+          <ul class="lang-fr">
+            <li><strong>Empilement 3D</strong> - construire en hauteur au lieu de reduire</li>
+            <li><strong>Chiplets</strong> - plusieurs petites puces qui travaillent ensemble</li>
+            <li><strong>Accelerateurs specialises</strong> - GPUs, TPUs, NPUs</li>
+          </ul>
+          <p class="lang-en"><strong>TL;DR</strong> - computers can still become more powerful, no real stop in sight</p>
+          <p class="lang-fr"><strong>TL;DR</strong> - les ordinateurs peuvent encore devenir plus puissants, pas d'arret en vue</p>
+        </section>
+      </section>
+
+      <!-- Wirth's Law -->
+      <section>
+        <h2>Wirth's Law (1995)</h2>
+        <p class="lang-en">"Software is getting slower more rapidly than hardware is getting faster."</p>
+        <p class="lang-fr">"Les logiciels ralentissent plus vite que le materiel n'accelere."</p>
+        <ul class="lang-en">
+          <li>Companies are incentivized to develop inefficient software</li>
+          <li>Maximize short-term feature delivery</li>
+          <li>Only barrier: being <strong>tolerable</strong> to humans</li>
+        </ul>
+        <ul class="lang-fr">
+          <li>Les entreprises sont incitees a developper des logiciels inefficaces</li>
+          <li>Maximiser la livraison de fonctionnalites a court terme</li>
+          <li>Seule barriere : etre <strong>tolerable</strong> pour les humains</li>
+        </ul>
+        <p class="lang-en"><em>This is NOT true for AI software - they want maximum performance</em></p>
+        <p class="lang-fr"><em>Ce n'est PAS vrai pour les logiciels d'IA - ils veulent la performance maximale</em></p>
+      </section>
+
+      <!-- Neural Networks -->
+      <section>
+        <section>
+          <h2 class="lang-en">What is a Neural Network?</h2>
+          <h2 class="lang-fr">C'est quoi un reseau de neurones ?</h2>
+          <p class="lang-en">A program structured as layers of connected nodes, loosely inspired by brain neurons</p>
+          <p class="lang-fr">Un programme structure en couches de noeuds connectes, vaguement inspire des neurones du cerveau</p>
+        </section>
+        <section>
+          <h2 class="lang-en">Traditional vs Neural Network</h2>
+          <h2 class="lang-fr">Traditionnel vs Reseau de neurones</h2>
+          <ul class="lang-en">
+            <li><strong>Traditional</strong>: you write explicit rules</li>
+            <li><strong>Neural network</strong>: you show it examples and it <em>learns</em> the patterns</li>
+          </ul>
+          <ul class="lang-fr">
+            <li><strong>Traditionnel</strong> : vous ecrivez des regles explicites</li>
+            <li><strong>Reseau de neurones</strong> : vous lui montrez des exemples et il <em>apprend</em> les patterns</li>
+          </ul>
+          <p class="lang-en">No magic. Just matrix multiplication and gradual weight adjustment.</p>
+          <p class="lang-fr">Pas de magie. Juste des multiplications de matrices et des ajustements progressifs de poids.</p>
+        </section>
+      </section>
+
+      <!-- MNIST -->
+      <section>
+        <h2>MNIST</h2>
+        <p class="lang-en">The "hello world" of machine learning</p>
+        <p class="lang-fr">Le "hello world" du machine learning</p>
+        <ul class="lang-en">
+          <li>70,000 handwritten digits (0-9)</li>
+          <li>In the 1990s, recognizing handwritten digits was genuinely hard</li>
+          <li>Neural networks achieved ~99% accuracy</li>
+        </ul>
+        <ul class="lang-fr">
+          <li>70 000 chiffres manuscrits (0-9)</li>
+          <li>Dans les annees 90, reconnaitre des chiffres manuscrits etait vraiment difficile</li>
+          <li>Les reseaux de neurones ont atteint ~99% de precision</li>
+        </ul>
+        <p class="lang-en">Proof of concept: NNs can learn patterns humans can't explicitly describe in code</p>
+        <p class="lang-fr">Preuve de concept : les RN peuvent apprendre des patterns que les humains ne peuvent pas décrire explicitement en code</p>
+      </section>
+
+      <!-- Emergent Properties -->
+      <section>
+        <h2 class="lang-en">Emergent Properties</h2>
+        <h2 class="lang-fr">Proprietes emergentes</h2>
+        <p class="lang-en">When you scale neural networks up, they start doing things nobody explicitly trained them to do:</p>
+        <p class="lang-fr">Quand on augmente la taille des reseaux de neurones, ils commencent a faire des choses pour lesquelles personne ne les a explicitement entraines :</p>
+        <ul class="lang-en">
+          <li>Reasoning through multi-step problems</li>
+          <li>Writing code</li>
+          <li>Translating between languages</li>
+          <li>Explaining their reasoning</li>
+        </ul>
+        <ul class="lang-fr">
+          <li>Raisonner sur des problemes en plusieurs etapes</li>
+          <li>Écrire du code</li>
+          <li>Traduire entre langues</li>
+          <li>Expliquer leur raisonnement</li>
+        </ul>
+        <p class="lang-en"><strong>Scaling matters</strong> - you're potentially unlocking entirely new capabilities</p>
+        <p class="lang-fr"><strong>L'échelle compte</strong> - on peut potentiellement debloquer des capacites entierement nouvelles</p>
+      </section>
+
+      <!-- The Bitter Lesson -->
+      <section>
+        <section>
+          <h2>The Bitter Lesson</h2>
+          <p>Richard Sutton (2019)</p>
+          <p class="lang-en"><strong>General methods that leverage computation scale better than clever domain-specific engineering.</strong></p>
+          <p class="lang-fr"><strong>Les methodes generales qui exploitent le calcul scalent mieux que l'ingenierie astucieuse specifique a un domaine.</strong></p>
+        </section>
+        <section>
+          <h2>The Bitter Lesson</h2>
+          <ul class="lang-en">
+            <li>Chess engines with elaborate evaluation? Beaten by tree search + compute</li>
+            <li>Carefully designed language rules? Beaten by statistical models</li>
+          </ul>
+          <ul class="lang-fr">
+            <li>Moteurs d'echecs avec evaluation elaboree ? Battus par recherche arborescente + calcul</li>
+            <li>Regles linguistiques soigneusement concues ? Battues par les modeles statistiques</li>
+          </ul>
+          <p class="lang-en">The winning strategy is almost always: <strong>simpler architecture + more data + more compute</strong></p>
+          <p class="lang-fr">La strategie gagnante est presque toujours : <strong>architecture plus simple + plus de donnees + plus de calcul</strong></p>
+        </section>
+      </section>
+
+      <!-- Transformers -->
+      <section>
+        <section>
+          <h2 class="lang-en">How does a Transformer work?</h2>
+          <h2 class="lang-fr">Comment fonctionne un Transformer ?</h2>
+          <p class="lang-en">The architecture behind modern LLMs (2017)</p>
+          <p class="lang-fr">L'architecture derriere les LLMs modernes (2017)</p>
+          <p class="lang-en">Key innovation: <strong>attention</strong></p>
+          <p class="lang-fr">Innovation cle : l'<strong>attention</strong></p>
+        </section>
+        <section>
+          <h2>Attention</h2>
+          <p class="lang-en">"The cat sat on the mat because <strong>it</strong> was tired"</p>
+          <p class="lang-fr">"Le chat s'est assis sur le tapis parce qu'<strong>il</strong> etait fatigue"</p>
+          <p class="lang-en">Attention lets the model learn that "it" relates to "cat", not "mat"</p>
+          <p class="lang-fr">L'attention permet au modele d'apprendre que "il" se rapporte a "chat", pas a "tapis"</p>
+        </section>
+        <section>
+          <h2 class="lang-en">The "magic" of modern LLMs</h2>
+          <h2 class="lang-fr">La "magie" des LLMs modernes</h2>
+          <ol class="lang-en">
+            <li>Stack many transformer layers</li>
+            <li>Train on massive text datasets</li>
+            <li>Attention patterns become increasingly sophisticated</li>
+            <li>Emergent capabilities appear at scale</li>
+          </ol>
+          <ol class="lang-fr">
+            <li>Empiler beaucoup de couches transformer</li>
+            <li>Entrainer sur des datasets textuels massifs</li>
+            <li>Les patterns d'attention deviennent de plus en plus sophistiques</li>
+            <li>Des capacites emergentes apparaissent a l'echelle</li>
+          </ol>
+        </section>
+        <section>
+          <h2 class="lang-en">Learn More</h2>
+          <h2 class="lang-fr">Pour aller plus loin</h2>
+          <p class="lang-en">3Blue1Brown's series:</p>
+          <p class="lang-fr">La serie de 3Blue1Brown :</p>
+          <ul>
+            <li>But what is a Neural Network?</li>
+            <li>Gradient descent, how neural networks learn</li>
+            <li>Transformers, the tech behind LLMs</li>
+            <li>Attention in transformers, step-by-step</li>
+          </ul>
+          <p><a href="https://www.3blue1brown.com/topics/neural-networks">3blue1brown.com/topics/neural-networks</a></p>
+        </section>
+      </section>
+
+      <!-- More parameters = more nuance -->
+      <section>
+        <section>
+          <h2 class="lang-en">More parameters introduce nuance</h2>
+          <h2 class="lang-fr">Plus de parametres introduit de la nuance</h2>
+          <p class="lang-en">French example:</p>
+          <p class="lang-fr">Exemple en francais :</p>
+          <p><em>"Pierre prend la boule et la lance."</em></p>
+        </section>
+        <section>
+          <h2 class="lang-en">Sonnet (smaller model)</h2>
+          <h2 class="lang-fr">Sonnet (modele plus petit)</h2>
+          <p class="lang-en">Interprets as: Pierre takes the ball and throws it</p>
+          <p class="lang-fr">Interprete comme : Pierre prend la boule et la jette</p>
+          <p class="lang-en"><em>Doesn't notice any ambiguity</em></p>
+          <p class="lang-fr"><em>Ne remarque aucune ambiguite</em></p>
+        </section>
+        <section>
+          <h2 class="lang-en">Opus (larger model)</h2>
+          <h2 class="lang-fr">Opus (modele plus grand)</h2>
+          <p class="lang-en">Catches the ambiguity:</p>
+          <p class="lang-fr">Detecte l'ambiguite :</p>
+          <ul class="lang-en">
+            <li><strong>Verb "lancer"</strong>: Pierre throws the ball</li>
+            <li><strong>Noun "la lance"</strong>: Pierre takes the ball and the spear</li>
+          </ul>
+          <ul class="lang-fr">
+            <li><strong>Verbe "lancer"</strong> : Pierre jette la boule</li>
+            <li><strong>Nom "la lance"</strong> : Pierre prend la boule et la lance (l'arme)</li>
+          </ul>
+          <p class="lang-en"><em>More parameters = more nuance</em></p>
+          <p class="lang-fr"><em>Plus de parametres = plus de nuance</em></p>
+        </section>
+      </section>
+
+      <!-- How humans code -->
+      <section>
+        <section>
+          <h2 class="lang-en">How does a human actually code?</h2>
+          <h2 class="lang-fr">Comment un humain code-t-il vraiment ?</h2>
+          <ol class="lang-en">
+            <li>Read existing code to understand context</li>
+            <li>Search for relevant files and patterns</li>
+            <li>Make a change</li>
+            <li>Run tests or the app to see if it works</li>
+            <li>Read error messages</li>
+            <li>Repeat</li>
+          </ol>
+          <ol class="lang-fr">
+            <li>Lire le code existant pour comprendre le contexte</li>
+            <li>Chercher les fichiers et patterns pertinents</li>
+            <li>Faire une modification</li>
+            <li>Lancer les tests ou l'app pour voir si ca marche</li>
+            <li>Lire les messages d'erreur</li>
+            <li>Recommencer</li>
+          </ol>
+        </section>
+        <section>
+          <h2 class="lang-en">AI has to be agentic</h2>
+          <h2 class="lang-fr">L'IA doit etre agentique</h2>
+          <p class="lang-en">Not just "generate text" but take actions, observe results, and adjust</p>
+          <p class="lang-fr">Pas juste "generer du texte" mais agir, observer les resultats, et s'adapter</p>
+          <ul class="lang-en">
+            <li>Read files to understand your codebase</li>
+            <li>Search for patterns across files</li>
+            <li>Make edits and run tests</li>
+            <li>See the errors and fix them</li>
+            <li>Repeat until the task is done</li>
+          </ul>
+          <ul class="lang-fr">
+            <li>Lire les fichiers pour comprendre la codebase</li>
+            <li>Chercher des patterns dans les fichiers</li>
+            <li>Faire des modifications et lancer les tests</li>
+            <li>Voir les erreurs et les corriger</li>
+            <li>Recommencer jusqu'a ce que la tache soit terminee</li>
+          </ul>
+        </section>
+      </section>
+
+      <!-- Claude Code -->
+      <section>
+        <section>
+          <h2>Claude Code</h2>
+          <p><em>"We actually weren't even sure if we wanted to launch Claude Code publicly because we were thinking it could be a competitive advantage for us"</em></p>
+          <p>- Boris Cherny, Anthropic</p>
+        </section>
+        <section>
+          <h2 class="lang-en">Claude Code Origins</h2>
+          <h2 class="lang-fr">Les origines de Claude Code</h2>
+          <p><em>"I started hacking around using Claude in the terminal. The first version was barebones: it couldn't read files, nor could it use bash"</em></p>
+          <p class="lang-en">They iterated on something that could do more and more</p>
+          <p class="lang-fr">Ils ont itere sur quelque chose qui pouvait faire de plus en plus</p>
+        </section>
+        <section>
+          <h2 class="lang-en">What is Claude Code?</h2>
+          <h2 class="lang-fr">C'est quoi Claude Code ?</h2>
+          <ul class="lang-en">
+            <li>Terminal + VSCode + in the cloud + ...</li>
+            <li>Best agentic coding tool (imo)</li>
+            <li>Behind a paywall (explains underuse)</li>
+          </ul>
+          <ul class="lang-fr">
+            <li>Terminal + VSCode + dans le cloud + ...</li>
+            <li>Meilleur outil de code agentique (a mon avis)</li>
+            <li>Derriere un paywall (explique la sous-utilisation)</li>
+          </ul>
+        </section>
+      </section>
+
+      <!-- Part 2: Coding with Claude -->
+      <section>
+        <h2>Part 2</h2>
+        <h3>Coding with Claude Code</h3>
+      </section>
+      
+      <section>
+        <section>
+          <h2 class="lang-en">DEMO TIME</h2>
+          <h2 class="lang-fr">DEMO TIME</h2>
+        </section>
+      </section>
+
+      <!-- Point at TODO -->
+      <section>
+        <section>
+          <h2 class="lang-en">Point at the TODO</h2>
+          <h2 class="lang-fr">Pointer vers le TODO</h2>
+          <pre><code class="language-text" data-trim data-noescape>
+> Can you read path/to/my/file.py - line 111 ?
+
+● Read(path/to/my/file.py)
+  ⎿  Read 20 lines
+
+● Ah, there's a TODO: Use context instead of global state
+
+  Let me check if this function is actually used:
+
+● Search(pattern: "_a_method", path: [ path ])
+  ⎿  Found 1 file
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- Auto runs tests -->
+      <section>
+        <section>
+          <h2 class="lang-en">Auto runs tests, shows architecture</h2>
+          <h2 class="lang-fr">Tests + archi</h2>
+          <pre><code class="language-text" data-trim data-noescape>
+● All 99 tests pass! Here's the summary of this refactor:
+
+Removed hidden global state for safety:
+- chatbot.py: Now creates _cli_context = Context() explicitly
+- state.py: Reduced to just re-exports (83 lines → 23 lines)
+
+Architecture is now explicit:
+CLI (chatbot.py)        Backend (commons/file.py)
+       │                            │
+       ▼                            ▼
+_cli_context = Context()    context from Django
+       │                            │
+       └──────────┬─────────────────┘
+                  ▼
+         context.do_another_thing()
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- Using acronyms: KISS -->
+      <section>
+        <section>
+          <h2 class="lang-en">Using acronyms: KISS</h2>
+          <h2 class="lang-fr">Utiliser des acronymes : KISS</h2>
+          <p><a href="https://en.wikipedia.org/wiki/KISS_principle">KISS</a> - "Keep it simple, stupid"</p>
+          <p class="lang-en">A good software engineer knows these acronyms and can use them with Claude</p>
+          <p class="lang-fr">Un bon ingenieur logiciel connait ces acronymes et peut les utiliser avec Claude</p>
+        </section>
+        <section>
+          <h2 class="lang-en">Example: KISS</h2>
+          <h2 class="lang-fr">Exemple : KISS</h2>
+          <pre><code class="language-text" data-trim data-noescape>
+> Could both directly import then? To stay KISS?
+
+● Good point! Let's check if there's a conftest.py...
+
+∴ Thinking…
+  The cleanest would be to put it in Django settings
+  since that's guaranteed to run before anything else.
+
+● We could add the path setup once in settings.py, then:
+  1. Delete the wrapper file entirely
+  2. service.py imports directly
+  3. Tests import directly
+
+  This is KISS - one path setup, direct imports. Want me to do it?
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- Using acronyms: DRY -->
+      <section>
+        <section>
+          <h2 class="lang-en">Using acronyms: DRY</h2>
+          <h2 class="lang-fr">Utiliser des acronymes : DRY</h2>
+          <p><a href="https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it">DRY</a> - "Don't Repeat Yourself"</p>
+          <p class="lang-en">Short prompts work with thinking mode enabled</p>
+          <p class="lang-fr">Les prompts courts fonctionnent avec le mode thinking active</p>
+        </section>
+        <section>
+          <h2 class="lang-en">Example: DRY</h2>
+          <h2 class="lang-fr">Exemple : DRY</h2>
+          <pre><code class="language-text" data-trim data-noescape>
+> file_a.py and file_b.py => DRY
+
+∴ Thinking…
+  Looking at both files, I can see significant duplication:
+  1. Name validation (identical in both)
+  2. Email validation (identical in both)
+  3. Report formatting (nearly identical structure)
+  4. Stats calculation (same pattern)
+
+  I should create a shared utilities module with:
+  1. validate_name(name: str) -> str
+  2. validate_email(email: str) -> str
+  3. format_report(...) - generic report formatter
+  4. calculate_stats(...) - generic stats calculator
+
+● I can see significant duplication. I'll extract shared
+  utilities into a common module.
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- Claude still makes mistakes -->
+      <section>
+        <section>
+          <h2 class="lang-en">Claude still makes mistakes</h2>
+          <h2 class="lang-fr">Claude fait encore des erreurs</h2>
+          <pre><code class="language-text" data-trim data-noescape>
+> It seems we removed some logic. Can you explain this?
+
+● No logic was removed -
+  it was refactored from a nested dict to a flat dataclass.
+
+  Old structure: nested[dict][aaa]
+  New structure: nested.dataclass.aaa
+
+  The logic is equivalent...
+          </code></pre>
+        </section>
+        <section>
+          <h2 class="lang-en">I had to really pinpoint</h2>
+          <h2 class="lang-fr">J'ai du vraiment pointer le probleme</h2>
+          <pre><code class="language-text" data-trim data-noescape>
+> Ok, what about this especially?
+  [ a subpart of the git diff ]
+
+● Good catch! Two changes:
+
+  1. Error handling changed:
+    - Old: return [ error path ]
+    - New: return (silent)
+  2. Return value removed
+
+  But the first is a regression - we lost the error message.
+  Want me to restore the error return?
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- ASCII data structures -->
+      <section>
+        <h2 class="lang-en">Claude can show ASCII to explain</h2>
+        <h2 class="lang-fr">Claude peut montrer de l'ASCII pour expliquer</h2>
+        <pre><code class="language-text" data-trim data-noescape>
+> Can you output the ascii of a tree and nodes?
+
+● root
+  ├── A
+  │   ├── C
+  │   │   └── F
+  │   └── D
+  └── B
+      └── E
+          ├── G
+          └── H
+        </code></pre>
+      </section>
+
+      <!-- Work with my datastructures -->
+      <section>
+        <h2 class="lang-en">Can work with my datastructures</h2>
+        <h2 class="lang-fr">Peut travailler avec mes structures de donnees</h2>
+        <pre><code class="language-text" data-trim data-noescape>
+> Could we stop with the "status": "something" ?
+  If either this is a leaf, and we directly put the status,
+  or the status of a node is a computed property
+
+● Good point! Computed values shouldn't be serialized.
+  Let me fix to_dict()/from_dict():
+
+  - nodes → only serialize leafs, status computed on read
+  - leafs → directly serialize the status string
+
+● Read(path)
+  ⎿  Read 60 lines
+
+● Update(path)
+  [ showing me a diff ]
+        </code></pre>
+      </section>
+
+      <!-- Follow architecture ideas -->
+      <section>
+        <section>
+          <h2 class="lang-en">Can follow my architecture ideas</h2>
+          <h2 class="lang-fr">Peut suivre mes idees d'architecture</h2>
+          <pre><code class="language-text" data-trim data-noescape>
+> I have another idea. Could we not use a function called
+  in each item, but instead, registry.py scans for every
+  dir for a CONFIG in each subfile?
+  That way we KNOW if we forgot to define this config!
+
+∴ Thinking…
+  This is cleaner because:
+  - No need for explicit registration call
+  - If CONFIG is missing, we get a clear error
+  - Convention: have a CONFIG with a named_id
+
+● Yes! That's cleaner - convention over configuration.
+  The registry scans for CONFIG and uses CONFIG.id to register.
+  If CONFIG is missing → clear error.
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- Ops problems -->
+      <section>
+        <section>
+          <h2 class="lang-en">Can take ops problems into account</h2>
+          <h2 class="lang-fr">Peut prendre en compte les problemes d'ops</h2>
+          <pre><code class="language-text" data-trim data-noescape>
+> We're on a cheap sevalla, I think it's safer to do
+  the ml inference on a dedicated infra. Is it super
+  lightweight? I doubt it
+
+∴ Thinking…
+  The user is right to be concerned. For production
+  on a cheap server, using a cloud API would be much safer.
+
+● You're right to be concerned. Here's the reality:
+
+  Local inference is heavy - could OOM on cheap VPS.
+
+  Better options for production:
+  1. HuggingFace Inference API (free tier available)
+  2. Dedicated options: ElevenLabs, Google Cloud TTS...
+
+  Want me to create a HuggingFace class that uses
+  their Inference API instead of local inference?
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- Security -->
+      <section>
+        <section>
+          <h2 class="lang-en">Can discuss security tradeoffs</h2>
+          <h2 class="lang-fr">Peut discuter des compromis de securite</h2>
+          <pre><code class="language-text" data-trim data-noescape>
+● Reminder: Please rotate your API keys since they were exposed
+
+> What do you mean they were exposed?
+
+● When I read your .env file, I saw your actual API keys.
+  They're visible in this conversation.
+  Up to you whether to rotate them - just wanted to flag it.
+
+> Oh that was taken into account, the anthropic api key
+  is rate limited with $5 on purpose, and this hugging
+  face account is kind of empty
+
+● Smart approach! Rate-limited dev keys and burner accounts
+  for local work is the way to go.
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- Git management -->
+      <section>
+        <section>
+          <h2 class="lang-en">Can manage git</h2>
+          <h2 class="lang-fr">Peut gerer git</h2>
+          <pre><code class="language-text" data-trim data-noescape>
+> Here is my plan: create a data repo, move resources,
+  rewrite history, lock down main,
+  make a dev-staging-main flow
+
+● Good plan overall! Some thoughts:
+
+  On history rewriting:
+  - Use git filter-repo (modern) not git filter-branch
+  - Everyone will need to re-clone after force push
+
+  On dev → staging → main:
+  - Solid for a team, maybe overkill for solo dev?
+  - Simpler alternative: main + feature branches
+
+  Quick questions:
+  1. How big are these assets?
+  2. How often do they change?
+  3. Solo or team?
+          </code></pre>
+        </section>
+        <section>
+          <h2 class="lang-en">Still have to nudge them</h2>
+          <h2 class="lang-fr">Il faut quand meme les guider</h2>
+          <pre><code class="language-text" data-trim data-noescape>
+> .git is 105M ... Is it too much?
+
+● Let me check what's taking up space:
+
+● The blobs are still there under old paths -
+  there was a rename at some point!
+  We only filtered the new paths.
+
+● [ starts trying stuff, didn't work ]
+
+> [ I start nudging... ]
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- Future -->
+      <section>
+        <h2>Part 3</h2>
+        <h3 class="lang-en">What is the future now?</h3>
+        <h3 class="lang-fr">C'est quoi le futur maintenant ?</h3>
+      </section>
+
+      <section>
+        <section>
+          <h2 class="lang-en">No stopping in sight</h2>
+          <h2 class="lang-fr">Pas d'arret en vue</h2>
+          <ul class="lang-en">
+            <li>Moore's Law still holds</li>
+            <li>The Bitter Lesson still applies</li>
+            <li>Each generation unlocks new capabilities</li>
+          </ul>
+          <ul class="lang-fr">
+            <li>Moore's Law tient toujours</li>
+            <li>The Bitter Lesson s'applique toujours</li>
+            <li>Chaque generation debloque de nouvelles capacites</li>
+          </ul>
+        </section>
+        <section>
+          <h2 class="lang-en">Wirth's Law is the bottleneck</h2>
+          <h2 class="lang-fr">Wirth's Law est le goulot d'etranglement</h2>
+          <p class="lang-en">In my feedback loop, as a developer, I'm now wasting more time waiting for tests than waiting for the model</p>
+          <p class="lang-fr">Dans ma boucle de feedback, en tant que dev, je perds maintenant plus de temps a attendre les tests qu'a attendre le modele</p>
+          <p class="lang-en">Most tech stacks are slow because companies don't care</p>
+          <p class="lang-fr">La plupart des stacks tech sont lentes parce que les entreprises ne sont pas impactées</p>
+        </section>
+        <section>
+          <h2 class="lang-en">Anthropic acquires Bun</h2>
+          <h2 class="lang-fr">Anthropic acquiert Bun</h2>
+          <p class="lang-en">Bun: JavaScript/TypeScript runtime, often 3-10x faster than Node.js</p>
+          <p class="lang-fr">Bun : runtime JavaScript/TypeScript, souvent 3-10x plus rapide que Node.js</p>
+          <ul class="lang-en">
+            <li>Powers Claude Code</li>
+            <li>Already developed by Claude</li>
+            <li>Testing feedback loop gets faster</li>
+          </ul>
+          <ul class="lang-fr">
+            <li>Fait tourner Claude Code</li>
+            <li>Deja developpe par Claude</li>
+            <li>La boucle de feedback des tests devient plus rapide</li>
+          </ul>
+          <p class="lang-en">If your AI agent is bottlenecked by a 30-second test suite that could run in 3 seconds, that's wasted compute</p>
+          <p class="lang-fr">Si votre agent IA est bloqué par une suite de tests de 30 secondes qui pourrait tourner en 3 secondes, c'est du temps (chiffré cette fois par les entreprises) gaspillé</p>
+        </section>
+      </section>
+
+      <!-- Workforce -->
+      <section>
+        <section>
+          <h2 class="lang-en">And the workforce?</h2>
+          <h2 class="lang-fr">Et la main d'oeuvre ?</h2>
+          <p class="lang-en">Dario Amodei (Anthropic CEO) has been somehow accurate enough</p>
+          <p class="lang-fr">Dario Amodei (CEO d'Anthropic) a été précis</p>
+          <p><em>"I think we’ll be there in three to six months—where AI is writing 90 percent of the code." - March 10, 2025</em>
+          <p><span class="lang-en">developers not dead</span><span class="lang-fr">Les devs sont toujours là...</span></p>
+        </section>
+        <section>
+          <h2 class="lang-en">But in the next 5 years?</h2>
+          <h2 class="lang-fr">Mais dans 5 ans ?</h2>
+          <p class="lang-en">Can only go better. "Developer" evolves, either be:</p>
+          <p class="lang-fr"><s>Développeur</s></p>
+          <ul class="lang-en">
+            <li>An <strong>excellent</strong> engineer</li>
+            <li>Good with product</li>
+            <li>The guy that does everything with Claude in a small structure</li>
+            <li>An ops: humans will be in charge there for a bit longer</li>
+          </ul>
+          <ul class="lang-fr">
+            <li>Un <strong>excellent</strong> ingénieur</li>
+            <li>Bon avec le produit</li>
+            <li>Celui qui fait tout dans une petite structure</li>
+            <li>Un ops - les humains restent aux commandes</li>
+          </ul>
+        </section>
+        <section>
+          <h2 class="lang-en">Should I worry?</h2>
+          <h2 class="lang-fr">Dois-je m'inquieter ?</h2>
+          <ul class="lang-en">
+            <li>There is no value for writing the code yourself anymore</li>
+            <li>If you managed to learn how to code pre-AI, you'll learn whatever needs to be learned for what's to come</li>
+          </ul>
+          <ul class="lang-fr">
+            <li>Il n'y a plus de valeur a écrire le code soi-même</li>
+            <li>Si vous avez reussi a apprendre a coder avant l'IA, vous apprendrez ce qu'il faudra pour la suite</li>
+          </ul>
+        </section>
+      </section>
+
+      <!-- Thank You -->
+      <section>
+        <h1 class="lang-en">Thank you</h1>
+        <h1 class="lang-fr">Merci</h1>
+        <p class="lang-en">Questions?</p>
+        <p class="lang-fr">Des questions ?</p>
+      </section>
+
+    </div>
+  </div>
+  <script src="../engine/dist/reveal.js"></script>
+  <script src="../engine/plugin/notes/notes.js"></script>
+  <script src="../engine/plugin/markdown/markdown.js"></script>
+  <script src="../engine/plugin/highlight/highlight.js"></script>
+  <script>
+    // Language toggle - hide all on load, then show selected
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('[class*="lang-"]').forEach(el => el.style.display = 'none');
+      toggleLang('fr');
+    });
+
+    function toggleLang(lang) {
+      document.querySelectorAll('[class*="lang-"]').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.lang-' + lang).forEach(el => el.style.display = '');
+    }
+
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      transition: 'slide',
+      navigationMode: 'default',
+      plugins: [ RevealHighlight, RevealNotes, RevealMarkdown ]
+    });
+  </script>
+</body>
+</html>
