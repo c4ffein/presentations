@@ -4,37 +4,120 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Presentations</title>
+    <script>
+        // Apply theme immediately to prevent flash
+        (function() {
+            var match = document.cookie.match(/(^| )preferred-theme=([^;]+)/);
+            var pref = match ? match[2] : 'default';
+            var theme = pref === 'default'
+                ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+                : pref;
+            document.documentElement.setAttribute('data-theme', theme);
+            document.documentElement.setAttribute('data-pref', pref);
+        })();
+    </script>
     <style>
+        :root[data-theme="dark"] {
+            --bg: #1a1a1a;
+            --text: #e0e0e0;
+            --text-muted: #888;
+            --link: #6db3f2;
+            --border: #444;
+            --code-bg: #2d2d2d;
+            --tag-bg: #333;
+        }
+        :root[data-theme="light"] {
+            --bg: #ffffff;
+            --text: #333;
+            --text-muted: #666;
+            --link: #0066cc;
+            --border: #ddd;
+            --code-bg: #f5f5f5;
+            --tag-bg: #eee;
+        }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
             max-width: 800px;
             margin: 50px auto;
             padding: 20px;
-            background: #1a1a1a;
-            color: #e0e0e0;
+            background: var(--bg);
+            color: var(--text);
         }
-        h1 {
-            border-bottom: 2px solid #444;
-            padding-bottom: 10px;
+        h1, h2, h3 { border-bottom: 2px solid var(--border); padding-bottom: 10px; }
+        a { color: var(--link); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        ul { list-style: none; padding: 0; }
+        li { margin: 15px 0; }
+        nav { margin-bottom: 2rem; display: flex; align-items: center; }
+        nav a { margin-right: 1rem; font-size: 1.1em; }
+        #theme-toggle {
+            margin-left: auto;
+            background: none; color: var(--text);
+            border: none; padding: 0;
+            cursor: pointer; font-size: 1.2rem;
+            width: 1.5em; height: 1.5em;
+            line-height: 1.5em; text-align: center;
         }
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-        li {
-            margin: 15px 0;
-        }
-        a {
-            color: #6db3f2;
-            text-decoration: none;
-            font-size: 1.2em;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
+        #theme-toggle:hover { color: var(--link); }
     </style>
+    <script>
+        (function() {
+            const COOKIE_NAME = 'preferred-theme';
+            const THEMES = ['default', 'light', 'dark'];
+            function getCookieDomain() {
+                const host = window.location.hostname;
+                return host.endsWith('.cafeine.dev') ? ';domain=.cafeine.dev' : '';
+            }
+            function getPreference() {
+                const match = document.cookie.match(new RegExp('(^| )' + COOKIE_NAME + '=([^;]+)'));
+                return match ? match[2] : 'default';
+            }
+            function setPreference(pref) {
+                document.cookie = `${COOKIE_NAME}=${pref}${getCookieDomain()};path=/;max-age=31536000;SameSite=Lax`;
+                applyTheme();
+            }
+            function getBrowserPreference() {
+                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            function getEffectiveTheme() {
+                const pref = getPreference();
+                return pref === 'default' ? getBrowserPreference() : pref;
+            }
+            function applyTheme() {
+                document.documentElement.setAttribute('data-theme', getEffectiveTheme());
+                updateToggleButton();
+            }
+            function cycleTheme() {
+                const current = getPreference();
+                const next = THEMES[(THEMES.indexOf(current) + 1) % THEMES.length];
+                setPreference(next);
+            }
+            function updateToggleButton() {
+                const btn = document.getElementById('theme-toggle');
+                if (!btn) return;
+                const labels = { default: '◐', light: '☀', dark: '☾' };
+                btn.textContent = labels[getPreference()];
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', applyTheme);
+            } else {
+                applyTheme();
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                if (getPreference() === 'default') applyTheme();
+            });
+            window.cycleTheme = cycleTheme;
+        })();
+    </script>
 </head>
 <body>
+    <nav>
+        <a href="https://writings.cafeine.dev">Home</a>
+        <a href="https://writings.cafeine.dev/posts">Posts</a>
+        <a href="https://presentations.cafeine.dev">Presentations</a>
+        <button id="theme-toggle" onclick="cycleTheme()"><script>document.write({default:'◐',light:'☀',dark:'☾'}[document.documentElement.getAttribute('data-pref')])</script></button>
+    </nav>
     <h1>Presentations</h1>
     <ul>
         <li><a href="slides/dev-with-ai-in-late-2025.html">Coding with Claude Code - fin 2025</a></li>
