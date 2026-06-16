@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Python for Programmers</title>
+    <title>Django Ninja</title>
     <link rel="stylesheet" href="../engine/dist/reset.css">
     <link rel="stylesheet" href="../engine/dist/reveal.css">
     <link rel="stylesheet" href="../engine/dist/theme/c4ffein.css">
@@ -55,7 +55,7 @@
                 return {"item_id": item_id, "q": q}
           </code></pre>
         </section>
-  <section><img data-src="images/pydantic.png"></section>
+  <section><img data-src="../resources/pydantic.png"></section>
   <section data-markdown>
           <textarea data-template>
             - Multithreading?
@@ -84,11 +84,12 @@
   </div></section>
         <section>
           <pre><code class="language-python" data-trim data-noescape>
-            def get_user:
-                self.user = UserProfile.objects.filter(
+            def get_user():
+                return UserProfile.objects.filter(
                     name="django"
                 ).first()
-            await sync_to_async(sync_function)
+
+            self.user = await sync_to_async(get_user)()
 
             ...
 
@@ -217,10 +218,10 @@
     </svg>
     <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://github.com/c4ffein/django-ninja-benchmarks">github.com/c4ffein/django-ninja-benchmarks</a></div>
   </section>
-  <section><img data-src="images/fastapi-async.png"></section>
-  <section><img data-src="images/async-drf.png"></section>
-  <section><img data-src="images/stars.png"></section>
-  <!--section><img data-src="images/adrf-missing.png"></section-->
+  <section><img data-src="../resources/fastapi-async.png"></section>
+  <section><img data-src="../resources/async-drf.png"></section>
+  <section><img data-src="../resources/stars.png"></section>
+  <!--section><img data-src="../resources/adrf-missing.png"></section-->
   <section data-markdown>
           <textarea data-template>
             Que présenter?
@@ -229,8 +230,8 @@
           </textarea>
   </section>
   <section>
-    <img src="images/realworld-logo.svg" alt="RealWorld" style="display:block;margin:0 auto;width:82%;max-width:900px;border:none;background:none;box-shadow:none;">
-    <img src="images/realworld-frameworks.svg" alt="Frontend and Backend frameworks" style="display:block;margin:0.4em auto 0;width:70%;max-width:720px;border:none;background:none;box-shadow:none;">
+    <img src="../resources/realworld-logo.svg" alt="RealWorld" style="display:block;margin:0 auto;width:82%;max-width:900px;border:none;background:none;box-shadow:none;">
+    <img src="../resources/realworld-frameworks.svg" alt="Frontend and Backend frameworks" style="display:block;margin:0.4em auto 0;width:70%;max-width:720px;border:none;background:none;box-shadow:none;">
     <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://github.com/realworld-apps/realworld">github.com/realworld-apps/realworld</a></div>
   </section>
   <section>
@@ -241,10 +242,10 @@
     <iframe data-src="https://api.realworld.show" style="width:80%;height:560px;border:1px solid #ddd;background:#fff;box-shadow:none;" allowfullscreen></iframe>
     <div style="font-size:0.4em;margin-top:0.2em;color:#666;">api.realworld.show</div>
   </section>
-  <section><img data-src="images/conduit.png"></section>
+  <section><img data-src="../resources/conduit.png"></section>
   <section data-markdown>
           <textarea data-template>
-            ![drf](images/realworld-drf.png)
+            ![drf](../resources/realworld-drf.png)
             - 3 modèles Django incluant User
             - KISS
             - Il y a des tests?..
@@ -252,7 +253,7 @@
   </section>
   <section data-markdown>
           <textarea data-template>
-            ![drf](images/realworld-drf.png)
+            ![drf](../resources/realworld-drf.png)
             - accounts
               - models.py
               - schemas.py
@@ -408,7 +409,7 @@
                     fields = ["username", "bio", "image"]
 
                 @staticmethod
-                def resolve_following(obj, context) -> str:
+                def resolve_following(obj, context) -> bool:
                     user = context.get("request").user
                     if user.is_authenticated:
                         return obj.followers.filter(pk=user.id).exists()
