@@ -98,7 +98,125 @@
           </code></pre>
         </section>
         
-	<section><img data-src="images/benchmark.png"></section>
+	<section>
+	  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 460" width="820" height="460" font-family="-apple-system,Segoe UI,Roboto,sans-serif" style="width:100%;max-width:860px;height:auto;display:block;margin:0 auto;">
+	  <rect width="820" height="460" fill="#ffffff"/>
+	  <text x="78" y="28" font-size="19" font-weight="700" fill="#111111">Parsing / validation JSON</text>
+	  <text x="78" y="48" font-size="13" fill="#666666">concurrency = 1, requests/sec (higher is better)</text>
+	  <line x1="78" y1="384.0" x2="796" y2="384.0" stroke="#e6e6e6"/>
+	  <text x="70" y="388.0" font-size="11" fill="#888888" text-anchor="end">0</text>
+	  <line x1="78" y1="277.3" x2="796" y2="277.3" stroke="#e6e6e6"/>
+	  <text x="70" y="281.3" font-size="11" fill="#888888" text-anchor="end">500</text>
+	  <line x1="78" y1="170.7" x2="796" y2="170.7" stroke="#e6e6e6"/>
+	  <text x="70" y="174.7" font-size="11" fill="#888888" text-anchor="end">1000</text>
+	  <line x1="78" y1="64.0" x2="796" y2="64.0" stroke="#e6e6e6"/>
+	  <text x="70" y="68.0" font-size="11" fill="#888888" text-anchor="end">1500</text>
+	  <text x="16" y="224" font-size="12" fill="#666666" transform="rotate(-90 16 224)" text-anchor="middle">requests / second</text>
+	  <rect x="117.5" y="85.9" width="90.3" height="298.1" fill="#1a1a1a" rx="1.5"/>
+	  <text x="162.7" y="80.9" font-size="10.5" fill="#333333" text-anchor="middle">1397</text>
+	  <rect x="210.8" y="98.9" width="90.3" height="285.1" fill="#808080" rx="1.5"/>
+	  <text x="256.0" y="93.9" font-size="10.5" fill="#333333" text-anchor="middle">1336</text>
+	  <rect x="304.2" y="242.5" width="90.3" height="141.5" fill="#bfbfbf" rx="1.5"/>
+	  <text x="349.3" y="237.5" font-size="10.5" fill="#333333" text-anchor="middle">663</text>
+	  <text x="257.5" y="404.0" font-size="12" fill="#444444" text-anchor="middle">sync  def</text>
+	  <text x="257.5" y="419.0" font-size="12" fill="#444444" text-anchor="middle">(gunicorn / WSGI)</text>
+	  <rect x="476.5" y="266.9" width="90.3" height="117.1" fill="#1a1a1a" rx="1.5"/>
+	  <text x="521.7" y="261.9" font-size="10.5" fill="#333333" text-anchor="middle">549</text>
+	  <rect x="569.8" y="288.6" width="90.3" height="95.4" fill="#808080" rx="1.5"/>
+	  <text x="615.0" y="283.6" font-size="10.5" fill="#333333" text-anchor="middle">447</text>
+	  <rect x="663.2" y="324.3" width="90.3" height="59.7" fill="#bfbfbf" rx="1.5"/>
+	  <text x="708.3" y="319.3" font-size="10.5" fill="#333333" text-anchor="middle">280</text>
+	  <text x="616.5" y="404.0" font-size="12" fill="#444444" text-anchor="middle">async  def</text>
+	  <text x="616.5" y="419.0" font-size="12" fill="#444444" text-anchor="middle">(uvicorn / ASGI, DRF=adrf)</text>
+	  <rect x="78" y="434" width="13" height="13" fill="#1a1a1a" rx="2"/>
+	  <text x="96" y="444" font-size="12" fill="#333333">Django Ninja</text>
+	  <rect x="204" y="434" width="13" height="13" fill="#808080" rx="2"/>
+	  <text x="222" y="444" font-size="12" fill="#333333">Flask + marshmallow</text>
+	  <rect x="386" y="434" width="13" height="13" fill="#bfbfbf" rx="2"/>
+	  <text x="404" y="444" font-size="12" fill="#333333">Django REST framework</text>
+	  </svg>
+	  <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://github.com/c4ffein/django-ninja-benchmarks">github.com/c4ffein/django-ninja-benchmarks</a></div>
+	</section>
+	<section>
+	  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 500" width="980" height="500" font-family="-apple-system,Segoe UI,Roboto,sans-serif" style="width:100%;max-width:980px;height:auto;display:block;margin:0 auto;">
+	  <rect width="980" height="500" fill="#ffffff"/>
+	  <text x="78" y="28" font-size="19" font-weight="700" fill="#111111">Calling a slow network operation</text>
+	  <text x="78" y="48" font-size="13" fill="#666666">concurrency = 50  —  Django Ninja uses async views</text>
+	  <line x1="78" y1="390.0" x2="956" y2="390.0" stroke="#e6e6e6"/>
+	  <text x="70" y="394.0" font-size="11" fill="#888888" text-anchor="end">0</text>
+	  <line x1="78" y1="324.8" x2="956" y2="324.8" stroke="#e6e6e6"/>
+	  <text x="70" y="328.8" font-size="11" fill="#888888" text-anchor="end">100</text>
+	  <line x1="78" y1="259.6" x2="956" y2="259.6" stroke="#e6e6e6"/>
+	  <text x="70" y="263.6" font-size="11" fill="#888888" text-anchor="end">200</text>
+	  <line x1="78" y1="194.4" x2="956" y2="194.4" stroke="#e6e6e6"/>
+	  <text x="70" y="198.4" font-size="11" fill="#888888" text-anchor="end">300</text>
+	  <line x1="78" y1="129.2" x2="956" y2="129.2" stroke="#e6e6e6"/>
+	  <text x="70" y="133.2" font-size="11" fill="#888888" text-anchor="end">400</text>
+	  <line x1="78" y1="64.0" x2="956" y2="64.0" stroke="#e6e6e6"/>
+	  <text x="70" y="68.0" font-size="11" fill="#888888" text-anchor="end">500</text>
+	  <text x="16" y="227" font-size="12" fill="#666666" transform="rotate(-90 16 227)" text-anchor="middle">requests / second</text>
+	  <rect x="85.4" y="126.3" width="14.6" height="263.7" fill="#1a1a1a" rx="1.5"/>
+	  <rect x="103.0" y="377.4" width="14.6" height="12.6" fill="#808080" rx="1.5"/>
+	  <rect x="120.5" y="377.4" width="14.6" height="12.6" fill="#bfbfbf" rx="1.5"/>
+	  <text x="111.8" y="410.0" font-size="12" fill="#444444" text-anchor="middle">1</text>
+	  <rect x="153.0" y="89.5" width="14.6" height="300.5" fill="#1a1a1a" rx="1.5"/>
+	  <rect x="170.5" y="371.2" width="14.6" height="18.8" fill="#808080" rx="1.5"/>
+	  <rect x="188.1" y="371.4" width="14.6" height="18.6" fill="#bfbfbf" rx="1.5"/>
+	  <text x="179.3" y="410.0" font-size="12" fill="#444444" text-anchor="middle">2</text>
+	  <rect x="220.5" y="80.2" width="14.6" height="309.8" fill="#1a1a1a" rx="1.5"/>
+	  <rect x="238.1" y="359.0" width="14.6" height="31.0" fill="#808080" rx="1.5"/>
+	  <rect x="255.6" y="359.4" width="14.6" height="30.6" fill="#bfbfbf" rx="1.5"/>
+	  <text x="246.8" y="410.0" font-size="12" fill="#444444" text-anchor="middle">4</text>
+	  <rect x="288.0" y="81.8" width="14.6" height="308.2" fill="#1a1a1a" rx="1.5"/>
+	  <rect x="305.6" y="346.7" width="14.6" height="43.3" fill="#808080" rx="1.5"/>
+	  <rect x="323.2" y="347.4" width="14.6" height="42.6" fill="#bfbfbf" rx="1.5"/>
+	  <text x="314.4" y="410.0" font-size="12" fill="#444444" text-anchor="middle">6</text>
+	  <rect x="355.6" y="84.9" width="14.6" height="305.1" fill="#1a1a1a" rx="1.5"/>
+	  <rect x="373.1" y="334.5" width="14.6" height="55.5" fill="#808080" rx="1.5"/>
+	  <rect x="390.7" y="335.9" width="14.6" height="54.1" fill="#bfbfbf" rx="1.5"/>
+	  <text x="381.9" y="410.0" font-size="12" fill="#444444" text-anchor="middle">8</text>
+	  <rect x="423.1" y="88.8" width="14.6" height="301.2" fill="#1a1a1a" rx="1.5"/>
+	  <rect x="440.7" y="322.3" width="14.6" height="67.7" fill="#808080" rx="1.5"/>
+	  <rect x="458.2" y="324.3" width="14.6" height="65.7" fill="#bfbfbf" rx="1.5"/>
+	  <text x="449.5" y="410.0" font-size="12" fill="#444444" text-anchor="middle">10</text>
+	  <rect x="490.7" y="91.6" width="14.6" height="298.4" fill="#1a1a1a" rx="1.5"/>
+	  <rect x="508.2" y="310.1" width="14.6" height="79.9" fill="#808080" rx="1.5"/>
+	  <rect x="525.8" y="313.2" width="14.6" height="76.8" fill="#bfbfbf" rx="1.5"/>
+	  <text x="517.0" y="410.0" font-size="12" fill="#444444" text-anchor="middle">12</text>
+	  <rect x="558.2" y="94.8" width="14.6" height="295.2" fill="#1a1a1a" rx="1.5"/>
+	  <rect x="575.8" y="297.9" width="14.6" height="92.1" fill="#808080" rx="1.5"/>
+	  <rect x="593.3" y="301.6" width="14.6" height="88.4" fill="#bfbfbf" rx="1.5"/>
+	  <text x="584.5" y="410.0" font-size="12" fill="#444444" text-anchor="middle">14</text>
+	  <rect x="625.7" y="99.7" width="14.6" height="290.3" fill="#1a1a1a" rx="1.5"/>
+	  <rect x="643.3" y="285.7" width="14.6" height="104.3" fill="#808080" rx="1.5"/>
+	  <rect x="660.9" y="290.7" width="14.6" height="99.3" fill="#bfbfbf" rx="1.5"/>
+	  <text x="652.1" y="410.0" font-size="12" fill="#444444" text-anchor="middle">16</text>
+	  <rect x="693.3" y="104.6" width="14.6" height="285.4" fill="#1a1a1a" rx="1.5"/>
+	  <rect x="710.8" y="273.4" width="14.6" height="116.6" fill="#808080" rx="1.5"/>
+	  <rect x="728.4" y="279.7" width="14.6" height="110.3" fill="#bfbfbf" rx="1.5"/>
+	  <text x="719.6" y="410.0" font-size="12" fill="#444444" text-anchor="middle">18</text>
+	  <rect x="760.8" y="109.0" width="14.6" height="281.0" fill="#1a1a1a" rx="1.5"/>
+	  <rect x="778.4" y="261.1" width="14.6" height="128.9" fill="#808080" rx="1.5"/>
+	  <rect x="795.9" y="269.6" width="14.6" height="120.4" fill="#bfbfbf" rx="1.5"/>
+	  <text x="787.2" y="410.0" font-size="12" fill="#444444" text-anchor="middle">20</text>
+	  <rect x="828.4" y="113.2" width="14.6" height="276.8" fill="#1a1a1a" rx="1.5"/>
+	  <rect x="845.9" y="248.8" width="14.6" height="141.2" fill="#808080" rx="1.5"/>
+	  <rect x="863.5" y="259.8" width="14.6" height="130.2" fill="#bfbfbf" rx="1.5"/>
+	  <text x="854.7" y="410.0" font-size="12" fill="#444444" text-anchor="middle">22</text>
+	  <rect x="895.9" y="116.6" width="14.6" height="273.4" fill="#1a1a1a" rx="1.5"/>
+	  <rect x="913.5" y="237.4" width="14.6" height="152.6" fill="#808080" rx="1.5"/>
+	  <rect x="931.0" y="249.3" width="14.6" height="140.7" fill="#bfbfbf" rx="1.5"/>
+	  <text x="922.2" y="410.0" font-size="12" fill="#444444" text-anchor="middle">24</text>
+	  <text x="517.0" y="431.0" font-size="12" fill="#666666" text-anchor="middle">number of worker processes</text>
+	  <rect x="78" y="474" width="13" height="13" fill="#1a1a1a" rx="2"/>
+	  <text x="96" y="484" font-size="12" fill="#333333">Django Ninja — uvicorn (async)</text>
+	  <rect x="348" y="474" width="13" height="13" fill="#808080" rx="2"/>
+	  <text x="366" y="484" font-size="12" fill="#333333">Flask + marshmallow — uWSGI (sync)</text>
+	  <rect x="650" y="474" width="13" height="13" fill="#bfbfbf" rx="2"/>
+	  <text x="668" y="484" font-size="12" fill="#333333">Django REST framework — uWSGI (sync)</text>
+	  </svg>
+	  <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://github.com/c4ffein/django-ninja-benchmarks">github.com/c4ffein/django-ninja-benchmarks</a></div>
+	</section>
 	<section><img data-src="images/fastapi-async.png"></section>
 	<section><img data-src="images/async-drf.png"></section>
 	<section><img data-src="images/stars.png"></section>
