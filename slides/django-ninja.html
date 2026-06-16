@@ -55,7 +55,43 @@
                 return {"item_id": item_id, "q": q}
           </code></pre>
         </section>
-  <section><img data-src="../resources/pydantic.png"></section>
+  <section>
+    <section>
+      <img src="../resources/pydantic-name.svg" alt="Pydantic" style="display:block;margin:0 auto;width:70%;max-width:640px;border:none;background:none;box-shadow:none;">
+      <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://github.com/pydantic/pydantic">github.com/pydantic/pydantic</a></div>
+    </section>
+        <section>
+          <pre><code class="language-python" data-trim data-noescape>
+            from datetime import datetime
+            from typing import Optional
+            from pydantic import BaseModel
+
+            class User(BaseModel):
+                id: int
+                name: str = 'John Doe'
+                signup_ts: Optional[datetime] = None
+                friends: list[int] = []
+          </code></pre>
+        </section>
+        <section>
+          <pre><code class="language-python" data-trim data-noescape>
+            external_data = {
+                'id': '123',
+                'signup_ts': '2017-06-01 12:22',
+                'friends': [1, '2', b'3'],
+            }
+            user = User(**external_data)
+
+            print(user)
+            #> id=123 name='John Doe'
+            #> signup_ts=datetime.datetime(2017, 6, 1, 12, 22)
+            #> friends=[1, 2, 3]
+
+            print(user.id)
+            #> 123
+          </code></pre>
+        </section>
+  </section>
   <section data-markdown>
           <textarea data-template>
             - Multithreading?
