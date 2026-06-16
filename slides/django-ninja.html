@@ -69,33 +69,67 @@
       <tbody>
         <tr>
           <td style="padding:0.35em 0.7em;text-align:left;font-weight:700;">Définition des routes</td>
-          <td style="padding:0.35em 0.9em;text-align:center;color:#666;">ViewSets / Routers</td>
+          <td style="padding:0.35em 0.9em;text-align:center;">ViewSets / Routers</td>
           <td style="padding:0.35em 0.9em;text-align:center;">Décorateurs</td>
         </tr>
         <tr>
           <td style="padding:0.35em 0.7em;text-align:left;font-weight:700;">Validation</td>
-          <td style="padding:0.35em 0.9em;text-align:center;color:#666;">Serializers</td>
+          <td style="padding:0.35em 0.9em;text-align:center;">Serializers</td>
           <td style="padding:0.35em 0.9em;text-align:center;">Pydantic</td>
         </tr>
         <tr>
           <td style="padding:0.35em 0.7em;text-align:left;font-weight:700;">Async natif</td>
-          <td style="padding:0.35em 0.9em;text-align:center;color:#666;">adrf (add-on)</td>
+          <td style="padding:0.35em 0.9em;text-align:center;">adrf (add-on)</td>
           <td style="padding:0.35em 0.9em;text-align:center;">✓</td>
         </tr>
         <tr>
           <td style="padding:0.35em 0.7em;text-align:left;font-weight:700;">Performance</td>
-          <td style="padding:0.35em 0.9em;text-align:center;color:#666;">référence</td>
+          <td style="padding:0.35em 0.9em;text-align:center;">référence</td>
           <td style="padding:0.35em 0.9em;text-align:center;">~2×</td>
         </tr>
         <tr>
           <td style="padding:0.35em 0.7em;text-align:left;font-weight:700;">GitHub stars</td>
           <td style="padding:0.35em 0.9em;text-align:center;">30k</td>
-          <td style="padding:0.35em 0.9em;text-align:center;color:#666;">9k</td>
+          <td style="padding:0.35em 0.9em;text-align:center;">9k</td>
         </tr>
       </tbody>
     </table>
   </section>
   </section>
+  <!-- ===== Axe : Définition des routes ===== -->
+  <section>
+    <section>
+      <table style="margin:0 auto;border-collapse:collapse;font-size:0.62em;">
+        <thead>
+          <tr>
+            <th style="padding:0.35em 0.7em;border-bottom:2px solid #333;"></th>
+            <th style="padding:0.35em 0.9em;border-bottom:2px solid #333;text-align:center;">DRF</th>
+            <th style="padding:0.35em 0.9em;border-bottom:2px solid #333;text-align:center;">Ninja</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:0.35em 0.7em;text-align:left;font-weight:700;">Définition des routes</td>
+            <td style="padding:0.35em 0.9em;text-align:center;">ViewSets / Routers</td>
+            <td style="padding:0.35em 0.9em;text-align:center;">Décorateurs</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+        <section>
+          <pre><code class="language-python" data-trim data-noescape>
+            # serializers.py + views.py + urls.py
+            class ItemViewSet(viewsets.ModelViewSet):
+                queryset = Item.objects.all()
+                serializer_class = ItemSerializer
+                permission_classes = [IsAuthenticated]
+
+
+            router = DefaultRouter()
+            router.register(r"items", ItemViewSet)
+            urlpatterns = router.urls
+          </code></pre>
+        </section>
         <section>
           <pre><code class="language-python" data-trim data-noescape>
             app = FastAPI()
@@ -111,7 +145,45 @@
                 return {"item_id": item_id, "q": q}
           </code></pre>
         </section>
+        <section>
+          <pre><code class="language-python" data-trim data-noescape>
+            api = NinjaAPI()
+
+
+            @api.get("/items/{item_id}")
+            def read_item(request, item_id: int):
+                return {"item_id": item_id}
+          </code></pre>
+        </section>
+  </section>
+  <!-- ===== Axe : Validation ===== -->
   <section>
+    <section>
+      <table style="margin:0 auto;border-collapse:collapse;font-size:0.62em;">
+        <thead>
+          <tr>
+            <th style="padding:0.35em 0.7em;border-bottom:2px solid #333;"></th>
+            <th style="padding:0.35em 0.9em;border-bottom:2px solid #333;text-align:center;">DRF</th>
+            <th style="padding:0.35em 0.9em;border-bottom:2px solid #333;text-align:center;">Ninja</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:0.35em 0.7em;text-align:left;font-weight:700;">Validation</td>
+            <td style="padding:0.35em 0.9em;text-align:center;">Serializers</td>
+            <td style="padding:0.35em 0.9em;text-align:center;">Pydantic</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+        <section>
+          <pre><code class="language-python" data-trim data-noescape>
+            class ItemSerializer(serializers.ModelSerializer):
+                class Meta:
+                    model = Item
+                    fields = ["id", "name", "price"]
+          </code></pre>
+        </section>
     <section>
       <img src="../resources/pydantic-name.svg" alt="Pydantic" style="display:block;margin:0 auto;width:70%;max-width:640px;border:none;background:none;box-shadow:none;">
       <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://github.com/pydantic/pydantic">github.com/pydantic/pydantic</a></div>
@@ -147,7 +219,39 @@
             #> 123
           </code></pre>
         </section>
+        <section>
+          <pre><code class="language-python" data-trim data-noescape>
+            from ninja import ModelSchema
+
+            # le « duct tape » de Django Ninja :
+            # le pont entre l'ORM Django et Pydantic
+            class ItemSchema(ModelSchema):
+                class Meta:
+                    model = Item
+                    fields = ["id", "name", "price"]
+          </code></pre>
+        </section>
   </section>
+  <!-- ===== Axe : Async natif ===== -->
+  <section>
+    <section>
+      <table style="margin:0 auto;border-collapse:collapse;font-size:0.62em;">
+        <thead>
+          <tr>
+            <th style="padding:0.35em 0.7em;border-bottom:2px solid #333;"></th>
+            <th style="padding:0.35em 0.9em;border-bottom:2px solid #333;text-align:center;">DRF</th>
+            <th style="padding:0.35em 0.9em;border-bottom:2px solid #333;text-align:center;">Ninja</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:0.35em 0.7em;text-align:left;font-weight:700;">Async natif</td>
+            <td style="padding:0.35em 0.9em;text-align:center;">adrf (add-on)</td>
+            <td style="padding:0.35em 0.9em;text-align:center;">✓</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
   <section data-markdown>
           <textarea data-template>
             - Multithreading?
@@ -190,7 +294,29 @@
             ).afirst()
           </code></pre>
         </section>
-
+  <section><img data-src="../resources/fastapi-async.png"></section>
+  <section><img data-src="../resources/async-drf.png"></section>
+  </section>
+  <!-- ===== Axe : Performance ===== -->
+  <section>
+    <section>
+      <table style="margin:0 auto;border-collapse:collapse;font-size:0.62em;">
+        <thead>
+          <tr>
+            <th style="padding:0.35em 0.7em;border-bottom:2px solid #333;"></th>
+            <th style="padding:0.35em 0.9em;border-bottom:2px solid #333;text-align:center;">DRF</th>
+            <th style="padding:0.35em 0.9em;border-bottom:2px solid #333;text-align:center;">Ninja</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:0.35em 0.7em;text-align:left;font-weight:700;">Performance</td>
+            <td style="padding:0.35em 0.9em;text-align:center;">référence</td>
+            <td style="padding:0.35em 0.9em;text-align:center;">~2×</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
   <section>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 460" width="820" height="460" font-family="-apple-system,Segoe UI,Roboto,sans-serif" style="width:100%;max-width:860px;height:auto;display:block;margin:0 auto;">
     <rect width="820" height="460" fill="#ffffff"/>
@@ -310,11 +436,31 @@
     </svg>
     <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://github.com/c4ffein/django-ninja-benchmarks">github.com/c4ffein/django-ninja-benchmarks</a></div>
   </section>
-  <section><img data-src="../resources/fastapi-async.png"></section>
-  <section><img data-src="../resources/async-drf.png"></section>
+  </section>
+  <!-- ===== Axe : GitHub stars ===== -->
+  <section>
+    <section>
+      <table style="margin:0 auto;border-collapse:collapse;font-size:0.62em;">
+        <thead>
+          <tr>
+            <th style="padding:0.35em 0.7em;border-bottom:2px solid #333;"></th>
+            <th style="padding:0.35em 0.9em;border-bottom:2px solid #333;text-align:center;">DRF</th>
+            <th style="padding:0.35em 0.9em;border-bottom:2px solid #333;text-align:center;">Ninja</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:0.35em 0.7em;text-align:left;font-weight:700;">GitHub stars</td>
+            <td style="padding:0.35em 0.9em;text-align:center;">30k</td>
+            <td style="padding:0.35em 0.9em;text-align:center;">9k</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
   <section>
     <img src="../resources/star-history.svg" alt="GitHub stars over time: django-ninja vs django-rest-framework" style="display:block;margin:0 auto;width:90%;max-width:980px;border:none;background:none;box-shadow:none;">
     <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://star-history.com/#vitalik/django-ninja&encode/django-rest-framework&Date">star-history.com</a></div>
+  </section>
   </section>
   <!--section><img data-src="../resources/adrf-missing.png"></section-->
   <section data-markdown>
@@ -325,17 +471,19 @@
           </textarea>
   </section>
   <section>
-    <img src="../resources/realworld-logo.svg" alt="RealWorld" style="display:block;margin:0 auto;width:82%;max-width:900px;border:none;background:none;box-shadow:none;">
-    <img src="../resources/realworld-frameworks.svg" alt="Frontend and Backend frameworks" style="display:block;margin:0.4em auto 0;width:70%;max-width:720px;border:none;background:none;box-shadow:none;">
-    <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://github.com/realworld-apps/realworld">github.com/realworld-apps/realworld</a></div>
-  </section>
-  <section>
-    <iframe data-src="https://demo.realworld.show" style="width:80%;height:560px;border:1px solid #ddd;background:#fff;box-shadow:none;" allowfullscreen></iframe>
-    <div style="font-size:0.4em;margin-top:0.2em;color:#666;">demo.realworld.show</div>
-  </section>
-  <section>
-    <iframe data-src="https://api.realworld.show" style="width:80%;height:560px;border:1px solid #ddd;background:#fff;box-shadow:none;" allowfullscreen></iframe>
-    <div style="font-size:0.4em;margin-top:0.2em;color:#666;">api.realworld.show</div>
+    <section>
+      <img src="../resources/realworld-logo.svg" alt="RealWorld" style="display:block;margin:0 auto;width:82%;max-width:900px;border:none;background:none;box-shadow:none;">
+      <img src="../resources/realworld-frameworks.svg" alt="Frontend and Backend frameworks" style="display:block;margin:0.4em auto 0;width:70%;max-width:720px;border:none;background:none;box-shadow:none;">
+      <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://github.com/realworld-apps/realworld">github.com/realworld-apps/realworld</a></div>
+    </section>
+    <section>
+      <iframe data-src="https://demo.realworld.show" style="width:80%;height:560px;border:1px solid #ddd;background:#fff;box-shadow:none;" allowfullscreen></iframe>
+      <div style="font-size:0.4em;margin-top:0.2em;color:#666;">demo.realworld.show</div>
+    </section>
+    <section>
+      <iframe data-src="https://api.realworld.show" style="width:80%;height:560px;border:1px solid #ddd;background:#fff;box-shadow:none;" allowfullscreen></iframe>
+      <div style="font-size:0.4em;margin-top:0.2em;color:#666;">api.realworld.show</div>
+    </section>
   </section>
   <section data-markdown>
           <textarea data-template>
