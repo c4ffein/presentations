@@ -1,0 +1,112 @@
+/*
+ * c4ffein light-theme syntax highlighting for highlight.js
+ * Background is kept transparent so code renders "as-is" on the slide,
+ * with no card / box / border.
+ */
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+
+  color: #333333;
+  background: transparent;
+}
+
+/* Comments, code spans, formulas */
+.hljs-comment,
+.hljs-quote,
+.hljs-formula {
+  color: #667777;
+}
+
+/* Keywords, types, template tags */
+.hljs-keyword,
+.hljs-type,
+.hljs-builtin-name,
+.hljs-meta-keyword,
+.hljs-template-tag,
+.hljs-template-variable {
+  color: #dd3344;
+}
+
+/* Titles, classes, functions */
+.hljs-title,
+.hljs-class .hljs-title,
+.hljs-function .hljs-title,
+.hljs-function,
+.hljs-class {
+  color: #7744bb;
+}
+
+/* Attributes, numbers, operators, variables, sections */
+.hljs-attr,
+.hljs-attribute,
+.hljs-number,
+.hljs-operator,
+.hljs-variable,
+.hljs-literal,
+.hljs-selector-attr,
+.hljs-selector-class,
+.hljs-selector-id,
+.hljs-meta,
+.hljs-section {
+  color: #0055cc;
+}
+
+.hljs-section {
+  font-weight: bold;
+}
+
+/* Strings, regex, meta-strings, links */
+.hljs-string,
+.hljs-regexp,
+.hljs-meta .hljs-string,
+.hljs-link {
+  color: #003366;
+}
+
+/* Built-ins, symbols, bullets */
+.hljs-built_in,
+.hljs-symbol {
+  color: #dd6611;
+}
+
+.hljs-bullet {
+  color: #775511;
+}
+
+/* Names, tags, selector tags */
+.hljs-name,
+.hljs-tag,
+.hljs-selector-tag,
+.hljs-selector-pseudo {
+  color: #228833;
+}
+
+/* Substitutions / params */
+.hljs-subst,
+.hljs-params {
+  color: #222233;
+}
+
+.hljs-doctag {
+  color: #dd3344;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-deletion {
+  color: #bb2222;
+  background-color: #ffeeee;
+}
+
+.hljs-addition {
+  color: #228833;
+  background-color: #eeffee;
+}
