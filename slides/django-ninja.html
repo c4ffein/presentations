@@ -15,28 +15,59 @@
 <body>
   <div class="reveal">
     <div class="slides">
-    <section>Django Ninja, une alternative à Django Rest Framework inspirée par FastAPI</section>
+    <section>
+      <h1 style="margin-bottom:0.3em;">Django Ninja</h1>
+      <p style="font-size:0.6em;">Une alternative à Django REST Framework inspirée par FastAPI</p>
+    </section>
   <section data-markdown>
           <textarea data-template>
-            ### Framework?
-            - Flask
+            ### Framework web Python?
+            - Flask: (api/ssr)
             - Django
-              - Django Rest Framework
-              - Ninja (pas Jinja)
+              - Default
+                - Jinja templates (ssr)
+                - Custom routes, diy (api)
+              - Django Rest Framework (api)
+              - Ninja (api)
+            - FastAPI (api)
           </textarea>
   </section>
-  <section data-markdown>
-          <textarea data-template>
-            ### Parcours pro (Django) d'un dev
-            - Software Engineer R&D dans une startup
-              - Découvre DRF avec le site marchand
-            - Réalise puis maintient (2 ans) un back Django
-              - DRF puis Ninja
-            - En entreprise, pousse un collègue à migrer
-              - Seulement un des sous-projets
-              - Le seul en Django
-            - Travaille de nouveau à temps plein sur DRF
-          </textarea>
+  <section>
+    <h3 style="margin-bottom:0.5em;">Parcours pro (Django) d'un dev</h3>
+    <table style="margin:0 auto;border-collapse:collapse;font-size:0.58em;">
+      <thead>
+        <tr>
+          <th style="padding:0.35em 0.9em;border-bottom:2px solid #333;text-align:left;">Expérience / contrat</th>
+          <th style="padding:0.35em 0.9em;border-bottom:2px solid #333;text-align:center;">DRF / Ninja&nbsp;?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding:0.3em 0.9em;text-align:left;border-bottom:1px solid #ddd;">Software Engineer R&amp;D en startup — site marchand</td>
+          <td style="padding:0.3em 0.9em;text-align:center;border-bottom:1px solid #ddd;">DRF (découverte)</td>
+        </tr>
+        <tr>
+          <td style="padding:0.3em 0.9em;text-align:left;border-bottom:1px solid #ddd;">Réalise puis maintient un back (2 ans)</td>
+          <td style="padding:0.3em 0.9em;text-align:center;border-bottom:1px solid #ddd;">DRF → Ninja</td>
+        </tr>
+        <tr>
+          <td style="padding:0.3em 0.9em;text-align:left;border-bottom:1px solid #ddd;">En entreprise, fait découvrir Ninja à un collègue</td>
+          <td style="padding:0.3em 0.9em;text-align:center;border-bottom:1px solid #ddd;">DRF → Ninja (1 sous-projet)</td>
+        </tr>
+        <tr>
+          <td style="padding:0.3em 0.9em;text-align:left;border-bottom:1px solid #ddd;">Temps plein sur un projet (2 ans)</td>
+          <td style="padding:0.3em 0.9em;text-align:center;border-bottom:1px solid #ddd;">DRF (statu quo)</td>
+        </tr>
+        <tr>
+          <td style="padding:0.3em 0.9em;text-align:left;border-bottom:1px solid #ddd;">Mission courte en startup</td>
+          <td style="padding:0.3em 0.9em;text-align:center;border-bottom:1px solid #ddd;">Ninja (setup)</td>
+        </tr>
+        <tr>
+          <td style="padding:0.3em 0.9em;text-align:left;">Mission longue dans un grand groupe</td>
+          <td style="padding:0.3em 0.9em;text-align:center;">DRF → Ninja</td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 
   <section>
@@ -85,7 +116,7 @@
         <tr>
           <td style="padding:0.35em 0.7em;text-align:left;font-weight:700;">Performance</td>
           <td style="padding:0.35em 0.9em;text-align:center;">référence</td>
-          <td style="padding:0.35em 0.9em;text-align:center;">~2×</td>
+          <td style="padding:0.35em 0.9em;text-align:center;">2.1×</td>
         </tr>
         <tr>
           <td style="padding:0.35em 0.7em;text-align:left;font-weight:700;">GitHub stars</td>
@@ -117,6 +148,7 @@
       </table>
     </section>
         <section>
+          <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">DRF</div>
           <pre><code class="language-python" data-trim data-noescape>
             # serializers.py + views.py + urls.py
             class ItemViewSet(viewsets.ModelViewSet):
@@ -131,6 +163,26 @@
           </code></pre>
         </section>
         <section>
+          <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">DRF</div>
+          <pre><code class="language-python" data-trim data-noescape>
+            class OrderViewSet(viewsets.ModelViewSet):
+                serializer_class = OrderSerializer
+                authentication_classes = [TokenAuthentication]
+                permission_classes = [IsAuthenticated]
+
+                def get_queryset(self):
+                    return Order.objects.filter(owner=self.request.user)
+
+                @action(detail=True, methods=["post"],
+                        permission_classes=[IsAdminUser])
+                def refund(self, request, pk=None):
+                    order = self.get_object()
+                    order.refund()
+                    return Response({"status": "refunded"})
+          </code></pre>
+        </section>
+        <section>
+          <img src="../resources/fastapi-logo.svg" alt="FastAPI" style="display:block;margin:0 0 0.5em;height:44px;width:auto;border:none;background:none;box-shadow:none;">
           <pre><code class="language-python" data-trim data-noescape>
             app = FastAPI()
 
@@ -146,6 +198,7 @@
           </code></pre>
         </section>
         <section>
+          <img src="../resources/django-ninja-logo.svg" alt="Django Ninja" style="display:block;margin:0 0 0.5em;height:52px;width:auto;border:none;background:none;box-shadow:none;">
           <pre><code class="language-python" data-trim data-noescape>
             api = NinjaAPI()
 
@@ -153,6 +206,23 @@
             @api.get("/items/{item_id}")
             def read_item(request, item_id: int):
                 return {"item_id": item_id}
+          </code></pre>
+        </section>
+        <section>
+          <img src="../resources/django-ninja-logo.svg" alt="Django Ninja" style="display:block;margin:0 0 0.5em;height:52px;width:auto;border:none;background:none;box-shadow:none;">
+          <pre><code class="language-python" data-trim data-noescape>
+            # urls.py
+            from django.contrib import admin
+            from django.urls import path
+            from ninja import NinjaAPI
+
+            api = NinjaAPI()
+            api.add_router("/items", "myapp.api.router")
+
+            urlpatterns = [
+                path("admin/", admin.site.urls),
+                path("api/", api.urls),
+            ]
           </code></pre>
         </section>
   </section>
@@ -177,6 +247,7 @@
       </table>
     </section>
         <section>
+          <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">DRF</div>
           <pre><code class="language-python" data-trim data-noescape>
             class ItemSerializer(serializers.ModelSerializer):
                 class Meta:
@@ -189,6 +260,7 @@
       <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://github.com/pydantic/pydantic">github.com/pydantic/pydantic</a></div>
     </section>
         <section>
+          <img src="../resources/pydantic-name.svg" alt="Pydantic" style="display:block;margin:0 0 0.5em;height:44px;width:auto;border:none;background:none;box-shadow:none;">
           <pre><code class="language-python" data-trim data-noescape>
             from datetime import datetime
             from typing import Optional
@@ -202,6 +274,7 @@
           </code></pre>
         </section>
         <section>
+          <img src="../resources/pydantic-name.svg" alt="Pydantic" style="display:block;margin:0 0 0.5em;height:44px;width:auto;border:none;background:none;box-shadow:none;">
           <pre><code class="language-python" data-trim data-noescape>
             external_data = {
                 'id': '123',
@@ -220,11 +293,10 @@
           </code></pre>
         </section>
         <section>
+          <img src="../resources/django-ninja-logo.svg" alt="Django Ninja" style="display:block;margin:0 0 0.5em;height:52px;width:auto;border:none;background:none;box-shadow:none;">
           <pre><code class="language-python" data-trim data-noescape>
             from ninja import ModelSchema
 
-            # le « duct tape » de Django Ninja :
-            # le pont entre l'ORM Django et Pydantic
             class ItemSchema(ModelSchema):
                 class Meta:
                     model = Item
@@ -294,8 +366,34 @@
             ).afirst()
           </code></pre>
         </section>
-  <section><img data-src="../resources/fastapi-async.png"></section>
-  <section><img data-src="../resources/async-drf.png"></section>
+  <section>
+    <iframe data-src="https://fastapi.tiangolo.com/async/" style="width:80%;height:560px;border:1px solid #ddd;background:#fff;box-shadow:none;" allowfullscreen></iframe>
+    <div style="font-size:0.4em;margin-top:0.2em;"><a href="https://fastapi.tiangolo.com/async/">fastapi.tiangolo.com/async</a></div>
+  </section>
+  <section>
+    <h3 style="margin-bottom:0.5em;"><code>adrf</code> — l'async pour DRF (add-on)</h3>
+    <table style="margin:0 auto;border-collapse:collapse;font-size:0.62em;">
+      <tbody>
+        <tr>
+          <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid #ddd;">GitHub stars</td>
+          <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid #ddd;">611</td>
+        </tr>
+        <tr>
+          <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid #ddd;">Dernier commit</td>
+          <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid #ddd;">il y a 7 mois</td>
+        </tr>
+        <tr>
+          <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid #ddd;">Dernière release</td>
+          <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid #ddd;">0.1.12 &middot; il y a ~7 mois</td>
+        </tr>
+        <tr>
+          <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;">Recommandé par DRF</td>
+          <td style="padding:0.35em 0.9em;text-align:center;">✓ (third-party-packages)</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="margin-top:0.4em;font-size:0.4em;"><a href="https://github.com/em1208/adrf">github.com/em1208/adrf</a></div>
+  </section>
   </section>
   <!-- ===== Axe : Performance ===== -->
   <section>
@@ -312,7 +410,7 @@
           <tr>
             <td style="padding:0.35em 0.7em;text-align:left;font-weight:700;">Performance</td>
             <td style="padding:0.35em 0.9em;text-align:center;">référence</td>
-            <td style="padding:0.35em 0.9em;text-align:center;">~2×</td>
+            <td style="padding:0.35em 0.9em;text-align:center;">2.1×</td>
           </tr>
         </tbody>
       </table>
@@ -459,13 +557,13 @@
     </section>
   <section>
     <img src="../resources/star-history.svg" alt="GitHub stars over time: django-ninja vs django-rest-framework" style="display:block;margin:0 auto;width:90%;max-width:980px;border:none;background:none;box-shadow:none;">
-    <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://star-history.com/#vitalik/django-ninja&encode/django-rest-framework&Date">star-history.com</a></div>
+    <div style="margin-top:0.3em;font-size:0.4em;">au 17 juin 2026 &middot; <a href="https://star-history.com/#vitalik/django-ninja&encode/django-rest-framework&Date">star-history.com</a></div>
   </section>
   </section>
   <!--section><img data-src="../resources/adrf-missing.png"></section-->
   <section data-markdown>
           <textarea data-template>
-            Que présenter?
+            Real world example?..
             - Un parcours de migration concret?
             - Il faut partir d'une base...
           </textarea>
@@ -485,29 +583,75 @@
       <div style="font-size:0.4em;margin-top:0.2em;color:#666;">api.realworld.show</div>
     </section>
   </section>
-  <section data-markdown>
-          <textarea data-template>
-            ![drf](../resources/realworld-drf.png)
-            - 3 modèles Django incluant User
-            - KISS
-            - Il y a des tests?..
-          </textarea>
+  <section>
+  <section>
+    <div style="display:flex;align-items:center;justify-content:center;gap:0.45em;margin-bottom:0.5em;">
+      <img src="../resources/realworld-logo.svg" alt="RealWorld" style="height:54px;width:auto;border:none;background:none;box-shadow:none;">
+      <span style="font-size:1.2em;font-weight:700;">— DRF</span>
+    </div>
+    <ul>
+      <li>Découpée en 3 apps</li>
+      <li>KISS</li>
+      <li>Il y a des tests?..</li>
+    </ul>
   </section>
-  <section data-markdown>
-          <textarea data-template>
-            ![drf](../resources/realworld-drf.png)
-            - accounts
-              - models.py
-              - schemas.py
-              - serializers.py
-              - tests.py
-              - views.py
-            - articles
-              - ...
-            - comments
-              - ...
-          </textarea>
+  <section>
+    <div style="display:flex;align-items:center;justify-content:center;gap:0.35em;margin-bottom:0.6em;">
+      <img src="../resources/realworld-logo.svg" alt="RealWorld" style="height:46px;width:auto;margin:0;border:none;background:none;box-shadow:none;">
+      <span style="font-size:1.2em;font-weight:700;">— DRF</span>
+    </div>
+    <table style="margin:0 auto;border-collapse:collapse;font-size:0.62em;">
+      <thead>
+        <tr>
+          <th style="padding:0.35em 0.7em;border-bottom:2px solid #333;"></th>
+          <th style="padding:0.35em 0.9em;border-bottom:2px solid #333;text-align:center;">accounts</th>
+          <th style="padding:0.35em 0.9em;border-bottom:2px solid #333;text-align:center;">articles</th>
+          <th style="padding:0.35em 0.9em;border-bottom:2px solid #333;text-align:center;">comments</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding:0.3em 0.7em;text-align:left;font-weight:700;"><code>models.py</code></td>
+          <td style="padding:0.3em 0.9em;text-align:center;">✓</td>
+          <td style="padding:0.3em 0.9em;text-align:center;">✓</td>
+          <td style="padding:0.3em 0.9em;text-align:center;">✓</td>
+        </tr>
+        <tr>
+          <td style="padding:0.3em 0.7em;text-align:left;font-weight:700;"><code>schemas.py</code></td>
+          <td style="padding:0.3em 0.9em;text-align:center;">✓</td>
+          <td style="padding:0.3em 0.9em;text-align:center;">✓</td>
+          <td style="padding:0.3em 0.9em;text-align:center;">✓</td>
+        </tr>
+        <tr>
+          <td style="padding:0.3em 0.7em;text-align:left;font-weight:700;"><code>serializers.py</code></td>
+          <td style="padding:0.3em 0.9em;text-align:center;">✓</td>
+          <td style="padding:0.3em 0.9em;text-align:center;">✓</td>
+          <td style="padding:0.3em 0.9em;text-align:center;">✓</td>
+        </tr>
+        <tr>
+          <td style="padding:0.3em 0.7em;text-align:left;font-weight:700;"><code>tests.py</code></td>
+          <td style="padding:0.3em 0.9em;text-align:center;">✓</td>
+          <td style="padding:0.3em 0.9em;text-align:center;">✓</td>
+          <td style="padding:0.3em 0.9em;text-align:center;">✓</td>
+        </tr>
+        <tr>
+          <td style="padding:0.3em 0.7em;text-align:left;font-weight:700;"><code>views.py</code></td>
+          <td style="padding:0.3em 0.9em;text-align:center;">✓</td>
+          <td style="padding:0.3em 0.9em;text-align:center;">✓</td>
+          <td style="padding:0.3em 0.9em;text-align:center;">✓</td>
+        </tr>
+      </tbody>
+    </table>
   </section>
+  </section>
+  <section>
+    <section>
+      <div style="display:flex;align-items:center;justify-content:center;gap:0.45em;margin-bottom:0.3em;">
+        <img src="../resources/realworld-logo.svg" alt="RealWorld" style="height:54px;width:auto;border:none;background:none;box-shadow:none;">
+        <span style="font-size:1.2em;font-weight:700;">— DRF</span>
+      </div>
+      <h4 style="color:#000;">Tests existants</h4>
+    </section>
         <section>
           <pre><code class="language-python" data-trim data-noescape>
             def test_profile_detail_view_get(self):
@@ -561,7 +705,17 @@
                     )
           </code></pre>
         </section>
+  </section>
+  <section>
+    <section>
+      <div style="display:flex;align-items:center;justify-content:center;gap:0.45em;margin-bottom:0.3em;">
+        <img src="../resources/realworld-logo.svg" alt="RealWorld" style="height:54px;width:auto;border:none;background:none;box-shadow:none;">
+        <span style="font-size:1.2em;font-weight:700;">— DRF</span>
+      </div>
+      <h4 style="color:#000;">Views</h4>
+    </section>
         <section>
+          <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">DRF</div>
           <pre><code class="language-python" data-trim data-noescape>
             class ProfileDetailView(viewsets.ModelViewSet):
 
@@ -578,6 +732,7 @@
           </code></pre>
         </section>
         <section>
+          <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">DRF</div>
           <pre><code class="language-python" data-trim data-noescape>
                 def list(self, request, username=None, *args, **kwargs):
                     try:
@@ -594,6 +749,7 @@
           </code></pre>
         </section>
         <section>
+          <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">DRF</div>
           <pre><code class="language-python" data-trim data-noescape>
             class ProfileSerializer(serializers.ModelSerializer):
                 following = serializers.SerializerMethodField()
@@ -604,6 +760,7 @@
           </code></pre>
         </section>
         <section>
+          <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">DRF</div>
           <pre><code class="language-python" data-trim data-noescape>
                 def get_following(self, obj):
                     user = self.context.get('request').user
@@ -613,8 +770,22 @@
           </code></pre>
         </section>
         <section>
+          <img src="../resources/django-ninja-logo.svg" alt="Django Ninja" style="display:block;margin:0 0 0.5em;height:52px;width:auto;border:none;background:none;box-shadow:none;">
           <pre><code class="language-python" data-trim data-noescape>
-           @router.get('/profiles/{username}', auth=AuthJWT(pass_even=True), response={200: Any, 401: Any, 404: Any})
+           @router.get(
+               '/profiles/{username}',
+               auth=AuthJWT(pass_even=True),
+               response={
+                   200: Any,
+                   401: Any,
+                   404: Any,
+               },
+           )
+          </code></pre>
+        </section>
+        <section>
+          <img src="../resources/django-ninja-logo.svg" alt="Django Ninja" style="display:block;margin:0 0 0.5em;height:52px;width:auto;border:none;background:none;box-shadow:none;">
+          <pre><code class="language-python" data-trim data-noescape>
            def get_profiles(request, username: str):
                user = get_object_or_404(User, username=username)
                return {
@@ -632,16 +803,26 @@
           </code></pre>
         </section>
         <section>
+          <img src="../resources/django-ninja-logo.svg" alt="Django Ninja" style="display:block;margin:0 0 0.5em;height:52px;width:auto;border:none;background:none;box-shadow:none;">
           <pre><code class="language-python" data-trim data-noescape>
-           @router.get('/profiles/{username}', auth=AuthJWT(pass_even=True), response={200: UserResponseSchema, 401: Any, 404: Any})
+           @router.get(
+               '/profiles/{username}',
+               auth=AuthJWT(pass_even=True),
+               response={
+                   200: ProfileSchema,
+                   401: Any,
+                   404: Any,
+               },
+           )
            def get_profiles(request, username: str):
                return ProfileSchema.from_orm(
-                   user = get_object_or_404(User, username=username),
+                   get_object_or_404(User, username=username),
                    context={"request": request},
-               ).dict()
+               )
           </code></pre>
         </section>
         <section>
+          <img src="../resources/django-ninja-logo.svg" alt="Django Ninja" style="display:block;margin:0 0 0.5em;height:52px;width:auto;border:none;background:none;box-shadow:none;">
           <pre><code class="language-python" data-trim data-noescape>
             class ProfileSchema(ModelSchema):
                 following: bool
@@ -659,6 +840,7 @@
           </code></pre>
         </section>
         <section>
+          <img src="../resources/django-ninja-logo.svg" alt="Django Ninja" style="display:block;margin:0 0 0.5em;height:52px;width:auto;border:none;background:none;box-shadow:none;">
           <pre><code class="language-python" data-trim data-noescape>
 class AuthJWT(HttpBearer, JWTBaseAuthentication):
     openapi_scheme = "token"
@@ -676,9 +858,10 @@ class AuthJWT(HttpBearer, JWTBaseAuthentication):
           </code></pre>
         </section>
         <section>
+          <img src="../resources/django-ninja-logo.svg" alt="Django Ninja" style="display:block;margin:0 0 0.5em;height:52px;width:auto;border:none;background:none;box-shadow:none;">
           <pre><code class="language-python" data-trim data-noescape>
 api = NinjaAPI()
-api.add_router("/", "accounts.views.router")
+api.add_router("/", "accounts.api.router")
 api.add_router("/", "comments.api.router")
 
 ...
@@ -691,28 +874,53 @@ urlpatterns = [
 ]
           </code></pre>
         </section>
-  <section data-markdown>
-          <textarea data-template>
-            - Migration encore en cours
-            - Pas de tests cassés = utilisable
-          </textarea>
   </section>
   <section data-markdown>
           <textarea data-template>
-            ### Conclusion
-            - Pour l'utiliser
-              - Peut éliminer les frictions avec DRF
-              - La perf (à vérifier à quel point s'applique)
-              - Pas de gros risque
-            - Pour ne pas l'utiliser
-              - Reste moins maintenu
-              - Reste moins documenté
-              - Equipe connait déjà DRF
-              - La codebase a déjà beaucoup de logique dans les serializers, etc
+            - Migration terminée
+            - Pendant la migration, pas de tests cassés = utilisable
+            - Maintenant mainteneur principal RealWorld
+              - Dev de suites de tests complètes
+                - Hurl
+                - Bruno
+                - Playwright
           </textarea>
   </section>
   <section>
-    github.com/c4ffein/realworld-django-ninja
+    <section data-markdown>
+          <textarea data-template>
+            ### Conclusion
+          </textarea>
+    </section>
+    <section data-markdown>
+          <textarea data-template>
+            ### Pour l'utiliser
+            - Peut éliminer les frictions avec DRF
+            - La perf (à vérifier à quel point s'applique)
+            - Pas de gros risque
+          </textarea>
+    </section>
+    <section data-markdown>
+          <textarea data-template>
+            ### Pour ne pas l'utiliser
+            - Reste moins maintenu
+            - Reste moins documenté
+            - Équipe connaît déjà DRF
+            - La codebase a déjà beaucoup de logique dans les serializers, etc
+          </textarea>
+    </section>
+  </section>
+  <section>
+    <div class="flex" style="align-items:center;justify-content:center;gap:1.6em;width:100%;">
+      <div style="flex:0 0 auto;text-align:center;">
+        <img src="../resources/qr-django-ninja.svg" alt="QR code vers les slides" style="width:300px;height:300px;border:none;background:#fff;box-shadow:none;">
+      </div>
+      <ul style="flex:0 1 auto;text-align:left;font-size:0.66em;line-height:2.1;list-style:none;margin:0;padding:0;">
+        <li><a href="https://presentations.cafeine.dev/slides/django-ninja.html" style="color:#000;text-decoration:none;">presentations.cafeine.dev/slides/django-ninja.html</a></li>
+        <li><a href="https://django-ninja.dev" style="color:#000;text-decoration:none;">django-ninja.dev</a></li>
+        <li><a href="https://github.com/c4ffein/realworld-django-ninja" style="color:#000;text-decoration:none;">github.com/c4ffein/realworld-django-ninja</a></li>
+      </ul>
+    </div>
   </section>
 
     </div>
