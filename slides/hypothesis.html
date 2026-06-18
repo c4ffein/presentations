@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hypothesis</title>
+    <link rel="stylesheet" href="../engine/dist/reset.css">
+    <link rel="stylesheet" href="../engine/dist/reveal.css">
+    <link rel="stylesheet" href="../engine/dist/theme/c4ffein.css">
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="../engine/dist/plugin/highlight/c4ffein-light.css">
+    <link rel="stylesheet" href="../engine/runcss/runcss.min.css">
+    <script src="../engine/runcss/runcss.min.js" defer watch></script>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+    <!-- ===== Titre ===== -->
+    <section>
+      <h1 style="margin-bottom:0.3em;">Hypothesis</h1>
+      <p style="font-size:0.6em;">Laissez la machine trouver vos edge cases</p>
+    </section>
+
+    <!-- ===== C'est quoi un test ? ===== -->
+    <section>
+      <section data-markdown>
+        <textarea data-template>
+          ### C'est quoi un test ?
+          - On appelle du code
+          - On vérifie une sortie *attendue*
+          - On choisit nous-mêmes les entrées
+        </textarea>
+      </section>
+      <section>
+        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">Test unitaire</div>
+        <pre><code class="language-python" data-trim data-noescape>
+          def add(a, b):
+              return a + b
+
+
+          def test_add():
+              assert add(2, 3) == 5
+              assert add(-1, 1) == 0
+        </code></pre>
+      </section>
+      <section>
+        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">Test end-to-end (api)</div>
+        <pre><code class="language-python" data-trim data-noescape>
+          def test_create_article(client):
+              token = login(client, "alice")
+              resp = client.post(
+                  "/api/articles",
+                  json={"title": "Hello", "body": "..."},
+                  headers={"Authorization": f"Token {token}"},
+              )
+              assert resp.status_code == 201
+              assert resp.json()["article"]["slug"] == "hello"
+        </code></pre>
+      </section>
+      <section>
+        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">Test end-to-end (ui) &mdash; Playwright</div>
+        <pre><code class="language-python" data-trim data-noescape>
+          def test_publish_article(page):
+              page.goto("https://demo.realworld.show")
+              page.get_by_text("New Article").click()
+              page.get_by_placeholder("Article Title").fill("Hello")
+              page.get_by_placeholder("Write your article (in markdown)").fill("...")
+              page.get_by_text("Publish Article").click()
+
+              expect(page.locator("h1")).to_have_text("Hello")
+        </code></pre>
+      </section>
+      <section>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" width="760" height="440" font-family="-apple-system,Segoe UI,Roboto,sans-serif" style="width:100%;max-width:780px;height:auto;display:block;margin:0 auto;">
+          <rect width="760" height="440" fill="#ffffff"/>
+          <polygon points="380,40 465.3,160 294.7,160" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+          <polygon points="287.6,170 472.4,170 557.6,290 202.4,290" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+          <polygon points="195.3,300 564.7,300 650,420 110,420" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+          <text x="380" y="120" font-size="18" font-weight="700" fill="#1a1a1a" text-anchor="middle">E2E</text>
+          <text x="380" y="240" font-size="18" font-weight="700" fill="#1a1a1a" text-anchor="middle">Intégration</text>
+          <text x="380" y="375" font-size="18" font-weight="700" fill="#1a1a1a" text-anchor="middle">Unitaires</text>
+        </svg>
+      </section>
+    </section>
+
+    <!-- ===== Mon rapport au test (À PERSONNALISER) ===== -->
+    <section>
+      <section>
+        <h3 style="margin-bottom:0.6em;">Mon rapport au test</h3>
+        <table style="margin:0 auto;border-collapse:collapse;font-size:0.6em;">
+          <thead>
+            <tr>
+              <th style="padding:0.35em 0.9em;border-bottom:2px solid #333;"></th>
+              <th style="padding:0.35em 0.9em;border-bottom:2px solid #333;text-align:center;">Avant l'agentique</th>
+              <th style="padding:0.35em 0.9em;border-bottom:2px solid #333;text-align:center;">Après l'agentique</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid #ddd;">Projets testés</td>
+              <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid #ddd;">en fonction du projet</td>
+              <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid #ddd;">tout, sauf le dogfood</td>
+            </tr>
+            <tr>
+              <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;">Couverture</td>
+              <td style="padding:0.35em 0.9em;text-align:center;">&laquo; ça dépend &raquo;</td>
+              <td style="padding:0.35em 0.9em;text-align:center;">100&nbsp;%</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">Ce que je teste</h3>
+        <ul>
+          <li>Exemple : mainteneur de RealWorld
+            <ul>
+              <li>Hurl / Bruno / Playwright</li>
+            </ul>
+          </li>
+          <li>Mes propres utilitaires CLI en Python&hellip;
+            <ul>
+              <li>dont je ne mesure même pas la couverture</li>
+            </ul>
+          </li>
+        </ul>
+        <div style="margin-top:0.7em;font-size:0.6em;color:#000;">Suffisant pour les cas simples (CRUD, outils codés à l'usage).</div>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Sur un projet complexe
+          - Je ne veux pas décrire des *exemples*
+          - Je veux décrire des *propriétés*
+          - Je veux laisser la machine chercher les *edge cases*
+          - Je veux que les paramètres qu'on me présente pour faire échouer mes tests soient le plus proches possible du cas nominal
+        </textarea>
+      </section>
+    </section>
+
+    <!-- ===== Le spectre : thèse / antithèse / synthèse ===== -->
+    <section>
+      <h3 style="margin-bottom:0.6em;">Et si la machine choisissait&nbsp;?</h3>
+      <div class="flex" style="align-items:stretch;justify-content:center;gap:0.6em;width:100%;font-size:0.6em;">
+        <div style="flex:1;border:1px solid #ddd;border-radius:6px;padding:0.7em;">
+          <div style="font-weight:700;margin-bottom:0.3em;">Tests classiques</div>
+          <div style="color:#444;">l'utilisateur choisit chaque entrée</div>
+        </div>
+        <div style="flex:1;border:1px solid #ddd;border-radius:6px;padding:0.7em;">
+          <div style="font-weight:700;margin-bottom:0.3em;">Fuzzing</div>
+          <div style="color:#444;">la machine génère, cherche les crashs</div>
+        </div>
+        <div style="flex:1;border:1px solid #ddd;border-radius:6px;padding:0.7em;">
+          <div style="font-weight:700;margin-bottom:0.3em;">Méthodes formelles</div>
+          <div style="color:#444;">on prouve pour <em>toutes</em> les entrées</div>
+        </div>
+      </div>
+      <div style="margin-top:0.7em;font-size:0.5em;color:#000;">Property-based testing = quelque part au milieu&hellip;</div>
+    </section>
+
+    <!-- ===== Fuzzing ===== -->
+    <section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Fuzzing
+          - La machine génère des entrées aléatoires
+            - pour trouver des **crashs**
+            - guidée par la couverture : oriente la génération vers des inputs plausibles
+        </textarea>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Commun pour les projets exposés
+          - **Chrome** &mdash; libFuzzer, AFL++, Centipede (ClusterFuzz, OSS-Fuzz)
+          - **Firefox** &mdash; libFuzzer, Grizzly, jsfunfuzz
+          - **Noyau Linux** &mdash; syzkaller (syzbot)
+        </textarea>
+      </section>
+      <section>
+        <table style="margin:0 auto;border-collapse:collapse;font-size:0.62em;">
+          <tbody>
+            <tr>
+              <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid #ddd;">Qui choisit les entrées</td>
+              <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid #ddd;">la machine</td>
+            </tr>
+            <tr>
+              <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid #ddd;">Oracle</td>
+              <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid #ddd;">crash uniquement</td>
+            </tr>
+            <tr>
+              <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;">Domaine typique</td>
+              <td style="padding:0.35em 0.9em;text-align:center;">parsers, navigateurs, sécurité</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="margin-top:0.6em;font-size:0.5em;color:#000;">Le fuzzer ne sait pas ce qui est <em>correct</em> &mdash; juste ce qui crash.</div>
+      </section>
+    </section>
+
+    <!-- ===== Méthodes formelles ===== -->
+    <section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Méthodes formelles
+          - On *prouve* une propriété pour **toutes** les entrées
+          - Les outils :
+            - **TLA+** &mdash; spécifier des systèmes concurrents/distribués
+            - **Coq** &mdash; assistant de preuve interactif
+            - **Lean** &mdash; assistant de preuve interactif (+ maths)
+            - **Dafny** &mdash; code vérifié automatiquement (SMT/Z3)
+          - Garantie la plus forte qui existe
+        </textarea>
+      </section>
+      <section>
+        <table style="margin:0 auto;border-collapse:collapse;font-size:0.62em;">
+          <tbody>
+            <tr>
+              <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid #ddd;">Couverture</td>
+              <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid #ddd;">toutes les entrées (preuve)</td>
+            </tr>
+            <tr>
+              <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid #ddd;">Coût</td>
+              <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid #ddd;">élevé</td>
+            </tr>
+            <tr>
+              <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;">Domaine typique</td>
+              <td style="padding:0.35em 0.9em;text-align:center;">aérospatial, crypto, hardware, smart contracts</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="margin-top:0.6em;font-size:0.5em;color:#000;">Garantie maximale, applicabilité étroite, budget conséquent.</div>
+      </section>
+      <section>
+        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">Lean &mdash; une preuve, pas un échantillon</div>
+        <pre><code class="language-plaintext" data-trim data-noescape>
+          -- Vrai pour TOUT a, b : aucune valeur n'est échantillonnée
+          -- la preuve est vérifiée à la compilation
+          theorem add_comm (a b : Nat) : a + b = b + a := by
+            omega
+        </code></pre>
+        <div style="margin-top:0.5em;font-size:0.55em;color:#000;">Pas de cas d'essai : le compilateur <em>vérifie</em> la preuve, ou refuse de compiler.</div>
+      </section>
+    </section>
+
+    <!-- ===== PBT = la synthèse + tableau comparatif ===== -->
+    <section>
+      <section>
+        <h3 style="margin-bottom:0.4em;">Property-based testing</h3>
+        <div style="font-size:0.6em;color:#000;line-height:1.7;">
+          Vous écrivez des <strong>propriétés</strong> (comme le formel)<br>
+          + la machine <strong>génère &amp; réduit</strong> les entrées (comme le fuzzing)
+        </div>
+        <div style="margin-top:0.6em;font-size:0.55em;color:#000;">&laquo; du fuzzing qui sait ce qui est correct &raquo;</div>
+      </section>
+      <section>
+        <table style="margin:0 auto;border-collapse:collapse;font-size:0.5em;">
+          <thead>
+            <tr>
+              <th style="padding:0.35em 0.6em;border-bottom:2px solid #333;"></th>
+              <th style="padding:0.35em 0.6em;border-bottom:2px solid #333;text-align:center;">Tests classiques</th>
+              <th style="padding:0.35em 0.6em;border-bottom:2px solid #333;text-align:center;">Fuzzing</th>
+              <th style="padding:0.35em 0.6em;border-bottom:2px solid #333;text-align:center;">PBT</th>
+              <th style="padding:0.35em 0.6em;border-bottom:2px solid #333;text-align:center;">Formel</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:0.3em 0.6em;text-align:left;font-weight:700;">Entrées</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">valeurs idéalement en dur</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">machine</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">machine (stratégies)</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">toutes (symbolique)</td>
+            </tr>
+            <tr>
+              <td style="padding:0.3em 0.6em;text-align:left;font-weight:700;">Oracle</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">assertions précises</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">crash only</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">propriétés</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">spécification</td>
+            </tr>
+            <tr>
+              <td style="padding:0.3em 0.6em;text-align:left;font-weight:700;">Domaine</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">partout</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">parsers, sécu</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">libs, data, métier</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">aéro, crypto</td>
+            </tr>
+            <tr>
+              <td style="padding:0.3em 0.6em;text-align:left;font-weight:700;">Coût</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">faible</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">moyen</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">faible&ndash;moyen</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">élevé</td>
+            </tr>
+            <tr>
+              <td style="padding:0.3em 0.6em;text-align:left;font-weight:700;">ROI</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">?</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">?</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">?</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">?</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </section>
+
+    <!-- ===== Un test Hypothesis simple ===== -->
+    <section>
+      <section>
+        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">Hypothesis</div>
+        <pre><code class="language-python" data-trim data-noescape>
+          from hypothesis import given, strategies as st
+
+
+          @given(st.integers(), st.integers())
+          def test_addition_commutative(a, b):
+              assert add(a, b) == add(b, a)
+        </code></pre>
+      </section>
+      <section>
+        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">Pas un tirage uniforme</div>
+        <pre><code class="language-python" data-trim data-noescape>
+          @given(st.integers())
+          def test_p(n):
+              ...
+
+          # Vise les bornes de l'intervalle, et injecte des constantes "SWE" :
+          #   2**31 - 1, 2**63 - 1     # overflow signé 32 / 64 bits
+          #   2**16, 10**9, 20!        # puissances de 2, de 10, factorielles
+          #   510510, 6469693230       # primorielles (codées en dur !)
+        </code></pre>
+        <div style="margin-top:0.5em;font-size:0.45em;"><a href="https://github.com/HypothesisWorks/hypothesis/blob/master/hypothesis/src/hypothesis/internal/conjecture/providers.py">GLOBAL_CONSTANTS &mdash; providers.py</a></div>
+      </section>
+      <section>
+        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">Composer des structures</div>
+        <pre><code class="language-python" data-trim data-noescape>
+          jsons = st.recursive(
+              st.none() | st.booleans() | st.integers() | st.text(),
+              lambda children: (
+                  st.lists(children)
+                  | st.dictionaries(st.text(), children)
+              ),
+          )
+
+          @given(jsons)
+          def test_roundtrip(value):
+              assert json.loads(json.dumps(value)) == value
+        </code></pre>
+        <div style="margin-top:0.5em;font-size:0.55em;color:#000;">Listes, dicts, récursion : les stratégies se composent.</div>
+      </section>
+      <section>
+        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">La réduction (shrinking)</div>
+        <pre><code class="language-python" data-trim data-noescape>
+          @given(st.lists(st.integers()))
+          def test_sort_idempotent(xs):
+              assert my_sort(my_sort(xs)) == my_sort(xs)
+
+          # Falsifying example: xs=[0]
+          # (réduit automatiquement depuis [-42, 1000, 0, 7, ...])
+        </code></pre>
+        <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://github.com/HypothesisWorks/hypothesis/blob/master/hypothesis-python/src/hypothesis/internal/conjecture/shrinker.py">le shrinker d'Hypothesis</a></div>
+      </section>
+      <section>
+        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">Rejouer le dernier contre-exemple</div>
+        <ul style="font-size:0.62em;">
+          <li>Le contre-exemple réduit est <strong>sauvegardé</strong></li>
+          <li>Répertoire <code>.hypothesis/</code> &mdash; la <em>base d'exemples</em></li>
+          <li>Au prochain run, il est <strong>rejoué en premier</strong></li>
+          <li>Partageable (CI, base partagée)</li>
+        </ul>
+      </section>
+    </section>
+
+    <!-- ===== Oracle testing ===== -->
+    <section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Patterns classiques
+          - Comment savoir si la sortie est *correcte* ?
+        </textarea>
+      </section>
+      <section>
+        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">Aller-retour (round-trip)</div>
+        <pre><code class="language-python" data-trim data-noescape>
+          @given(st.text())
+          def test_json_roundtrip(s):
+              assert json.loads(json.dumps(s)) == s
+        </code></pre>
+      </section>
+      <section>
+        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">Implémentation de référence</div>
+        <pre><code class="language-python" data-trim data-noescape>
+          @given(st.lists(st.integers()))
+          def test_against_reference(xs):
+              assert my_fast_sort(xs) == sorted(xs)
+        </code></pre>
+        <div style="margin-top:0.5em;font-size:0.58em;color:#000;">Le code lent &amp; évident est l'oracle du code rapide &amp; subtil.</div>
+      </section>
+      <section>
+        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">Invariants &mdash; &laquo; rien ne change &raquo;</div>
+        <pre><code class="language-python" data-trim data-noescape>
+          @given(st.lists(st.integers()))
+          def test_sort_preserves(xs):
+              ys = my_sort(xs)
+              assert len(ys) == len(xs)        # même longueur
+              assert set(ys) == set(xs)        # mêmes éléments
+        </code></pre>
+        <div style="margin-top:0.5em;font-size:0.55em;color:#000;">On ne dit pas <em>quel</em> résultat ; juste ce qui doit rester vrai.</div>
+      </section>
+      <section>
+        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">Idempotence &mdash; deux fois = une fois</div>
+        <pre><code class="language-python" data-trim data-noescape>
+          @given(st.text())
+          def test_normalize_idempotent(s):
+              once = normalize(s)
+              assert normalize(once) == once
+        </code></pre>
+        <div style="margin-top:0.5em;font-size:0.55em;color:#000;">Réappliquer l'opération ne change plus rien.</div>
+      </section>
+    </section>
+
+    <!-- ===== Stateful testing ===== -->
+    <section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Tester des séquences d'actions
+          - Pas juste une entrée : une *suite* d'appels
+          - Hypothesis génère le scénario qui casse l'invariant
+        </textarea>
+      </section>
+      <section>
+        <pre><code class="language-python" data-trim data-noescape>
+          class ShoppingCart(RuleBasedStateMachine):
+
+              @rule(item=st.text(), qty=st.integers(min_value=1))
+              def add(self, item, qty):
+                  ...
+
+              @rule()
+              def checkout(self):
+                  ...
+
+              @invariant()
+              def total_is_never_negative(self):
+                  assert self.cart.total() >= 0
+        </code></pre>
+      </section>
+    </section>
+
+    <!-- ===== L'IA qui trouve des bugs ===== -->
+    <section>
+      <section>
+        <h3 style="margin-bottom:0.4em;">Et l'IA dans tout ça&nbsp;?</h3>
+        <div style="font-size:0.58em;color:#444;line-height:1.7;">
+          Un agent LLM qui <strong>infère</strong> les propriétés depuis le code &amp; la doc,<br>
+          <strong>génère</strong> des PBT, <strong>confirme</strong> les vrais bugs.
+        </div>
+      </section>
+      <section>
+        <table style="margin:0 auto;border-collapse:collapse;font-size:0.6em;">
+          <tbody>
+            <tr>
+              <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid #ddd;">Packages Python analysés</td>
+              <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid #ddd;">100</td>
+            </tr>
+            <tr>
+              <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid #ddd;">Rapports = vrais bugs</td>
+              <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid #ddd;">56&nbsp;%</td>
+            </tr>
+            <tr>
+              <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;">Bugs corrigés en amont</td>
+              <td style="padding:0.35em 0.9em;text-align:center;">NumPy, SDKs cloud&hellip; patchs mergés</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="margin-top:0.5em;font-size:0.4em;">
+          <em>Agentic Property-Based Testing</em> &mdash; Maaz, DeVoe, Hatfield-Dodds, Carlini ·
+          <a href="https://arxiv.org/abs/2510.09907">arXiv:2510.09907</a>
+        </div>
+      </section>
+      <section>
+        <h4 style="margin-bottom:0.5em;color:#000;">Avant la vague Mythos</h4>
+        <table style="margin:0 auto;border-collapse:collapse;font-size:0.56em;">
+          <tbody>
+            <tr>
+              <td style="padding:0.4em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid #ddd;white-space:nowrap;">Oct. 2025</td>
+              <td style="padding:0.4em 0.9em;text-align:left;border-bottom:1px solid #ddd;">Des agents trouvent &mdash; et corrigent &mdash; de vrais bugs via PBT (NumPy, SDKs)</td>
+            </tr>
+            <tr>
+              <td style="padding:0.4em 0.9em;text-align:left;font-weight:700;white-space:nowrap;">Avr. 2026</td>
+              <td style="padding:0.4em 0.9em;text-align:left;">Claude Mythos : découverte de bugs en autonomie (sans forcément générer de tests) &mdash; des milliers de 0-days en sécu offensive</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="margin-top:0.6em;font-size:0.5em;color:#000;">Le papier PBT précède de 6 mois la vague de vulnérabilités Mythos.</div>
+        <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://en.wikipedia.org/wiki/Claude_Mythos">Claude Mythos</a> &mdash; <a href="https://www.anthropic.com/project/glasswing">Projet Glasswing</a></div>
+      </section>
+    </section>
+
+    <!-- ===== Hegel : what's next (hand-waving assumé) ===== -->
+    <section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">Et après&nbsp;? &mdash; Hegel</h3>
+        <div style="font-size:0.72em;font-weight:700;line-height:1.8;">
+          Hypothesis <span style="color:#000;">(thèse)</span><br>
+          + Antithesis <span style="color:#000;">(antithèse)</span><br>
+          = <strong>Hegel</strong> <span style="color:#000;">(synthèse)</span>
+        </div>
+        <div style="margin-top:0.6em;font-size:0.45em;"><a href="https://antithesis.com/blog/2026/hegel/">antithesis.com/blog/2026/hegel</a></div>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Hegel (initialement)
+          - Le moteur d'Hypothesis comme **serveur**
+          - Un **protocole** &mdash; écrit une fois
+          - Des clients : Rust, Go, C++, TypeScript, Java&hellip;
+
+          **&rarr; La meilleure lib de PBT (selon moi)**<br>
+          **&rarr; pour _tous_ les langages**
+        </textarea>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Hegel (évolution)
+          - Un mode **Rust natif** expérimental
+            - réécriture *assistée par IA* (Claude)
+          - Pour l'instant : encore incomplet, mais le gain en perf est *déjà* là
+            - le port IA &laquo; pas encore assez bon &raquo;
+        </textarea>
+      </section>
+      <section>
+        <blockquote style="font-size:0.6em;text-align:left;max-width:80%;margin:0 auto;border:none;box-shadow:none;background:none;padding:0;">
+          &laquo; Haskell programmers are willing to put up with a lot of suffering for correctness.
+          If Python programmers were willing to put up with suffering to achieve correctness,
+          they'd not be writing Python in the first place! &raquo;
+        </blockquote>
+        <div style="margin-top:0.5em;font-size:0.45em;color:#000;">&mdash; David MacIver · <a href="https://hegel.dev">hegel.dev</a></div>
+      </section>
+    </section>
+
+    <!-- ===== Conclusion ===== -->
+    <section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Conclusion
+        </textarea>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Pour l'utiliser
+          - Trouve des cas que vous n'imaginez pas
+          - La réduction = un bug minimal, reproductible
+          - Les propriétés = une doc exécutable
+        </textarea>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Pour ne pas l'utiliser
+          - Effort demandé pour trouver les bonnes propriétés
+          - Plus lent qu'un test par l'exemple
+          - Il faut formuler la propriété correctement
+          - Tous les cas ne seront pas forcément testés
+        </textarea>
+      </section>
+    </section>
+
+    <!-- ===== Merci + liens ===== -->
+    <section>
+      <div class="flex" style="align-items:center;justify-content:center;gap:1.6em;width:100%;">
+        <div style="flex:0 0 auto;text-align:center;">
+          <img src="../resources/qr-hypothesis.svg" alt="QR code vers les slides" style="width:300px;height:300px;border:none;background:#fff;box-shadow:none;">
+        </div>
+        <ul style="flex:0 1 auto;text-align:left;font-size:0.66em;line-height:2.1;list-style:none;margin:0;padding:0;">
+          <li><a href="https://presentations.cafeine.dev/slides/hypothesis.html" style="color:#000;text-decoration:none;">presentations.cafeine.dev/slides/hypothesis.html</a></li>
+          <li><a href="https://hypothesis.readthedocs.io" style="color:#000;text-decoration:none;">hypothesis.readthedocs.io</a></li>
+          <li><a href="https://hegel.dev" style="color:#000;text-decoration:none;">hegel.dev</a></li>
+          <li><a href="https://arxiv.org/abs/2510.09907" style="color:#000;text-decoration:none;">arXiv:2510.09907 &mdash; Agentic PBT</a></li>
+        </ul>
+      </div>
+    </section>
+
+    </div>
+  </div>
+  <script src="../engine/dist/reveal.js"></script>
+  <script src="../engine/dist/plugin/notes.js"></script>
+  <script src="../engine/dist/plugin/markdown.js"></script>
+  <script src="../engine/dist/plugin/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      transition: 'slide',
+      navigationMode: 'default',
+      plugins: [ RevealHighlight, RevealNotes, RevealMarkdown ]
+    });
+  </script>
+</body>
+</html>
