@@ -4,6 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Presentations</title>
+
+    <!-- SEO: Canonical URL (always points to production) -->
+    <link rel="canonical" href="https:&#x2F;&#x2F;writings.cafeine.dev&#x2F;presentations-index&#x2F;">
+
+    
+
+    <!-- Open Graph / Social sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https:&#x2F;&#x2F;writings.cafeine.dev&#x2F;presentations-index&#x2F;">
+    <meta property="og:title" content="Presentations">
+    <meta property="og:description" content="Slides and presentations">
+    <meta property="og:site_name" content="Writings">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Presentations">
+    <meta name="twitter:description" content="Slides and presentations">
+
     <script>
         // Apply theme immediately to prevent flash
         (function() {
@@ -15,25 +33,53 @@
             document.documentElement.setAttribute('data-theme', theme);
             document.documentElement.setAttribute('data-pref', pref);
         })();
+        // "Living ink" chrome, ON BY DEFAULT: WebGPU devices get the animated shader
+        // field, everyone else gets the flat tier. ?field=off is the kill switch
+        // (see field-chrome.js for the full ?field=gpu|flat|off|diag scheme).
+        if (new URLSearchParams(location.search).get('field') !== 'off') {
+            // Curtain until the field has measured & built (fonts settled), so a hard
+            // refresh doesn't flash unstyled chrome. Pure-CSS 0.9s reveal is the fail-safe:
+            // even if the engine (inlined at the end of <body>) dies, the page shows.
+            document.documentElement.classList.add('fielding');
+        }
     </script>
     <style>
-        :root[data-theme="dark"] {
-            --bg: #1a1a1a;
-            --text: #e0e0e0;
-            --text-muted: #888;
-            --link: #6db3f2;
-            --border: #444;
-            --code-bg: #2d2d2d;
-            --tag-bg: #333;
-        }
+        /* Two themes, both monochrome — black-and-white, no colour anywhere. Links carry no
+           hue; the underline (below) is what marks them. */
         :root[data-theme="light"] {
             --bg: #ffffff;
             --text: #333;
             --text-muted: #666;
-            --link: #0066cc;
+            --link: #111;
             --border: #ddd;
             --code-bg: #f5f5f5;
             --tag-bg: #eee;
+            /* chrome ink: everything the living-ink field covers (headings, rules, nav,
+               meta, pills) renders in this when the field isn't painting — so no-JS and
+               no-GPU pages show the designed look with zero script involvement. */
+            --chrome: #111111;
+        }
+        /* Light palette PER TIER (html.fc-gpu is set by field-chrome when the GPU tier
+           boots): flat/no-JS users live with solid chrome ink forever, so they keep the
+           classic strong pairing above. GPU users' chrome is the living texture — their
+           flat values only flash at boot — so prose takes the near-black (the protagonist)
+           and the chrome recedes to a soft grey. Dark mode is one palette for everyone:
+           on black, halation does the separating (whites bloom; blacks don't). */
+        :root[data-theme="light"].fc-gpu {
+            --text: #111111;
+            --chrome: #444444;
+        }
+        :root[data-theme="dark"] {
+            /* Pure black. Text a hair off white to soften halation. */
+            color-scheme: dark;
+            --bg: #000000;
+            --text: #ededed;
+            --text-muted: #808080;
+            --link: #ffffff;
+            --border: #4a4a4a;
+            --code-bg: #141414;
+            --tag-bg: #202020;
+            --chrome: #eeeeee;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -44,28 +90,104 @@
             background: var(--bg);
             color: var(--text);
         }
-        h1, h2, h3 { border-bottom: 2px solid var(--border); padding-bottom: 10px; }
-        a { color: var(--link); text-decoration: none; }
-        a:hover { text-decoration: underline; }
+        /* Masthead hierarchy: the h1 gets the page's one rule; sections stand bare.
+           Headings + rules are chrome — they carry the field when it paints.
+           Weight 400 (not browser-default bold): size + the rule carry the hierarchy,
+           the regular strokes keep the field texture calm instead of massive. */
+        h1, h2, h3 { color: var(--chrome); padding-bottom: 10px; font-weight: 400; }
+        h1 { border-bottom: 2px solid var(--chrome); }
+        hr { border: none; height: 2px; background: var(--chrome); }
+        a { color: var(--link); text-decoration: underline; }
         ul, ol { padding-left: 1.5rem; margin: 1rem 0; }
         li { margin: 0.5rem 0; }
+        /* ul bullets: ONE rule renders the disc two ways — as ::before when no JS runs,
+           and as a real .fc-bullet span once the field engine boots (html.fc-js). Same
+           declarations => same box => identical pixels; the span exists so the GPU tier
+           can MEASURE it like every other component instead of recomputing geometry.
+           ol keeps native numbers, in chrome ink. */
+        ul { list-style: none; }
+        ul li { position: relative; }
+        ul li::before, ul li .fc-bullet {
+            content: ""; position: absolute; left: -0.85em; top: 0.61em;
+            width: 0.38em; height: 0.38em; border-radius: 50%; background: var(--chrome);
+        }
+        html.fc-js ul li::before { content: none; }
+        nav ul li::before, nav ul li .fc-bullet { content: none; display: none; }
+        li::marker { color: var(--chrome); }
         nav ul { list-style: none; padding: 0; margin: 0; }
         nav li { margin: 0; }
         code { background: var(--code-bg); padding: 0.2rem 0.4rem; border-radius: 3px; }
-        pre { background: var(--code-bg); padding: 1rem; border-radius: 5px; overflow-x: auto; }
+        pre { background: var(--code-bg); padding: 1rem; border-radius: 5px; overflow-x: auto; color: var(--text); }
         pre code { background: none; padding: 0; }
-        blockquote { border-left: 3px solid var(--border); margin-left: 0; padding-left: 1rem; color: var(--text-muted); }
-        nav { margin-bottom: 2rem; display: flex; align-items: center; }
-        nav a { margin-right: 1rem; font-size: 1.1em; }
+        /* Syntax tokens (Zola highlight_theme = "css" emits z-* classes): the c4ffein nvim
+           colorscheme — dark theme verbatim (its editor bg is literally #111111, the site's
+           chrome ink), light theme a hue-faithful darkened twin. Code is the one place on
+           this monochrome site where colour lives, same as in the editor. */
+        :root[data-theme="light"] {
+            --syn-comment: #777777; --syn-string: #0e7a44; --syn-number: #a05a2c;
+            --syn-const: #8a7a00; --syn-keyword: #0778a5; --syn-storage: #c2317f;
+            --syn-func: #0778a5; --syn-op: #c33fa0; --syn-type: #7c4dcc;
+        }
+        :root[data-theme="dark"] {
+            --syn-comment: #777777; --syn-string: #88ffaa; --syn-number: #ffccaa;
+            --syn-const: #f1fa8c; --syn-keyword: #88eeff; --syn-storage: #ff79c6;
+            --syn-func: #88eeff; --syn-op: #ff92df; --syn-type: #bd93f9;
+        }
+        .z-comment { color: var(--syn-comment); }
+        .z-string { color: var(--syn-string); }
+        .z-constant.z-numeric { color: var(--syn-number); }
+        .z-constant { color: var(--syn-const); }
+        .z-keyword { color: var(--syn-keyword); }
+        .z-keyword.z-operator { color: var(--syn-op); }
+        .z-storage { color: var(--syn-storage); }
+        .z-entity.z-name.z-function, .z-support.z-function { color: var(--syn-func); }
+        .z-entity.z-name.z-type, .z-support.z-type, .z-support.z-class { color: var(--syn-type); }
+        blockquote { border-left: 3px solid var(--chrome); margin-left: 0; padding-left: 1rem; color: var(--text-muted); }
+        nav { margin-bottom: 2.9rem; display: flex; align-items: center; }
+        /* Poppins (400, regular — regenerate via make_nav_font.py to change) for the nav
+           labels — inlined below, so no request/flash. No underline: they read as
+           navigation, not body links. Falls back to the system sans if unloaded. */
+        nav a {
+            /* Fluid: present on desktop, scales down so it never overflows a narrow phone. */
+            margin-right: 1rem; font-size: clamp(0.95rem, 3vw, 1.3rem);
+            font-family: "Poppins", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-weight: 400; text-decoration: none; letter-spacing: -0.01em;
+            color: var(--chrome);
+        }
         #theme-toggle {
             margin-left: auto;
-            background: none; color: var(--text);
+            background: none; color: var(--chrome);
             border: none; padding: 0;
             cursor: pointer; font-size: 1.2rem;
             width: 1.5em; height: 1.5em;
             line-height: 1.5em; text-align: center;
         }
         #theme-toggle:hover { color: var(--link); }
+        /* ?field curtain: hidden until the engine reveals (class removed), or 0.9s passes —
+           the keyframe fires on pure CSS, so no JS failure can leave the page blank. */
+        html.fielding body { visibility: hidden; animation: fc-reveal 0s 0.9s forwards; }
+        @keyframes fc-reveal { to { visibility: visible; } }
+        /* No transition animations, deliberately: the living field is the site's ONLY
+           motion. Navigation is atomic — spa-nav.js stages fonts and redraws the field
+           atlas synchronously inside the swap, so the switch is a single complete frame
+           (the click-time equivalent of the first-load curtain above). */
+        #content:focus { outline: none; } /* spa-nav focuses it after a swap (a11y), no ring */
+        article { margin-bottom: 3rem; }
+        .post-meta { color: var(--chrome); font-size: 0.9rem; }
+        .tags { margin-top: 0.5rem; }
+        .tag { background: var(--chrome); color: var(--bg); padding: 0.2rem 0.5rem; border-radius: 3px; font-size: 0.8rem; }
+        details { margin: 1rem 0; }
+        summary { cursor: pointer; font-weight: bold; }
+        /* Poppins, subset to the nav's letters (make_nav_font.py) and inlined as a data
+           URI, so the nav font is never a request and never flashes. */
+        @font-face {
+            font-family: "Poppins";
+            /* block, not swap: the face is inlined (data URI below), so its decode is effectively
+               instant — there's no real invisible period — but block avoids painting the system
+               fallback first and then reflowing to Poppins (the nav "glitch" swap caused). */
+            font-style: normal; font-weight: 400; font-display: block;
+            src: url(data:font/woff2;base64,d09GMgABAAAAAARsAAwAAAAAB+QAAAQcAAQBBgAAAAAAAAAAAAAAAAAAAAAAAAAAGyAcMAZgAGQKhwCFZgE2AiQDMAsaAAQgBYMaByAbXQZRVDC2CX4mZCoDHjtLa0uYog2522deUMrTXyjlO/Hw/dznuS8vC0kWACQJs7OKqKSIfIXr1P4at64EwrZCk+/UE/58nfaCKimoJKUn9q80NScr6tR6r0KwwtHof4Dc2h0zxmf77+dWt4GnHWkRTYVUKeWhnh5iabeEaGM/cSSLxZpotA6leVoolEooAduW+BhuDEMxqUuk7d3FApVJoUgbW2I1OMrwXwAzLWGiVHrfbBhIEypUDSlDW52Ls7EJ7Egtsh7Yl3visrTgA0oaDOpn757jyuAq8PXlwH9H1OfO1AsEpMU0A2AWFQkFBlEEBlGdAnq5o2CHXI0GuE59/w3Ydj3SuiuOOGif3XZGQtpGcLSehRjJxB2kzeoIyUWHLomjm7pjoDfA0TkvDrq7OycPDlJpRZOqsk5dxWczjdarvGcBs41k4mL9wWbjckbQcxWP5vg1VivpjQXfbjYDYbHQ19rw9Ff/RjJhtXkyaMqmLWBdKFd3vVgI0+JgyjwQczRNppW/kRK5Ku6yqFMqa08LYqkv25i3FqDXsoMnzGaaTUHr/lTdExsdqtaa/eYi6/2Wljsk023tm4KFmurAfdqam0DMX8t8bbkXUSegRMzT3zIriVJFbShtt/amplFBXQFyk9Lq0iB0+0DPyIqo8JavBka6jccmeKWFpm0rYAUkNmETAxwBHy88UF8eXd54saWIJ+jnYSbVnQJInZKermKloqLi1HJVBAL+ikVQ4px8qrzeyM+XZv2v9ZEura2VjnA4hEaDTY6w5dJBrGRAVMFlCKWxKZxqnb3ECDVj6YGBOhYQ9Xw1KiBJH42iIY3MLCMXF2PGLKVcy+GpjFpmD8CDkOyMkZHNwQv34nhxKcwyRod6ljoUWh5fbdCyaCfp6XJGDnxwHIdLaNR8Ypwtldqd+ZMajZCY5EhTZBpGBiorS0eq5NQ0pYWIw1KQ4u/B4m99ekml/+4TiSgaGeCOY4m54ojKHHZ6TsZ8VPSXMvc74vCskszEVA6Kz0ediCJDiW8y7Y4MimS/uygIlZAYeMb4fJh9iMW7J2ISpVjEkWM8EW8NIm5tFAEI5Gi7/fO68IpbwVdHSvEJgLfH7i8A8HFdZ6rA/z8pC+TfQLsEgjP12UNqweQzmtbEF5BegSRhVn8MklJb0Q/rSYiDhMWk6PfbaFajTSASGkubLk+m2eMmALQ7jyJyJ04AIkvodkInxTNLYc2CJZv2x1KqYvS0NtMRCdOpy7AeuCbN+oRLk2IxnHpANwTlMLCA69AbQw6kRosGdYKl+j1k0p16sGB8IfbpCjEPy6Sb4OD8frWY6nRqxxpho06u7FCvxzARdvZJiCsoNWgSqdrU6CGgxiWT/1dxwgl+TgamFCky1MrJeTMk3BojSaFs/V9pAAAAAA==) format("woff2");
+        }
     </style>
     <script>
         (function() {
@@ -99,8 +221,7 @@
             function updateToggleButton() {
                 const btn = document.getElementById('theme-toggle');
                 if (!btn) return;
-                const labels = { light: '☀︎', dark: '⏾' };
-                btn.textContent = labels[getEffectiveTheme()];
+                btn.textContent = getEffectiveTheme() === 'dark' ? '⏾' : '☀︎';
             }
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', applyTheme);
@@ -113,20 +234,861 @@
             window.cycleTheme = cycleTheme;
         })();
     </script>
+    
+    
 </head>
 <body>
     <nav>
-        <a href="https://writings.cafeine.dev">Home</a>
+        
+        <a href="https:&#x2F;&#x2F;writings.cafeine.dev/">Home</a>
         <a href="https://writings.cafeine.dev/posts">Posts</a>
         <a href="https://presentations.cafeine.dev">Presentations</a>
-        <button id="theme-toggle" onclick="cycleTheme()"><script>document.write({light:'☀︎',dark:'⏾'}[document.documentElement.getAttribute('data-theme')])</script></button>
+        <button id="theme-toggle" onclick="cycleTheme()"><script>document.write(document.documentElement.getAttribute('data-theme')==='dark'?'⏾':'☀︎')</script></button>
     </nav>
-    <h1>Presentations</h1>
-    <ul>
-        <li><a href="slides/dev-with-ai-in-late-2025.html">Coding with Claude Code - fin 2025</a></li>
-        <li><a href="slides/django-ninja.html">Django Ninja</a></li>
-        <li><a href="slides/hypothesis.html">Hypothesis</a></li>
-        <li><a href="slides/learning-python-as-a-programmer.html">Learning Python as a Programmer</a></li>
-    </ul>
+    
+    <main id="content">
+<h1>Presentations</h1>
+<ul>
+    
+    <li><a href="slides&#x2F;dev-with-ai-in-late-2025.html">Coding with Claude Code - fin 2025</a></li>
+    
+    <li><a href="slides&#x2F;django-ninja.html">Django Ninja</a></li>
+    
+    <li><a href="slides&#x2F;hypothesis.html">Hypothesis</a></li>
+    
+    <li><a href="slides&#x2F;learning-python-as-a-programmer.html">Learning Python as a Programmer</a></li>
+    
+</ul>
+</main>
+    
+    
+    <script>/*
+ * field-gpu.js — the WebGPU tier of the living-ink chrome (see field-chrome.js, which
+ * loads this when navigator.gpu exist, and falls back to basic colors when init returns false for any reason).
+ *
+ * Architecture:
+ *   - One fixed, full-viewport, pointer-transparent <canvas> overlay. The real DOM text
+ *     stays in place (made transparent, still selectable/SEO/a11y); box-type helpers
+ *     (slabs, rules, rings, bullets) are made invisible. The shader paints their ink.
+ *   - ALPHA ATLAS: a viewport-sized 2D canvas holding the union of every target's alpha —
+ *     glyphs drawn per text-fragment rect (Range.getClientRects, the wave's technique, so
+ *     kerning/wrapping are the browser's own), boxes drawn as geometry. Redrawn on
+ *     scroll/resize/theme; uploaded as a texture.
+ *   - FRAGMENT SHADER: per pixel — sample atlas alpha; if inked, evaluate domain-warped
+ *     fBm at DOCUMENT coordinates (pixel + scroll uniform) with a TRUE TIME AXIS (3D
+ *     noise sliced over t): the continuous a→b→c evolution SVG's feTurbulence can never
+ *     do, replacing the crossfade-reseed contraption entirely. Palette = the exact
+ *     zigzag tables from the SVG engine, as a WGSL function.
+ *   - Document-anchored coords make the unified field a triviality: no clusters, no
+ *     feOffset — continuity is just arithmetic.
+ */
+(function () {
+  "use strict";
+
+  var WGSL = `
+struct U {
+  scroll : vec2f,
+  size   : vec2f,
+  time   : f32,
+  dark   : f32,
+  dpr    : f32,
+  pad1   : f32,
+};
+@group(0) @binding(0) var<uniform> u : U;
+@group(0) @binding(1) var atlasTex : texture_2d<f32>;
+@group(0) @binding(2) var smp : sampler;
+
+fn hash3(p : vec3f) -> f32 {
+  var q = fract(p * 0.3183099 + vec3f(0.1, 0.2, 0.3));
+  q = q * 17.0;
+  return fract(q.x * q.y * q.z * (q.x + q.y + q.z));
+}
+fn vnoise(p : vec3f) -> f32 {
+  let i = floor(p);
+  let f = fract(p);
+  let w = f * f * (3.0 - 2.0 * f);
+  return mix(
+    mix(mix(hash3(i + vec3f(0,0,0)), hash3(i + vec3f(1,0,0)), w.x),
+        mix(hash3(i + vec3f(0,1,0)), hash3(i + vec3f(1,1,0)), w.x), w.y),
+    mix(mix(hash3(i + vec3f(0,0,1)), hash3(i + vec3f(1,0,1)), w.x),
+        mix(hash3(i + vec3f(0,1,1)), hash3(i + vec3f(1,1,1)), w.x), w.y),
+    w.z);
+}
+fn fbm4(p : vec3f) -> f32 {
+  var f = 0.0; var a = 0.5; var q = p;
+  for (var k = 0; k < 4; k++) {
+    f += a * vnoise(q);
+    q = q * 2.02; a *= 0.5;
+  }
+  return f / 0.9375;
+}
+fn fbm2(p : vec3f) -> f32 {
+  return (0.5 * vnoise(p) + 0.25 * vnoise(p * 2.03)) / 0.75;
+}
+// the SVG engine's six-stop zigzag table, input folded over stops at 0,.2,.4,.6,.8,1
+fn zigzag(v : f32, s0 : f32, s1 : f32, s2 : f32, s3 : f32, s4 : f32, s5 : f32) -> f32 {
+  let x = clamp(v, 0.0, 1.0) * 5.0;
+  let i = floor(x);
+  let f = x - i;
+  if (i < 1.0) { return mix(s0, s1, f); }
+  if (i < 2.0) { return mix(s1, s2, f); }
+  if (i < 3.0) { return mix(s2, s3, f); }
+  if (i < 4.0) { return mix(s3, s4, f); }
+  return mix(s4, s5, f);
+}
+
+@vertex
+fn vmain(@builtin(vertex_index) vi : u32) -> @builtin(position) vec4f {
+  var pos = array<vec2f, 3>(vec2f(-1.0, -3.0), vec2f(-1.0, 1.0), vec2f(3.0, 1.0));
+  return vec4f(pos[vi], 0.0, 1.0);
+}
+
+@fragment
+fn fmain(@builtin(position) fc : vec4f) -> @location(0) vec4f {
+  let a = textureSample(atlasTex, smp, fc.xy / u.size).a;
+  if (a < 0.004) { return vec4f(0.0); }
+  // document-space coords in CSS px (dpr-normalized): the unified field, by construction,
+  // with the same feature scale on every display
+  let p = (fc.xy + u.scroll) / max(u.dpr, 1.0);
+  let t = u.time;
+  // gentle scale wander baked into the shader (two incommensurate sines, as ever)
+  let wander = 1.0 + 0.18 * sin(t * 0.61) + 0.10 * sin(t * 1.41);
+  // warp field with its own slow time
+  let w = vec2f(
+    fbm2(vec3f(p * 0.03, 11.3 + t * 0.16)),
+    fbm2(vec3f(p * 0.03, 27.7 + t * 0.16)));
+  let q = p + (w - vec2f(0.5)) * 60.0 * wander;
+  // base marble, evolving on the time axis — the thing feTurbulence never had
+  let f = fbm4(vec3f(q * 0.012, t * 0.09));
+  var g : f32;
+  if (u.dark > 0.5) {
+    g = zigzag(f, 0.467, 1.0, 0.667, 0.867, 0.533, 1.0); // #777777 – #ffffff on black
+  } else {
+    g = zigzag(f, 0.533, 0.0, 0.333, 0.133, 0.467, 0.0); // #000000 – #888888 on white
+  }
+  return vec4f(vec3f(g) * a, a); // premultiplied
+}
+`;
+
+  // Per-font metrics cache: anchoring glyphs to the true BASELINE (rect bottom minus the
+  // font's descent) instead of textBaseline:"top" — canvas's "top" and the DOM line box
+  // disagree by a few px of ascent bookkeeping, which read as "everything slightly low".
+  var fontMetrics = {};
+  function metricsFor(ctx) {
+    var key = ctx.font;
+    var m = fontMetrics[key];
+    if (!m) {
+      var t = ctx.measureText("Hgjp");
+      m = fontMetrics[key] = {
+        desc: (t.fontBoundingBoxDescent !== undefined) ? t.fontBoundingBoxDescent : null,
+      };
+    }
+    return m;
+  }
+
+  // Glyphs of one element, per text-fragment rect (kerning/wrap are the DOM's own),
+  // anchored to the true baseline via measured font descent.
+  function drawTextGlyphs(ctx, el) {
+    var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    var range = document.createRange();
+    for (var n; (n = walker.nextNode()); ) {
+      if (!n.nodeValue.trim()) continue;
+      var pcs = getComputedStyle(n.parentElement);
+      ctx.font = pcs.fontStyle + " " + pcs.fontWeight + " " + pcs.fontSize + " " + pcs.fontFamily;
+      var text = n.nodeValue;
+      // iterate by GRAPHEME CLUSTER, not char: splitting a Range inside a cluster
+      // (variation selectors — the ☀︎ toggle! — surrogate pairs, combining marks) yields
+      // zero rects on platforms that shape atomically, and the glyph silently vanishes.
+      // Extend the range until the browser hands us a box, then draw the whole cluster.
+      var i = 0;
+      while (i < text.length) {
+        var j = i + 1;
+        if (text[i] === " " || text[i] === "\n" || text[i] === "\t") { i = j; continue; }
+        range.setStart(n, i); range.setEnd(n, j);
+        var cr = range.getClientRects()[0];
+        while ((!cr || cr.width <= 0) && j < text.length) {
+          j++;
+          range.setEnd(n, j);
+          cr = range.getClientRects()[0];
+        }
+        if (cr && cr.width > 0) {
+          ctx.fillStyle = "#000";
+          var fm = metricsFor(ctx);
+          if (fm.desc !== null) {
+            ctx.textBaseline = "alphabetic";
+            ctx.fillText(text.slice(i, j), cr.left, cr.bottom - fm.desc);
+          } else { // ancient browser: the old approximation
+            ctx.textBaseline = "top";
+            ctx.fillText(text.slice(i, j), cr.left, cr.top);
+          }
+        }
+        i = j;
+      }
+    }
+  }
+
+  // Draw one element's alpha into the atlas. Coordinates are viewport-space; the caller's
+  // transform maps them into the document-anchored window. cullTop/cullBottom bound the
+  // window in viewport space.
+  function drawElementAlpha(ctx, el, cullTop, cullBottom) {
+    var isBox = el.classList && (el.classList.contains("fc-slab") || el.classList.contains("fc-ring") ||
+                el.classList.contains("fc-bullet") || el.tagName === "HR");
+    var r = el.getBoundingClientRect();
+    if (r.bottom < cullTop || r.top > cullBottom || r.width <= 0) return;
+    var cs = getComputedStyle(el);
+    if (isBox) {
+      // border-radius 50% (the bullet discs) parses as NaN px — draw a true circle
+      if (el.classList.contains("fc-bullet")) {
+        ctx.fillStyle = "#000";
+        ctx.beginPath();
+        ctx.arc(r.left + r.width / 2, r.top + r.height / 2, r.width / 2, 0, 7);
+        ctx.fill();
+        return;
+      }
+      var rad = parseFloat(cs.borderRadius) || 0;
+      if (el.classList.contains("fc-ring")) { // frame only: stroke, transparent interior
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#000";
+        ctx.beginPath();
+        ctx.roundRect(r.left + 1, r.top + 1, r.width - 2, r.height - 2, Math.max(0, rad - 1));
+        ctx.stroke();
+      } else {
+        ctx.fillStyle = "#000";
+        ctx.beginPath();
+        ctx.roundRect(r.left, r.top, r.width, r.height, rad);
+        ctx.fill();
+      }
+      // tag slabs: punch the label's glyphs OUT of the marble — the true knockout (the
+      // DOM label underneath is page-coloured, so the holes read as the page itself)
+      if (el.classList.contains("fc-slab")) {
+        var label = el.nextElementSibling;
+        if (label && !label.classList.contains("fc-slab")) {
+          ctx.globalCompositeOperation = "destination-out";
+          drawTextGlyphs(ctx, label);
+          ctx.globalCompositeOperation = "source-over";
+        }
+      }
+      return;
+    }
+    // heading underline (h1 keeps its rule): draw the border band
+    var bw = parseFloat(cs.borderBottomWidth);
+    if (bw > 0) ctx.fillRect(r.left, r.bottom - bw, r.width, bw);
+    // blockquote's left border
+    var blw = parseFloat(cs.borderLeftWidth);
+    if (blw > 0) ctx.fillRect(r.left, r.top, blw, r.height);
+    drawTextGlyphs(ctx, el);
+  }
+
+  var DIAG = window.__fieldGPUDiag = [];
+  function diag(m) { DIAG.push(m); }
+
+  window.__fieldGPUInit = async function (cfg) {
+    var cleanup = [];
+    try {
+      diag("init start, els=" + cfg.els.length);
+      if (!navigator.gpu) { diag("no navigator.gpu"); return false; }
+      var adapter = await navigator.gpu.requestAdapter();
+      if (!adapter) { diag("adapter: null"); return false; }
+      diag("adapter ok" + (adapter.info ? " (" + (adapter.info.description || adapter.info.vendor || "?") + ")" : ""));
+      var device = await adapter.requestDevice();
+      diag("device ok");
+      device.addEventListener && device.addEventListener("uncapturederror", function (e) {
+        diag("UNCAPTURED: " + (e.error && e.error.message ? e.error.message.slice(0, 300) : e.error));
+      });
+
+      // DOCUMENT-ANCHORED WINDOW, not position:fixed: a fixed canvas painting viewport-
+      // space content always trails the compositor's async scroll by a frame (visible lag).
+      // Anchored absolute in the document, the compositor moves canvas and page TOGETHER —
+      // scroll costs nothing and sync is exact. The window spans WIN viewports and jumps
+      // (+ atlas redraw) only when scrolling nears its edge.
+      // NB: a canvas is a REPLACED element — explicit CSS size in sizeAll() is load-bearing
+      // (otherwise it displays at its intrinsic device-pixel size: 2x on Retina).
+      var WIN = 3, originY = 0, winH = 0;
+      var canvas = document.createElement("canvas");
+      canvas.style.cssText = "position:absolute;left:0;top:0;pointer-events:none;z-index:4";
+      canvas.setAttribute("aria-hidden", "true");
+      document.body.appendChild(canvas);
+      cleanup.push(function () { canvas.remove(); });
+
+      var gctx = canvas.getContext("webgpu");
+      if (!gctx) return false;
+      var format = navigator.gpu.getPreferredCanvasFormat();
+
+      var atlas = document.createElement("canvas");
+      var actx = atlas.getContext("2d");
+
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var texture = null, bindGroup = null;
+      var module = device.createShaderModule({ code: WGSL });
+      module.getCompilationInfo && module.getCompilationInfo().then(function (info) {
+        info.messages.forEach(function (m) {
+          diag("WGSL " + m.type + " L" + m.lineNum + ": " + m.message.slice(0, 200));
+        });
+      });
+      var pipeline = device.createRenderPipeline({
+        layout: "auto",
+        vertex: { module: module, entryPoint: "vmain" },
+        fragment: { module: module, entryPoint: "fmain",
+          targets: [{ format: format,
+            blend: { color: { srcFactor: "one", dstFactor: "one-minus-src-alpha" },
+                     alpha: { srcFactor: "one", dstFactor: "one-minus-src-alpha" } } }] },
+        primitive: { topology: "triangle-list" },
+      });
+      var ubuf = device.createBuffer({ size: 32, usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST });
+      var sampler = device.createSampler({ magFilter: "linear", minFilter: "linear" });
+
+      function sizeAll() {
+        canvas.width = Math.floor(innerWidth * dpr);
+        canvas.height = Math.max(1, Math.floor(winH * dpr));
+        canvas.style.width = innerWidth + "px";   // CSS size ≠ backing size on Retina
+        canvas.style.height = winH + "px";
+        atlas.width = canvas.width;
+        atlas.height = canvas.height;
+        gctx.configure({ device: device, format: format, alphaMode: "premultiplied" });
+        texture = device.createTexture({
+          size: [canvas.width, canvas.height],
+          format: "rgba8unorm",
+          usage: GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.COPY_DST | GPUTextureUsage.RENDER_ATTACHMENT,
+        });
+        bindGroup = device.createBindGroup({
+          layout: pipeline.getBindGroupLayout(0),
+          entries: [
+            { binding: 0, resource: { buffer: ubuf } },
+            { binding: 1, resource: texture.createView() },
+            { binding: 2, resource: sampler },
+          ],
+        });
+      }
+
+      // Window management: jump the canvas (and redraw) only when scroll nears an edge.
+      // CLAMPED to the document's natural height — an absolutely-positioned box that
+      // overhangs the page EXTENDS the scrollable area (accidental infinite scroll).
+      // The measurement zeroes our own height first so we never measure our own overhang.
+      function layoutWindow(force) {
+        var vh = innerHeight, sy = window.scrollY;
+        if (!force && !(sy < originY || sy + vh > originY + winH - vh * 0.25)) return;
+        canvas.style.height = "0px";
+        var docH = document.documentElement.scrollHeight;
+        originY = Math.max(0, Math.min(sy - vh, Math.max(0, docH - WIN * vh)));
+        var h = Math.min(WIN * vh, docH - originY);
+        canvas.style.top = originY + "px";
+        // Reallocate ONLY when the backing size truly changed: sizeAll() clears the
+        // canvas (reconfigure), and a gratuitous clear during a content swap is a
+        // one-frame blank of ALL ink — with instant swaps there's no dissolve to hide it.
+        if (Math.abs(h - winH) > 1 || canvas.width !== Math.floor(innerWidth * dpr)) {
+          winH = h;
+          sizeAll(); // reallocates backing + texture at the new window size
+        } else {
+          canvas.style.height = winH + "px"; // restore after the measurement zeroing
+        }
+        atlasDirty = true;
+      }
+
+      var atlasDirty = true;
+      function redrawAtlas() {
+        actx.setTransform(1, 0, 0, 1, 0, 0);
+        actx.clearRect(0, 0, atlas.width, atlas.height);
+        // map viewport-space drawing into the document-anchored window
+        var sy = window.scrollY, sx = window.scrollX;
+        actx.setTransform(dpr, 0, 0, dpr, sx * dpr, (sy - originY) * dpr);
+        var cullTop = originY - sy, cullBottom = cullTop + winH;
+        cfg.els.forEach(function (el) { drawElementAlpha(actx, el, cullTop, cullBottom); });
+
+        // raw-bytes upload (writeTexture), not copyExternalImageToTexture: the blit path
+        // kills software WebGPU implementations, and the data path is universal
+        var img = actx.getImageData(0, 0, atlas.width, atlas.height);
+        device.queue.writeTexture({ texture: texture }, img.data,
+          { bytesPerRow: atlas.width * 4, rowsPerImage: atlas.height },
+          [atlas.width, atlas.height]);
+        atlasDirty = false;
+      }
+
+      // originals go invisible-but-real: text keeps layout/selection, boxes keep geometry
+      function inkEls(els) {
+        els.forEach(function (el) {
+          var prev = el.getAttribute("style") || "";
+          cleanup.push(function () { el.setAttribute("style", prev); });
+          if (el.classList.contains("fc-slab") || el.classList.contains("fc-ring") ||
+              el.classList.contains("fc-bullet") || el.tagName === "HR") {
+            el.style.opacity = "0";
+          } else {
+            el.style.color = "transparent";
+            el.style.borderColor = "transparent";
+          }
+        });
+      }
+      inkEls(cfg.els);
+
+      // Adopt a new element set after a content swap (spa-nav.js): ink only the newcomers
+      // (re-inking a survivor would capture our own transparent style as its "restore"
+      // state), retarget the atlas, and force a re-layout — the document height changed.
+      window.__fieldGPURefresh = function (els) {
+        if (dead) return;
+        inkEls(els.filter(function (el) { return cfg.els.indexOf(el) === -1; }));
+        cfg.els = els;
+        layoutWindow(true);
+        redrawAtlas(); // SYNCHRONOUS: the very next painted frame must show the new ink
+        if (reduced) requestAnimationFrame(frame); // no continuous loop to present it
+      };
+
+      layoutWindow(true); redrawAtlas();
+      diag("sized " + canvas.width + "x" + canvas.height + " dpr" + dpr + ", atlas drawn");
+      window.addEventListener("resize", function () { layoutWindow(true); });
+      window.addEventListener("scroll", function () { layoutWindow(false); }, { passive: true });
+      new MutationObserver(function () { atlasDirty = true; }).observe(
+        document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+      var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      // Field clock: resumes at the phase the PREVIOUS page saved (sessionStorage), so a
+      // navigation freezes the ink mid-pattern and the next page picks it up exactly there.
+      // Frozen, not wall-clock-advanced: the last rendered frame is what a view transition
+      // holds on screen during the switch, so resuming AT it (t0 anchors to our first
+      // frame, load time excluded) is the seamless choice — advancing by elapsed time
+      // would visibly jump. The 1e5 cap (~7h of animation) keeps t in f32-friendly range.
+      var tBase = 0, tNow = 0, t0 = null;
+      try { tBase = parseFloat(sessionStorage.getItem("fc-clock")) || 0; } catch (_) {}
+      if (!isFinite(tBase) || tBase < 0 || tBase > 1e5) tBase = 0;
+      window.addEventListener("pagehide", function () {
+        try { sessionStorage.setItem("fc-clock", String(tNow)); } catch (_) {}
+      });
+      var uf = new Float32Array(8);
+      var frames = 0, dead = false;
+      function frame(now) {
+        if (dead) return; // device lost: stop submitting to a corpse
+        frames++;
+        if (frames === 1 || frames === 60) diag("frame " + frames + " @" + Math.round(now) + "ms");
+        if (atlasDirty) redrawAtlas();
+        var dark = document.documentElement.getAttribute("data-theme") === "dark" ? 1 : 0;
+        if (t0 === null) t0 = now;
+        tNow = tBase + ((now - t0) / 1000) * 4;
+        // document offset = the window's origin, constant between jumps (scroll is free)
+        uf[0] = 0; uf[1] = originY * dpr;
+        uf[2] = canvas.width; uf[3] = canvas.height;
+        uf[4] = tNow; uf[5] = dark; uf[6] = dpr;
+        device.queue.writeBuffer(ubuf, 0, uf);
+        var enc = device.createCommandEncoder();
+        var pass = enc.beginRenderPass({ colorAttachments: [{
+          view: gctx.getCurrentTexture().createView(),
+          clearValue: { r: 0, g: 0, b: 0, a: 0 }, loadOp: "clear", storeOp: "store" }] });
+        pass.setPipeline(pipeline);
+        pass.setBindGroup(0, bindGroup);
+        pass.draw(3);
+        pass.end();
+        device.queue.submit([enc.finish()]);
+        if (!reduced) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+
+      device.lost.then(function (info) {
+        // GPU went away mid-flight (driver reset, tab eviction, software-renderer giving
+        // up): restore the DOM ink and hand control back — never leave a bare page.
+        dead = true;
+        diag("DEVICE LOST after " + frames + " frames: " + info.reason + " " + (info.message || "").slice(0, 200));
+        cleanup.forEach(function (f) { try { f(); } catch (_) {} });
+        if (cfg.onLost) cfg.onLost();
+      });
+      diag("init complete");
+      return true;
+    } catch (e) {
+      diag("THREW: " + (e && e.message ? e.message.slice(0, 300) : e));
+      cleanup.forEach(function (f) { try { f(); } catch (_) {} });
+      return false;
+    }
+  };
+})();
+</script>
+    <script>/*
+ * field-chrome.js — "living ink" chrome, on by default on every page.
+ *
+ * Two tiers, one decision:
+ *   - WebGPU available  -> the shader field (field-gpu.js): domain-warped fBm with a true
+ *     time axis, painted over the real DOM text (which stays selectable underneath);
+ *   - otherwise         -> the restructured chrome (em-dash meta line, tight tag pills,
+ *     code-block rings, list dots) in the stylesheet's var(--chrome) ink. The COLOURS
+ *     live in base.html's CSS, not here — so no-JS and killed pages render the designed
+ *     look with zero script involvement. No SVG filters anywhere: old WebKit
+ *     re-rasterizes them on scroll, which is exactly the device class this tier is for.
+ *
+ * ?field=gpu   force the GPU tier; on failure show the diagnostic panel (fail visible)
+ * ?field=flat  fallback tier in an unmistakable debug skin (--chrome -> #ffdddd/#441111)
+ * ?field=off   kill switch — the loader in base.html runs nothing at all
+ * ?field=diag  GPU tier + always show the diagnostic panel
+ *
+ * The pre-paint curtain (html.fielding) is added by base.html's loader and dropped here
+ * once the chosen tier is in place; a pure-CSS 0.9s reveal is the fail-safe.
+ */
+(function () {
+  "use strict";
+  // Idempotence: guards against any double-inclusion (a second run would restructure
+  // the DOM twice). With everything inlined per page this shouldn't occur — kept anyway.
+  if (window.__fieldChrome) return;
+  window.__fieldChrome = true;
+
+  var MODE = new URLSearchParams(location.search).get("field"); // null=auto | gpu|flat|off|diag
+  function uncurtain() { document.documentElement.classList.remove("fielding"); }
+  if (MODE === "off") {
+    // Still define the refresh hook (as a no-op): spa-nav.js reads its absence as "older
+    // field-chrome.js cached" and falls back to full navigations — off-mode must not.
+    window.__fieldChromeRefresh = function () {};
+    uncurtain(); return; // belt-and-suspenders: loader already skips
+  }
+
+  var SEL = "nav a, #theme-toggle, h1, h2, h3, article hr, article blockquote, .fc-date, .fc-slab, .fc-ring, li .post-meta, .fc-bullet";
+
+  function prep() {
+    // Code chips inside headings lose their opaque background: the GPU stencil cuts by
+    // alpha, and a chip's background would turn the whole heading into a marble slab.
+    document.querySelectorAll("article h1 code, article h2 code, article h3 code").forEach(function (c) {
+      c.style.background = "transparent";
+      c.style.padding = "0";
+    });
+    // List bullets: swap the CSS ::before disc for a REAL span carrying the same class —
+    // the SAME stylesheet rule renders both, so the swap is pixel-identical, and the GPU
+    // tier can measure the span's true rect like every other component (no recomputed
+    // geometry, no exceptions). html.fc-js retires the pseudo.
+    document.documentElement.classList.add("fc-js");
+    document.querySelectorAll("ul li").forEach(function (li) {
+      if (li.closest("nav") || li.querySelector(".fc-bullet")) return;
+      var b = document.createElement("span");
+      b.className = "fc-bullet";
+      b.setAttribute("aria-hidden", "true");
+      li.insertBefore(b, li.firstChild);
+    });
+    // Code blocks: page-coloured background, framed by a 2px ring (same weight as the
+    // rules). The ring overlay has a transparent interior — its alpha is just the frame,
+    // so the field paints an outline only.
+    document.querySelectorAll("article pre").forEach(function (pre) {
+      if (pre.parentElement && pre.parentElement.classList.contains("fc-prewrap")) return;
+      pre.style.background = "var(--bg)";
+      var wrap = document.createElement("div");
+      wrap.className = "fc-prewrap";
+      wrap.style.cssText = "position:relative;margin:1rem 0";
+      pre.parentNode.insertBefore(wrap, pre);
+      wrap.appendChild(pre);
+      pre.style.margin = "0"; // margin moves to the wrapper so the ring hugs the box
+      var ring = document.createElement("span");
+      ring.className = "fc-ring";
+      ring.style.cssText = "position:absolute;inset:0;border:2px solid var(--chrome);border-radius:5px;pointer-events:none";
+      wrap.appendChild(ring);
+    });
+    // Date: wrap .post-meta's leading text node in a span → a filterable target.
+    document.querySelectorAll("article .post-meta").forEach(function (meta) {
+      if (meta.querySelector(".fc-date")) return;
+      for (var n = meta.firstChild; n; n = n.nextSibling) {
+        if (n.nodeType === 3 && n.nodeValue.trim()) {
+          var s = document.createElement("span");
+          s.className = "fc-date";
+          n.parentNode.insertBefore(s, n);
+          s.appendChild(n);
+          // em dash joining date and tags — inside the span, so it takes the field
+          if (meta.querySelector(".tags")) s.appendChild(document.createTextNode(" —"));
+          break;
+        }
+      }
+    });
+    // Tags: pill bg → field slab; label lifted out, knocked out of it by the GPU atlas.
+    document.querySelectorAll("article .tag").forEach(function (tag) {
+      if (tag.querySelector(".fc-slab")) return;
+      var radius = getComputedStyle(tag).borderRadius;
+      var label = document.createElement("span");
+      label.textContent = tag.textContent;
+      label.style.cssText = "position:relative;color:var(--bg)";
+      var slab = document.createElement("span");
+      slab.className = "fc-slab";
+      slab.style.cssText = "position:absolute;inset:0.2rem -0.1rem;background:var(--chrome);border-radius:" + radius;
+      tag.textContent = "";
+      tag.style.display = "inline-block";
+      tag.style.position = "relative";
+      tag.style.background = "none";
+      tag.style.padding = "0";
+      tag.style.marginLeft = "0.2rem";
+      tag.appendChild(slab);
+      tag.appendChild(label);
+    });
+  }
+
+  // FALLBACK tier — no filters, no animation, no canvas, and no colours of its own:
+  // everything renders in the stylesheet's var(--chrome) (#111111 light / #eeeeee dark),
+  // so no-JS and ?field=off pages look the same minus the restructuring. This function
+  // only restructures. As ?field=flat it wears an unmistakable debug skin instead, so a
+  // forced fallback can never be confused with the real one.
+  function flat() {
+    // Tier signal off: the light palette reverts to the strong flat pairing (base.html).
+    // Matters on the device-lost path — the page must not keep GPU-tier colours with
+    // no texture left to justify them.
+    document.documentElement.classList.remove("fc-gpu");
+    prep();
+    if (MODE === "flat") {
+      var st = document.createElement("style");
+      // :root[…] matches the base rules' specificity, so document order (this comes later) wins
+      st.textContent = ':root[data-theme="light"]{--chrome:#441111}:root[data-theme="dark"]{--chrome:#ffdddd}';
+      document.head.appendChild(st);
+    }
+    uncurtain();
+  }
+
+  // Diagnostic panel: the GPU engine's step log, on-page — the user's browser is the
+  // instrument when the developer has no GPU to reproduce on.
+  function showDiag() {
+    var pre = document.getElementById("fc-diag");
+    if (!pre) {
+      pre = document.createElement("pre");
+      pre.id = "fc-diag";
+      pre.style.cssText = "position:fixed;top:8px;right:8px;z-index:99;max-width:46ch;max-height:60vh;" +
+        "overflow:auto;background:#000;color:#0f0;font:11px monospace;padding:8px;border-radius:6px;opacity:.92;visibility:visible";
+      document.documentElement.appendChild(pre); // outside body: survives the curtain
+    }
+    var d = window.__fieldGPUDiag || ["(no gpu diag)"];
+    pre.textContent = "field-gpu diag\n" + d.join("\n");
+    setTimeout(showDiag, 1000); // keep streaming late entries (lost, uncaptured, frame 60)
+  }
+
+  function tryGPU() {
+    return new Promise(function (resolve) {
+      if (!navigator.gpu || MODE === "flat") return resolve(false);
+      // field-gpu.js is inlined in the same document, just before this file (base.html),
+      // and is pure definitions — by boot time it HAS run. Absent means something is
+      // deeply wrong with the page itself; the flat tier is the only sane answer.
+      if (!window.__fieldGPUInit) return resolve(false);
+      prep();
+      var els = Array.prototype.slice.call(document.querySelectorAll(SEL));
+      window.__fieldGPUInit({ els: els, onLost: function () { flat(); } })
+        .then(resolve, function () { resolve(false); });
+    });
+  }
+
+  // Re-theme content that arrived AFTER boot (spa-nav.js swaps #content): prep() is
+  // idempotent (every mutation is guarded), and the GPU tier re-collects + re-inks the
+  // current SEL set. Undefined until this script runs — callers must feature-check.
+  window.__fieldChromeRefresh = function () {
+    prep();
+    if (window.__fieldGPURefresh) {
+      window.__fieldGPURefresh(Array.prototype.slice.call(document.querySelectorAll(SEL)));
+    }
+  };
+
+  function boot() {
+    var ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+    ready.then(function () {
+      requestAnimationFrame(function () {
+        tryGPU().then(function (ok) {
+          if (MODE === "diag" || (!ok && MODE === "gpu")) showDiag();
+          if (ok) {
+            // Tier signal (see base.html): GPU-tier light palette. Added BEFORE the
+            // curtain lifts, so a full load never shows the flat palette shifting.
+            document.documentElement.classList.add("fc-gpu");
+            uncurtain();
+            // The els list fed to init was collected at script load; if a swap landed while
+            // the device was booting, re-sync so the new content is inked and atlased too.
+            window.__fieldChromeRefresh();
+            return;
+          }
+          flat();
+        });
+      });
+    }, function () { flat(); });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
+})();
+</script>
+    <script>/*
+ * spa-nav.js — persistent-chrome navigation. Progressive enhancement only.
+ *
+ * Same-origin link clicks are intercepted: the target page (plain static HTML — the
+ * build output IS the wire format, no JSON twin to drift) is fetched, parsed with
+ * DOMParser, and only #content is swapped, plus the head nodes tagged data-page-css
+ * (per-article fonts). Everything else — nav, theme scripts, and above all the GPU
+ * field (canvas, device, clock) — persists, so navigation never reboots the field.
+ *
+ * Swaps are deliberately INSTANT: no transition animation — the living field is the
+ * site's only motion. What makes the instant swap safe to look at is staging: the
+ * target page's fonts are imported and awaited BEFORE the swap (stageFonts), and the
+ * field atlas is redrawn synchronously inside it (field-gpu refresh), so the switch
+ * is one complete frame — the click-time equivalent of the first-load curtain.
+ *
+ * Reading positions are recorded per pathname in sessionStorage (see the recorder
+ * below) and restored on back/forward.
+ *
+ * Every unexpected shape falls back to a real navigation: modified clicks, other
+ * origins, downloads, fetch errors, a page without #content. Without JS none of this
+ * exists and links are just links. (All three runtime scripts, this one included, are
+ * INLINED by base.html — no external JS, so engine/page version skew cannot exist.)
+ */
+(function () {
+  "use strict";
+  if (!window.fetch || !window.DOMParser || !history.pushState) return;
+  if (window.__spaNav) return;
+  window.__spaNav = true;
+
+  var parser = new DOMParser();
+  var cache = new Map(); // href -> Promise<html text>; session-lived, tiny pages
+  var MAX_CACHE = 40;
+  var renderedPath = location.pathname;
+
+  function sameOriginUrl(a) {
+    var url;
+    try { url = new URL(a.getAttribute("href"), location.href); } catch (e) { return null; }
+    if (url.origin !== location.origin) return null;
+    return url;
+  }
+
+  function eligible(a, e) {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return null;
+    if ((a.target && a.target !== "_self") || a.hasAttribute("download")) return null;
+    var url = sameOriginUrl(a);
+    if (!url) return null;
+    // In-page anchor: let the browser scroll natively.
+    if (url.pathname === location.pathname && url.hash) return null;
+    return url;
+  }
+
+  function fetchPage(url) {
+    var key = url.pathname;
+    if (cache.has(key)) return cache.get(key);
+    var p = fetch(url.href, { headers: { Accept: "text/html" } }).then(function (r) {
+      if (!r.ok || (r.headers.get("content-type") || "").indexOf("text/html") === -1) {
+        throw new Error("not swappable: " + r.status);
+      }
+      return r.text();
+    });
+    p.catch(function () { cache.delete(key); }); // don't cache failures
+    if (cache.size >= MAX_CACHE) cache.delete(cache.keys().next().value);
+    cache.set(key, p);
+    return p;
+  }
+
+  // DOM mutation only — returns false when the fetched page has no #content (then the
+  // caller does a real navigation instead).
+  function swap(doc) {
+    var next = doc.querySelector("#content");
+    var cur = document.querySelector("#content");
+    if (!next || !cur) return false;
+    document.querySelectorAll("head [data-page-css]").forEach(function (n) { n.remove(); });
+    doc.querySelectorAll("head [data-page-css]").forEach(function (n) {
+      document.head.appendChild(document.importNode(n, true));
+    });
+    cur.replaceWith(document.importNode(next, true));
+    document.title = doc.title;
+    if (window.__fieldChromeRefresh) window.__fieldChromeRefresh();
+    return true;
+  }
+
+  // Stage the target page's fonts BEFORE the swap: append its font CSS now (the preload
+  // link kicks the fetch, the @font-face makes the family loadable) and give the faces up
+  // to 400ms to arrive — an instant swap must never reveal fallback glyphs that reflow.
+  // swap() later clears every [data-page-css] and re-imports — same URLs, fonts stay
+  // cached, so the pre-staged clones are simply superseded, never fetched twice.
+  function stageFonts(doc) {
+    var art = doc.querySelector("article[data-font]");
+    if (!art || !document.fonts || !document.fonts.load) return Promise.resolve();
+    doc.querySelectorAll("head [data-page-css]").forEach(function (n) {
+      document.head.appendChild(document.importNode(n, true));
+    });
+    var f = art.getAttribute("data-font");
+    var loads = Promise.all(['1em "' + f + '"', '700 1em "' + f + '"', 'italic 1em "' + f + '"']
+      .map(function (s) { return document.fonts.load(s); }));
+    return Promise.race([
+      loads,
+      new Promise(function (r) { setTimeout(r, 400); }), // slow network: swap anyway
+    ]).catch(function () {});
+  }
+
+  // Staged instant swap — the only swap. `after` runs right after the DOM mutation.
+  function stagedSwap(doc, after) {
+    return stageFonts(doc).then(function () {
+      var ok = swap(doc);
+      if (ok && after) after();
+      return ok;
+    });
+  }
+
+  function focusContent() {
+    var c = document.querySelector("#content");
+    if (!c) return;
+    c.setAttribute("tabindex", "-1");
+    c.focus({ preventScroll: true }); // title change + focus move announce the new page
+  }
+
+  // swapLock: the recorder must be deaf while a swap is in flight — replacing tall
+  // content with short content makes the browser CLAMP the scroll position, and that
+  // implicit scroll event fires before pushState, i.e. it would be recorded against the
+  // OLD page and destroy the reading position back/forward exists to restore. Arrival
+  // positions are written explicitly (recordScroll) instead.
+  var swapLock = false;
+  function recordScroll() {
+    try { sessionStorage.setItem("fc-scroll:" + location.pathname, String(scrollY)); } catch (e) {}
+  }
+  var scrollSaveQueued = false;
+  addEventListener("scroll", function () {
+    if (scrollSaveQueued || swapLock) return;
+    scrollSaveQueued = true;
+    requestAnimationFrame(function () {
+      scrollSaveQueued = false;
+      if (!swapLock) recordScroll();
+    });
+  }, { passive: true });
+
+  function navigate(url) {
+    return fetchPage(url).then(function (text) {
+      var doc = parser.parseFromString(text, "text/html");
+      swapLock = true;
+      return stagedSwap(doc, function () {
+        // History moves BEFORE the arrival scroll, so the position is recorded under the
+        // NEW page — the old page's reading position must survive for back.
+        history.pushState(null, "", url.href);
+        renderedPath = url.pathname;
+        var target = url.hash && document.querySelector(url.hash);
+        if (target) target.scrollIntoView(); else scrollTo(0, 0);
+        recordScroll();
+        focusContent();
+      }).then(function (ok) {
+        swapLock = false;
+        if (!ok) { location.href = url.href; return; }
+      });
+    });
+  }
+
+  document.addEventListener("click", function (e) {
+    var a = e.target && e.target.closest && e.target.closest("a[href]");
+    if (!a) return;
+    var url = eligible(a, e);
+    if (!url) return;
+    e.preventDefault();
+    navigate(url).catch(function () { location.href = url.href; });
+  });
+
+  // Warm the cache on intent: pages are no-cache HTML, so hover is the free head start.
+  document.addEventListener("mouseover", function (e) {
+    var a = e.target && e.target.closest && e.target.closest("a[href]");
+    if (!a || (a.target && a.target !== "_self") || a.hasAttribute("download")) return;
+    var url = sameOriginUrl(a);
+    if (url && url.pathname !== location.pathname) fetchPage(url).catch(function () {});
+  });
+
+  history.scrollRestoration = "manual"; // we restore from the recorder
+  addEventListener("popstate", function () {
+    if (location.pathname === renderedPath) return; // hash-only traversal: browser scrolls
+    var url = new URL(location.href);
+    var y = 0;
+    try { y = parseInt(sessionStorage.getItem("fc-scroll:" + url.pathname), 10) || 0; } catch (e) {}
+    swapLock = true;
+    fetchPage(url).then(function (text) {
+      return stagedSwap(parser.parseFromString(text, "text/html"), function () {
+        renderedPath = url.pathname;
+        scrollTo(0, y);
+        recordScroll();
+        focusContent();
+      });
+    }).then(function (ok) {
+      swapLock = false;
+      if (!ok) { location.reload(); return; }
+    }).catch(function () { location.reload(); });
+  });
+})();
+</script>
 </body>
 </html>
