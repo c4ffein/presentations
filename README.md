@@ -7,7 +7,7 @@ The `index.html` is generated from the [writings](https://github.com/c4ffein/wri
 To update after theme changes:
 ```bash
 curl -o index.html https://c4ffein.github.io/writings/presentations-index.html
-curl -o index.html https://c4ffein.github.io/writings/404.html
+curl -o 404.html https://c4ffein.github.io/writings/404.html
 ```
 
 ## License
