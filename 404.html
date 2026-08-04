@@ -273,21 +273,33 @@
  * field-gpu.js — the WebGPU tier of the living-ink chrome (see field-chrome.js, which
  * loads this when navigator.gpu exist, and falls back to basic colors when init returns false for any reason).
  *
- * Architecture:
- *   - One fixed, full-viewport, pointer-transparent <canvas> overlay. The real DOM text
- *     stays in place (made transparent, still selectable/SEO/a11y); box-type helpers
- *     (slabs, rules, rings, bullets) are made invisible. The shader paints their ink.
- *   - ALPHA ATLAS: a viewport-sized 2D canvas holding the union of every target's alpha —
- *     glyphs drawn per text-fragment rect (Range.getClientRects, the wave's technique, so
- *     kerning/wrapping are the browser's own), boxes drawn as geometry. Redrawn on
- *     scroll/resize/theme; uploaded as a texture.
- *   - FRAGMENT SHADER: per pixel — sample atlas alpha; if inked, evaluate domain-warped
- *     fBm at DOCUMENT coordinates (pixel + scroll uniform) with a TRUE TIME AXIS (3D
- *     noise sliced over t): the continuous a→b→c evolution SVG's feTurbulence can never
- *     do, replacing the crossfade-reseed contraption entirely. Palette = the exact
- *     zigzag tables from the SVG engine, as a WGSL function.
- *   - Document-anchored coords make the unified field a triviality: no clusters, no
- *     feOffset — continuity is just arithmetic.
+ * Architecture (strip engine):
+ *   - The real DOM text stays in place (made transparent, still selectable/SEO/a11y);
+ *     box-type helpers (slabs, rules, rings, bullets) are made invisible. The shader
+ *     paints their ink on pointer-transparent canvas overlays.
+ *   - The document is divided into a FIXED grid of horizontal strips (~3/4 viewport
+ *     tall), anchored to document coordinates. Strips containing no ink are never
+ *     created; the rest each get their own small WebGPU canvas, absolutely positioned
+ *     once and NEVER moved, resized, or reconfigured while visible. (This replaced a
+ *     single 3-viewport canvas that jumped at scroll edges: its mid-scroll churn —
+ *     style.top moves + swapchain reconfigures — made the ink visibly trail the page
+ *     on some Windows compositors. Static surfaces cannot trail by construction.)
+ *   - Strip width is MEASURED: the horizontal bounding box of all targets plus bleed,
+ *     not the viewport — content-width pages pay content-width memory, and future side
+ *     content widens the measurement on its own.
+ *   - An IntersectionObserver (1-viewport margin) wakes strips as they approach:
+ *     configure + stencil raster happen OFF-SCREEN, where swapchain churn is invisible
+ *     by definition. Far strips are unconfigured to release their swapchains; their
+ *     stencil textures are kept, so re-waking is render-only.
+ *   - STENCILS: per-strip alpha textures holding the union of every target's alpha —
+ *     glyphs drawn per text-fragment rect (Range.getClientRects, so kerning/wrapping
+ *     are the browser's own), boxes drawn as geometry. Rasterized once per strip;
+ *     re-done only when layout truly changes (resize, content swap, late images).
+ *   - FRAGMENT SHADER: per pixel — sample stencil alpha; if inked, evaluate domain-
+ *     warped fBm at DOCUMENT coordinates with a TRUE TIME AXIS (3D noise sliced over
+ *     t). Palette = the exact zigzag tables from the old SVG engine, as a WGSL
+ *     function. Document-anchored coords make the unified field a triviality: each
+ *     strip carries only an offset uniform — continuity across strips is arithmetic.
  */
 (function () {
   "use strict";
@@ -434,9 +446,9 @@ fn fmain(@builtin(position) fc : vec4f) -> @location(0) vec4f {
     }
   }
 
-  // Draw one element's alpha into the atlas. Coordinates are viewport-space; the caller's
-  // transform maps them into the document-anchored window. cullTop/cullBottom bound the
-  // window in viewport space.
+  // Draw one element's alpha into a stencil. Coordinates are viewport-space; the caller's
+  // transform maps them into the document-anchored strip. cullTop/cullBottom bound the
+  // strip in viewport space.
   function drawElementAlpha(ctx, el, cullTop, cullBottom) {
     var isBox = el.classList && (el.classList.contains("fc-slab") || el.classList.contains("fc-ring") ||
                 el.classList.contains("fc-bullet") || el.tagName === "HR");
@@ -503,29 +515,8 @@ fn fmain(@builtin(position) fc : vec4f) -> @location(0) vec4f {
         diag("UNCAPTURED: " + (e.error && e.error.message ? e.error.message.slice(0, 300) : e.error));
       });
 
-      // DOCUMENT-ANCHORED WINDOW, not position:fixed: a fixed canvas painting viewport-
-      // space content always trails the compositor's async scroll by a frame (visible lag).
-      // Anchored absolute in the document, the compositor moves canvas and page TOGETHER —
-      // scroll costs nothing and sync is exact. The window spans WIN viewports and jumps
-      // (+ atlas redraw) only when scrolling nears its edge.
-      // NB: a canvas is a REPLACED element — explicit CSS size in sizeAll() is load-bearing
-      // (otherwise it displays at its intrinsic device-pixel size: 2x on Retina).
-      var WIN = 3, originY = 0, winH = 0;
-      var canvas = document.createElement("canvas");
-      canvas.style.cssText = "position:absolute;left:0;top:0;pointer-events:none;z-index:4";
-      canvas.setAttribute("aria-hidden", "true");
-      document.body.appendChild(canvas);
-      cleanup.push(function () { canvas.remove(); });
-
-      var gctx = canvas.getContext("webgpu");
-      if (!gctx) return false;
       var format = navigator.gpu.getPreferredCanvasFormat();
-
-      var atlas = document.createElement("canvas");
-      var actx = atlas.getContext("2d");
-
       var dpr = Math.min(window.devicePixelRatio || 1, 2);
-      var texture = null, bindGroup = null;
       var module = device.createShaderModule({ code: WGSL });
       module.getCompilationInfo && module.getCompilationInfo().then(function (info) {
         info.messages.forEach(function (m) {
@@ -541,73 +532,145 @@ fn fmain(@builtin(position) fc : vec4f) -> @location(0) vec4f {
                      alpha: { srcFactor: "one", dstFactor: "one-minus-src-alpha" } } }] },
         primitive: { topology: "triangle-list" },
       });
-      var ubuf = device.createBuffer({ size: 32, usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST });
       var sampler = device.createSampler({ magFilter: "linear", minFilter: "linear" });
 
-      function sizeAll() {
-        canvas.width = Math.floor(innerWidth * dpr);
-        canvas.height = Math.max(1, Math.floor(winH * dpr));
-        canvas.style.width = innerWidth + "px";   // CSS size ≠ backing size on Retina
-        canvas.style.height = winH + "px";
-        atlas.width = canvas.width;
-        atlas.height = canvas.height;
-        gctx.configure({ device: device, format: format, alphaMode: "premultiplied" });
-        texture = device.createTexture({
-          size: [canvas.width, canvas.height],
-          format: "rgba8unorm",
-          usage: GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.COPY_DST | GPUTextureUsage.RENDER_ATTACHMENT,
+      // One scratch 2D canvas, reused for every strip's stencil raster.
+      // willReadFrequently: getImageData is this canvas's whole job — keep it CPU-backed
+      // so each read isn't a GPU readback stall.
+      var scratch = document.createElement("canvas");
+      var sctx = scratch.getContext("2d", { willReadFrequently: true });
+
+      var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var strips = [], observer = null;
+      var frames = 0, dead = false;
+
+      function destroyStrips() {
+        if (observer) { observer.disconnect(); observer = null; }
+        strips.forEach(function (s) {
+          try { if (s.tex) s.tex.destroy(); } catch (_) {}
+          s.canvas.remove();
         });
-        bindGroup = device.createBindGroup({
+        strips = [];
+      }
+      cleanup.push(destroyStrips);
+
+      // Fixed document-space grid; a canvas only where ink exists. Strips are clamped to
+      // the document's natural size (measured with no strips in the DOM, so we never
+      // measure our own overhang — an absolutely-positioned box that sticks out past the
+      // page EXTENDS the scrollable area).
+      function buildStrips() {
+        destroyStrips();
+        var docH = document.documentElement.scrollHeight;
+        var docW = document.documentElement.scrollWidth;
+        var sx = window.scrollX, sy = window.scrollY;
+        var PAD = 8; // ink bleed: descenders/antialiasing at strip and side edges
+        var rects = [];
+        var left = Infinity, right = -Infinity, bottom = 0;
+        cfg.els.forEach(function (el) {
+          var r = el.getBoundingClientRect();
+          if (r.width <= 0 || r.height <= 0) return;
+          var d = { top: r.top + sy, bottom: r.bottom + sy };
+          rects.push(d);
+          left = Math.min(left, r.left + sx);
+          right = Math.max(right, r.right + sx);
+          bottom = Math.max(bottom, d.bottom);
+        });
+        if (!rects.length) { diag("no target rects"); return; }
+        left = Math.max(0, Math.floor(left - PAD));
+        right = Math.min(docW, Math.ceil(right + PAD)); // never widen the scrollable area
+        var w = Math.max(1, right - left);
+        var H = Math.max(512, Math.min(1024, Math.round(innerHeight * 0.75)));
+        var n = Math.ceil(Math.min(bottom + PAD, docH) / H);
+        observer = new IntersectionObserver(onNear, { rootMargin: "100% 0px" });
+        var made = 0;
+        for (var i = 0; i < n; i++) {
+          var top = i * H;
+          var h = Math.min(H, docH - top);
+          if (h <= 0) break;
+          var inked = rects.some(function (r) { return r.bottom + PAD > top && r.top - PAD < top + h; });
+          if (!inked) continue;
+          var c = document.createElement("canvas");
+          c.width = Math.max(1, Math.floor(w * dpr));
+          c.height = Math.max(1, Math.floor(h * dpr));
+          c.style.cssText = "position:absolute;pointer-events:none;z-index:4;" +
+            "left:" + left + "px;top:" + top + "px;width:" + w + "px;height:" + h + "px";
+          c.setAttribute("aria-hidden", "true");
+          document.body.appendChild(c);
+          var s = { left: left, top: top, w: w, h: h, canvas: c, gctx: null,
+                    ubuf: null, tex: null, bindGroup: null,
+                    configured: false, rastered: false, near: false };
+          c.__fcStrip = s;
+          strips.push(s);
+          observer.observe(c);
+          made++;
+        }
+        diag("strips " + made + "/" + n + " inked, " + w + "x" + H + " @x" + left);
+      }
+
+      // Wake = configure the swapchain (cheap churn, but OFF-SCREEN thanks to the
+      // observer margin) and, first time only, raster this strip's stencil.
+      function wake(s) {
+        if (!s.configured) {
+          if (!s.gctx) s.gctx = s.canvas.getContext("webgpu");
+          if (!s.gctx) return;
+          s.gctx.configure({ device: device, format: format, alphaMode: "premultiplied" });
+          s.configured = true;
+        }
+        if (!s.rastered) rasterStrip(s);
+      }
+
+      function rasterStrip(s) {
+        scratch.width = s.canvas.width;  // also resets state + clears
+        scratch.height = s.canvas.height;
+        var sx = window.scrollX, sy = window.scrollY;
+        // map viewport-space drawing into this strip's document window
+        sctx.setTransform(dpr, 0, 0, dpr, (sx - s.left) * dpr, (sy - s.top) * dpr);
+        var cullTop = s.top - sy, cullBottom = cullTop + s.h;
+        cfg.els.forEach(function (el) { drawElementAlpha(sctx, el, cullTop, cullBottom); });
+        // raw-bytes upload (writeTexture), not copyExternalImageToTexture: the blit path
+        // kills software WebGPU implementations, and the data path is universal
+        var img = sctx.getImageData(0, 0, scratch.width, scratch.height);
+        s.tex = device.createTexture({
+          size: [scratch.width, scratch.height],
+          format: "rgba8unorm",
+          usage: GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.COPY_DST,
+        });
+        device.queue.writeTexture({ texture: s.tex }, img.data,
+          { bytesPerRow: scratch.width * 4, rowsPerImage: scratch.height },
+          [scratch.width, scratch.height]);
+        s.ubuf = device.createBuffer({ size: 32, usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST });
+        s.bindGroup = device.createBindGroup({
           layout: pipeline.getBindGroupLayout(0),
           entries: [
-            { binding: 0, resource: { buffer: ubuf } },
-            { binding: 1, resource: texture.createView() },
+            { binding: 0, resource: { buffer: s.ubuf } },
+            { binding: 1, resource: s.tex.createView() },
             { binding: 2, resource: sampler },
           ],
         });
+        s.rastered = true;
       }
 
-      // Window management: jump the canvas (and redraw) only when scroll nears an edge.
-      // CLAMPED to the document's natural height — an absolutely-positioned box that
-      // overhangs the page EXTENDS the scrollable area (accidental infinite scroll).
-      // The measurement zeroes our own height first so we never measure our own overhang.
-      function layoutWindow(force) {
-        var vh = innerHeight, sy = window.scrollY;
-        if (!force && !(sy < originY || sy + vh > originY + winH - vh * 0.25)) return;
-        canvas.style.height = "0px";
-        var docH = document.documentElement.scrollHeight;
-        originY = Math.max(0, Math.min(sy - vh, Math.max(0, docH - WIN * vh)));
-        var h = Math.min(WIN * vh, docH - originY);
-        canvas.style.top = originY + "px";
-        // Reallocate ONLY when the backing size truly changed: sizeAll() clears the
-        // canvas (reconfigure), and a gratuitous clear during a content swap is a
-        // one-frame blank of ALL ink — with instant swaps there's no dissolve to hide it.
-        if (Math.abs(h - winH) > 1 || canvas.width !== Math.floor(innerWidth * dpr)) {
-          winH = h;
-          sizeAll(); // reallocates backing + texture at the new window size
-        } else {
-          canvas.style.height = winH + "px"; // restore after the measurement zeroing
-        }
-        atlasDirty = true;
+      function onNear(entries) {
+        entries.forEach(function (en) {
+          var s = en.target.__fcStrip;
+          if (!s) return;
+          s.near = en.isIntersecting;
+          if (s.near) wake(s);
+          else if (s.configured && s.gctx && s.gctx.unconfigure) {
+            s.gctx.unconfigure(); // release the swapchain; stencil texture stays
+            s.configured = false;
+          }
+        });
+        if (reduced) requestAnimationFrame(frame); // render freshly-woken strips once
       }
 
-      var atlasDirty = true;
-      function redrawAtlas() {
-        actx.setTransform(1, 0, 0, 1, 0, 0);
-        actx.clearRect(0, 0, atlas.width, atlas.height);
-        // map viewport-space drawing into the document-anchored window
-        var sy = window.scrollY, sx = window.scrollX;
-        actx.setTransform(dpr, 0, 0, dpr, sx * dpr, (sy - originY) * dpr);
-        var cullTop = originY - sy, cullBottom = cullTop + winH;
-        cfg.els.forEach(function (el) { drawElementAlpha(actx, el, cullTop, cullBottom); });
-
-        // raw-bytes upload (writeTexture), not copyExternalImageToTexture: the blit path
-        // kills software WebGPU implementations, and the data path is universal
-        var img = actx.getImageData(0, 0, atlas.width, atlas.height);
-        device.queue.writeTexture({ texture: texture }, img.data,
-          { bytesPerRow: atlas.width * 4, rowsPerImage: atlas.height },
-          [atlas.width, atlas.height]);
-        atlasDirty = false;
+      // The observer fires asynchronously — at boot and after swaps, wake in-view strips
+      // by geometry so the very next painted frame has ink (the swap must be atomic).
+      function wakeVisible() {
+        var sy = window.scrollY, vh = innerHeight;
+        strips.forEach(function (s) {
+          if (s.top < sy + 2 * vh && s.top + s.h > sy - vh) { s.near = true; wake(s); }
+        });
       }
 
       // originals go invisible-but-real: text keeps layout/selection, boxes keep geometry
@@ -628,24 +691,53 @@ fn fmain(@builtin(position) fc : vec4f) -> @location(0) vec4f {
 
       // Adopt a new element set after a content swap (spa-nav.js): ink only the newcomers
       // (re-inking a survivor would capture our own transparent style as its "restore"
-      // state), retarget the atlas, and force a re-layout — the document height changed.
+      // state), then rebuild the grid — the document layout changed.
       window.__fieldGPURefresh = function (els) {
         if (dead) return;
         inkEls(els.filter(function (el) { return cfg.els.indexOf(el) === -1; }));
         cfg.els = els;
-        layoutWindow(true);
-        redrawAtlas(); // SYNCHRONOUS: the very next painted frame must show the new ink
-        if (reduced) requestAnimationFrame(frame); // no continuous loop to present it
+        rebuild(); // hoisted: defined below with the resize plumbing
       };
 
-      layoutWindow(true); redrawAtlas();
-      diag("sized " + canvas.width + "x" + canvas.height + " dpr" + dpr + ", atlas drawn");
-      window.addEventListener("resize", function () { layoutWindow(true); });
-      window.addEventListener("scroll", function () { layoutWindow(false); }, { passive: true });
-      new MutationObserver(function () { atlasDirty = true; }).observe(
-        document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+      // Full rebuild: re-capture dpr FIRST — browser zoom changes devicePixelRatio, and
+      // rastering at the stale ratio leaves the ink blurry at the new zoom level.
+      function rebuild() {
+        if (dead) return;
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        buildStrips();
+        wakeVisible();
+        if (reduced) requestAnimationFrame(frame);
+      }
 
-      var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      buildStrips();
+      wakeVisible();
+      diag("built, dpr" + dpr);
+
+      // LEADING-EDGE throttle, not a debounce: a discrete resize (zoom step, maximize)
+      // rebuilds on THIS event — no visible settle lag. Continuous drags rebuild at most
+      // every 150ms, plus a trailing pass so the final size always lands exact.
+      var resizeT = null, lastBuild = 0;
+      window.addEventListener("resize", function () {
+        clearTimeout(resizeT);
+        var now = performance.now();
+        if (now - lastBuild > 150) {
+          lastBuild = now;
+          rebuild();
+        } else {
+          resizeT = setTimeout(function () { lastBuild = performance.now(); rebuild(); }, 150);
+        }
+      });
+      // Late layout shifts (images without reserved height) move the ink after boot;
+      // one rebuild when everything has arrived covers it.
+      if (document.readyState !== "complete") {
+        window.addEventListener("load", function () { rebuild(); }, { once: true });
+      }
+      new MutationObserver(function () {
+        // theme is a shader uniform, not a stencil property — reduced mode just needs
+        // one frame to repaint with the other palette
+        if (reduced) requestAnimationFrame(frame);
+      }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
       // Field clock: resumes at the phase the PREVIOUS page saved (sessionStorage), so a
       // navigation freezes the ink mid-pattern and the next page picks it up exactly there.
       // Frozen, not wall-clock-advanced: the last rendered frame is what a view transition
@@ -658,30 +750,32 @@ fn fmain(@builtin(position) fc : vec4f) -> @location(0) vec4f {
       window.addEventListener("pagehide", function () {
         try { sessionStorage.setItem("fc-clock", String(tNow)); } catch (_) {}
       });
+
       var uf = new Float32Array(8);
-      var frames = 0, dead = false;
       function frame(now) {
         if (dead) return; // device lost: stop submitting to a corpse
         frames++;
         if (frames === 1 || frames === 60) diag("frame " + frames + " @" + Math.round(now) + "ms");
-        if (atlasDirty) redrawAtlas();
         var dark = document.documentElement.getAttribute("data-theme") === "dark" ? 1 : 0;
         if (t0 === null) t0 = now;
         tNow = tBase + ((now - t0) / 1000) * 4;
-        // document offset = the window's origin, constant between jumps (scroll is free)
-        uf[0] = 0; uf[1] = originY * dpr;
-        uf[2] = canvas.width; uf[3] = canvas.height;
-        uf[4] = tNow; uf[5] = dark; uf[6] = dpr;
-        device.queue.writeBuffer(ubuf, 0, uf);
-        var enc = device.createCommandEncoder();
-        var pass = enc.beginRenderPass({ colorAttachments: [{
-          view: gctx.getCurrentTexture().createView(),
-          clearValue: { r: 0, g: 0, b: 0, a: 0 }, loadOp: "clear", storeOp: "store" }] });
-        pass.setPipeline(pipeline);
-        pass.setBindGroup(0, bindGroup);
-        pass.draw(3);
-        pass.end();
-        device.queue.submit([enc.finish()]);
+        var enc = null;
+        strips.forEach(function (s) {
+          if (!s.near || !s.configured || !s.rastered) return;
+          uf[0] = s.left * dpr; uf[1] = s.top * dpr;
+          uf[2] = s.canvas.width; uf[3] = s.canvas.height;
+          uf[4] = tNow; uf[5] = dark; uf[6] = dpr;
+          device.queue.writeBuffer(s.ubuf, 0, uf);
+          if (!enc) enc = device.createCommandEncoder();
+          var pass = enc.beginRenderPass({ colorAttachments: [{
+            view: s.gctx.getCurrentTexture().createView(),
+            clearValue: { r: 0, g: 0, b: 0, a: 0 }, loadOp: "clear", storeOp: "store" }] });
+          pass.setPipeline(pipeline);
+          pass.setBindGroup(0, s.bindGroup);
+          pass.draw(3);
+          pass.end();
+        });
+        if (enc) device.queue.submit([enc.finish()]);
         if (!reduced) requestAnimationFrame(frame);
       }
       requestAnimationFrame(frame);
