@@ -1,0 +1,118 @@
+/* Claude Code terminal mock — reusable across decks.
+ *
+ * Usage in a deck:
+ *   <link rel="stylesheet" href="../resources/claude-terminal.css">
+ *
+ *   <div class="claude-terminal">
+ *     <div class="ct-banner"><span class="ct-star">&#10035;</span> Welcome to Claude Code!
+ *
+ *   /help for help
+ *   cwd: ~/workspace/project</div>
+ *     <div class="ct-user">the prompt you typed</div>
+ *     <div class="ct-think">Thinking&hellip;</div>
+ *     <div class="ct-claude">Claude's answer text</div>
+ *     <div class="ct-tool">Bash(python -m pytest)</div>
+ *     <div class="ct-result">13 passed</div>
+ *   </div>
+ *
+ * Prefixes (>, ●, ⎿, ✻) are added by CSS — paste transcript lines as-is,
+ * one div per block. Newlines inside a div are preserved (pre-wrap),
+ * so keep continuation lines flush-left in the HTML source.
+ */
+
+.claude-terminal {
+  background: #1b1b1b;
+  color: #e8e6e3;
+  font-family: "JetBrains Mono", "Fira Code", Menlo, Consolas, monospace;
+  font-size: 0.45em;
+  line-height: 1.55;
+  text-align: left;
+  padding: 1.1em 1.4em 1.3em;
+  border-radius: 8px;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35);
+  max-width: 52em;
+  margin: 0 auto;
+  /* pre-wrap goes on the line divs only: on the container it would also
+     render the newlines between divs in the HTML source */
+  white-space: normal;
+  word-break: break-word;
+}
+
+.claude-terminal > div {
+  white-space: pre-wrap;
+}
+
+.claude-terminal > div + div {
+  margin-top: 0.7em;
+}
+
+.claude-terminal .ct-banner {
+  border: 1px solid #3a3a3a;
+  border-radius: 6px;
+  padding: 0.5em 0.9em;
+  margin-bottom: 1.1em;
+  color: #bdbbb8;
+}
+
+.claude-terminal .ct-star {
+  color: #d97757;
+}
+
+/* hang the prefix so wrapped lines align under the text */
+.claude-terminal .ct-user,
+.claude-terminal .ct-claude,
+.claude-terminal .ct-tool,
+.claude-terminal .ct-think {
+  padding-left: 1.7em;
+  text-indent: -1.7em;
+}
+
+.claude-terminal .ct-user::before,
+.claude-terminal .ct-claude::before,
+.claude-terminal .ct-tool::before,
+.claude-terminal .ct-think::before,
+.claude-terminal .ct-result::before {
+  margin-right: 0.7em;
+}
+
+.claude-terminal .ct-user::before {
+  content: ">";
+  color: #8a8884;
+  font-weight: 700;
+}
+
+.claude-terminal .ct-claude::before {
+  content: "\25CF";       /* ● */
+  color: #d97757;
+}
+
+.claude-terminal .ct-tool::before {
+  content: "\25CF";       /* ● */
+  color: #6ccc7a;
+}
+
+.claude-terminal .ct-result {
+  color: #8a8884;
+  padding-left: 1.7em;
+  margin-top: 0.1em !important;
+}
+
+.claude-terminal .ct-result::before {
+  content: "\23BF";       /* ⎿ */
+}
+
+.claude-terminal .ct-think {
+  color: #8a8884;
+  font-style: italic;
+}
+
+.claude-terminal .ct-think::before {
+  content: "\2735";       /* ✵ spark */
+  color: #d97757;
+  font-style: normal;
+}
+
+/* dim spans for args, paths, counts inside any line */
+.claude-terminal .ct-dim {
+  color: #8a8884;
+}

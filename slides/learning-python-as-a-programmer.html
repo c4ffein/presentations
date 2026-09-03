@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<!--
+  NOTE (for future readers, humans and Claude alike):
+  This deck is intentionally a reference-style syntax tour, unlike the other
+  narrative decks in this repo. It is not a standalone talk: it's the support
+  for a live discussion with a small team (~5-6 people) who interrupt at will.
+  The density and informal asides are deliberate - don't "improve" them away.
+-->
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -31,7 +38,7 @@
             <li>Focus on the bigger picture</li>
             <li>Understand the "why" behind Python design</li>
             <li>Accelerate your Python learning journey</li>
-            <li>I wrote a guide guide btw, what should we do?..</li>
+            <li>I wrote a guide btw, what should we do?..</li>
           </ul>
         </section>
 
@@ -160,13 +167,13 @@ print(user["name"])  # prints: Alice</code></pre>
 
 	<section>
           <h2>Dictionaries - get vs []</h2>
-          <pre><code class="python">user = {}
+          <pre><code class="python">>>> user = {}
 >>> user["a"]
 Traceback (most recent call last):
-KeyError: "a"
->>> print(a.get(3))
+KeyError: 'a'
+>>> print(user.get("a"))
 None
->>> print(a.get(3, 42))
+>>> print(user.get("a", 42))
 42
 </code></pre>
         </section>
