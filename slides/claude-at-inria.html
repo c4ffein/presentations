@@ -79,34 +79,21 @@
       <h3>La courbe</h3>
     </section>
 
-    <!-- Vos modèles locaux -->
+    <!-- Le même exercice, trois générations -->
     <section>
-      <section>
-        <h3 style="margin-bottom:0.5em;">Vos modèles locaux</h3>
-        <ul>
-          <li>Des résultats, en local, depuis quelques mois</li>
-          <li>Ce qui tourne sur vos machines aujourd'hui<br>≈ la frontière d'il y a ~2 ans</li>
-        </ul>
-        <div style="margin-top:0.7em;font-size:0.6em;color:#000;">Ce n'est pas du retard. C'est la courbe, rendue tangible sur votre bureau.</div>
-      </section>
       <section data-markdown>
         <textarea data-template>
-          ### Donc deux questions
-          - Où est la frontière, *maintenant* ?
-          - La courbe s'arrête-t-elle ?
+          ### Le même exercice, trois générations
+          - 2018 &middot; GPT-1 — 2019 &middot; GPT-2 — 2020 &middot; GPT-3
+          - Même recette. Plus de compute.
         </textarea>
       </section>
-    </section>
-
-    <!-- L'arc GPT -->
-    <section>
       <section>
-        <h3 style="margin-bottom:0.5em;">2018 — AI and Compute</h3>
-        <ul style="font-size:0.8em;">
-          <li>Le compute des gros entraînements : ×2 tous les ~3,4 mois</li>
-          <li>Bien plus vite que Moore (×2 / ~2 ans)</li>
-        </ul>
-        <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://openai.com/research/ai-and-compute">openai.com — AI and Compute</a></div>
+        <h3 style="margin-bottom:0.5em;">2018 — GPT-1</h3>
+        <div class="claude-terminal">
+          <div class="ct-claude">[ échantillon à peine cohérent ]</div>
+        </div>
+        <div class="todo">retrouver un vrai échantillon GPT-1 publié (papier 2018) — ou le plus ancien exemple publié qui fait mal</div>
       </section>
       <section>
         <h3 style="margin-bottom:0.5em;">2019 — GPT-2</h3>
@@ -117,15 +104,31 @@
         <div style="margin-top:0.5em;font-size:0.5em;color:#000;">Échantillon publié par OpenAI. À l'époque : &laquo; trop dangereux pour être publié en entier &raquo;.</div>
         <div style="margin-top:0.2em;font-size:0.4em;"><a href="https://openai.com/research/better-language-models">openai.com — Better Language Models (fév. 2019)</a></div>
       </section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">2020 — GPT-3</h3>
+        <div class="todo">échantillon GPT-3 publié (few-shot, papier 2020) — le même saut, encore</div>
+      </section>
+    </section>
+
+    <!-- L'erreur facile -->
+    <section>
       <section data-markdown>
         <textarea data-template>
-          ### L'arc, en accéléré
-          - **2020** — GPT-3 : few-shot, sans ré-entraînement
-          - **2022** — ChatGPT : le grand public
-          - **2023** — GPT-4 : les benchmarks humains tombent
-          - **2025** — les agents : la boucle *agir → observer → corriger*
-          - **2026** — Claude 5 / Mythos : la découverte autonome
+          ### L'erreur facile
+          - 2019 : &laquo; un générateur de texte rigolo &raquo;
+          - Chaque verdict était *localement* raisonnable
+          - L'erreur n'était pas de mal juger un modèle&hellip;
+          - &hellip;c'était de juger un **point** au lieu d'une **courbe**
         </textarea>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">Ce qui a changé : le compute</h3>
+        <ul style="font-size:0.75em;">
+          <li>2018, OpenAI : le compute des gros entraînements ×2 / ~3,4 mois</li>
+          <li>GPT-3 → ChatGPT → GPT-4 → agents (2025) → Claude 5 / Mythos (2026)</li>
+          <li>La recette n'a presque pas bougé. L'échelle, si.</li>
+        </ul>
+        <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://openai.com/research/ai-and-compute">openai.com — AI and Compute</a></div>
       </section>
     </section>
 
@@ -165,6 +168,115 @@
         <h3>The Bitter Lesson</h3>
         <p style="font-size:0.7em;">Richard Sutton (2019)</p>
         <p style="font-size:0.75em;"><strong>Les méthodes générales qui exploitent le calcul scalent mieux que l'ingénierie astucieuse spécifique à un domaine.</strong></p>
+      </section>
+    </section>
+
+    <!-- Vos modèles locaux : le payoff -->
+    <section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">Vos modèles locaux</h3>
+        <ul>
+          <li>Des résultats, en local, depuis quelques mois</li>
+          <li>Ce qui tourne sur vos machines aujourd'hui<br>≈ la frontière d'il y a ~2 ans</li>
+        </ul>
+        <div style="margin-top:0.7em;font-size:0.6em;color:#000;">Ce n'est pas du retard. C'est la courbe, rendue tangible sur votre bureau.</div>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### La même erreur facile est en vente libre
+          - &laquo; ça marche en local, donc je vois où on en est &raquo;
+          - C'est juger un point. La courbe, elle, continue.
+          - Donc : où est la frontière, *maintenant* ?
+        </textarea>
+      </section>
+    </section>
+
+    <!-- Chapitre : la frontière, en pratique -->
+    <section>
+      <h3>La frontière, en pratique</h3>
+      <p style="font-size:0.55em;color:#444;">Ce qu'on achète vraiment en 2026 quand on dit &laquo; un modèle &raquo;</p>
+    </section>
+
+    <section data-markdown>
+      <textarea data-template>
+        ### Trois étages
+        - **Modèle** — les poids : ce qu'il *peut*
+        - **Contexte** — ce que vous lui montrez : ce qu'il sait *là, maintenant*
+        - **Agent** — la boucle : *agir → observer → corriger*
+        - Les trois progressent — et se **multiplient** entre eux
+      </textarea>
+    </section>
+
+    <section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Prix au token ≠ prix à la tâche
+          - Le gros modèle : plus cher **au token**
+          - Souvent moins cher **à la tâche** :
+            - moins d'allers-retours, moins de reprises
+            - moins de *votre* temps
+          - Et le budget de réflexion se règle — un axe de plus
+        </textarea>
+      </section>
+      <section>
+        <div class="todo">le beau graphe — coût par tâche vs taux de réussite, plusieurs modèles × plusieurs niveaux de thinking. Trouver des données publiées (pareto de model cards / benchmarks) ou tracer les nôtres — je peux viber le graphe une fois les données choisies</div>
+      </section>
+    </section>
+
+    <section data-markdown>
+      <textarea data-template>
+        ### Claude Code, édition 2026 : multi-agent
+        - L'agent seul → l'équipe d'agents
+        - Sous-agents : explorer, vérifier en parallèle
+        - Workflows : du fan-out **déterministe** par-dessus
+          des agents stochastiques
+      </textarea>
+    </section>
+
+    <section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">Le harnais compte autant que le modèle</h3>
+        <table style="margin:0 auto;border-collapse:collapse;font-size:0.6em;">
+          <thead>
+            <tr>
+              <th style="padding:0.35em 0.9em;border-bottom:2px solid #333;text-align:left;">Modèle</th>
+              <th style="padding:0.35em 0.9em;border-bottom:2px solid #333;text-align:left;">Harnais accordé</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:0.3em 0.9em;text-align:left;border-bottom:1px solid #ddd;">Claude</td>
+              <td style="padding:0.3em 0.9em;text-align:left;border-bottom:1px solid #ddd;">Claude Code</td>
+            </tr>
+            <tr>
+              <td style="padding:0.3em 0.9em;text-align:left;border-bottom:1px solid #ddd;">GPT</td>
+              <td style="padding:0.3em 0.9em;text-align:left;border-bottom:1px solid #ddd;">Codex CLI</td>
+            </tr>
+            <tr>
+              <td style="padding:0.3em 0.9em;text-align:left;">autres / locaux</td>
+              <td style="padding:0.3em 0.9em;text-align:left;">pi, opencode — harnais <em>transparents</em></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Pourquoi ça compte
+          - Harnais **accordé** : tuné bout à bout avec son modèle
+          - Harnais **transparent** : vous voyez la boucle —
+            un échec devient attribuable (modèle ? contexte ? boucle ?)
+          - Harnais **générique** : ni l'un ni l'autre —
+            le même modèle y paraît plus faible
+        </textarea>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">La preuve ? Copilot lui-même</h3>
+        <ul style="font-size:0.72em;">
+          <li>Février 2026 — GitHub <strong>Agent HQ</strong> :<br>les agents Claude et Codex, <em>dans</em> Copilot</li>
+          <li>&laquo; Pick your agent &raquo; — le titre est d'eux</li>
+          <li>Le vendeur du harnais générique distribue désormais<br>les harnais accordés — la thèse est concédée</li>
+        </ul>
+        <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://github.blog/news-insights/company-news/pick-your-agent-use-claude-and-codex-on-agent-hq/">github.blog — Pick your agent: Claude and Codex on Agent HQ</a></div>
       </section>
     </section>
 
