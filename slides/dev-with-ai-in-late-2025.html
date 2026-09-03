@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../engine/dist/theme/c4ffein.css">
     <!-- Theme used for syntax highlighted code -->
     <link rel="stylesheet" href="../engine/dist/plugin/highlight/c4ffein-light.css">
+    <link rel="stylesheet" href="../resources/claude-terminal.css">
     <link rel="stylesheet" href="../engine/runcss/runcss.min.css">
     <script src="../engine/runcss/runcss.min.js" defer watch></script>
 </head>
@@ -320,7 +321,25 @@
       
       <section>
         <section>
-          <img src="https://kean.blog/images/posts/claude/claude-code-screen-01.png" style="max-width:95%; max-height:80vh;">
+          <div class="claude-terminal">
+            <div class="ct-banner"><span class="ct-star">&#10035;</span> Welcome to Claude Code!
+
+  /help for help, /status for your current setup
+
+  cwd: /home/dev/workspace/project</div>
+            <div class="ct-user">can you fix the failing test in tests/test_auth.py?</div>
+            <div class="ct-tool">Bash(python -m pytest tests/test_auth.py)
+<span class="ct-result">1 failed, 12 passed</span></div>
+            <div class="ct-claude">The test expects a 401, the view returns 403. Let me look at the view:</div>
+            <div class="ct-tool">Read(api/views.py)
+<span class="ct-result">Read 40 lines</span></div>
+            <div class="ct-tool">Update(api/views.py)
+<span class="ct-result">Updated api/views.py with 1 addition and 1 removal</span></div>
+            <div class="ct-tool">Bash(python -m pytest tests/test_auth.py)
+<span class="ct-result">13 passed</span></div>
+            <div class="ct-claude">Fixed! The permission check ran before authentication,
+so anonymous users got 403 instead of 401.</div>
+          </div>
         </section>
       </section>
 
@@ -411,7 +430,7 @@ _cli_context = Context()    context from Django
         <section>
           <h2 class="lang-en">Using acronyms: DRY</h2>
           <h2 class="lang-fr">Utiliser des acronymes : DRY</h2>
-          <p><a href="https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it">DRY</a> - "Don't Repeat Yourself"</p>
+          <p><a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a> - "Don't Repeat Yourself"</p>
           <p class="lang-en">Short prompts work with thinking mode enabled</p>
           <p class="lang-fr">Les prompts courts fonctionnent avec le mode thinking activé</p>
         </section>
