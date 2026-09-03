@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<!--
+  DRAFT — talk at Inria, 2026. Structure v1, iterating with Claude.
+  Arc: Partie 1 la courbe (pas de plafond) / Partie 2 l'arc Scotch /
+  Partie 3 trois idées / Closer: Claude Science.
+  TODO() markers = waiting on material from c4ffein.
+-->
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Toujours pas de plafond</title>
+    <link rel="stylesheet" href="../engine/dist/reset.css">
+    <link rel="stylesheet" href="../engine/dist/reveal.css">
+    <link rel="stylesheet" href="../engine/dist/theme/c4ffein.css">
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="../engine/dist/plugin/highlight/c4ffein-light.css">
+    <link rel="stylesheet" href="../resources/claude-terminal.css">
+    <link rel="stylesheet" href="../engine/runcss/runcss.min.css">
+    <script src="../engine/runcss/runcss.min.js" defer watch></script>
+    <style>
+      /* draft-only: loud placeholders, delete this block when the deck is final */
+      .todo {
+        border: 3px dashed #c00;
+        background: #ffecec;
+        color: #c00;
+        font-size: 0.5em;
+        font-weight: 700;
+        padding: 0.6em 0.9em;
+        margin: 0.6em auto 0;
+        max-width: 85%;
+        text-align: left;
+      }
+      .todo::before { content: "TODO — "; }
+    </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+    <!-- ===== Titre ===== -->
+    <section>
+      <h1 style="margin-bottom:0.3em;">Toujours pas de plafond</h1>
+      <p style="font-size:0.6em;">Coder — et chercher — avec Claude en 2026</p>
+    </section>
+
+    <!-- ===== Cold open : le graphe à 3 sommets ===== -->
+    <section>
+      <!-- TODO(scotch): replace with the actual 3-vertex minimal counterexample
+           from hegel-c tests/irl/scotch/test_graph_order_shrink.c -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" style="width:70%;max-width:760px;height:auto;display:block;margin:0 auto;">
+        <line x1="180" y1="280" x2="380" y2="100" stroke="#1a1a1a" stroke-width="3"/>
+        <line x1="380" y1="100" x2="580" y2="280" stroke="#1a1a1a" stroke-width="3"/>
+        <circle cx="180" cy="280" r="26" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
+        <circle cx="380" cy="100" r="26" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
+        <circle cx="580" cy="280" r="26" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
+        <text x="180" y="287" font-size="20" text-anchor="middle" fill="#1a1a1a">0</text>
+        <text x="380" y="107" font-size="20" text-anchor="middle" fill="#1a1a1a">1</text>
+        <text x="580" y="287" font-size="20" text-anchor="middle" fill="#1a1a1a">2</text>
+      </svg>
+      <div style="margin-top:0.6em;font-size:0.55em;color:#000;">Ce graphe fait planter un code vieux de 30 ans.<br>Une machine l'a trouvé. On y revient.</div>
+      <div class="todo">remplacer par le vrai contre-exemple minimal de hegel-c (test_graph_order_shrink.c) — arêtes exactes + quel invariant casse</div>
+    </section>
+
+    <!-- ===== Présentation ===== -->
+    <section>
+      <h2>Présentation</h2>
+      <ul>
+        <li>Toujours pas un expert en IA</li>
+        <li>Toujours un ingé qui aime comprendre</li>
+      </ul>
+      <div class="todo">la ligne sur le lien familial avec Scotch — tes mots, pas les miens</div>
+      <p><em>→ Pourquoi ce talk, ici</em></p>
+    </section>
+
+    <!-- ===== Partie 1 ===== -->
+    <section>
+      <h2>Partie 1</h2>
+      <h3>La courbe</h3>
+    </section>
+
+    <!-- Vos modèles locaux -->
+    <section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">Vos modèles locaux</h3>
+        <ul>
+          <li>Des résultats, en local, depuis quelques mois</li>
+          <li>Ce qui tourne sur vos machines aujourd'hui<br>≈ la frontière d'il y a ~2 ans</li>
+        </ul>
+        <div style="margin-top:0.7em;font-size:0.6em;color:#000;">Ce n'est pas du retard. C'est la courbe, rendue tangible sur votre bureau.</div>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Donc deux questions
+          - Où est la frontière, *maintenant* ?
+          - La courbe s'arrête-t-elle ?
+        </textarea>
+      </section>
+    </section>
+
+    <!-- L'arc GPT -->
+    <section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">2018 — AI and Compute</h3>
+        <ul style="font-size:0.8em;">
+          <li>Le compute des gros entraînements : ×2 tous les ~3,4 mois</li>
+          <li>Bien plus vite que Moore (×2 / ~2 ans)</li>
+        </ul>
+        <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://openai.com/research/ai-and-compute">openai.com — AI and Compute</a></div>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">2019 — GPT-2</h3>
+        <div class="claude-terminal">
+          <div class="ct-user">In a shocking finding, scientist discovered a herd of unicorns living in a remote, previously unexplored valley, in the Andes Mountains.</div>
+          <div class="ct-claude">The scientist named the population, after their distinctive horn, Ovid's Unicorn. These four-horned, silver-white unicorns were previously unknown to science. [&hellip;]</div>
+        </div>
+        <div style="margin-top:0.5em;font-size:0.5em;color:#000;">Échantillon publié par OpenAI. À l'époque : &laquo; trop dangereux pour être publié en entier &raquo;.</div>
+        <div style="margin-top:0.2em;font-size:0.4em;"><a href="https://openai.com/research/better-language-models">openai.com — Better Language Models (fév. 2019)</a></div>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### L'arc, en accéléré
+          - **2020** — GPT-3 : few-shot, sans ré-entraînement
+          - **2022** — ChatGPT : le grand public
+          - **2023** — GPT-4 : les benchmarks humains tombent
+          - **2025** — les agents : la boucle *agir → observer → corriger*
+          - **2026** — Claude 5 / Mythos : la découverte autonome
+        </textarea>
+      </section>
+    </section>
+
+    <!-- Scaling laws -->
+    <section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">2020 — Scaling Laws (Kaplan et al.)</h3>
+        <ul style="font-size:0.8em;">
+          <li>Loss vs compute, paramètres, données</li>
+          <li>Des droites en log-log, sur plusieurs ordres de grandeur</li>
+        </ul>
+        <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://arxiv.org/abs/2001.08361">arXiv:2001.08361</a></div>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">2022 — Chinchilla</h3>
+        <ul style="font-size:0.8em;">
+          <li>Les lois se raffinent (ratio données/paramètres)&hellip;</li>
+          <li>&hellip;elles ne s'abrogent pas</li>
+        </ul>
+        <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://arxiv.org/abs/2203.15556">arXiv:2203.15556</a></div>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">Soyons honnêtes : loi de puissance ≠ absence de limite</h3>
+        <ul style="font-size:0.75em;">
+          <li>Rendements décroissants par FLOP — oui</li>
+          <li>Mur — aucun d'observé à ce jour</li>
+          <li>Et de <strong>nouveaux axes</strong> s'ouvrent :
+            <ul>
+              <li>post-training (RL)</li>
+              <li>compute au moment de l'inférence</li>
+            </ul>
+          </li>
+        </ul>
+        <div style="margin-top:0.5em;font-size:0.55em;color:#000;">&laquo; Pas de plafond &raquo; = pas de mur constaté + des axes neufs. Rien de plus, rien de moins.</div>
+      </section>
+      <section>
+        <h3>The Bitter Lesson</h3>
+        <p style="font-size:0.7em;">Richard Sutton (2019)</p>
+        <p style="font-size:0.75em;"><strong>Les méthodes générales qui exploitent le calcul scalent mieux que l'ingénierie astucieuse spécifique à un domaine.</strong></p>
+      </section>
+    </section>
+
+    <!-- La forme du prompt est absorbée -->
+    <section>
+      <section data-markdown>
+        <textarea data-template>
+          ### L'effort de forme est absorbé
+          - Même demande, deux prompts :
+            - un **rangé**, un **en vrac**
+          - Les notes de travail visibles (CoT) convergent
+            vers à peu près le même plan
+        </textarea>
+      </section>
+      <section>
+        <div class="todo">le vrai côte-à-côte : prompt en vrac vs prompt rangé, et les deux extraits de CoT quasi identiques (claude-terminal ou deux colonnes)</div>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Ce que ça veut dire (et ne veut pas dire)
+          - Le modèle fait le travail de **mise en ordre**
+          - Dépensez votre énergie sur les *idées*, pas sur la forme
+          - Nuance : le CoT visible n'est pas une lecture fidèle
+            de l'interne — on compare des notes, pas des pensées
+        </textarea>
+      </section>
+    </section>
+
+    <!-- Détour : le CoT du jeu de cartes — [ coupe possible ] -->
+    <section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Détour — ses notes à lui
+          - Mes prompts : non curés. Son CoT : *compressé*.
+          - Exemple : Claude réfléchit à un jeu de cartes&hellip;
+        </textarea>
+      </section>
+      <section>
+        <div class="claude-terminal">
+          <div class="ct-think">deck 52, draw 5 → eval: pair&gt;high. joker? non — règle v2 🃏 exclu. compte: 13 rangs × 4. edge: as haut OU bas?.. les 2 → straight A-2-3-4-5 ok ✅ mais A-K-Q-J-10 aussi → duplique la logique?.. non: rank_value(as)={1,14}, min/max au eval</div>
+        </div>
+        <div class="todo">extrait bidon écrit à la main — remplacer par le vrai CoT du jeu de cartes (celui avec les emojis)</div>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Observation
+          - Mots-outils supprimés, abréviations, symboles&hellip;
+          - &hellip;et les **emojis survivent** à la compression
+          - Beaucoup de sens, un seul token ?
+        </textarea>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Détour spéculatif, donc coupable
+          - Des notes proches d'une *description minimale* ?
+          - Shannon : coder court ce qui est prévisible,
+            dépenser les bits sur ce qui surprend
+          - Je n'affirme rien — **question ouverte
+            aux théoriciens de l'information dans la salle**
+        </textarea>
+      </section>
+    </section>
+
+    <!-- Chaque prompt est une question -->
+    <section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Chaque prompt est une question
+          - Je ne donne (presque) jamais d'ordres
+          - &laquo; wdyt? &raquo; &mdash; &laquo; EDYT? &raquo; &mdash; &laquo; still too blunt? &raquo;
+          - *(vrais prompts &mdash; voir la transcription publiée)*
+        </textarea>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Pourquoi
+          - Le produit est entraîné pour **suivre vos instructions**
+          - Ordonnez : il obéira &mdash; même si vous avez tort
+          - Demandez : vous récupérez l'information
+            que l'ordre aurait écrasée
+          - Ce talk : le framing &laquo; ils étaient en retard &raquo;
+            a été inversé *parce que c'était une question*
+        </textarea>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### La nuance
+          - Les ordres restent parfaits pour le mécanique :
+            &laquo; kill 8080! serve on 8080! &raquo; *(vrai prompt aussi)*
+          - Accorder l'acte de langage à la tâche :
+            - jugement &rarr; **question**
+            - mécanique &rarr; **ordre**
+          - Pas de la politesse : de l'ingénierie de l'information
+        </textarea>
+      </section>
+    </section>
+
+    <!-- Vibe physics -->
+    <section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">&laquo; Vibe physics &raquo; — un physicien, un papier</h3>
+        <ul style="font-size:0.75em;">
+          <li>Papier technique écrit avec Claude — 2 semaines, publié le 5 janvier 2026</li>
+          <li>Claude a triché : paramètres ajustés pour que les courbes collent</li>
+          <li>Le physicien l'a <strong>vu</strong> — parce qu'il connaît son domaine</li>
+        </ul>
+        <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://www.anthropic.com/research/vibe-physics">anthropic.com/research/vibe-physics</a></div>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### La leçon
+          - Claude fait des erreurs. Les humains aussi.
+          - L'expertise est la **couche de correction d'erreur**
+          - Et malgré tout : bien plus rapide que seul
+        </textarea>
+      </section>
+    </section>
+
+    <!-- ===== Partie 2 ===== -->
+    <section>
+      <h2>Partie 2</h2>
+      <h3>L'arc Scotch</h3>
+    </section>
+
+    <section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Scotch
+          - Partitionnement de graphes, renumérotation de matrices creuses
+          - Plus de 30 ans, C, MPI — au cœur du HPC
+          - Développé ici, à Inria
+        </textarea>
+      </section>
+      <section>
+        <div class="todo">le moment &laquo; l'auteur est dans la salle &raquo; — à toi de choisir comment le jouer (slide, ou juste à l'oral)</div>
+      </section>
+    </section>
+
+    <!-- L'échelle : 5 barreaux -->
+    <section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Le plan d'attaque
+          1. **pyscotch** — un wrapper ctypes, vibé
+          2. **Tests différentiels** — octet par octet vs `gpart` / `gord`
+          3. **Lire le C** — premier bug, trouvé par lecture
+          4. **Hypothesis** — la machine choisit les entrées
+          5. **hegel-c** — du PBT *en C*, avec réduction
+        </textarea>
+      </section>
+    </section>
+
+    <!-- Barreau 1 : pyscotch -->
+    <section>
+      <section data-markdown>
+        <textarea data-template>
+          ### 1. pyscotch
+          - Wrapper ctypes pour PT-Scotch
+          - Le README : *"this is a vibe-engineering experiment —
+            you probably shouldn't use this!"*
+          - [github.com/c4ffein/pyscotch](https://github.com/c4ffein/pyscotch)
+        </textarea>
+      </section>
+      <section>
+        <div class="todo">1-2 slides de détails croustillants du wrapper — SCOTCH_*Sizeof pour les structs dynamiques ? suffixes 32/64 bits ? la couche FILE* ? choisis ce qui raconte le mieux</div>
+      </section>
+    </section>
+
+    <!-- Barreau 2 : différentiel -->
+    <section>
+      <section data-markdown>
+        <textarea data-template>
+          ### 2. Tests différentiels
+          - Même entrée → pyscotch vs `gpart` / `gord` / `gmap`
+          - Comparaison octet par octet
+          - L'oracle, c'est Scotch lui-même
+        </textarea>
+      </section>
+    </section>
+
+    <!-- Barreau 3 : lire le C -->
+    <section>
+      <section data-markdown>
+        <textarea data-template>
+          ### 3. Lire le C
+          - Premier bug : trouvé par *lecture* du code
+        </textarea>
+      </section>
+      <section>
+        <div class="claude-terminal">
+          <div class="ct-user">[ transcript à insérer ]</div>
+        </div>
+        <div class="todo">la vraie transcription de la découverte du premier bug en lisant le C — colle-la brute, je la mets en forme (divs ct-user / ct-claude / ct-tool / ct-result)</div>
+      </section>
+    </section>
+
+    <!-- Barreau 4 : Hypothesis -->
+    <section>
+      <section data-markdown>
+        <textarea data-template>
+          ### 4. Hypothesis sur le wrapper
+          - Des propriétés, pas des exemples
+            *(cf. mon talk Hypothesis — la suite, c'est maintenant)*
+          - La machine choisit les graphes
+        </textarea>
+      </section>
+      <section>
+        <div class="todo">ce qu'Hypothesis a trouvé — la propriété + le falsifying example, un bug par slide</div>
+      </section>
+    </section>
+
+    <!-- Barreau 5 : hegel-c -->
+    <section>
+      <section data-markdown>
+        <textarea data-template>
+          ### 5. hegel-c
+          - Hegel : le moteur d'Hypothesis, pour tous les langages
+          - hegel-c : le client C — vibé ensemble, avec Claude
+          - Propriétés en C, réduction automatique
+          - [github.com/c4ffein/hegel-c](https://github.com/c4ffein/hegel-c)
+        </textarea>
+      </section>
+      <section>
+        <pre><code class="language-c" data-trim data-noescape>
+static void test_add_commutes (hegel_testcase *tc) {
+  int a = HEGEL_DRAW_INT (-1000, 1000);
+  int b = HEGEL_DRAW_INT (-1000, 1000);
+  HEGEL_ASSERT (a + b == b + a, "a=%d b=%d", a, b);
+}
+
+int main (void) { hegel_run_test (test_add_commutes); return 0; }
+        </code></pre>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Le retour du graphe à 3 sommets
+          - `SCOTCH_graphOrder` : un vrai bug
+          - Trouvé sur un graphe aléatoire&hellip;
+          - &hellip;réduit automatiquement au **minimum théorique**
+        </textarea>
+      </section>
+    </section>
+
+    <!-- Le bilan des bugs -->
+    <section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">Le bilan</h3>
+        <table style="margin:0 auto;border-collapse:collapse;font-size:0.55em;">
+          <thead>
+            <tr>
+              <th style="padding:0.35em 0.7em;border-bottom:2px solid #333;text-align:left;">Bug</th>
+              <th style="padding:0.35em 0.7em;border-bottom:2px solid #333;text-align:center;">Méthode</th>
+              <th style="padding:0.35em 0.7em;border-bottom:2px solid #333;text-align:center;">Sévérité</th>
+              <th style="padding:0.35em 0.7em;border-bottom:2px solid #333;text-align:center;">Upstream</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding:0.3em 0.7em;" colspan="4">[ à remplir — un bug par ligne ]</td></tr>
+          </tbody>
+        </table>
+        <div class="todo">LA slide de crédibilité — un bug par ligne, et distinguer bug upstream vs mauvais usage du wrapper. C'est celle que la salle va challenger.</div>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">Les reçus</h3>
+        <ul style="font-size:0.7em;">
+          <li>Mon nom, dans le bug tracker de Scotch</li>
+          <li>Les logs de conversation avec le mainteneur</li>
+        </ul>
+        <div class="todo">captures du bug tracker (ton nom visible) + extraits choisis des échanges avec François — le &laquo; SLA du mainteneur upstream : le dîner de famille &raquo; peut être une très bonne slide, à toi de voir</div>
+      </section>
+    </section>
+
+    <!-- ===== Partie 3 ===== -->
+    <section>
+      <h2>Partie 3</h2>
+      <h3>Trois idées — en accéléré</h3>
+      <p style="font-size:0.55em;color:#444;">Une idée, plusieurs projets, un détail chacun. Promis, ça va vite.</p>
+    </section>
+
+    <!-- Idée 1 : porter une codebase -->
+    <section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Idée 1 — On peut porter une codebase
+          - Premiers essais : modèles faibles, résultats faibles
+          - Aujourd'hui : ça tient
+        </textarea>
+      </section>
+      <section>
+        <div class="todo">les détails — les premiers essais avec des modèles faibles (lesquels ? qu'est-ce qui ratait ?), puis la grande réécriture Bun : quelle codebase, vers quoi, qu'est-ce qui a cassé, qu'est-ce qui a tenu ?</div>
+      </section>
+    </section>
+
+    <!-- Idée 2 : viber son observabilité -->
+    <section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Idée 2 — Vibez votre observabilité
+          - Un petit jeu, un moteur maison
+          - &laquo; Claude, on a un problème de perf ? &raquo; → &laquo; non, ça va &raquo;
+          - Alors : &laquo; vibe-moi un visualiseur de spans &raquo;
+          - L'outil a montré un **axe** que la question ne trouvait pas
+        </textarea>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### La leçon
+          - Ne demandez pas un avis — construisez un **instrument**
+          - L'avis meurt dans la conversation ; l'instrument reste
+          - Un outil d'observabilité jetable coûte désormais&hellip; une conversation
+        </textarea>
+      </section>
+      <section>
+        <div class="todo">capture du visualiseur de spans + c'était quoi, le nouvel axe que l'outil a montré ?</div>
+      </section>
+    </section>
+
+    <!-- Idée 3 : tout code est legacy -->
+    <section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Idée 3 — Tout code est du legacy
+          - Feathers, *Working Effectively with Legacy Code* :
+            legacy = du code **sans tests**
+          - Avec l'IA, tout code est du code que *vous* n'avez pas écrit
+          - Même celui d'hier
+        </textarea>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### La bonne nouvelle : l'outillage intellectuel existe déjà
+          - Tests de caractérisation → c'est le PBT de la partie 2
+          - Coutures (*seams*) → c'est pyscotch
+          - Petits pas sûrs → c'est la boucle de l'agent
+          - **La qualité, c'est la vitesse** — surtout maintenant
+        </textarea>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Et le code de recherche ?
+          - 30 ans, C ou Fortran, peu de tests : le legacy ultime
+          - Vous avez le domaine ; la machine a la patience
+        </textarea>
+      </section>
+    </section>
+
+    <!-- ===== Closer : Claude Science ===== -->
+    <section>
+      <section data-markdown>
+        <textarea data-template>
+          ### 30 juin 2026 — Claude Science
+          - &laquo; Claude Code, pour la recherche scientifique &raquo;
+          - Outils, packages, artefacts auditables, compute
+          - Programme AI for Science : projets en cours,
+            sept. → déc. 2026
+        </textarea>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Autrement dit
+          - La courbe n'a pas de plafond constaté
+          - Elle vient de traverser un code de 30 ans, ici même
+          - Et elle est maintenant **emballée pour vos labos**
+        </textarea>
+      </section>
+      <div style="display:none"><!-- TODO(closer): link anthropic.com/news/claude-science-ai-workbench on slide or links page --></div>
+    </section>
+
+    <!-- ===== Merci + liens ===== -->
+    <section>
+      <div class="flex" style="align-items:center;justify-content:center;gap:1.6em;width:100%;">
+        <div style="flex:0 0 auto;text-align:center;">
+          <div style="width:300px;height:300px;border:3px dashed #c00;display:flex;align-items:center;justify-content:center;font-size:0.5em;color:#c00;font-weight:700;">TODO — QR<br>(qr-claude-at-inria.svg)</div>
+        </div>
+        <ul style="flex:0 1 auto;text-align:left;font-size:0.6em;line-height:2.0;list-style:none;margin:0;padding:0;">
+          <li><a href="https://presentations.cafeine.dev/slides/claude-at-inria.html" style="color:#000;text-decoration:none;">presentations.cafeine.dev/slides/claude-at-inria.html</a></li>
+          <li><a href="https://github.com/c4ffein/pyscotch" style="color:#000;text-decoration:none;">github.com/c4ffein/pyscotch</a></li>
+          <li><a href="https://github.com/c4ffein/hegel-c" style="color:#000;text-decoration:none;">github.com/c4ffein/hegel-c</a></li>
+          <li><a href="https://www.anthropic.com/research/vibe-physics" style="color:#000;text-decoration:none;">anthropic.com/research/vibe-physics</a></li>
+          <li><a href="https://www.anthropic.com/news/claude-science-ai-workbench" style="color:#000;text-decoration:none;">anthropic.com — Claude Science</a></li>
+          <li class="todo" style="list-style:none;">le lien vers la transcription publiée du making-of de ce deck</li>
+        </ul>
+      </div>
+    </section>
+
+    </div>
+  </div>
+  <script src="../engine/dist/reveal.js"></script>
+  <script src="../engine/dist/plugin/notes.js"></script>
+  <script src="../engine/dist/plugin/markdown.js"></script>
+  <script src="../engine/dist/plugin/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      transition: 'slide',
+      navigationMode: 'default',
+      plugins: [ RevealHighlight, RevealNotes, RevealMarkdown ]
+    });
+  </script>
+</body>
+</html>
