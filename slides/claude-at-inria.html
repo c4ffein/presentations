@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Toujours pas de plafond</title>
+    <title>Claude on Scotch</title>
     <link rel="stylesheet" href="../engine/dist/reset.css">
     <link rel="stylesheet" href="../engine/dist/reveal.css">
     <link rel="stylesheet" href="../engine/dist/theme/c4ffein.css">
@@ -40,43 +40,47 @@
 
     <!-- ===== Titre ===== -->
     <section>
-      <h1 style="margin-bottom:0.3em;">Toujours pas de plafond</h1>
-      <p style="font-size:0.6em;">Coder — et chercher — avec Claude en 2026</p>
-    </section>
-
-    <!-- ===== Cold open : le graphe à 3 sommets ===== -->
-    <section>
-      <!-- TODO(scotch): replace with the actual 3-vertex minimal counterexample
-           from hegel-c tests/irl/scotch/test_graph_order_shrink.c -->
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" style="width:70%;max-width:760px;height:auto;display:block;margin:0 auto;">
-        <line x1="180" y1="280" x2="380" y2="100" stroke="#1a1a1a" stroke-width="3"/>
-        <line x1="380" y1="100" x2="580" y2="280" stroke="#1a1a1a" stroke-width="3"/>
-        <circle cx="180" cy="280" r="26" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
-        <circle cx="380" cy="100" r="26" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
-        <circle cx="580" cy="280" r="26" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
-        <text x="180" y="287" font-size="20" text-anchor="middle" fill="#1a1a1a">0</text>
-        <text x="380" y="107" font-size="20" text-anchor="middle" fill="#1a1a1a">1</text>
-        <text x="580" y="287" font-size="20" text-anchor="middle" fill="#1a1a1a">2</text>
-      </svg>
-      <div style="margin-top:0.6em;font-size:0.55em;color:#000;">Ce graphe fait planter un code vieux de 30 ans.<br>Une machine l'a trouvé. On y revient.</div>
-      <div class="todo">remplacer par le vrai contre-exemple minimal de hegel-c (test_graph_order_shrink.c) — arêtes exactes + quel invariant casse</div>
+      <h1 style="margin-bottom:0.3em;">Claude on Scotch</h1>
+      <p style="font-size:0.5em;max-width:80%;margin:0 auto;">État de l'art du développement avec Claude sur une codebase C de plus de 30 ans liée au calcul scientifique</p>
     </section>
 
     <!-- ===== Présentation ===== -->
     <section>
-      <h2>Présentation</h2>
-      <ul>
-        <li>Toujours pas un expert en IA</li>
-        <li>Toujours un ingé qui aime comprendre</li>
-      </ul>
-      <div class="todo">la ligne sur le lien familial avec Scotch — tes mots, pas les miens</div>
-      <p><em>→ Pourquoi ce talk, ici</em></p>
+      <!-- ===== Présentation : moi ===== -->
+      <section>
+        <h2>Présentation</h2>
+        <ul>
+          <li>Jeune autodidacte inspiré par sa famille</li>
+          <li>Master en Génie Logiciel à l'Université de Bordeaux</li>
+          <li>Parti dans l'industrie sur des sujets R&D</li>
+          <li>Ne se considère pas comme un expert en IA mais un ingé curieux qui aime comprendre</li>
+        </ul>
+      </section>
+      <!-- ===== Présentation : Scotch ===== -->
+      <section>
+        <h2>Scotch</h2>
+        <ul>
+          <li>Partitionnement de graphes, renumérotation de matrices creuses</li>
+          <li>Plus de 30 ans, C, MPI — au cœur du HPC</li>
+          <li>Développé ici, à l'Inria</li>
+          <li>Je connais l'auteur</li>
+        </ul>
+      </section>
+      <!-- ===== Le plan ===== -->
+      <section>
+        <h3 style="margin-bottom:0.6em;">Le plan</h3>
+        <ol style="font-size:0.8em;line-height:1.9;text-align:left;display:inline-block;">
+          <li><strong>Mon bon modèle mental des LLM</strong><!--comment je pense qu'il faut les considérer, pourquoi j'ai pu supposer que le progrès allait continuer, et comment je travaille avec pour avoir de bons résultats-->
+          <li><strong>Parcours avec Scotch</strong><!--pourquoi j'ai choisi cette codebase, et pourquoi j'ai choisi de raconter cette histoire de manière chronologique-->
+          <li><strong>Leçons générales de Scotch et d'autres projets</strong><!--présenter des idées claires qui sont généralisables facilement et permettent de travailler plus efficacement avec Claude, et ne rentraient pas dans mon parcours avec Scotch-->
+        </ol>
+      </section>
     </section>
 
     <!-- ===== Partie 1 ===== -->
     <section>
       <h2>Partie 1</h2>
-      <h3>La courbe</h3>
+      <h3>Mon modèle mental des LLM</h3>
     </section>
 
     <!-- Le même exercice, trois générations -->
@@ -401,20 +405,6 @@
       <h3>L'arc Scotch</h3>
     </section>
 
-    <section>
-      <section data-markdown>
-        <textarea data-template>
-          ### Scotch
-          - Partitionnement de graphes, renumérotation de matrices creuses
-          - Plus de 30 ans, C, MPI — au cœur du HPC
-          - Développé ici, à Inria
-        </textarea>
-      </section>
-      <section>
-        <div class="todo">le moment &laquo; l'auteur est dans la salle &raquo; — à toi de choisir comment le jouer (slide, ou juste à l'oral)</div>
-      </section>
-    </section>
-
     <!-- L'échelle : 5 barreaux -->
     <section>
       <section data-markdown>
@@ -510,13 +500,24 @@ static void test_add_commutes (hegel_testcase *tc) {
 int main (void) { hegel_run_test (test_add_commutes); return 0; }
         </code></pre>
       </section>
-      <section data-markdown>
-        <textarea data-template>
-          ### Le retour du graphe à 3 sommets
-          - `SCOTCH_graphOrder` : un vrai bug
-          - Trouvé sur un graphe aléatoire&hellip;
-          - &hellip;réduit automatiquement au **minimum théorique**
-        </textarea>
+      <section>
+        <h3 style="margin-bottom:0.4em;">Un graphe à 3 sommets</h3>
+        <!-- TODO(scotch): remplacer par le vrai contre-exemple minimal de hegel-c
+             (test_graph_order_shrink.c) — arêtes exactes + quel invariant casse -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 320" width="760" height="320" style="width:58%;max-width:760px;height:auto;display:block;margin:0 auto;">
+          <line x1="180" y1="240" x2="380" y2="80" stroke="#1a1a1a" stroke-width="3"/>
+          <line x1="380" y1="80" x2="580" y2="240" stroke="#1a1a1a" stroke-width="3"/>
+          <circle cx="180" cy="240" r="26" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
+          <circle cx="380" cy="80" r="26" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
+          <circle cx="580" cy="240" r="26" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
+          <text x="180" y="247" font-size="20" text-anchor="middle" fill="#1a1a1a">0</text>
+          <text x="380" y="87" font-size="20" text-anchor="middle" fill="#1a1a1a">1</text>
+          <text x="580" y="247" font-size="20" text-anchor="middle" fill="#1a1a1a">2</text>
+        </svg>
+        <div style="margin-top:0.4em;font-size:0.55em;color:#000;">
+          <code>SCOTCH_graphOrder</code> — un vrai bug.<br>
+          Trouvé sur un graphe aléatoire, réduit tout seul au <strong>minimum</strong>.
+        </div>
       </section>
     </section>
 
