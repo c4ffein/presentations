@@ -86,39 +86,55 @@
       <h3>Mon modèle mental des LLM</h3>
     </section>
 
-    <!-- Le même exercice, trois générations -->
+    <!-- Le même exercice, quatre générations (theaidigest.org) -->
     <section>
-      <section data-markdown>
-        <textarea data-template>
-          ### Le même exercice, trois générations
-          - 2018 &middot; GPT-1 — 2019 &middot; GPT-2 — 2020 &middot; GPT-3
-          - Même recette. Plus de compute.
-        </textarea>
-      </section>
       <section>
-        <h3 style="margin-bottom:0.5em;">2018 — GPT-1</h3>
+        <h3 style="margin-bottom:0.4em;">Reasoning - GPT 2/3/3.5/4</h3>
         <div class="claude-terminal">
-          <div class="ct-claude">[ échantillon à peine cohérent ]</div>
+          <div class="ct-user">Jane thinks today is 6/18/2019, but John thinks today is 6/19/2019. John is correct. What is the date 10 days ago in MM/DD/YYYY?</div>
         </div>
-        <div class="todo">retrouver un vrai échantillon GPT-1 publié (papier 2018) — ou le plus ancien exemple publié qui fait mal</div>
+        <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://theaidigest.org/progress-and-dangers">theaidigest.org/progress-and-dangers</a></div>
       </section>
       <section>
-        <h3 style="margin-bottom:0.5em;">2019 — GPT-2</h3>
+        <h3 style="margin-bottom:0.4em;">2019 &mdash; GPT-2 <span style="font-size:0.6em;color:#444;">&middot; gpt2-xl &middot; ~4,6 k$ de compute</span></h3>
         <div class="claude-terminal">
-          <div class="ct-user">In a shocking finding, scientist discovered a herd of unicorns living in a remote, previously unexplored valley, in the Andes Mountains.</div>
-          <div class="ct-claude">The scientist named the population, after their distinctive horn, Ovid's Unicorn. These four-horned, silver-white unicorns were previously unknown to science. [&hellip;]</div>
+          <div class="ct-user">Jane thinks today is 6/18/2019, but John thinks today is 6/19/2019. John is correct. What is the date 10 days ago in MM/DD/YYYY?</div>
+          <div class="ct-claude">The date is 6/18/2019.</div>
         </div>
-        <div style="margin-top:0.5em;font-size:0.5em;color:#000;">Échantillon publié par OpenAI. À l'époque : &laquo; trop dangereux pour être publié en entier &raquo;.</div>
-        <div style="margin-top:0.2em;font-size:0.4em;"><a href="https://openai.com/research/better-language-models">openai.com — Better Language Models (fév. 2019)</a></div>
+        <!-- Une phrase qui ressemble à une réponse. -->
+        <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://theaidigest.org/progress-and-dangers">theaidigest.org/progress-and-dangers</a></div>
       </section>
       <section>
-        <h3 style="margin-bottom:0.5em;">2020 — GPT-3</h3>
-        <div class="todo">échantillon GPT-3 publié (few-shot, papier 2020) — le même saut, encore</div>
+        <h3 style="margin-bottom:0.4em;">2020 &mdash; GPT-3 <span style="font-size:0.6em;color:#444;">&middot; davinci &middot; ~690 k$</span></h3>
+        <div class="claude-terminal">
+          <div class="ct-user">Jane thinks today is 6/18/2019, but John thinks today is 6/19/2019. John is correct. What is the date 10 days ago in MM/DD/YYYY?</div>
+          <div class="ct-claude">Jane thinks today is 6/18/2019, but John thinks today is 6/19/2019. John is correct. The date 10 days ago in MM/DD/YYYY is 5/28/2019.</div>
+        </div>
+        <!-- La forme de la tâche est comprise. Le calcul, non. -->
+        <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://theaidigest.org/progress-and-dangers">theaidigest.org/progress-and-dangers</a></div>
       </section>
       <section>
-        <h3 style="margin-bottom:0.5em;">2022 — et le grand public</h3>
+        <h3 style="margin-bottom:0.4em;">2022 &mdash; GPT-3.5 <span style="font-size:0.6em;color:#444;">&middot; gpt-3.5-turbo-0613 &middot; RLHF &middot; ChatGPT</span></h3>
+        <div class="claude-terminal">
+          <div class="ct-user">Jane thinks today is 6/18/2019, but John thinks today is 6/19/2019. John is correct. What is the date 10 days ago in MM/DD/YYYY?</div>
+          <div class="ct-claude">To determine the date 10 days ago, we need to subtract 10 days from the given date.<br><br>Starting with Jane's date of 6/18/2019, we subtract 10 days:<br><br>6/18/2019 - 10 days = 6/8/2019<br><br>Therefore, the date 10 days ago from Jane's perspective is 6/8/2019 in MM/DD/YYYY format.</div>
+        </div>
+        <!-- Le calcul est juste. La prémisse est fausse : John is correct a été ignoré. Et le ton est sûr de lui. -->
+        <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://theaidigest.org/progress-and-dangers">theaidigest.org/progress-and-dangers</a></div>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.4em;">2023 &mdash; GPT-4 <span style="font-size:0.6em;color:#444;">&middot; gpt-4-0613 &middot; ~50 M$</span></h3>
+        <div class="claude-terminal">
+          <div class="ct-user">Jane thinks today is 6/18/2019, but John thinks today is 6/19/2019. John is correct. What is the date 10 days ago in MM/DD/YYYY?</div>
+          <div class="ct-claude">If today's date according to John is 6/19/2019, then 10 days ago would be 6/9/2019.<br><br>To calculate this, you subtract 10 days from the current date. Since there are 30 days in June, subtracting 10 from 19 gives you 9. Therefore, the date 10 days ago would be 06/09/2019.</div>
+        </div>
+        <!-- Juste. La bonne prémisse, le bon calcul, le bon format. -->
+        <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://theaidigest.org/progress-and-dangers">theaidigest.org/progress-and-dangers</a></div>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">&rarr; 2022 = contact grand public</h3>
         <ul style="font-size:0.8em;">
-          <li>ChatGPT — construit sur GPT-3.5</li>
+          <li>ChatGPT &mdash; construit sur GPT-3.5</li>
           <li>Pour beaucoup : le <em>premier</em> contact</li>
           <li>Un instantané d'une courbe déjà longue</li>
         </ul>
@@ -128,7 +144,7 @@
     <!-- Scaling laws -->
     <section>
       <section>
-        <h3 style="margin-bottom:0.5em;">L'architecture — &laquo; Attention Is All You Need &raquo;</h3>
+        <h3 style="margin-bottom:0.5em;">&laquo; Attention Is All You Need &raquo;</h3>
         <ul style="font-size:0.8em;">
           <li>Les <strong>transformers</strong>, 2017</li>
           <li>La brique sous GPT-1/2/3 — et sous tout ce qui a suivi</li>
@@ -143,19 +159,15 @@
         </ul>
         <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://arxiv.org/abs/2001.08361">arXiv:2001.08361</a> &middot; <a href="https://arxiv.org/abs/2203.15556">arXiv:2203.15556</a></div>
       </section>
-      <section data-markdown>
-        <textarea data-template>
-          ### Alors&nbsp;?
-          - Une trajectoire (1 → 2 → 3), une architecture, une loi
-          - Le public : un instantané (3.5) d'une courbe déjà longue
-          - Un point ne dit rien de la pente — alors, où est le plafond&nbsp;?
-        </textarea>
-      </section>
       <section>
-        <h3 style="margin-bottom:0.5em;">Soyons honnêtes : loi de puissance ≠ absence de limite</h3>
+        <h3 style="margin-bottom:0.5em;">Loi de puissance ≠ absence de limite</h3>
         <ul style="font-size:0.75em;">
           <li>Rendements décroissants par FLOP — oui</li>
-          <li>Mur — aucun d'observé à ce jour</li>
+          <li>Mur attendus mais qui n'ont pas empêchés les modèles de s'améliorer</li>
+            <ul>
+              <li>Manque de puissance disponible</li>
+              <li>Manque de data</li>
+            </ul>
           <li>Et de <strong>nouveaux axes</strong> s'ouvrent :
             <ul>
               <li>post-training (RL)</li>
@@ -163,7 +175,6 @@
             </ul>
           </li>
         </ul>
-        <div style="margin-top:0.5em;font-size:0.55em;color:#000;">&laquo; Pas de plafond &raquo; = pas de mur constaté + des axes neufs. Rien de plus, rien de moins.</div>
       </section>
       <section>
         <h3>The Bitter Lesson</h3>
@@ -369,7 +380,9 @@
       <section>
         <h3 style="margin-bottom:0.5em;">&laquo; Vibe physics &raquo; — un physicien, un papier</h3>
         <ul style="font-size:0.75em;">
-          <li>Papier technique écrit avec Claude — 2 semaines, publié le 5 janvier 2026</li>
+          <li>Matthew Schwartz (Harvard, QFT) — 2 semaines de décembre 2025, avec Claude</li>
+          <li>Le papier : <a href="https://arxiv.org/abs/2601.02484">arXiv:2601.02484</a>, 5 janvier 2026</li>
+          <li>Le récit, chez Anthropic : 23 mars 2026</li>
           <li>Claude a triché : paramètres ajustés pour que les courbes collent</li>
           <li>Le physicien l'a <strong>vu</strong> — parce qu'il connaît son domaine</li>
         </ul>
@@ -396,29 +409,79 @@
       <section data-markdown>
         <textarea data-template>
           ### Initialement
-          - Trouver des bugs avec l'IA dans une codebase sérieuse
-          - Je connais l'auteur, vrai projet d'ingéniérie
+          - AI bug-hunting dans une codebase sérieuse
+          - Je connais l'auteur, vrai projet d'ingénierie
           - Property based testing => **Hypothesis**
-          - Je dois trouver un moyen d'éxecuter hypothesis sur scotch
+          - Trouver un moyen d'exécuter Hypothesis sur Scotch
         </textarea>
       </section>
-      <section data-markdown>
-        <textarea data-template>
+      <section>
+        <pre><code class="language-python" data-trim data-noescape>
           from hypothesis import given, strategies as st
 
-@given(st.lists(st.integers() | st.floats()))
-def test_sort_correctness_using_properties(lst):
-    result = my_sort(lst)
-    assert set(lst) == set(result)
-    assert all(a <= b for a, b in zip(result, result[1:]))
-        </textarea>
-        source : https://hypothesis.readthedocs.io/en/latest/
+          @given(st.lists(st.integers() | st.floats()))
+          def test_sort_correctness_using_properties(lst):
+              result = my_sort(lst)
+              assert set(lst) == set(result)
+              assert all(a <= b for a, b in zip(result, result[1:]))
+        </code></pre>
+        <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://hypothesis.readthedocs.io/en/latest/">source : hypothesis.readthedocs.io</a></div>
       </section>
-      <section data-markdown>
-        <textarea data-template>
-            https://arxiv.org/abs/2510.09907
-        </textarea>
-        X mois avant la vague mythos
+      <section>
+        <table style="margin:0 auto;border-collapse:collapse;font-size:0.5em;">
+          <thead>
+            <tr>
+              <th style="padding:0.35em 0.6em;border-bottom:2px solid #333;"></th>
+              <th style="padding:0.35em 0.6em;border-bottom:2px solid #333;text-align:center;">Tests classiques</th>
+              <th style="padding:0.35em 0.6em;border-bottom:2px solid #333;text-align:center;">Fuzzing</th>
+              <th style="padding:0.35em 0.6em;border-bottom:2px solid #333;text-align:center;">PBT</th>
+              <th style="padding:0.35em 0.6em;border-bottom:2px solid #333;text-align:center;">Formel</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:0.3em 0.6em;text-align:left;font-weight:700;">Entrées</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">valeurs en dur</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">machine</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">machine (stratégies)</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">toutes (symbolique)</td>
+            </tr>
+            <tr>
+              <td style="padding:0.3em 0.6em;text-align:left;font-weight:700;">Oracle</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">assertions précises</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">crash only</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">propriétés</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">spécification</td>
+            </tr>
+            <tr>
+              <td style="padding:0.3em 0.6em;text-align:left;font-weight:700;">Domaine</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">partout</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">parsers, sécu</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">libs, data, métier</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">aéro, crypto</td>
+            </tr>
+            <tr>
+              <td style="padding:0.3em 0.6em;text-align:left;font-weight:700;">Coût</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">faible</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">moyen</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">faible&ndash;moyen</td>
+              <td style="padding:0.3em 0.6em;text-align:center;">élevé</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="margin-top:0.5em;font-size:0.5em;color:#444;">Scotch : 30 ans de C, un oracle qui existe déjà (Scotch lui-même) &rarr; la colonne PBT</div>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">Pas le seul à avoir l'idée&hellip; =&gt; déjà un papier</h3>
+        <ul style="font-size:0.68em;">
+          <li><em>Agentic Property-Based Testing: Finding Bugs Across the Python Ecosystem</em></li>
+          <li>Maaz, <strong>DeVoe</strong>, <strong>Hatfield-Dodds</strong> (mainteneurs d'Hypothesis), Carlini &mdash; 10 octobre 2025</li>
+          <li>Un agent lit le code, <em>infère</em> les propriétés, écrit les tests, rédige le rapport</li>
+          <li>56&nbsp;% des rapports générés : des bugs valides</li>
+          <li>~6 mois avant la vague Mythos</li>
+        </ul>
+        <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://arxiv.org/abs/2510.09907">arXiv:2510.09907</a></div>
+        <div class="todo">« vague Mythos » : confirmer la date que tu as en tête (avril 2026 ?) et ajuster le « ~6 mois »</div>
       </section>
     </section>
 
@@ -427,21 +490,22 @@ def test_sort_correctness_using_properties(lst):
       <section data-markdown>
         <textarea data-template>
           ### 1. pyscotch
-          - Wrapper ctypes pour PT-Scotch
+          - scotchpy en retard sur les mises à jour
+          - ownership, un bridge, le moins coûteux possible
+          - Un système automatisé qui :
+            - écrit du code Scotch **en C**
+            - génère l'équivalent **Python**
+            - vérifie l'**équivalence** &mdash; on itère
+          - Bonus : des bugs trouvés *avant* de lancer Hypothesis
+        </textarea>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Vibe engineering de wrapper
           - Le README : *"this is a vibe-engineering experiment —
             you probably shouldn't use this!"*
           - [github.com/c4ffein/pyscotch](https://github.com/c4ffein/pyscotch)
         </textarea>
-      </section>
-      <section>
-        - vibe engineering autant que possible
-          - creer des systemes automatisés d'ecriture de code scotch en c
-          - genere un equivalent python
-          - doit verifier l'equivalence, on itere
-        - a permis de trouver des bugs avant de faire tourner hypothesis
-        - scotchpy existe deja mais mise a jour en retard
-        - je veux un equivalent avec lequel j'ai plus de controle
-          - initialement uniquement un bridge le moins couteux possible...
       </section>
     </section>
 
@@ -560,11 +624,96 @@ int main (void) { hegel_run_test (test_add_commutes); return 0; }
       </section>
     </section>
 
+    <!-- ===== Épilogue de l'arc Scotch : la même tâche, deux fois ===== -->
+    <section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Sonnet 5 vs Fable 5
+          - Francois envoie une tache bien scopée :
+            - Une journée pour un ingé de l'équipe avec Sonnet
+            - J'envoie la tâche à Fable, je ne veux pas relire
+              - Depuis mon portable
+              - Dans la voiture et au restaurant
+          - **Zéro relecture** du code &mdash; volontairement
+          - Je n'ai lu cette session qu'en préparant ces slides
+        </textarea>
+      </section>
+      <section>
+        <div class="claude-terminal">
+          <div class="ct-user">Hey! Can you check the gitlab for scotch? Clone it here?</div>
+          <div class="ct-claude">Done — SCOTCH is cloned at ~/playground/scotch. [&hellip;] I went with the canonical one: the SCOTCH graph partitioning / sparse matrix ordering library from Inria's GitLab.</div>
+          <div class="ct-user">Noice!<br>Francois would like some help on this:<br><br>&lt;&lt; La tâche à accomplir concerne le logiciel Scotch. À l'heure actuelle, la routine `dorderTreeDist`, dans 'src/libscotch/dorder_tree_dist.c', calcule un tableau `treetab` dont les valeurs ne sont pas "basées", c'est-à-dire commencent toujours à 0 et non à `baseval`, le champ du graphe `grafptr` passé en paramètre, qui n'est actuellement pas utilisé. Modifie le code de `dorderTreeDist` et éventuellement de ses sous-routines afin que le tableau retourné par la fonction soit basé. &gt;&gt;</div>
+        </div>
+        <!-- le brief : les mots du mainteneur, sans une ligne de plus -->
+        <div style="margin-top:0.4em;font-size:0.4em;"><a href="#" data-transcript="claude-on-scotch-la-tache.json">▶ la session complète (transcript brut)</a></div>
+      </section>
+      <section>
+        <div class="claude-terminal">
+          <div class="ct-user">Create a report in md and a patch, and commit / push on main? What about explaining what was asked, your thought process and how you did the qa?</div>
+          <div class="ct-claude">Done — the fix is written, tested with MPI, and exported as a patch series [&hellip;]<br><br><strong>The change</strong> (all in src/libscotch/dorder_tree_dist.c, no sub-routine needed it): [&hellip;] The root's father value stays -1 regardless of base — that's exactly what the user manual already promised [&hellip;] and what the ParMeTiS wrapper already assumes at parmetis_dgraph_order.c:178. So this is really the code catching up to its documentation.<br><br><strong>Verification</strong> — I installed OpenMPI, built libptscotch, and ran a small test ordering a 16-vertex ring:<br>2 ranks, baseval 1: treetab = [-1, 1, 1, 1]<br>2 ranks, baseval 0: [-1, 0, 0, 0] — bit-identical to the old behavior.<br>4 ranks, baseval 1: 10 blocks, [-1, 1, 2, 2, 2, 1, 6, 6, 6, 1]</div>
+        </div>
+        <!-- extraits -->
+        <div style="margin-top:0.4em;font-size:0.4em;"><a href="#" data-transcript="claude-on-scotch-la-tache.json">▶ la session complète (transcript brut)</a></div>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.4em;">Le résultat : un patch pour Scotch</h3>
+        <pre><code class="language-diff" data-trim data-noescape>
+          Subject: [PATCH] Base the tree array returned by dorderTreeDist(), as documented
+
+           src/libscotch/dorder_tree_dist.c | 19 ++++++++++++++-----
+
+          +  baseval = grafptr->baseval;
+             for (dblkglbnum = 0; dblkglbnum < dblkglbnbr; dblkglbnum ++) {
+          -    srt1glbtab[2 * dblkglbnum + 1] = dblkglbnum;
+          +    srt1glbtab[2 * dblkglbnum + 1] = dblkglbnum + baseval;
+          [...]
+          +  treeglbtax = treeglbtab - baseval;   /* TRICK: based accesses to user arrays */
+          +  sizeglbtax = sizeglbtab - baseval;
+        </code></pre>
+        <div style="margin-top:0.4em;font-size:0.4em;"><a href="https://github.com/c4ffein-work/playground/tree/main/patches/scotch__scotch/2026-08-25-dorder-tree-dist-based">github.com/c4ffein-work/playground &mdash; patch, REPORT.md, test_treedist.c (25 août 2026)</a> &middot; <a href="#" data-transcript="claude-on-scotch-la-tache.json">▶ la session complète</a></div>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.4em;">Le message de commit</h3>
+        <pre><code class="language-plaintext" data-trim data-noescape style="font-size:0.72em;line-height:1.3;">
+          Base the tree array returned by dorderTreeDist(), as documented
+
+          The user manual states that, in the tree array filled by
+          SCOTCH_dgraphOrderTreeDist(), "all node indices start from baseval".
+          Yet, dorderTreeDist() numbered the permuted column block indices from
+          0, ignoring the base value of the distributed graph passed as
+          parameter, whose pointer was hitherto unused.
+
+          Father indices stored in the tree array are now based with respect to
+          grafptr->baseval, and the result arrays are accessed through based
+          pointers so that the entry for column block (baseval + i) remains at
+          array slot i. The father index of the root of the tree remains -1,
+          irrespective of the base value, as documented. Callers that already
+          handled based indices, such as ParMETIS_V3_NodeND(), which subtracts
+          the base value from tree array values, are unaffected for the 0-based
+          case and now behave correctly for the 1-based case.
+        </code></pre>
+        <!-- « Verified with an MPI test on 2 and 4 ranks, baseval 0 and 1 » est dans le commit du playground, pas dans le patch ; le test et le rapport sont publiés — moi, je n'ai pas vérifié -->
+        <div style="margin-top:0.4em;font-size:0.4em;"><a href="#" data-transcript="claude-on-scotch-la-tache.json">▶ la session complète</a></div>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Le verdict
+          - L'expertise de François reste le déterminant
+            - Ce n'est **pas** un jugement sur l'expertise humaine
+            - Il faut continuer de former des humains
+          - Les humains compétents profitent des **derniers modèles**
+            pour faire le meilleur travail possible
+        </textarea>
+      </section>
+      <section>
+        <div class="todo">reçus : le mail de François avec son verdict (extrait), + s'assurer qu'il est OK pour que ce soit dit en public &mdash; l'ingénieur est peut-être dans la salle, ou identifiable</div>
+      </section>
+    </section>
+
     <!-- ===== Partie 3 ===== -->
     <section>
       <h2>Partie 3</h2>
       <h3>Trois idées — en accéléré</h3>
-      <p style="font-size:0.55em;color:#444;">Une idée, plusieurs projets, un détail chacun. Promis, ça va vite.</p>
     </section>
 
     <!-- Idée 1 : porter une codebase -->
@@ -572,12 +721,96 @@ int main (void) { hegel_run_test (test_add_commutes); return 0; }
       <section data-markdown>
         <textarea data-template>
           ### Idée 1 — On peut porter une codebase
-          - Premiers essais : modèles faibles, résultats faibles
-          - Aujourd'hui : ça tient
+          - Mai 2025 : ça passe&hellip; en trichant un peu
+          - Mai 2026 : ça tient — à toutes les échelles
+        </textarea>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Petite échelle — password-store (bash) &rarr; Python
+          - Mai 2025, avec Claude Code : un fichier, zéro dépendance
+          - **L'oracle : la suite de tests de l'original**, branchée sur le port
+            par un adaptateur — puis 7 scénarios de plus
+          - `TEST_ORIGINAL_PASS_VERSION=TRUE` : le même harnais, sur le bash d'origine
+          - [github.com/c4ffein/pass](https://github.com/c4ffein/pass) — historique des sessions publié
         </textarea>
       </section>
       <section>
-        <div class="todo">les détails — les premiers essais avec des modèles faibles (lesquels ? qu'est-ce qui ratait ?), puis la grande réécriture Bun : quelle codebase, vers quoi, qu'est-ce qui a cassé, qu'est-ce qui a tenu ?</div>
+        <h3 style="margin-bottom:0.5em;">Mai 2025 — ce que j'ai écrit à l'époque</h3>
+        <ul style="font-size:0.7em;">
+          <li>&laquo; After that, I only said yes to everything. &raquo;</li>
+          <li>&laquo; Feels like watching a beginner, but 10x, or even 100x faster. &raquo;</li>
+          <li>&laquo; Claude ended up making <strong>hardcoded modifications specifically to pass the tests</strong> &raquo;</li>
+          <li>&laquo; &hellip;easily recognized this mistake <strong>once I asked a simple question</strong>. &raquo;</li>
+          <li>&laquo; I fixed the remaining issues myself. &raquo;</li>
+        </ul>
+        <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://github.com/c4ffein/pass/blob/master/chat_history/00-INDEX.md">github.com/c4ffein/pass — chat_history/00-INDEX.md</a></div>
+        <!-- une question, pas un ordre — cf. partie 1. Et : l'oracle a été contourné, pas le modèle qui a triché tout seul -->
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Échelle moyenne — le shrinker d'Hypothesis (Python) &rarr; Rust
+          - hegel-rust PR #283, *« Native shrinker: parity with Hypothesis »*
+          - Par **DRMacIver** — l'auteur d'Hypothesis — co-auteur : Claude Opus 4.7
+          - 20 &rarr; 26 mai 2026 : 65 commits, ~5 000 lignes, une méthode en 18 étapes,
+            un commit par phase
+          - **L'oracle : 123 tests de qualité de réduction**, portés d'Hypothesis, + 750 tests unitaires
+          - *« Parity = superset, not replacement »*
+          - [github.com/hegeldev/hegel-rust/pull/283](https://github.com/hegeldev/hegel-rust/pull/283)
+        </textarea>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Retour à la partie 2
+          - Le graphe à 3 sommets : c'est *ce* shrinker qui l'a trouvé
+          - Hegel = le moteur d'Hypothesis, pour tous les langages
+            - hegel-c l'appelle depuis le C
+            - hegel-rust vient de le réécrire en natif — avec Claude
+          - L'outil qui trouve les bugs est lui-même porté par la méthode
+        </textarea>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Grande échelle — Bun (Zig) &rarr; Rust
+          - PR #30412, branche `claude/phase-a-port` : ouverte le 8 mai, fusionnée le 14 mai 2026
+          - 6 755 commits — ~1,3 M lignes — 1 448 fichiers `.zig` &rarr; `.rs`
+          - 11 jours, jusqu'à 64 instances de Claude en parallèle, ~165 k$ d'API
+          - Même architecture, mêmes structures de données — *« largely the same »*
+        </textarea>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">Comment ça a tenu</h3>
+        <ul style="font-size:0.68em;">
+          <li><strong>D'abord une carte</strong> : <code>PORTING.md</code> (motifs Zig &rarr; Rust) et <code>LIFETIMES.tsv</code> (durée de vie de chaque champ)</li>
+          <li><strong>Puis le port mécanique</strong> — <em>&laquo; Absolutely none of it worked yet &raquo;</em></li>
+          <li><strong>1 implémenteur, ≥ 2 relecteurs adversariaux</strong> par contexte : <em>&laquo; assume the code is wrong &raquo;</em><br><span style="font-size:0.85em;color:#444;">&mdash; la réponse au &laquo; hardcoded to pass the tests &raquo; de 2025</span></li>
+          <li><strong>1,3 M+ assertions conservées, zéro test supprimé</strong> — les tests sont le contrat</li>
+          <li>Résultat : 128 bugs corrigés, binaire &minus;3,8 à 6,8 Mo, perf +2 à 5 %</li>
+        </ul>
+        <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://bun.com/blog/bun-in-rust">bun.com/blog/bun-in-rust (8 juil. 2026)</a> &middot; <a href="https://github.com/oven-sh/bun/pull/30412">github.com/oven-sh/bun/pull/30412</a></div>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Ce qui rend le port possible
+          - Pas le modèle seul : **l'oracle**
+            - pass : les tests de l'original
+            - hegel-rust : les tests de réduction d'Hypothesis
+            - Bun : 1,3 M d'assertions existantes
+            - Scotch : `gpart` / `gord` / `gmap`
+          - Un port sans oracle, c'est une réécriture
+          - *&laquo; This would've taken 3 engineers a year &raquo;* — J. Sumner
+        </textarea>
+      </section>
+      <section>
+        <img src="../resources/realworld-logo.svg" alt="RealWorld" style="display:block;margin:0 auto 0.3em;height:64px;width:auto;border:none;background:none;box-shadow:none;">
+        <h3 style="margin-bottom:0.5em;">Et si l'oracle existait <em>avant</em> le code ?</h3>
+        <ul style="font-size:0.68em;">
+          <li>Un même clone de Medium, 100+ implémentations — je maintiens la spec, les tests et la démo</li>
+          <li><code>specs/api</code> : <code>openapi.yml</code> + 13 fichiers <strong>Hurl</strong> (source de vérité)<br>&rarr; 156 requêtes <strong>Bruno</strong>, générées, synchro vérifiée en CI</li>
+          <li><code>specs/e2e</code> : 15 suites <strong>Playwright</strong> + <code>SELECTORS.md</code> pour les fronts</li>
+          <li>Spec + tests livrés avant l'implémentation &rArr; <strong>le port devient automatique</strong>,<br>vers n'importe quel langage, n'importe quel framework</li>
+        </ul>
+        <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://github.com/realworld-apps/realworld">github.com/realworld-apps/realworld</a> &middot; <a href="https://demo.realworld.show">demo.realworld.show</a></div>
       </section>
     </section>
 
@@ -587,21 +820,22 @@ int main (void) { hegel_run_test (test_add_commutes); return 0; }
         <textarea data-template>
           ### Idée 2 — Vibez votre observabilité
           - Un petit jeu, un moteur maison
-          - &laquo; Claude, on a un problème de perf ? &raquo; → &laquo; non, ça va &raquo;
-          - Alors : &laquo; vibe-moi un visualiseur de spans &raquo;
-          - L'outil a montré un **axe** que la question ne trouvait pas
+          - &laquo; problème de perf ? &raquo; → &laquo; non, ça va &raquo;
+          - → &laquo; vibe-moi un visualiseur de spans &raquo;
         </textarea>
+      </section>
+      <section>
+        <iframe data-src="../resources/perf-trace.html" style="width:92%;height:600px;border:1px solid #333;background:#0b0e13;box-shadow:none;" allowfullscreen></iframe>
+        <div style="font-size:0.4em;margin-top:0.2em;color:#666;">le visualiseur vibé, avec 120 frames de la capture (#180 → #299) — frame #211 : 61 ms, dont 49 ms de <em>walk</em></div>
+        <!-- l'axe que la question ne trouvait pas : à dire en une phrase (walk dans flush ? ou la ligne gap, hors code ?) -->
       </section>
       <section data-markdown>
         <textarea data-template>
           ### La leçon
-          - Ne demandez pas un avis — construisez un **instrument**
-          - L'avis meurt dans la conversation ; l'instrument reste
-          - Un outil d'observabilité jetable coûte désormais&hellip; une conversation
+          - avis → instrumentation
+          - v0 des benchmarks ne coute rien
+          - relire le code n'est pas gratuit...
         </textarea>
-      </section>
-      <section>
-        <div class="todo">capture du visualiseur de spans + c'était quoi, le nouvel axe que l'outil a montré ?</div>
       </section>
     </section>
 
@@ -610,26 +844,29 @@ int main (void) { hegel_run_test (test_add_commutes); return 0; }
       <section data-markdown>
         <textarea data-template>
           ### Idée 3 — Tout code est du legacy
-          - Feathers, *Working Effectively with Legacy Code* :
-            legacy = du code **sans tests**
-          - Avec l'IA, tout code est du code que *vous* n'avez pas écrit
-          - Même celui d'hier
+          *Avec l'IA...*
+          - tout code est du code que *vous* n'avez pas écrit
+          - même celui généré il y a deux heures
         </textarea>
       </section>
       <section data-markdown>
         <textarea data-template>
-          ### La bonne nouvelle : l'outillage intellectuel existe déjà
-          - Tests de caractérisation → c'est le PBT de la partie 2
-          - Coutures (*seams*) → c'est pyscotch
-          - Petits pas sûrs → c'est la boucle de l'agent
+          ### = gérer du turnover ?
+          - *Working Effectively with Legacy Code*
+            - Michael Feathers
+            - legacy = du code **sans tests**
+          - Architecture en boites noires
+          - Specs, documentation... 
+            - pour les humains **et** les agents
           - **La qualité, c'est la vitesse** — surtout maintenant
         </textarea>
       </section>
       <section data-markdown>
         <textarea data-template>
-          ### Et le code de recherche ?
-          - 30 ans, C ou Fortran, peu de tests : le legacy ultime
-          - Vous avez le domaine ; la machine a la patience
+          ### L'intérêt de la connaissance
+          - Facilite la prise en main du projet aux nouveaux arrivants
+            - ... mais une fatigue que je n'avais jamais ressenti
+          - Les spécialistes vont pouvoir déleguer à l'IA
         </textarea>
       </section>
     </section>
@@ -666,9 +903,12 @@ int main (void) { hegel_run_test (test_add_commutes); return 0; }
           <li><a href="https://presentations.cafeine.dev/slides/claude-on-scotch.html" style="color:#000;text-decoration:none;">presentations.cafeine.dev/slides/claude-on-scotch.html</a></li>
           <li><a href="https://github.com/c4ffein/pyscotch" style="color:#000;text-decoration:none;">github.com/c4ffein/pyscotch</a></li>
           <li><a href="https://github.com/c4ffein/hegel-c" style="color:#000;text-decoration:none;">github.com/c4ffein/hegel-c</a></li>
+          <li><a href="https://github.com/realworld-apps/realworld" style="color:#000;text-decoration:none;">github.com/realworld-apps/realworld</a></li>
+          <li><a href="https://github.com/c4ffein-work/playground/tree/main/patches/scotch__scotch/2026-08-25-dorder-tree-dist-based" style="color:#000;text-decoration:none;">github.com/c4ffein-work/playground &mdash; patch + rapport + test de l'épilogue</a></li>
           <li><a href="https://www.anthropic.com/research/vibe-physics" style="color:#000;text-decoration:none;">anthropic.com/research/vibe-physics</a></li>
           <li><a href="https://www.anthropic.com/news/claude-science-ai-workbench" style="color:#000;text-decoration:none;">anthropic.com — Claude Science</a></li>
           <li><a href="#" data-transcript="claude-on-scotch-making-of.json" style="color:#000;text-decoration:none;font-weight:700;">▶ voir le making-of (transcript brut)</a></li>
+          <li><a href="#" data-transcript="claude-on-scotch-la-tache.json" style="color:#000;text-decoration:none;font-weight:700;">▶ la tâche du mainteneur, faite depuis un téléphone (transcript brut)</a></li>
         </ul>
       </div>
     </section>

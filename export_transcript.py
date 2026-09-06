@@ -15,7 +15,11 @@ Options:
   -o/--output PATH        where to write (default: transcripts/transcript.json)
   --title TEXT            title stored in the JSON meta
   --include-thinking      also export Claude's visible reasoning (off by default)
-  --tools / --no-tools    include compact tool-call markers (default: on)
+  --stop-before TEXT      drop the first user turn containing TEXT and everything
+                          after it (e.g. a post-teleport chat that is out of scope)
+  --tools / --no-tools    include compact tool-call markers (default: on);
+                          file edits (Edit/Write/MultiEdit) carry their full
+                          old/new content so the viewer can show them on demand
 
 REVIEW THE OUTPUT before publishing — the scrubber is best-effort, not a
 guarantee. Add project-specific patterns to REDACTIONS below as needed.
@@ -90,6 +94,34 @@ def tool_target(inp: object) -> str:
     return ""
 
 
+EDIT_TOOLS = {"Edit", "Write", "MultiEdit", "NotebookEdit"}
+
+
+def edit_payload(name: str | None, inp: object) -> dict | None:
+    """Full content of a file edit, so the viewer can show it behind a toggle.
+
+    Edit  -> {"file", "old", "new"}        Write -> {"file", "new"}
+    MultiEdit -> {"file", "edits": [{"old", "new"}, ...]}
+    NotebookEdit -> {"file", "new"} (the new cell source)
+    Everything passes through scrub(). Other tools export no payload.
+    """
+    if name not in EDIT_TOOLS or not isinstance(inp, dict):
+        return None
+    file = scrub(str(inp.get("file_path") or inp.get("notebook_path") or ""))
+    if name == "Edit":
+        return {"file": file, "old": scrub(inp.get("old_string", "")),
+                "new": scrub(inp.get("new_string", ""))}
+    if name == "Write":
+        return {"file": file, "new": scrub(inp.get("content", ""))}
+    if name == "MultiEdit":
+        edits = [{"old": scrub(e.get("old_string", "")), "new": scrub(e.get("new_string", ""))}
+                 for e in inp.get("edits", []) if isinstance(e, dict)]
+        return {"file": file, "edits": edits}
+    if name == "NotebookEdit":
+        return {"file": file, "new": scrub(inp.get("new_source", ""))}
+    return None
+
+
 def shorten(text: str, limit: int = 90) -> str:
     text = text.strip()
     return text if len(text) <= limit else text[: limit - 1] + "…"
@@ -147,10 +179,12 @@ def build_turns(entries, include_thinking: bool, include_tools: bool):
                 elif bt == "thinking" and include_thinking and b.get("thinking", "").strip():
                     cur_items.append({"t": "thinking", "text": scrub(b["thinking"].strip())})
                 elif bt == "tool_use" and include_tools:
-                    cur_items.append(
-                        {"t": "tool", "name": b.get("name", "?"),
-                         "target": scrub(tool_target(b.get("input")))}
-                    )
+                    item = {"t": "tool", "name": b.get("name", "?"),
+                            "target": scrub(tool_target(b.get("input")))}
+                    edit = edit_payload(b.get("name"), b.get("input"))
+                    if edit:
+                        item["edit"] = edit
+                    cur_items.append(item)
     flush()
     # Drop assistant turns that ended up empty (e.g. tools-only when --no-tools).
     return [t for t in turns if t["role"] == "user" or t["items"]]
@@ -164,6 +198,8 @@ def main() -> int:
     ap.add_argument("--include-thinking", action="store_true")
     ap.add_argument("--tools", dest="tools", action="store_true", default=True)
     ap.add_argument("--no-tools", dest="tools", action="store_false")
+    ap.add_argument("--stop-before", metavar="TEXT", default=None,
+                    help="truncate at the first user turn containing TEXT (that turn is dropped too)")
     ap.add_argument("--stamp", action="store_true",
                     help="add a coarse (year-month) export marker to meta")
     args = ap.parse_args()
@@ -173,6 +209,14 @@ def main() -> int:
         return 1
 
     turns = build_turns(load_lines(args.input), args.include_thinking, args.tools)
+    if args.stop_before:
+        for i, t in enumerate(turns):
+            if t["role"] == "user" and args.stop_before in t["text"]:
+                print(f"stop-before: cut {len(turns) - i} turn(s) starting at user turn {i}", file=sys.stderr)
+                turns = turns[:i]
+                break
+        else:
+            print("stop-before: marker not found, nothing cut", file=sys.stderr)
     n_user = sum(1 for t in turns if t["role"] == "user")
     n_asst = sum(1 for t in turns if t["role"] == "assistant")
 

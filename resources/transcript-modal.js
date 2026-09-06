@@ -76,12 +76,16 @@
     frame.src = "about:blank";
   }
 
+  // Capture phase + stopPropagation: Reveal listens for clicks on a[href^="#"]
+  // inside .slides and navigates to the matching slide ("#" = first slide),
+  // which would reset the deck the moment a transcript link is clicked.
   document.addEventListener("click", function (e) {
     var link = e.target.closest("[data-transcript]");
     if (!link) return;
     e.preventDefault();
+    e.stopPropagation();
     openModal(link.getAttribute("data-transcript"), viewerBase(link));
-  });
+  }, true);
 
   window.TranscriptModal = { open: openModal, close: closeModal };
 })();

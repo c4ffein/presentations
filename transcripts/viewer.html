@@ -35,6 +35,24 @@
       font-family: var(--mono); font-size: 0.85em; color: var(--tool);
     }
     .assistant .tool .arg { color: var(--dim); }
+    .assistant details.tool { white-space: normal; }
+    .assistant details.tool > summary { cursor: pointer; list-style: none; }
+    .assistant details.tool > summary::-webkit-details-marker { display: none; }
+    .assistant details.tool > summary .toggle {
+      color: var(--dim); font-size: 0.85em; margin-left: 0.6em;
+      border: 1px solid var(--border); border-radius: 4px; padding: 0 0.4em;
+    }
+    .assistant details.tool[open] > summary .toggle::after { content: "masquer"; }
+    .assistant details.tool:not([open]) > summary .toggle::after { content: "afficher"; }
+    .assistant .edit { margin: 0.4em 0 0.2em 1.2em; font-size: 0.95em; }
+    .assistant .edit .file { color: var(--dim); margin-bottom: 0.3em; }
+    .assistant .edit pre {
+      margin: 0 0 0.4em; padding: 0.5em 0.7em; border-radius: 4px; overflow-x: auto;
+      white-space: pre; color: var(--fg); border-left: 3px solid var(--border);
+    }
+    .assistant .edit pre.old { background: #2e1f1f; border-left-color: #c05a5a; }
+    .assistant .edit pre.new { background: #1f2e22; border-left-color: #5ab070; }
+    .assistant .edit .lbl { font-size: 0.75em; color: var(--dim); text-transform: uppercase; letter-spacing: 0.06em; }
     .assistant .role::before { content: "\25CF  "; color: var(--claude); }
     .empty { color: var(--dim); text-align: center; margin-top: 4em; }
     a { color: var(--claude); }
@@ -60,6 +78,17 @@
       if (text != null) e.textContent = text;
       return e;
     }
+    function renderEdit(edit) {
+      const box = el("div", "edit");
+      if (edit.file) box.appendChild(el("div", "file", edit.file));
+      const pair = (old, nw) => {
+        if (old != null) { box.appendChild(el("div", "lbl", "avant")); box.appendChild(el("pre", "old", old)); }
+        if (nw != null) { box.appendChild(el("div", "lbl", old != null ? "après" : "contenu")); box.appendChild(el("pre", "new", nw)); }
+      };
+      if (Array.isArray(edit.edits)) edit.edits.forEach(e => pair(e.old, e.new));
+      else pair(edit.old, edit.new);
+      return box;
+    }
     function render(data) {
       document.getElementById("title").textContent = data.meta?.title || "Transcript";
       const m = data.meta || {};
@@ -76,7 +105,17 @@
         } else {
           t.appendChild(el("div", "role", "claude"));
           for (const item of turn.items || []) {
-            if (item.t === "tool") {
+            if (item.t === "tool" && item.edit) {
+              // Full edit content, collapsed by default; click the line to toggle.
+              const d = el("details", "item tool");
+              const sum = el("summary");
+              sum.appendChild(el("span", null, item.name));
+              if (item.target) { sum.appendChild(document.createTextNode(" ")); sum.appendChild(el("span", "arg", "(" + item.target + ")")); }
+              sum.appendChild(el("span", "toggle"));
+              d.appendChild(sum);
+              d.appendChild(renderEdit(item.edit));
+              t.appendChild(d);
+            } else if (item.t === "tool") {
               const d = el("div", "item tool");
               d.appendChild(el("span", null, item.name));
               if (item.target) { d.appendChild(document.createTextNode(" ")); d.appendChild(el("span", "arg", "(" + item.target + ")")); }
@@ -91,7 +130,9 @@
       if (!(data.turns || []).length)
         main.appendChild(el("p", "empty", "Transcript vide."));
     }
-    fetch(transcriptFile())
+    // cache: "no-store" — a re-exported transcript must show up on the next open,
+    // not after the browser feels like revalidating.
+    fetch(transcriptFile(), { cache: "no-store" })
       .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(render)
       .catch(e => {

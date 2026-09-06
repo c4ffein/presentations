@@ -2,9 +2,9 @@
   "meta": {
     "title": "Claude on Scotch — making of",
     "source": "claude-code",
-    "turns": 163,
+    "turns": 165,
     "user_turns": 28,
-    "assistant_turns": 135,
+    "assistant_turns": 137,
     "thinking_included": false,
     "note": "PII-scrubbed export; review before publishing. Not polished on purpose."
   },
@@ -136,7 +136,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/dev-with-ai-in-late-2025.html"
+          "target": "~/workspace/presentations/slides/dev-with-ai-in-late-2025.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/dev-with-ai-in-late-2025.html",
+            "old": "<p><a href=\"https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it\">DRY</a> - \"Don't Repeat Yourself\"</p>",
+            "new": "<p><a href=\"https://en.wikipedia.org/wiki/Don%27t_repeat_yourself\">DRY</a> - \"Don't Repeat Yourself\"</p>"
+          }
         }
       ]
     },
@@ -146,7 +151,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/learning-python-as-a-programmer.html"
+          "target": "~/workspace/presentations/slides/learning-python-as-a-programmer.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/learning-python-as-a-programmer.html",
+            "old": "          <pre><code class=\"python\">user = {}\n>>> user[\"a\"]\nTraceback (most recent call last):\nKeyError: \"a\"\n>>> print(a.get(3))\nNone\n>>> print(a.get(3, 42))\n42\n</code></pre>",
+            "new": "          <pre><code class=\"python\">>>> user = {}\n>>> user[\"a\"]\nTraceback (most recent call last):\nKeyError: 'a'\n>>> print(user.get(\"a\"))\nNone\n>>> print(user.get(\"a\", 42))\n42\n</code></pre>"
+          }
         }
       ]
     },
@@ -160,7 +170,11 @@
         {
           "t": "tool",
           "name": "Write",
-          "target": "~/workspace/presentations/resources/claude-terminal.css"
+          "target": "~/workspace/presentations/resources/claude-terminal.css",
+          "edit": {
+            "file": "~/workspace/presentations/resources/claude-terminal.css",
+            "new": "/* Claude Code terminal mock — reusable across decks.\n *\n * Usage in a deck:\n *   <link rel=\"stylesheet\" href=\"../resources/claude-terminal.css\">\n *\n *   <div class=\"claude-terminal\">\n *     <div class=\"ct-banner\"><span class=\"ct-star\">&#10035;</span> Welcome to Claude Code!\n *\n *   /help for help\n *   cwd: ~/workspace/project</div>\n *     <div class=\"ct-user\">the prompt you typed</div>\n *     <div class=\"ct-think\">Thinking&hellip;</div>\n *     <div class=\"ct-claude\">Claude's answer text</div>\n *     <div class=\"ct-tool\">Bash(python -m pytest)</div>\n *     <div class=\"ct-result\">13 passed</div>\n *   </div>\n *\n * Prefixes (>, ●, ⎿, ✻) are added by CSS — paste transcript lines as-is,\n * one div per block. Newlines inside a div are preserved (pre-wrap),\n * so keep continuation lines flush-left in the HTML source.\n */\n\n.claude-terminal {\n  background: #1b1b1b;\n  color: #e8e6e3;\n  font-family: \"JetBrains Mono\", \"Fira Code\", Menlo, Consolas, monospace;\n  font-size: 0.45em;\n  line-height: 1.55;\n  text-align: left;\n  padding: 1.1em 1.4em 1.3em;\n  border-radius: 8px;\n  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35);\n  max-width: 52em;\n  margin: 0 auto;\n  white-space: pre-wrap;\n  word-break: break-word;\n}\n\n.claude-terminal > div + div {\n  margin-top: 0.7em;\n}\n\n.claude-terminal .ct-banner {\n  border: 1px solid #3a3a3a;\n  border-radius: 6px;\n  padding: 0.5em 0.9em;\n  margin-bottom: 1.1em;\n  color: #bdbbb8;\n}\n\n.claude-terminal .ct-star {\n  color: #d97757;\n}\n\n/* hang the prefix so wrapped lines align under the text */\n.claude-terminal .ct-user,\n.claude-terminal .ct-claude,\n.claude-terminal .ct-tool,\n.claude-terminal .ct-think {\n  padding-left: 1.4em;\n  text-indent: -1.4em;\n}\n\n.claude-terminal .ct-user::before {\n  content: \"> \";\n  color: #8a8884;\n  font-weight: 700;\n}\n\n.claude-terminal .ct-claude::before {\n  content: \"\\25CF \";      /* ● */\n  color: #d97757;\n}\n\n.claude-terminal .ct-tool::before {\n  content: \"\\25CF \";      /* ● */\n  color: #6ccc7a;\n}\n\n.claude-terminal .ct-result {\n  color: #8a8884;\n  padding-left: 1.4em;\n  margin-top: 0.1em !important;\n}\n\n.claude-terminal .ct-result::before {\n  content: \"\\23BF  \";     /* ⎿ */\n}\n\n.claude-terminal .ct-think {\n  color: #8a8884;\n  font-style: italic;\n}\n\n.claude-terminal .ct-think::before {\n  content: \"\\2735 \";      /* ✵ spark */\n  color: #d97757;\n  font-style: normal;\n}\n\n/* dim spans for args, paths, counts inside any line */\n.claude-terminal .ct-dim {\n  color: #8a8884;\n}\n"
+          }
         }
       ]
     },
@@ -174,7 +188,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/dev-with-ai-in-late-2025.html"
+          "target": "~/workspace/presentations/slides/dev-with-ai-in-late-2025.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/dev-with-ai-in-late-2025.html",
+            "old": "    <link rel=\"stylesheet\" href=\"../engine/dist/plugin/highlight/c4ffein-light.css\">\n    <link rel=\"stylesheet\" href=\"../engine/runcss/runcss.min.css\">\n    <script src=\"../engine/runcss/runcss.min.js\" defer watch></script>",
+            "new": "    <link rel=\"stylesheet\" href=\"../engine/dist/plugin/highlight/c4ffein-light.css\">\n    <link rel=\"stylesheet\" href=\"../resources/claude-terminal.css\">\n    <link rel=\"stylesheet\" href=\"../engine/runcss/runcss.min.css\">\n    <script src=\"../engine/runcss/runcss.min.js\" defer watch></script>"
+          }
         }
       ]
     },
@@ -184,7 +203,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/dev-with-ai-in-late-2025.html"
+          "target": "~/workspace/presentations/slides/dev-with-ai-in-late-2025.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/dev-with-ai-in-late-2025.html",
+            "old": "      <section>\n        <section>\n          <img src=\"https://kean.blog/images/posts/claude/claude-code-screen-01.png\" style=\"max-width:95%; max-height:80vh;\">\n        </section>\n      </section>",
+            "new": "      <section>\n        <section>\n          <div class=\"claude-terminal\">\n            <div class=\"ct-banner\"><span class=\"ct-star\">&#10035;</span> Welcome to Claude Code!\n\n  /help for help, /status for your current setup\n\n  cwd: ~/workspace/project</div>\n            <div class=\"ct-user\">can you fix the failing test in tests/test_auth.py?</div>\n            <div class=\"ct-tool\">Bash(python -m pytest tests/test_auth.py)\n<span class=\"ct-result\">&#9151;  1 failed, 12 passed</span></div>\n            <div class=\"ct-claude\">The test expects a 401, the view returns 403. Let me look at the view:</div>\n            <div class=\"ct-tool\">Read(api/views.py)\n<span class=\"ct-result\">&#9151;  Read 40 lines</span></div>\n            <div class=\"ct-tool\">Update(api/views.py)\n<span class=\"ct-result\">&#9151;  Updated api/views.py with 1 addition and 1 removal</span></div>\n            <div class=\"ct-tool\">Bash(python -m pytest tests/test_auth.py)\n<span class=\"ct-result\">&#9151;  13 passed</span></div>\n            <div class=\"ct-claude\">Fixed! The permission check ran before authentication,\nso anonymous users got 403 instead of 401.</div>\n          </div>\n        </section>\n      </section>"
+          }
         }
       ]
     },
@@ -208,12 +232,21 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/learning-python-as-a-programmer.html"
+          "target": "~/workspace/presentations/slides/learning-python-as-a-programmer.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/learning-python-as-a-programmer.html",
+            "old": "<!DOCTYPE html>\n<html>\n<head>\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no\">\n    <title>Python for Programmers</title>",
+            "new": "<!DOCTYPE html>\n<!--\n  NOTE (for future readers, humans and Claude alike):\n  This deck is intentionally a reference-style syntax tour, unlike the other\n  narrative decks in this repo. It is not a standalone talk: it's the support\n  for a live discussion with a small team (~5-6 people) who interrupt at will.\n  The density and informal asides are deliberate - don't \"improve\" them away.\n-->\n<html>\n<head>\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no\">\n    <title>Python for Programmers</title>"
+          }
         },
         {
           "t": "tool",
           "name": "Write",
-          "target": "~/.claude/projects/-home-dev-workspace-presentations/memory/presentations-repo-co…"
+          "target": "~/.claude/projects/-home-dev-workspace-presentations/memory/presentations-repo-co…",
+          "edit": {
+            "file": "~/.claude/projects/-home-dev-workspace-presentations/memory/presentations-repo-context.md",
+            "new": "---\nname: presentations-repo-context\ndescription: How the decks in the presentations repo are actually used — small-audience sessions, one deck is discussion-format by design\nmetadata:\n  type: project\n---\n\nThe decks in `~/workspace/presentations` are given to small audiences (~5-6 people), not conference halls.\n\n- `slides/learning-python-as-a-programmer.html` is **deliberately** a dense reference-style syntax tour: it supports a live discussion where the team interrupts at will. It is not a weak deck to be restructured into a narrative talk. (There's an HTML comment at the top of the file saying so.)\n- `slides/dev-with-ai-in-late-2025.html` uses the reusable Claude-terminal mock component in `resources/claude-terminal.css` (classes: `claude-terminal`, `ct-banner`, `ct-user`, `ct-claude`, `ct-tool`, `ct-result`, `ct-think`, `ct-dim`) to render Claude Code transcripts as styled HTML instead of screenshots. The user wants future talks to reuse it — transcripts paste in as one div per block, prefixes (>, ●, ⎿, ✻) come from CSS.\n\nSee also [[user-voice-in-slides]].\n"
+          }
         }
       ]
     },
@@ -223,12 +256,20 @@
         {
           "t": "tool",
           "name": "Write",
-          "target": "~/.claude/projects/-home-dev-workspace-presentations/memory/user-voice-in-slides.…"
+          "target": "~/.claude/projects/-home-dev-workspace-presentations/memory/user-voice-in-slides.…",
+          "edit": {
+            "file": "~/.claude/projects/-home-dev-workspace-presentations/memory/user-voice-in-slides.md",
+            "new": "---\nname: user-voice-in-slides\ndescription: Informal asides in slides are the user's intentional voice — don't flag or polish them\nmetadata:\n  type: feedback\n---\n\nInformal, self-deprecating asides in the slides (e.g. \"I wrote a guide btw, what should we do?..\") are the user's deliberate speaking voice for small-group sessions.\n\n**Why:** These decks are conversation starters for 5-6 people, not polished conference material; the user explicitly said \"that's my voice... and I like that\" after such a line was flagged in review.\n\n**How to apply:** When reviewing decks in this repo, report real defects (broken links, wrong code, broken layout) but don't treat casual phrasing or personal asides as issues to fix. Related: [[presentations-repo-context]].\n"
+          }
         },
         {
           "t": "tool",
           "name": "Write",
-          "target": "~/.claude/projects/-home-dev-workspace-presentations/memory/MEMORY.md"
+          "target": "~/.claude/projects/-home-dev-workspace-presentations/memory/MEMORY.md",
+          "edit": {
+            "file": "~/.claude/projects/-home-dev-workspace-presentations/memory/MEMORY.md",
+            "new": "# Memory index\n\n- [Presentations repo context](presentations-repo-context.md) — small-audience decks; python deck is discussion-format by design; claude-terminal.css is the reusable transcript component\n- [User voice in slides](user-voice-in-slides.md) — informal asides are intentional, don't polish them away\n"
+          }
         }
       ]
     },
@@ -252,7 +293,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/resources/claude-terminal.css"
+          "target": "~/workspace/presentations/resources/claude-terminal.css",
+          "edit": {
+            "file": "~/workspace/presentations/resources/claude-terminal.css",
+            "old": "  max-width: 52em;\n  margin: 0 auto;\n  white-space: pre-wrap;\n  word-break: break-word;\n}\n\n.claude-terminal > div + div {\n  margin-top: 0.7em;\n}",
+            "new": "  max-width: 52em;\n  margin: 0 auto;\n  /* pre-wrap goes on the line divs only: on the container it would also\n     render the newlines between divs in the HTML source */\n  white-space: normal;\n  word-break: break-word;\n}\n\n.claude-terminal > div {\n  white-space: pre-wrap;\n}\n\n.claude-terminal > div + div {\n  margin-top: 0.7em;\n}"
+          }
         }
       ]
     },
@@ -486,7 +532,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/resources/claude-terminal.css"
+          "target": "~/workspace/presentations/resources/claude-terminal.css",
+          "edit": {
+            "file": "~/workspace/presentations/resources/claude-terminal.css",
+            "old": "/* hang the prefix so wrapped lines align under the text */\n.claude-terminal .ct-user,\n.claude-terminal .ct-claude,\n.claude-terminal .ct-tool,\n.claude-terminal .ct-think {\n  padding-left: 1.4em;\n  text-indent: -1.4em;\n}\n\n.claude-terminal .ct-user::before {\n  content: \"> \";\n  color: #8a8884;\n  font-weight: 700;\n}\n\n.claude-terminal .ct-claude::before {\n  content: \"\\25CF \";      /* ● */\n  color: #d97757;\n}\n\n.claude-terminal .ct-tool::before {\n  content: \"\\25CF \";      /* ● */\n  color: #6ccc7a;\n}\n\n.claude-terminal .ct-result {\n  color: #8a8884;\n  padding-left: 1.4em;\n  margin-top: 0.1em !important;\n}\n\n.claude-terminal .ct-result::before {\n  content: \"\\23BF  \";     /* ⎿ */\n}\n\n.claude-terminal .ct-think {\n  color: #8a8884;\n  font-style: italic;\n}\n\n.claude-terminal .ct-think::before {\n  content: \"\\2735 \";      /* ✵ spark */\n  color: #d97757;\n  font-style: normal;\n}",
+            "new": "/* hang the prefix so wrapped lines align under the text */\n.claude-terminal .ct-user,\n.claude-terminal .ct-claude,\n.claude-terminal .ct-tool,\n.claude-terminal .ct-think {\n  padding-left: 1.7em;\n  text-indent: -1.7em;\n}\n\n.claude-terminal .ct-user::before,\n.claude-terminal .ct-claude::before,\n.claude-terminal .ct-tool::before,\n.claude-terminal .ct-think::before,\n.claude-terminal .ct-result::before {\n  margin-right: 0.7em;\n}\n\n.claude-terminal .ct-user::before {\n  content: \">\";\n  color: #8a8884;\n  font-weight: 700;\n}\n\n.claude-terminal .ct-claude::before {\n  content: \"\\25CF\";       /* ● */\n  color: #d97757;\n}\n\n.claude-terminal .ct-tool::before {\n  content: \"\\25CF\";       /* ● */\n  color: #6ccc7a;\n}\n\n.claude-terminal .ct-result {\n  color: #8a8884;\n  padding-left: 1.7em;\n  margin-top: 0.1em !important;\n}\n\n.claude-terminal .ct-result::before {\n  content: \"\\23BF\";       /* ⎿ */\n}\n\n.claude-terminal .ct-think {\n  color: #8a8884;\n  font-style: italic;\n}\n\n.claude-terminal .ct-think::before {\n  content: \"\\2735\";       /* ✵ spark */\n  color: #d97757;\n  font-style: normal;\n}"
+          }
         }
       ]
     },
@@ -580,12 +631,21 @@
         {
           "t": "tool",
           "name": "Write",
-          "target": "~/.claude/projects/-home-dev-workspace-presentations/memory/inria-talk-2026.md"
+          "target": "~/.claude/projects/-home-dev-workspace-presentations/memory/inria-talk-2026.md",
+          "edit": {
+            "file": "~/.claude/projects/-home-dev-workspace-presentations/memory/inria-talk-2026.md",
+            "new": "---\nname: inria-talk-2026\ndescription: Upcoming talk at Inria — glowup of the 2025 Claude Code deck, built around finding real bugs in Scotch\nmetadata:\n  type: project\n---\n\nAs of September 2026, the user is preparing a talk at Inria, a \"glowup\" of `slides/dev-with-ai-in-late-2025.html`. Personal stake: the user says François Pellegrini (Scotch's author, Inria) is their father.\n\nStory ladder: [[presentations-repo-context]] terminal component shows transcripts →\n1. github.com/c4ffein/pyscotch — ctypes wrapper for PT-Scotch (\"vibe-engineering experiment\" per its README), differential testing vs gpart/gord/gmap, Hypothesis PBT\n2. Claude found a bug reading Scotch's C directly\n3. More bugs via Hypothesis on the wrapper\n4. github.com/c4ffein/hegel-c — C frontend to the Hegel PBT protocol, vibed with Claude; its docs cite a real `SCOTCH_graphOrder` bug shrunk to a 3-vertex minimal counterexample (`tests/irl/scotch/test_graph_order_shrink.c`)\n\nOpen items (awaiting user): bug list with upstream status (reported/confirmed/fixed — no public trail found; Inria GitLab unreachable, pyscotch has 0 issues), raw Claude transcripts for terminal slides, deck language (FR vs bilingual), how much AI-basics intro to keep, talk date.\n\nSuggested cold open: the 3-vertex counterexample graph. Credibility rule for this audience: every bug slide must distinguish upstream bug vs wrapper misuse.\n"
+          }
         },
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/.claude/projects/-home-dev-workspace-presentations/memory/MEMORY.md"
+          "target": "~/.claude/projects/-home-dev-workspace-presentations/memory/MEMORY.md",
+          "edit": {
+            "file": "~/.claude/projects/-home-dev-workspace-presentations/memory/MEMORY.md",
+            "old": "- [User voice in slides](user-voice-in-slides.md) — informal asides are intentional, don't polish them away",
+            "new": "- [User voice in slides](user-voice-in-slides.md) — informal asides are intentional, don't polish them away\n- [Inria talk 2026](inria-talk-2026.md) — Claude-finds-bugs-in-Scotch talk; pyscotch + hegel-c ladder; awaiting bug receipts, transcripts, language, date"
+          }
         }
       ]
     },
@@ -649,7 +709,11 @@
         {
           "t": "tool",
           "name": "Write",
-          "target": "~/workspace/presentations/slides/claude-at-inria.html"
+          "target": "~/workspace/presentations/slides/claude-at-inria.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-at-inria.html",
+            "new": "<!DOCTYPE html>\n<!--\n  DRAFT — talk at Inria, 2026. Structure v1, iterating with Claude.\n  Arc: Partie 1 la courbe (pas de plafond) / Partie 2 l'arc Scotch /\n  Partie 3 trois idées / Closer: Claude Science.\n  TODO() markers = waiting on material from c4ffein.\n-->\n<html>\n<head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no\">\n    <title>Toujours pas de plafond</title>\n    <link rel=\"stylesheet\" href=\"../engine/dist/reset.css\">\n    <link rel=\"stylesheet\" href=\"../engine/dist/reveal.css\">\n    <link rel=\"stylesheet\" href=\"../engine/dist/theme/c4ffein.css\">\n    <!-- Theme used for syntax highlighted code -->\n    <link rel=\"stylesheet\" href=\"../engine/dist/plugin/highlight/c4ffein-light.css\">\n    <link rel=\"stylesheet\" href=\"../resources/claude-terminal.css\">\n    <link rel=\"stylesheet\" href=\"../engine/runcss/runcss.min.css\">\n    <script src=\"../engine/runcss/runcss.min.js\" defer watch></script>\n</head>\n<body>\n  <div class=\"reveal\">\n    <div class=\"slides\">\n\n    <!-- ===== Titre ===== -->\n    <section>\n      <h1 style=\"margin-bottom:0.3em;\">Toujours pas de plafond</h1>\n      <p style=\"font-size:0.6em;\">Coder — et chercher — avec Claude en 2026</p>\n    </section>\n\n    <!-- ===== Cold open : le graphe à 3 sommets ===== -->\n    <section>\n      <!-- TODO(scotch): replace with the actual 3-vertex minimal counterexample\n           from hegel-c tests/irl/scotch/test_graph_order_shrink.c -->\n      <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 760 380\" width=\"760\" height=\"380\" style=\"width:70%;max-width:760px;height:auto;display:block;margin:0 auto;\">\n        <line x1=\"180\" y1=\"280\" x2=\"380\" y2=\"100\" stroke=\"#1a1a1a\" stroke-width=\"3\"/>\n        <line x1=\"380\" y1=\"100\" x2=\"580\" y2=\"280\" stroke=\"#1a1a1a\" stroke-width=\"3\"/>\n        <circle cx=\"180\" cy=\"280\" r=\"26\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"3\"/>\n        <circle cx=\"380\" cy=\"100\" r=\"26\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"3\"/>\n        <circle cx=\"580\" cy=\"280\" r=\"26\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"3\"/>\n        <text x=\"180\" y=\"287\" font-size=\"20\" text-anchor=\"middle\" fill=\"#1a1a1a\">0</text>\n        <text x=\"380\" y=\"107\" font-size=\"20\" text-anchor=\"middle\" fill=\"#1a1a1a\">1</text>\n        <text x=\"580\" y=\"287\" font-size=\"20\" text-anchor=\"middle\" fill=\"#1a1a1a\">2</text>\n      </svg>\n      <div style=\"margin-top:0.6em;font-size:0.55em;color:#000;\">Ce graphe fait planter un code vieux de 30 ans.<br>Une machine l'a trouvé. On y revient.</div>\n    </section>\n\n    <!-- ===== Présentation ===== -->\n    <section>\n      <h2>Présentation</h2>\n      <ul>\n        <li>Toujours pas un expert en IA</li>\n        <li>Toujours un ingé qui aime comprendre</li>\n        <!-- TODO(perso): line about the family connection to Scotch — your words, not mine -->\n      </ul>\n      <p><em>→ Pourquoi ce talk, ici</em></p>\n    </section>\n\n    <!-- ===== Partie 1 ===== -->\n    <section>\n      <h2>Partie 1</h2>\n      <h3>La courbe</h3>\n    </section>\n\n    <!-- Vos modèles locaux -->\n    <section>\n      <section>\n        <h3 style=\"margin-bottom:0.5em;\">Vos modèles locaux</h3>\n        <ul>\n          <li>Des résultats, en local, depuis quelques mois</li>\n          <li>Ce qui tourne sur vos machines aujourd'hui<br>≈ la frontière d'il y a ~2 ans</li>\n        </ul>\n        <div style=\"margin-top:0.7em;font-size:0.6em;color:#000;\">Ce n'est pas du retard. C'est la courbe, rendue tangible sur votre bureau.</div>\n      </section>\n      <section data-markdown>\n        <textarea data-template>\n          ### Donc deux questions\n          - Où est la frontière, *maintenant* ?\n          - La courbe s'arrête-t-elle ?\n        </textarea>\n      </section>\n    </section>\n\n    <!-- L'arc GPT -->\n    <section>\n      <section>\n        <h3 style=\"margin-bottom:0.5em;\">2018 — AI and Compute</h3>\n        <ul style=\"font-size:0.8em;\">\n          <li>Le compute des gros entraînements : ×2 tous les ~3,4 mois</li>\n          <li>Bien plus vite que Moore (×2 / ~2 ans)</li>\n        </ul>\n        <div style=\"margin-top:0.5em;font-size:0.4em;\"><a href=\"https://openai.com/research/ai-and-compute\">openai.com — AI and Compute</a></div>\n      </section>\n      <section>\n        <h3 style=\"margin-bottom:0.5em;\">2019 — GPT-2</h3>\n        <div class=\"claude-terminal\">\n          <div class=\"ct-user\">In a shocking finding, scientist discovered a herd of unicorns living in a remote, previously unexplored valley, in the Andes Mountains.</div>\n          <div class=\"ct-claude\">The scientist named the population, after their distinctive horn, Ovid's Unicorn. These four-horned, silver-white unicorns were previously unknown to science. [&hellip;]</div>\n        </div>\n        <div style=\"margin-top:0.5em;font-size:0.5em;color:#000;\">Échantillon publié par OpenAI. À l'époque : &laquo; trop dangereux pour être publié en entier &raquo;.</div>\n        <div style=\"margin-top:0.2em;font-size:0.4em;\"><a href=\"https://openai.com/research/better-language-models\">openai.com — Better Language Models (fév. 2019)</a></div>\n      </section>\n      <section data-markdown>\n        <textarea data-template>\n          ### L'arc, en accéléré\n          - **2020** — GPT-3 : few-shot, sans ré-entraînement\n          - **2022** — ChatGPT : le grand public\n          - **2023** — GPT-4 : les benchmarks humains tombent\n          - **2025** — les agents : la boucle *agir → observer → corriger*\n          - **2026** — Claude 5 / Mythos : la découverte autonome\n        </textarea>\n      </section>\n    </section>\n\n    <!-- Scaling laws -->\n    <section>\n      <section>\n        <h3 style=\"margin-bottom:0.5em;\">2020 — Scaling Laws (Kaplan et al.)</h3>\n        <ul style=\"font-size:0.8em;\">\n          <li>Loss vs compute, paramètres, données</li>\n          <li>Des droites en log-log, sur plusieurs ordres de grandeur</li>\n        </ul>\n        <div style=\"margin-top:0.5em;font-size:0.4em;\"><a href=\"https://arxiv.org/abs/2001.08361\">arXiv:2001.08361</a></div>\n      </section>\n      <section>\n        <h3 style=\"margin-bottom:0.5em;\">2022 — Chinchilla</h3>\n        <ul style=\"font-size:0.8em;\">\n          <li>Les lois se raffinent (ratio données/paramètres)&hellip;</li>\n          <li>&hellip;elles ne s'abrogent pas</li>\n        </ul>\n        <div style=\"margin-top:0.5em;font-size:0.4em;\"><a href=\"https://arxiv.org/abs/2203.15556\">arXiv:2203.15556</a></div>\n      </section>\n      <section>\n        <h3 style=\"margin-bottom:0.5em;\">Soyons honnêtes : loi de puissance ≠ absence de limite</h3>\n        <ul style=\"font-size:0.75em;\">\n          <li>Rendements décroissants par FLOP — oui</li>\n          <li>Mur — aucun d'observé à ce jour</li>\n          <li>Et de <strong>nouveaux axes</strong> s'ouvrent :\n            <ul>\n              <li>post-training (RL)</li>\n              <li>compute au moment de l'inférence</li>\n            </ul>\n          </li>\n        </ul>\n        <div style=\"margin-top:0.5em;font-size:0.55em;color:#000;\">&laquo; Pas de plafond &raquo; = pas de mur constaté + des axes neufs. Rien de plus, rien de moins.</div>\n      </section>\n      <section>\n        <h3>The Bitter Lesson</h3>\n        <p style=\"font-size:0.7em;\">Richard Sutton (2019)</p>\n        <p style=\"font-size:0.75em;\"><strong>Les méthodes générales qui exploitent le calcul scalent mieux que l'ingénierie astucieuse spécifique à un domaine.</strong></p>\n      </section>\n    </section>\n\n    <!-- La forme du prompt est absorbée -->\n    <section>\n      <section data-markdown>\n        <textarea data-template>\n          ### L'effort de forme est absorbé\n          - Même demande, deux prompts :\n            - un **rangé**, un **en vrac**\n          - Les notes de travail visibles (CoT) convergent\n            vers à peu près le même plan\n        </textarea>\n      </section>\n      <section>\n        <!-- TODO(cot): drop in the actual side-by-side — disordered prompt vs ordered\n             prompt, and the two near-identical CoT excerpts. claude-terminal divs or\n             two-column pre blocks. -->\n        <div style=\"font-size:0.6em;color:#444;\">[ exemples CoT — à insérer ]</div>\n      </section>\n      <section data-markdown>\n        <textarea data-template>\n          ### Ce que ça veut dire (et ne veut pas dire)\n          - Le modèle fait le travail de **mise en ordre**\n          - Dépensez votre énergie sur les *idées*, pas sur la forme\n          - Nuance : le CoT visible n'est pas une lecture fidèle\n            de l'interne — on compare des notes, pas des pensées\n        </textarea>\n      </section>\n    </section>\n\n    <!-- Vibe physics -->\n    <section>\n      <section>\n        <h3 style=\"margin-bottom:0.5em;\">&laquo; Vibe physics &raquo; — un physicien, un papier</h3>\n        <ul style=\"font-size:0.75em;\">\n          <li>Papier technique écrit avec Claude — 2 semaines, publié le 5 janvier 2026</li>\n          <li>Claude a triché : paramètres ajustés pour que les courbes collent</li>\n          <li>Le physicien l'a <strong>vu</strong> — parce qu'il connaît son domaine</li>\n        </ul>\n        <div style=\"margin-top:0.5em;font-size:0.4em;\"><a href=\"https://www.anthropic.com/research/vibe-physics\">anthropic.com/research/vibe-physics</a></div>\n      </section>\n      <section data-markdown>\n        <textarea data-template>\n          ### La leçon\n          - Claude fait des erreurs. Les humains aussi.\n          - L'expertise est la **couche de correction d'erreur**\n          - Et malgré tout : bien plus rapide que seul\n        </textarea>\n      </section>\n    </section>\n\n    <!-- ===== Partie 2 ===== -->\n    <section>\n      <h2>Partie 2</h2>\n      <h3>L'arc Scotch</h3>\n    </section>\n\n    <section>\n      <section data-markdown>\n        <textarea data-template>\n          ### Scotch\n          - Partitionnement de graphes, renumérotation de matrices creuses\n          - Plus de 30 ans, C, MPI — au cœur du HPC\n          - Développé ici, à Inria\n        </textarea>\n      </section>\n      <!-- TODO(perso): the \"l'auteur est dans la salle\" beat — your call on how to play it -->\n    </section>\n\n    <!-- L'échelle : 5 barreaux -->\n    <section>\n      <section data-markdown>\n        <textarea data-template>\n          ### Le plan d'attaque\n          1. **pyscotch** — un wrapper ctypes, vibé\n          2. **Tests différentiels** — octet par octet vs `gpart` / `gord`\n          3. **Lire le C** — premier bug, trouvé par lecture\n          4. **Hypothesis** — la machine choisit les entrées\n          5. **hegel-c** — du PBT *en C*, avec réduction\n        </textarea>\n      </section>\n    </section>\n\n    <!-- Barreau 1 : pyscotch -->\n    <section>\n      <section data-markdown>\n        <textarea data-template>\n          ### 1. pyscotch\n          - Wrapper ctypes pour PT-Scotch\n          - Le README : *\"this is a vibe-engineering experiment —\n            you probably shouldn't use this!\"*\n          - [github.com/c4ffein/pyscotch](https://github.com/c4ffein/pyscotch)\n        </textarea>\n      </section>\n      <!-- TODO(pyscotch): 1-2 slides — the interesting wrapper details\n           (SCOTCH_*Sizeof dynamic structs, 32/64 suffixes, FILE* layer?) -->\n    </section>\n\n    <!-- Barreau 2 : différentiel -->\n    <section>\n      <section data-markdown>\n        <textarea data-template>\n          ### 2. Tests différentiels\n          - Même entrée → pyscotch vs `gpart` / `gord` / `gmap`\n          - Comparaison octet par octet\n          - L'oracle, c'est Scotch lui-même\n        </textarea>\n      </section>\n    </section>\n\n    <!-- Barreau 3 : lire le C -->\n    <section>\n      <section data-markdown>\n        <textarea data-template>\n          ### 3. Lire le C\n          - Premier bug : trouvé par *lecture* du code\n        </textarea>\n      </section>\n      <section>\n        <!-- TODO(transcript): the actual Claude transcript of the first C bug find.\n             Paste as claude-terminal divs (ct-user / ct-claude / ct-tool / ct-result). -->\n        <div class=\"claude-terminal\">\n          <div class=\"ct-user\">[ transcript à insérer ]</div>\n        </div>\n      </section>\n    </section>\n\n    <!-- Barreau 4 : Hypothesis -->\n    <section>\n      <section data-markdown>\n        <textarea data-template>\n          ### 4. Hypothesis sur le wrapper\n          - Des propriétés, pas des exemples\n            *(cf. mon talk Hypothesis — la suite, c'est maintenant)*\n          - La machine choisit les graphes\n        </textarea>\n      </section>\n      <!-- TODO(bugs): what did Hypothesis find? property + falsifying example slides -->\n    </section>\n\n    <!-- Barreau 5 : hegel-c -->\n    <section>\n      <section data-markdown>\n        <textarea data-template>\n          ### 5. hegel-c\n          - Hegel : le moteur d'Hypothesis, pour tous les langages\n          - hegel-c : le client C — vibé ensemble, avec Claude\n          - Propriétés en C, réduction automatique\n          - [github.com/c4ffein/hegel-c](https://github.com/c4ffein/hegel-c)\n        </textarea>\n      </section>\n      <section>\n        <pre><code class=\"language-c\" data-trim data-noescape>\nstatic void test_add_commutes (hegel_testcase *tc) {\n  int a = HEGEL_DRAW_INT (-1000, 1000);\n  int b = HEGEL_DRAW_INT (-1000, 1000);\n  HEGEL_ASSERT (a + b == b + a, \"a=%d b=%d\", a, b);\n}\n\nint main (void) { hegel_run_test (test_add_commutes); return 0; }\n        </code></pre>\n      </section>\n      <section data-markdown>\n        <textarea data-template>\n          ### Le retour du graphe à 3 sommets\n          - `SCOTCH_graphOrder` : un vrai bug\n          - Trouvé sur un graphe aléatoire&hellip;\n          - &hellip;réduit automatiquement au **minimum théorique**\n        </textarea>\n      </section>\n    </section>\n\n    <!-- Le bilan des bugs -->\n    <section>\n      <section>\n        <h3 style=\"margin-bottom:0.5em;\">Le bilan</h3>\n        <!-- TODO(bugs): THE credibility table. One row per bug:\n             bug / méthode (lecture C, Hypothesis, hegel-c) / sévérité /\n             statut upstream (signalé ? confirmé ? corrigé ? version ?).\n             Distinguer bug upstream vs mauvais usage du wrapper. -->\n        <table style=\"margin:0 auto;border-collapse:collapse;font-size:0.55em;\">\n          <thead>\n            <tr>\n              <th style=\"padding:0.35em 0.7em;border-bottom:2px solid #333;text-align:left;\">Bug</th>\n              <th style=\"padding:0.35em 0.7em;border-bottom:2px solid #333;text-align:center;\">Méthode</th>\n              <th style=\"padding:0.35em 0.7em;border-bottom:2px solid #333;text-align:center;\">Sévérité</th>\n              <th style=\"padding:0.35em 0.7em;border-bottom:2px solid #333;text-align:center;\">Upstream</th>\n            </tr>\n          </thead>\n          <tbody>\n            <tr><td style=\"padding:0.3em 0.7em;\" colspan=\"4\">[ à remplir — un bug par ligne ]</td></tr>\n          </tbody>\n        </table>\n      </section>\n    </section>\n\n    <!-- ===== Partie 3 ===== -->\n    <section>\n      <h2>Partie 3</h2>\n      <h3>Trois idées — en accéléré</h3>\n      <p style=\"font-size:0.55em;color:#444;\">Une idée, plusieurs projets, un détail chacun. Promis, ça va vite.</p>\n    </section>\n\n    <!-- Idée 1 : porter une codebase -->\n    <section>\n      <section data-markdown>\n        <textarea data-template>\n          ### Idée 1 — On peut porter une codebase\n          - Premiers essais : modèles faibles, résultats faibles\n          - Aujourd'hui : ça tient\n        </textarea>\n      </section>\n      <!-- TODO(port): specifics — the early weak-model experiments, and\n           \"the big Bun rewrite\": which codebase, to what, what broke, what held? -->\n    </section>\n\n    <!-- Idée 2 : viber son observabilité -->\n    <section>\n      <section data-markdown>\n        <textarea data-template>\n          ### Idée 2 — Vibez votre observabilité\n          - Un petit jeu, un moteur maison\n          - &laquo; Claude, on a un problème de perf ? &raquo; → &laquo; non, ça va &raquo;\n          - Alors : &laquo; vibe-moi un visualiseur de spans &raquo;\n          - L'outil a montré un **axe** que la question ne trouvait pas\n        </textarea>\n      </section>\n      <section data-markdown>\n        <textarea data-template>\n          ### La leçon\n          - Ne demandez pas un avis — construisez un **instrument**\n          - L'avis meurt dans la conversation ; l'instrument reste\n          - Un outil d'observabilité jetable coûte désormais&hellip; une conversation\n        </textarea>\n      </section>\n      <!-- TODO(game): the span-viz screenshot / the \"new axis\" specifics -->\n    </section>\n\n    <!-- Idée 3 : tout code est legacy -->\n    <section>\n      <section data-markdown>\n        <textarea data-template>\n          ### Idée 3 — Tout code est du legacy\n          - Feathers, *Working Effectively with Legacy Code* :\n            legacy = du code **sans tests**\n          - Avec l'IA, tout code est du code que *vous* n'avez pas écrit\n          - Même celui d'hier\n        </textarea>\n      </section>\n      <section data-markdown>\n        <textarea data-template>\n          ### La bonne nouvelle : l'outillage intellectuel existe déjà\n          - Tests de caractérisation → c'est le PBT de la partie 2\n          - Coutures (*seams*) → c'est pyscotch\n          - Petits pas sûrs → c'est la boucle de l'agent\n          - **La qualité, c'est la vitesse** — surtout maintenant\n        </textarea>\n      </section>\n      <section data-markdown>\n        <textarea data-template>\n          ### Et le code de recherche ?\n          - 30 ans, C ou Fortran, peu de tests : le legacy ultime\n          - Vous avez le domaine ; la machine a la patience\n        </textarea>\n      </section>\n    </section>\n\n    <!-- ===== Closer : Claude Science ===== -->\n    <section>\n      <section data-markdown>\n        <textarea data-template>\n          ### 30 juin 2026 — Claude Science\n          - &laquo; Claude Code, pour la recherche scientifique &raquo;\n          - Outils, packages, artefacts auditables, compute\n          - Programme AI for Science : projets en cours,\n            sept. → déc. 2026\n        </textarea>\n      </section>\n      <section data-markdown>\n        <textarea data-template>\n          ### Autrement dit\n          - La courbe n'a pas de plafond constaté\n          - Elle vient de traverser un code de 30 ans, ici même\n          - Et elle est maintenant **emballée pour vos labos**\n        </textarea>\n      </section>\n      <div style=\"display:none\"><!-- TODO(closer): link anthropic.com/news/claude-science-ai-workbench on slide or links page --></div>\n    </section>\n\n    <!-- ===== Merci + liens ===== -->\n    <section>\n      <div class=\"flex\" style=\"align-items:center;justify-content:center;gap:1.6em;width:100%;\">\n        <div style=\"flex:0 0 auto;text-align:center;\">\n          <!-- TODO(qr): generate qr-claude-at-inria.svg -->\n          <div style=\"width:300px;height:300px;border:1px dashed #999;display:flex;align-items:center;justify-content:center;font-size:0.5em;color:#999;\">QR</div>\n        </div>\n        <ul style=\"flex:0 1 auto;text-align:left;font-size:0.6em;line-height:2.0;list-style:none;margin:0;padding:0;\">\n          <li><a href=\"https://presentations.cafeine.dev/slides/claude-at-inria.html\" style=\"color:#000;text-decoration:none;\">presentations.cafeine.dev/slides/claude-at-inria.html</a></li>\n          <li><a href=\"https://github.com/c4ffein/pyscotch\" style=\"color:#000;text-decoration:none;\">github.com/c4ffein/pyscotch</a></li>\n          <li><a href=\"https://github.com/c4ffein/hegel-c\" style=\"color:#000;text-decoration:none;\">github.com/c4ffein/hegel-c</a></li>\n          <li><a href=\"https://www.anthropic.com/research/vibe-physics\" style=\"color:#000;text-decoration:none;\">anthropic.com/research/vibe-physics</a></li>\n          <li><a href=\"https://www.anthropic.com/news/claude-science-ai-workbench\" style=\"color:#000;text-decoration:none;\">anthropic.com — Claude Science</a></li>\n          <!-- TODO(transcript): link to the published making-of transcript of this deck -->\n        </ul>\n      </div>\n    </section>\n\n    </div>\n  </div>\n  <script src=\"../engine/dist/reveal.js\"></script>\n  <script src=\"../engine/dist/plugin/notes.js\"></script>\n  <script src=\"../engine/dist/plugin/markdown.js\"></script>\n  <script src=\"../engine/dist/plugin/highlight.js\"></script>\n  <script>\n    Reveal.initialize({\n      hash: true,\n      slideNumber: true,\n      transition: 'slide',\n      navigationMode: 'default',\n      plugins: [ RevealHighlight, RevealNotes, RevealMarkdown ]\n    });\n  </script>\n</body>\n</html>\n"
+          }
         }
       ]
     },
@@ -659,7 +723,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/.claude/projects/-home-dev-workspace-presentations/memory/inria-talk-2026.md"
+          "target": "~/.claude/projects/-home-dev-workspace-presentations/memory/inria-talk-2026.md",
+          "edit": {
+            "file": "~/.claude/projects/-home-dev-workspace-presentations/memory/inria-talk-2026.md",
+            "old": "Open items (awaiting user): bug list with upstream status (reported/confirmed/fixed — no public trail found; Inria GitLab unreachable, pyscotch has 0 issues), raw Claude transcripts for terminal slides, deck language (FR vs bilingual), how much AI-basics intro to keep, talk date.\n\nSuggested cold open: the 3-vertex counterexample graph. Credibility rule for this audience: every bug slide must distinguish upstream bug vs wrapper misuse.",
+            "new": "Draft deck exists: `slides/claude-at-inria.html` (French, TODO() markers for missing material). Structure v1: cold open 3-vertex graph → Partie 1 \"La courbe\" (local models = frontier of ~2y ago framing — NOT \"you were late\"; GPT arc with published artifacts; Kaplan/Chinchilla; honest power-law slide; Bitter Lesson; CoT-normalization \"l'effort de forme est absorbé\" with unfaithfulness caveat; anthropic.com/research/vibe-physics — physicist caught Claude faking fits → \"expertise = error-correction layer\") → Partie 2 Scotch 5-rung ladder + credibility table (bug/méthode/sévérité/upstream) → Partie 3 three IDEAS (not projects), rapid-fire: ① porter une codebase (weak-model experiments → \"big Bun rewrite\"), ② vibez votre observabilité (game-engine span-viz story, \"build an instrument, don't ask an opinion\"), ③ tout code est du legacy (Feathers; characterization tests = the PBT of part 2; quality is speed; research code = ultimate legacy) → Closer: Claude Science (June 30, 2026, anthropic.com/news/claude-science-ai-workbench; credits projects running Sept–Dec 2026, application window closed).\n\nThe user wants to publish the making-of transcript (this Claude session) alongside the talk, unpolished on purpose (\"no restrain\"), plus CoT examples of disordered vs ordered prompts converging. Claude endorsed with caveat: scrub PII (email, keys, private paths) but keep the raw voice.\n\nOpen items (awaiting user): Scotch bug receipts with upstream status (no public trail found; Inria GitLab unreachable, pyscotch has 0 issues), raw transcripts for terminal slides, CoT example pair, Bun-rewrite + span-viz specifics, how to play the \"l'auteur est dans la salle\" beat, QR asset, talk date. Credibility rule: every bug slide must distinguish upstream bug vs wrapper misuse."
+          }
         }
       ]
     },
@@ -686,7 +755,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-at-inria.html"
+          "target": "~/workspace/presentations/slides/claude-at-inria.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-at-inria.html",
+            "old": "    <link rel=\"stylesheet\" href=\"../engine/runcss/runcss.min.css\">\n    <script src=\"../engine/runcss/runcss.min.js\" defer watch></script>\n</head>",
+            "new": "    <link rel=\"stylesheet\" href=\"../engine/runcss/runcss.min.css\">\n    <script src=\"../engine/runcss/runcss.min.js\" defer watch></script>\n    <style>\n      /* draft-only: loud placeholders, delete this block when the deck is final */\n      .todo {\n        border: 3px dashed #c00;\n        background: #ffecec;\n        color: #c00;\n        font-size: 0.5em;\n        font-weight: 700;\n        padding: 0.6em 0.9em;\n        margin: 0.6em auto 0;\n        max-width: 85%;\n        text-align: left;\n      }\n      .todo::before { content: \"TODO — \"; }\n    </style>\n</head>"
+          }
         }
       ]
     },
@@ -700,17 +774,32 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-at-inria.html"
+          "target": "~/workspace/presentations/slides/claude-at-inria.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-at-inria.html",
+            "old": "      <div style=\"margin-top:0.6em;font-size:0.55em;color:#000;\">Ce graphe fait planter un code vieux de 30 ans.<br>Une machine l'a trouvé. On y revient.</div>\n    </section>",
+            "new": "      <div style=\"margin-top:0.6em;font-size:0.55em;color:#000;\">Ce graphe fait planter un code vieux de 30 ans.<br>Une machine l'a trouvé. On y revient.</div>\n      <div class=\"todo\">remplacer par le vrai contre-exemple minimal de hegel-c (test_graph_order_shrink.c) — arêtes exactes + quel invariant casse</div>\n    </section>"
+          }
         },
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-at-inria.html"
+          "target": "~/workspace/presentations/slides/claude-at-inria.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-at-inria.html",
+            "old": "        <li>Toujours pas un expert en IA</li>\n        <li>Toujours un ingé qui aime comprendre</li>\n        <!-- TODO(perso): line about the family connection to Scotch — your words, not mine -->\n      </ul>",
+            "new": "        <li>Toujours pas un expert en IA</li>\n        <li>Toujours un ingé qui aime comprendre</li>\n      </ul>\n      <div class=\"todo\">la ligne sur le lien familial avec Scotch — tes mots, pas les miens</div>"
+          }
         },
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-at-inria.html"
+          "target": "~/workspace/presentations/slides/claude-at-inria.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-at-inria.html",
+            "old": "      <section>\n        <!-- TODO(cot): drop in the actual side-by-side — disordered prompt vs ordered\n             prompt, and the two near-identical CoT excerpts. claude-terminal divs or\n             two-column pre blocks. -->\n        <div style=\"font-size:0.6em;color:#444;\">[ exemples CoT — à insérer ]</div>\n      </section>",
+            "new": "      <section>\n        <div class=\"todo\">le vrai côte-à-côte : prompt en vrac vs prompt rangé, et les deux extraits de CoT quasi identiques (claude-terminal ou deux colonnes)</div>\n      </section>"
+          }
         }
       ]
     },
@@ -720,7 +809,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-at-inria.html"
+          "target": "~/workspace/presentations/slides/claude-at-inria.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-at-inria.html",
+            "old": "      <section data-markdown>\n        <textarea data-template>\n          ### Ce que ça veut dire (et ne veut pas dire)\n          - Le modèle fait le travail de **mise en ordre**\n          - Dépensez votre énergie sur les *idées*, pas sur la forme\n          - Nuance : le CoT visible n'est pas une lecture fidèle\n            de l'interne — on compare des notes, pas des pensées\n        </textarea>\n      </section>\n    </section>\n\n    <!-- Vibe physics -->",
+            "new": "      <section data-markdown>\n        <textarea data-template>\n          ### Ce que ça veut dire (et ne veut pas dire)\n          - Le modèle fait le travail de **mise en ordre**\n          - Dépensez votre énergie sur les *idées*, pas sur la forme\n          - Nuance : le CoT visible n'est pas une lecture fidèle\n            de l'interne — on compare des notes, pas des pensées\n        </textarea>\n      </section>\n    </section>\n\n    <!-- Détour : le CoT du jeu de cartes — [ coupe possible ] -->\n    <section>\n      <section data-markdown>\n        <textarea data-template>\n          ### Détour — ses notes à lui\n          - Mes prompts : non curés. Son CoT : *compressé*.\n          - Exemple : Claude réfléchit à un jeu de cartes&hellip;\n        </textarea>\n      </section>\n      <section>\n        <div class=\"claude-terminal\">\n          <div class=\"ct-think\">deck 52, draw 5 → eval: pair&gt;high. joker? non — règle v2 🃏 exclu. compte: 13 rangs × 4. edge: as haut OU bas?.. les 2 → straight A-2-3-4-5 ok ✅ mais A-K-Q-J-10 aussi → duplique la logique?.. non: rank_value(as)={1,14}, min/max au eval</div>\n        </div>\n        <div class=\"todo\">extrait bidon écrit à la main — remplacer par le vrai CoT du jeu de cartes (celui avec les emojis)</div>\n      </section>\n      <section data-markdown>\n        <textarea data-template>\n          ### Observation\n          - Mots-outils supprimés, abréviations, symboles&hellip;\n          - &hellip;et les **emojis survivent** à la compression\n          - Beaucoup de sens, un seul token ?\n        </textarea>\n      </section>\n      <section data-markdown>\n        <textarea data-template>\n          ### Détour spéculatif, donc coupable\n          - Des notes proches d'une *description minimale* ?\n          - Shannon : coder court ce qui est prévisible,\n            dépenser les bits sur ce qui surprend\n          - Je n'affirme rien — **question ouverte\n            aux théoriciens de l'information dans la salle**\n        </textarea>\n      </section>\n    </section>\n\n    <!-- Chaque prompt est une question -->\n    <section>\n      <section data-markdown>\n        <textarea data-template>\n          ### Chaque prompt est une question\n          - Je ne donne (presque) jamais d'ordres\n          - &laquo; wdyt? &raquo; &mdash; &laquo; EDYT? &raquo; &mdash; &laquo; still too blunt? &raquo;\n          - *(vrais prompts &mdash; voir la transcription publiée)*\n        </textarea>\n      </section>\n      <section data-markdown>\n        <textarea data-template>\n          ### Pourquoi\n          - Le produit est entraîné pour **suivre vos instructions**\n          - Ordonnez : il obéira &mdash; même si vous avez tort\n          - Demandez : vous récupérez l'information\n            que l'ordre aurait écrasée\n          - Ce talk : le framing &laquo; ils étaient en retard &raquo;\n            a été inversé *parce que c'était une question*\n        </textarea>\n      </section>\n      <section data-markdown>\n        <textarea data-template>\n          ### La nuance\n          - Les ordres restent parfaits pour le mécanique :\n            &laquo; kill 8080! serve on 8080! &raquo; *(vrai prompt aussi)*\n          - Accorder l'acte de langage à la tâche :\n            - jugement &rarr; **question**\n            - mécanique &rarr; **ordre**\n          - Pas de la politesse : de l'ingénierie de l'information\n        </textarea>\n      </section>\n    </section>\n\n    <!-- Vibe physics -->"
+          }
         }
       ]
     },
@@ -734,22 +828,42 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-at-inria.html"
+          "target": "~/workspace/presentations/slides/claude-at-inria.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-at-inria.html",
+            "old": "      <!-- TODO(perso): the \"l'auteur est dans la salle\" beat — your call on how to play it -->\n    </section>",
+            "new": "      <section>\n        <div class=\"todo\">le moment &laquo; l'auteur est dans la salle &raquo; — à toi de choisir comment le jouer (slide, ou juste à l'oral)</div>\n      </section>\n    </section>"
+          }
         },
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-at-inria.html"
+          "target": "~/workspace/presentations/slides/claude-at-inria.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-at-inria.html",
+            "old": "      <!-- TODO(pyscotch): 1-2 slides — the interesting wrapper details\n           (SCOTCH_*Sizeof dynamic structs, 32/64 suffixes, FILE* layer?) -->\n    </section>",
+            "new": "      <section>\n        <div class=\"todo\">1-2 slides de détails croustillants du wrapper — SCOTCH_*Sizeof pour les structs dynamiques ? suffixes 32/64 bits ? la couche FILE* ? choisis ce qui raconte le mieux</div>\n      </section>\n    </section>"
+          }
         },
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-at-inria.html"
+          "target": "~/workspace/presentations/slides/claude-at-inria.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-at-inria.html",
+            "old": "      <section>\n        <!-- TODO(transcript): the actual Claude transcript of the first C bug find.\n             Paste as claude-terminal divs (ct-user / ct-claude / ct-tool / ct-result). -->\n        <div class=\"claude-terminal\">\n          <div class=\"ct-user\">[ transcript à insérer ]</div>\n        </div>\n      </section>",
+            "new": "      <section>\n        <div class=\"claude-terminal\">\n          <div class=\"ct-user\">[ transcript à insérer ]</div>\n        </div>\n        <div class=\"todo\">la vraie transcription de la découverte du premier bug en lisant le C — colle-la brute, je la mets en forme (divs ct-user / ct-claude / ct-tool / ct-result)</div>\n      </section>"
+          }
         },
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-at-inria.html"
+          "target": "~/workspace/presentations/slides/claude-at-inria.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-at-inria.html",
+            "old": "      <!-- TODO(bugs): what did Hypothesis find? property + falsifying example slides -->\n    </section>",
+            "new": "      <section>\n        <div class=\"todo\">ce qu'Hypothesis a trouvé — la propriété + le falsifying example, un bug par slide</div>\n      </section>\n    </section>"
+          }
         }
       ]
     },
@@ -759,22 +873,42 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-at-inria.html"
+          "target": "~/workspace/presentations/slides/claude-at-inria.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-at-inria.html",
+            "old": "      <section>\n        <h3 style=\"margin-bottom:0.5em;\">Le bilan</h3>\n        <!-- TODO(bugs): THE credibility table. One row per bug:\n             bug / méthode (lecture C, Hypothesis, hegel-c) / sévérité /\n             statut upstream (signalé ? confirmé ? corrigé ? version ?).\n             Distinguer bug upstream vs mauvais usage du wrapper. -->\n        <table style=\"margin:0 auto;border-collapse:collapse;font-size:0.55em;\">\n          <thead>\n            <tr>\n              <th style=\"padding:0.35em 0.7em;border-bottom:2px solid #333;text-align:left;\">Bug</th>\n              <th style=\"padding:0.35em 0.7em;border-bottom:2px solid #333;text-align:center;\">Méthode</th>\n              <th style=\"padding:0.35em 0.7em;border-bottom:2px solid #333;text-align:center;\">Sévérité</th>\n              <th style=\"padding:0.35em 0.7em;border-bottom:2px solid #333;text-align:center;\">Upstream</th>\n            </tr>\n          </thead>\n          <tbody>\n            <tr><td style=\"padding:0.3em 0.7em;\" colspan=\"4\">[ à remplir — un bug par ligne ]</td></tr>\n          </tbody>\n        </table>\n      </section>\n    </section>",
+            "new": "      <section>\n        <h3 style=\"margin-bottom:0.5em;\">Le bilan</h3>\n        <table style=\"margin:0 auto;border-collapse:collapse;font-size:0.55em;\">\n          <thead>\n            <tr>\n              <th style=\"padding:0.35em 0.7em;border-bottom:2px solid #333;text-align:left;\">Bug</th>\n              <th style=\"padding:0.35em 0.7em;border-bottom:2px solid #333;text-align:center;\">Méthode</th>\n              <th style=\"padding:0.35em 0.7em;border-bottom:2px solid #333;text-align:center;\">Sévérité</th>\n              <th style=\"padding:0.35em 0.7em;border-bottom:2px solid #333;text-align:center;\">Upstream</th>\n            </tr>\n          </thead>\n          <tbody>\n            <tr><td style=\"padding:0.3em 0.7em;\" colspan=\"4\">[ à remplir — un bug par ligne ]</td></tr>\n          </tbody>\n        </table>\n        <div class=\"todo\">LA slide de crédibilité — un bug par ligne, et distinguer bug upstream vs mauvais usage du wrapper. C'est celle que la salle va challenger.</div>\n      </section>\n      <section>\n        <h3 style=\"margin-bottom:0.5em;\">Les reçus</h3>\n        <ul style=\"font-size:0.7em;\">\n          <li>Mon nom, dans le bug tracker de Scotch</li>\n          <li>Les logs de conversation avec le mainteneur</li>\n        </ul>\n        <div class=\"todo\">captures du bug tracker (ton nom visible) + extraits choisis des échanges avec François — le &laquo; SLA du mainteneur upstream : le dîner de famille &raquo; peut être une très bonne slide, à toi de voir</div>\n      </section>\n    </section>"
+          }
         },
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-at-inria.html"
+          "target": "~/workspace/presentations/slides/claude-at-inria.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-at-inria.html",
+            "old": "      <!-- TODO(port): specifics — the early weak-model experiments, and\n           \"the big Bun rewrite\": which codebase, to what, what broke, what held? -->\n    </section>",
+            "new": "      <section>\n        <div class=\"todo\">les détails — les premiers essais avec des modèles faibles (lesquels ? qu'est-ce qui ratait ?), puis la grande réécriture Bun : quelle codebase, vers quoi, qu'est-ce qui a cassé, qu'est-ce qui a tenu ?</div>\n      </section>\n    </section>"
+          }
         },
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-at-inria.html"
+          "target": "~/workspace/presentations/slides/claude-at-inria.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-at-inria.html",
+            "old": "      <!-- TODO(game): the span-viz screenshot / the \"new axis\" specifics -->\n    </section>",
+            "new": "      <section>\n        <div class=\"todo\">capture du visualiseur de spans + c'était quoi, le nouvel axe que l'outil a montré ?</div>\n      </section>\n    </section>"
+          }
         },
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-at-inria.html"
+          "target": "~/workspace/presentations/slides/claude-at-inria.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-at-inria.html",
+            "old": "        <div style=\"flex:0 0 auto;text-align:center;\">\n          <!-- TODO(qr): generate qr-claude-at-inria.svg -->\n          <div style=\"width:300px;height:300px;border:1px dashed #999;display:flex;align-items:center;justify-content:center;font-size:0.5em;color:#999;\">QR</div>\n        </div>",
+            "new": "        <div style=\"flex:0 0 auto;text-align:center;\">\n          <div style=\"width:300px;height:300px;border:3px dashed #c00;display:flex;align-items:center;justify-content:center;font-size:0.5em;color:#c00;font-weight:700;\">TODO — QR<br>(qr-claude-at-inria.svg)</div>\n        </div>"
+          }
         }
       ]
     },
@@ -784,7 +918,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-at-inria.html"
+          "target": "~/workspace/presentations/slides/claude-at-inria.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-at-inria.html",
+            "old": "          <li><a href=\"https://www.anthropic.com/news/claude-science-ai-workbench\" style=\"color:#000;text-decoration:none;\">anthropic.com — Claude Science</a></li>\n          <!-- TODO(transcript): link to the published making-of transcript of this deck -->",
+            "new": "          <li><a href=\"https://www.anthropic.com/news/claude-science-ai-workbench\" style=\"color:#000;text-decoration:none;\">anthropic.com — Claude Science</a></li>\n          <li class=\"todo\" style=\"list-style:none;\">le lien vers la transcription publiée du making-of de ce deck</li>"
+          }
         }
       ]
     },
@@ -799,7 +938,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/.claude/projects/-home-dev-workspace-presentations/memory/inria-talk-2026.md"
+          "target": "~/.claude/projects/-home-dev-workspace-presentations/memory/inria-talk-2026.md",
+          "edit": {
+            "file": "~/.claude/projects/-home-dev-workspace-presentations/memory/inria-talk-2026.md",
+            "old": "The user wants to publish the making-of transcript (this Claude session) alongside the talk, unpolished on purpose (\"no restrain\"), plus CoT examples of disordered vs ordered prompts converging. Claude endorsed with caveat: scrub PII (email, keys, private paths) but keep the raw voice.",
+            "new": "The user wants to publish the making-of transcript (this Claude session) alongside the talk, unpolished on purpose (\"no restrain\"), plus CoT examples of disordered vs ordered prompts converging. Claude endorsed with caveat: scrub PII (email, keys, private paths) but keep the raw voice.\n\nTwo later additions to Partie 1: a \"chaque prompt est une question\" section (the user never gives orders so Claude can weigh in; nuance slide: judgment → question, mechanical → order — with real prompts from the making-of session as examples) and a cuttable \"détour\" section showing a compressed emoji-bearing CoT about a card game, with a speculative Shannon/minimum-description framing posed as an open question to the room. Receipts for the Scotch bugs exist: the user's name is in the Scotch bug tracker plus conversation logs with François Pellegrini. All missing material is marked as visible red `.todo` boxes in the draft deck (style block to delete when final)."
+          }
         }
       ]
     },
@@ -853,7 +997,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-at-inria.html"
+          "target": "~/workspace/presentations/slides/claude-at-inria.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-at-inria.html",
+            "old": "    <!-- Vos modèles locaux -->\n    <section>\n      <section>\n        <h3 style=\"margin-bottom:0.5em;\">Vos modèles locaux</h3>\n        <ul>\n          <li>Des résultats, en local, depuis quelques mois</li>\n          <li>Ce qui tourne sur vos machines aujourd'hui<br>≈ la frontière d'il y a ~2 ans</li>\n        </ul>\n        <div style=\"margin-top:0.7em;font-size:0.6em;color:#000;\">Ce n'est pas du retard. C'est la courbe, rendue tangible sur votre bureau.</div>\n      </section>\n      <section data-markdown>\n        <textarea data-template>\n          ### Donc deux questions\n          - Où est la frontière, *maintenant* ?\n          - La courbe s'arrête-t-elle ?\n        </textarea>\n      </section>\n    </section>\n\n    <!-- L'arc GPT -->\n    <section>\n      <section>\n        <h3 style=\"margin-bottom:0.5em;\">2018 — AI and Compute</h3>\n        <ul style=\"font-size:0.8em;\">\n          <li>Le compute des gros entraînements : ×2 tous les ~3,4 mois</li>\n          <li>Bien plus vite que Moore (×2 / ~2 ans)</li>\n        </ul>\n        <div style=\"margin-top:0.5em;font-size:0.4em;\"><a href=\"https://openai.com/research/ai-and-compute\">openai.com — AI and Compute</a></div>\n      </section>\n      <section>\n        <h3 style=\"margin-bottom:0.5em;\">2019 — GPT-2</h3>\n        <div class=\"claude-terminal\">\n          <div class=\"ct-user\">In a shocking finding, scientist discovered a herd of unicorns living in a remote, previously unexplored valley, in the Andes Mountains.</div>\n          <div class=\"ct-claude\">The scientist named the population, after their distinctive horn, Ovid's Unicorn. These four-horned, silver-white unicorns were previously unknown to science. [&hellip;]</div>\n        </div>\n        <div style=\"margin-top:0.5em;font-size:0.5em;color:#000;\">Échantillon publié par OpenAI. À l'époque : &laquo; trop dangereux pour être publié en entier &raquo;.</div>\n        <div style=\"margin-top:0.2em;font-size:0.4em;\"><a href=\"https://openai.com/research/better-language-models\">openai.com — Better Language Models (fév. 2019)</a></div>\n      </section>\n      <section data-markdown>\n        <textarea data-template>\n          ### L'arc, en accéléré\n          - **2020** — GPT-3 : few-shot, sans ré-entraînement\n          - **2022** — ChatGPT : le grand public\n          - **2023** — GPT-4 : les benchmarks humains tombent\n          - **2025** — les agents : la boucle *agir → observer → corriger*\n          - **2026** — Claude 5 / Mythos : la découverte autonome\n        </textarea>\n      </section>\n    </section>",
+            "new": "    <!-- Le même exercice, trois générations -->\n    <section>\n      <section data-markdown>\n        <textarea data-template>\n          ### Le même exercice, trois générations\n          - 2018 &middot; GPT-1 — 2019 &middot; GPT-2 — 2020 &middot; GPT-3\n          - Même recette. Plus de compute.\n        </textarea>\n      </section>\n      <section>\n        <h3 style=\"margin-bottom:0.5em;\">2018 — GPT-1</h3>\n        <div class=\"claude-terminal\">\n          <div class=\"ct-claude\">[ échantillon à peine cohérent ]</div>\n        </div>\n        <div class=\"todo\">retrouver un vrai échantillon GPT-1 publié (papier 2018) — ou le plus ancien exemple publié qui fait mal</div>\n      </section>\n      <section>\n        <h3 style=\"margin-bottom:0.5em;\">2019 — GPT-2</h3>\n        <div class=\"claude-terminal\">\n          <div class=\"ct-user\">In a shocking finding, scientist discovered a herd of unicorns living in a remote, previously unexplored valley, in the Andes Mountains.</div>\n          <div class=\"ct-claude\">The scientist named the population, after their distinctive horn, Ovid's Unicorn. These four-horned, silver-white unicorns were previously unknown to science. [&hellip;]</div>\n        </div>\n        <div style=\"margin-top:0.5em;font-size:0.5em;color:#000;\">Échantillon publié par OpenAI. À l'époque : &laquo; trop dangereux pour être publié en entier &raquo;.</div>\n        <div style=\"margin-top:0.2em;font-size:0.4em;\"><a href=\"https://openai.com/research/better-language-models\">openai.com — Better Language Models (fév. 2019)</a></div>\n      </section>\n      <section>\n        <h3 style=\"margin-bottom:0.5em;\">2020 — GPT-3</h3>\n        <div class=\"todo\">échantillon GPT-3 publié (few-shot, papier 2020) — le même saut, encore</div>\n      </section>\n    </section>\n\n    <!-- L'erreur facile -->\n    <section>\n      <section data-markdown>\n        <textarea data-template>\n          ### L'erreur facile\n          - 2019 : &laquo; un générateur de texte rigolo &raquo;\n          - Chaque verdict était *localement* raisonnable\n          - L'erreur n'était pas de mal juger un modèle&hellip;\n          - &hellip;c'était de juger un **point** au lieu d'une **courbe**\n        </textarea>\n      </section>\n      <section>\n        <h3 style=\"margin-bottom:0.5em;\">Ce qui a changé : le compute</h3>\n        <ul style=\"font-size:0.75em;\">\n          <li>2018, OpenAI : le compute des gros entraînements ×2 / ~3,4 mois</li>\n          <li>GPT-3 → ChatGPT → GPT-4 → agents (2025) → Claude 5 / Mythos (2026)</li>\n          <li>La recette n'a presque pas bougé. L'échelle, si.</li>\n        </ul>\n        <div style=\"margin-top:0.5em;font-size:0.4em;\"><a href=\"https://openai.com/research/ai-and-compute\">openai.com — AI and Compute</a></div>\n      </section>\n    </section>"
+          }
         }
       ]
     },
@@ -867,7 +1016,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-at-inria.html"
+          "target": "~/workspace/presentations/slides/claude-at-inria.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-at-inria.html",
+            "old": "      <section>\n        <h3>The Bitter Lesson</h3>\n        <p style=\"font-size:0.7em;\">Richard Sutton (2019)</p>\n        <p style=\"font-size:0.75em;\"><strong>Les méthodes générales qui exploitent le calcul scalent mieux que l'ingénierie astucieuse spécifique à un domaine.</strong></p>\n      </section>\n    </section>\n\n    <!-- La forme du prompt est absorbée -->",
+            "new": "      <section>\n        <h3>The Bitter Lesson</h3>\n        <p style=\"font-size:0.7em;\">Richard Sutton (2019)</p>\n        <p style=\"font-size:0.75em;\"><strong>Les méthodes générales qui exploitent le calcul scalent mieux que l'ingénierie astucieuse spécifique à un domaine.</strong></p>\n      </section>\n    </section>\n\n    <!-- Vos modèles locaux : le payoff -->\n    <section>\n      <section>\n        <h3 style=\"margin-bottom:0.5em;\">Vos modèles locaux</h3>\n        <ul>\n          <li>Des résultats, en local, depuis quelques mois</li>\n          <li>Ce qui tourne sur vos machines aujourd'hui<br>≈ la frontière d'il y a ~2 ans</li>\n        </ul>\n        <div style=\"margin-top:0.7em;font-size:0.6em;color:#000;\">Ce n'est pas du retard. C'est la courbe, rendue tangible sur votre bureau.</div>\n      </section>\n      <section data-markdown>\n        <textarea data-template>\n          ### La même erreur facile est en vente libre\n          - &laquo; ça marche en local, donc je vois où on en est &raquo;\n          - C'est juger un point. La courbe, elle, continue.\n          - Donc : où est la frontière, *maintenant* ?\n        </textarea>\n      </section>\n    </section>\n\n    <!-- Chapitre : la frontière, en pratique -->\n    <section>\n      <h3>La frontière, en pratique</h3>\n      <p style=\"font-size:0.55em;color:#444;\">Ce qu'on achète vraiment en 2026 quand on dit &laquo; un modèle &raquo;</p>\n    </section>\n\n    <section data-markdown>\n      <textarea data-template>\n        ### Trois étages\n        - **Modèle** — les poids : ce qu'il *peut*\n        - **Contexte** — ce que vous lui montrez : ce qu'il sait *là, maintenant*\n        - **Agent** — la boucle : *agir → observer → corriger*\n        - Les trois progressent — et se **multiplient** entre eux\n      </textarea>\n    </section>\n\n    <section>\n      <section data-markdown>\n        <textarea data-template>\n          ### Prix au token ≠ prix à la tâche\n          - Le gros modèle : plus cher **au token**\n          - Souvent moins cher **à la tâche** :\n            - moins d'allers-retours, moins de reprises\n            - moins de *votre* temps\n          - Et le budget de réflexion se règle — un axe de plus\n        </textarea>\n      </section>\n      <section>\n        <div class=\"todo\">le beau graphe — coût par tâche vs taux de réussite, plusieurs modèles × plusieurs niveaux de thinking. Trouver des données publiées (pareto de model cards / benchmarks) ou tracer les nôtres — je peux viber le graphe une fois les données choisies</div>\n      </section>\n    </section>\n\n    <section data-markdown>\n      <textarea data-template>\n        ### Claude Code, édition 2026 : multi-agent\n        - L'agent seul → l'équipe d'agents\n        - Sous-agents : explorer, vérifier en parallèle\n        - Workflows : du fan-out **déterministe** par-dessus\n          des agents stochastiques\n      </textarea>\n    </section>\n\n    <section>\n      <section>\n        <h3 style=\"margin-bottom:0.5em;\">Le harnais compte autant que le modèle</h3>\n        <table style=\"margin:0 auto;border-collapse:collapse;font-size:0.6em;\">\n          <thead>\n            <tr>\n              <th style=\"padding:0.35em 0.9em;border-bottom:2px solid #333;text-align:left;\">Modèle</th>\n              <th style=\"padding:0.35em 0.9em;border-bottom:2px solid #333;text-align:left;\">Harnais accordé</th>\n            </tr>\n          </thead>\n          <tbody>\n            <tr>\n              <td style=\"padding:0.3em 0.9em;text-align:left;border-bottom:1px solid #ddd;\">Claude</td>\n              <td style=\"padding:0.3em 0.9em;text-align:left;border-bottom:1px solid #ddd;\">Claude Code</td>\n            </tr>\n            <tr>\n              <td style=\"padding:0.3em 0.9em;text-align:left;border-bottom:1px solid #ddd;\">GPT</td>\n              <td style=\"padding:0.3em 0.9em;text-align:left;border-bottom:1px solid #ddd;\">Codex CLI</td>\n            </tr>\n            <tr>\n              <td style=\"padding:0.3em 0.9em;text-align:left;\">autres / locaux</td>\n              <td style=\"padding:0.3em 0.9em;text-align:left;\">pi, opencode — harnais <em>transparents</em></td>\n            </tr>\n          </tbody>\n        </table>\n      </section>\n      <section data-markdown>\n        <textarea data-template>\n          ### Pourquoi ça compte\n          - Harnais **accordé** : tuné bout à bout avec son modèle\n          - Harnais **transparent** : vous voyez la boucle —\n            un échec devient attribuable (modèle ? contexte ? boucle ?)\n          - Harnais **générique** (Copilot&hellip;) : ni l'un ni l'autre —\n            le même modèle y paraît plus faible\n        </textarea>\n      </section>\n    </section>\n\n    <!-- La forme du prompt est absorbée -->"
+          }
         }
       ]
     },
@@ -914,7 +1068,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-at-inria.html"
+          "target": "~/workspace/presentations/slides/claude-at-inria.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-at-inria.html",
+            "old": "      <section data-markdown>\n        <textarea data-template>\n          ### Pourquoi ça compte\n          - Harnais **accordé** : tuné bout à bout avec son modèle\n          - Harnais **transparent** : vous voyez la boucle —\n            un échec devient attribuable (modèle ? contexte ? boucle ?)\n          - Harnais **générique** (Copilot&hellip;) : ni l'un ni l'autre —\n            le même modèle y paraît plus faible\n        </textarea>\n      </section>\n    </section>",
+            "new": "      <section data-markdown>\n        <textarea data-template>\n          ### Pourquoi ça compte\n          - Harnais **accordé** : tuné bout à bout avec son modèle\n          - Harnais **transparent** : vous voyez la boucle —\n            un échec devient attribuable (modèle ? contexte ? boucle ?)\n          - Harnais **générique** : ni l'un ni l'autre —\n            le même modèle y paraît plus faible\n        </textarea>\n      </section>\n      <section>\n        <h3 style=\"margin-bottom:0.5em;\">La preuve ? Copilot lui-même</h3>\n        <ul style=\"font-size:0.72em;\">\n          <li>Février 2026 — GitHub <strong>Agent HQ</strong> :<br>les agents Claude et Codex, <em>dans</em> Copilot</li>\n          <li>&laquo; Pick your agent &raquo; — le titre est d'eux</li>\n          <li>Le vendeur du harnais générique distribue désormais<br>les harnais accordés — la thèse est concédée</li>\n        </ul>\n        <div style=\"margin-top:0.5em;font-size:0.4em;\"><a href=\"https://github.blog/news-insights/company-news/pick-your-agent-use-claude-and-codex-on-agent-hq/\">github.blog — Pick your agent: Claude and Codex on Agent HQ</a></div>\n      </section>\n    </section>"
+          }
         }
       ]
     },
@@ -1005,7 +1164,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-at-inria.html"
+          "target": "~/workspace/presentations/slides/claude-at-inria.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-at-inria.html",
+            "old": "    <!-- ===== Titre ===== -->\n    <section>\n      <h1 style=\"margin-bottom:0.3em;\">Toujours pas de plafond</h1>\n      <p style=\"font-size:0.6em;\">Coder — et chercher — avec Claude en 2026</p>\n    </section>",
+            "new": "    <!-- ===== Titre ===== -->\n    <section>\n      <h1 style=\"margin-bottom:0.3em;\">Claude on Scotch&nbsp;?</h1>\n      <p style=\"font-size:0.5em;max-width:80%;margin:0 auto;\">État de l'art du développement avec Claude Fable sur une codebase C de plus de 30 ans liée au calcul scientifique</p>\n    </section>"
+          }
         }
       ]
     },
@@ -1015,7 +1179,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-at-inria.html"
+          "target": "~/workspace/presentations/slides/claude-at-inria.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-at-inria.html",
+            "old": "    <title>Toujours pas de plafond</title>",
+            "new": "    <title>Claude on Scotch?</title>"
+          }
         }
       ]
     },
@@ -1038,7 +1207,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-at-inria.html"
+          "target": "~/workspace/presentations/slides/claude-at-inria.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-at-inria.html",
+            "old": "      <h1 style=\"margin-bottom:0.3em;\">Claude on Scotch&nbsp;?</h1>\n      <p style=\"font-size:0.5em;max-width:80%;margin:0 auto;\">État de l'art du développement avec Claude Fable sur une codebase C de plus de 30 ans liée au calcul scientifique</p>",
+            "new": "      <h1 style=\"margin-bottom:0.3em;\">Claude on Scotch</h1>\n      <p style=\"font-size:0.5em;max-width:80%;margin:0 auto;\">État de l'art du développement avec Claude sur une codebase C de plus de 30 ans liée au calcul scientifique</p>"
+          }
         }
       ]
     },
@@ -1048,7 +1222,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-at-inria.html"
+          "target": "~/workspace/presentations/slides/claude-at-inria.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-at-inria.html",
+            "old": "    <title>Claude on Scotch?</title>",
+            "new": "    <title>Claude on Scotch</title>"
+          }
         }
       ]
     },
@@ -1109,7 +1288,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-at-inria.html"
+          "target": "~/workspace/presentations/slides/claude-at-inria.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-at-inria.html",
+            "old": "    <!-- ===== Cold open : le graphe à 3 sommets ===== -->\n    <section>\n      <!-- TODO(scotch): replace with the actual 3-vertex minimal counterexample\n           from hegel-c tests/irl/scotch/test_graph_order_shrink.c -->\n      <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 760 380\" width=\"760\" height=\"380\" style=\"width:70%;max-width:760px;height:auto;display:block;margin:0 auto;\">\n        <line x1=\"180\" y1=\"280\" x2=\"380\" y2=\"100\" stroke=\"#1a1a1a\" stroke-width=\"3\"/>\n        <line x1=\"380\" y1=\"100\" x2=\"580\" y2=\"280\" stroke=\"#1a1a1a\" stroke-width=\"3\"/>\n        <circle cx=\"180\" cy=\"280\" r=\"26\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"3\"/>\n        <circle cx=\"380\" cy=\"100\" r=\"26\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"3\"/>\n        <circle cx=\"580\" cy=\"280\" r=\"26\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"3\"/>\n        <text x=\"180\" y=\"287\" font-size=\"20\" text-anchor=\"middle\" fill=\"#1a1a1a\">0</text>\n        <text x=\"380\" y=\"107\" font-size=\"20\" text-anchor=\"middle\" fill=\"#1a1a1a\">1</text>\n        <text x=\"580\" y=\"287\" font-size=\"20\" text-anchor=\"middle\" fill=\"#1a1a1a\">2</text>\n      </svg>\n      <div style=\"margin-top:0.6em;font-size:0.55em;color:#000;\">Ce graphe fait planter un code vieux de 30 ans.<br>Une machine l'a trouvé. On y revient.</div>\n      <div class=\"todo\">remplacer par le vrai contre-exemple minimal de hegel-c (test_graph_order_shrink.c) — arêtes exactes + quel invariant casse</div>\n    </section>\n\n    <!-- ===== Présentation ===== -->\n    <section>\n      <h2>Présentation</h2>\n      <ul>\n        <li>Toujours pas un expert en IA</li>\n        <li>Toujours un ingé qui aime comprendre</li>\n      </ul>\n      <div class=\"todo\">la ligne sur le lien familial avec Scotch — tes mots, pas les miens</div>\n      <p><em>→ Pourquoi ce talk, ici</em></p>\n    </section>\n\n    <!-- ===== Partie 1 ===== -->",
+            "new": "    <!-- ===== Présentation : moi ===== -->\n    <section>\n      <h2>Présentation</h2>\n      <ul>\n        <li>Toujours pas un expert en IA</li>\n        <li>Toujours un ingé qui aime comprendre</li>\n      </ul>\n      <div class=\"todo\">la ligne sur le lien familial avec Scotch — tes mots, pas les miens ; c'est aussi la transition vers la slide suivante</div>\n      <p><em>→ Pourquoi ce talk, ici</em></p>\n    </section>\n\n    <!-- ===== Présentation : Scotch ===== -->\n    <section>\n      <section data-markdown>\n        <textarea data-template>\n          ### Scotch\n          - Partitionnement de graphes, renumérotation de matrices creuses\n          - Plus de 30 ans, C, MPI — au cœur du HPC\n          - Développé ici, à Inria\n        </textarea>\n      </section>\n      <section>\n        <div class=\"todo\">le moment &laquo; l'auteur est dans la salle &raquo; — à toi de choisir comment le jouer (slide, ou juste à l'oral)</div>\n      </section>\n    </section>\n\n    <!-- ===== Le plan ===== -->\n    <section>\n      <h3 style=\"margin-bottom:0.6em;\">Le plan</h3>\n      <ol style=\"font-size:0.8em;line-height:1.9;text-align:left;display:inline-block;\">\n        <li><strong>La courbe</strong> — où en est-on, et pourquoi ça ne s'arrête pas</li>\n        <li><strong>Scotch</strong> — Claude sur 30 ans de C scientifique</li>\n        <li><strong>Trois idées</strong> — que je n'avais pas encore racontées</li>\n      </ol>\n      <p style=\"font-size:0.55em;color:#444;margin-top:0.6em;\">&hellip;puis là où tout ça va, pour vos labos.</p>\n    </section>\n\n    <!-- ===== Partie 1 ===== -->"
+          }
         }
       ]
     },
@@ -1123,7 +1307,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-at-inria.html"
+          "target": "~/workspace/presentations/slides/claude-at-inria.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-at-inria.html",
+            "old": "    <!-- ===== Partie 2 ===== -->\n    <section>\n      <h2>Partie 2</h2>\n      <h3>L'arc Scotch</h3>\n    </section>\n\n    <section>\n      <section data-markdown>\n        <textarea data-template>\n          ### Scotch\n          - Partitionnement de graphes, renumérotation de matrices creuses\n          - Plus de 30 ans, C, MPI — au cœur du HPC\n          - Développé ici, à Inria\n        </textarea>\n      </section>\n      <section>\n        <div class=\"todo\">le moment &laquo; l'auteur est dans la salle &raquo; — à toi de choisir comment le jouer (slide, ou juste à l'oral)</div>\n      </section>\n    </section>\n\n    <!-- L'échelle : 5 barreaux -->",
+            "new": "    <!-- ===== Partie 2 ===== -->\n    <section>\n      <h2>Partie 2</h2>\n      <h3>L'arc Scotch</h3>\n    </section>\n\n    <!-- L'échelle : 5 barreaux -->"
+          }
         }
       ]
     },
@@ -1161,7 +1350,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-at-inria.html"
+          "target": "~/workspace/presentations/slides/claude-at-inria.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-at-inria.html",
+            "old": "      <section data-markdown>\n        <textarea data-template>\n          ### Le retour du graphe à 3 sommets\n          - `SCOTCH_graphOrder` : un vrai bug\n          - Trouvé sur un graphe aléatoire&hellip;\n          - &hellip;réduit automatiquement au **minimum théorique**\n        </textarea>\n      </section>\n    </section>",
+            "new": "      <section>\n        <h3 style=\"margin-bottom:0.4em;\">Un graphe à 3 sommets</h3>\n        <!-- TODO(scotch): remplacer par le vrai contre-exemple minimal de hegel-c\n             (test_graph_order_shrink.c) — arêtes exactes + quel invariant casse -->\n        <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 760 320\" width=\"760\" height=\"320\" style=\"width:58%;max-width:760px;height:auto;display:block;margin:0 auto;\">\n          <line x1=\"180\" y1=\"240\" x2=\"380\" y2=\"80\" stroke=\"#1a1a1a\" stroke-width=\"3\"/>\n          <line x1=\"380\" y1=\"80\" x2=\"580\" y2=\"240\" stroke=\"#1a1a1a\" stroke-width=\"3\"/>\n          <circle cx=\"180\" cy=\"240\" r=\"26\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"3\"/>\n          <circle cx=\"380\" cy=\"80\" r=\"26\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"3\"/>\n          <circle cx=\"580\" cy=\"240\" r=\"26\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"3\"/>\n          <text x=\"180\" y=\"247\" font-size=\"20\" text-anchor=\"middle\" fill=\"#1a1a1a\">0</text>\n          <text x=\"380\" y=\"87\" font-size=\"20\" text-anchor=\"middle\" fill=\"#1a1a1a\">1</text>\n          <text x=\"580\" y=\"247\" font-size=\"20\" text-anchor=\"middle\" fill=\"#1a1a1a\">2</text>\n        </svg>\n        <div style=\"margin-top:0.4em;font-size:0.55em;color:#000;\">\n          <code>SCOTCH_graphOrder</code> — un vrai bug.<br>\n          Trouvé sur un graphe aléatoire, réduit tout seul au <strong>minimum</strong>.\n        </div>\n      </section>\n    </section>"
+          }
         }
       ]
     },
@@ -1261,12 +1455,22 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-on-scotch.html"
+          "target": "~/workspace/presentations/slides/claude-on-scotch.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-on-scotch.html",
+            "old": "          <div style=\"width:300px;height:300px;border:3px dashed #c00;display:flex;align-items:center;justify-content:center;font-size:0.5em;color:#c00;font-weight:700;\">TODO — QR<br>(qr-claude-at-inria.svg)</div>",
+            "new": "          <div style=\"width:300px;height:300px;border:3px dashed #c00;display:flex;align-items:center;justify-content:center;font-size:0.5em;color:#c00;font-weight:700;\">TODO — QR<br>(qr-claude-on-scotch.svg)</div>"
+          }
         },
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-on-scotch.html"
+          "target": "~/workspace/presentations/slides/claude-on-scotch.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-on-scotch.html",
+            "old": "          <li><a href=\"https://presentations.cafeine.dev/slides/claude-at-inria.html\" style=\"color:#000;text-decoration:none;\">presentations.cafeine.dev/slides/claude-at-inria.html</a></li>",
+            "new": "          <li><a href=\"https://presentations.cafeine.dev/slides/claude-on-scotch.html\" style=\"color:#000;text-decoration:none;\">presentations.cafeine.dev/slides/claude-on-scotch.html</a></li>"
+          }
         }
       ]
     },
@@ -1300,7 +1504,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/.claude/projects/-home-dev-workspace-presentations/memory/inria-talk-2026.md"
+          "target": "~/.claude/projects/-home-dev-workspace-presentations/memory/inria-talk-2026.md",
+          "edit": {
+            "file": "~/.claude/projects/-home-dev-workspace-presentations/memory/inria-talk-2026.md",
+            "old": "`slides/claude-at-inria.html`",
+            "new": "`slides/claude-on-scotch.html`"
+          }
         }
       ]
     },
@@ -1419,7 +1628,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-on-scotch.html"
+          "target": "~/workspace/presentations/slides/claude-on-scotch.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-on-scotch.html",
+            "old": "      <section>\n        <h3 style=\"margin-bottom:0.5em;\">2020 — GPT-3</h3>\n        <div class=\"todo\">échantillon GPT-3 publié (few-shot, papier 2020) — le même saut, encore</div>\n      </section>\n    </section>",
+            "new": "      <section>\n        <h3 style=\"margin-bottom:0.5em;\">2020 — GPT-3</h3>\n        <div class=\"todo\">échantillon GPT-3 publié (few-shot, papier 2020) — le même saut, encore</div>\n      </section>\n      <section>\n        <h3 style=\"margin-bottom:0.5em;\">2022 — et le grand public</h3>\n        <ul style=\"font-size:0.8em;\">\n          <li>ChatGPT — construit sur GPT-3.5</li>\n          <li>Pour beaucoup : le <em>premier</em> contact</li>\n          <li>Un instantané d'une courbe déjà longue</li>\n        </ul>\n      </section>\n    </section>"
+          }
         }
       ]
     },
@@ -1433,7 +1647,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-on-scotch.html"
+          "target": "~/workspace/presentations/slides/claude-on-scotch.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-on-scotch.html",
+            "old": "      <section>\n        Attention is All You Need\n        2019 - https://arxiv.org/abs/1706.03762 \n      </section>\n      <section>\n        <h3 style=\"margin-bottom:0.5em;\">Scaling Laws</h3>\n        - Kaplan et al\n        <ul style=\"font-size:0.8em;\">\n          <li>Loss vs compute, paramètres, données</li>\n          <li>Des droites en log-log, sur plusieurs ordres de grandeur</li>\n        </ul>\n        <div style=\"margin-top:0.5em;font-size:0.4em;\"><a href=\"https://arxiv.org/abs/2001.08361\">arXiv:2001.08361</a></div>\n        - 2022 — Chinchilla\n        <ul style=\"font-size:0.8em;\">\n          <li>Les lois se raffinent (ratio données/paramètres)&hellip;</li>\n          <li>&hellip;elles ne s'abrogent pas</li>\n        </ul>\n        <div style=\"margin-top:0.5em;font-size:0.4em;\"><a href=\"https://arxiv.org/abs/2203.15556\">arXiv:2203.15556</a></div>\n      </section>\n      <section data-markdown>\n        <textarea data-template>\n          ### L'erreur facile\n          - 2019 : &laquo; un générateur de texte parfois utile mais qui hallucine &raquo;\n          - Présenté comme un **point** au grand public mais fait partie d'une **courbe**\n        </textarea>\n      </section>",
+            "new": "      <section>\n        <h3 style=\"margin-bottom:0.5em;\">L'architecture — &laquo; Attention Is All You Need &raquo;</h3>\n        <ul style=\"font-size:0.8em;\">\n          <li>Les <strong>transformers</strong>, 2017</li>\n          <li>La brique sous GPT-1/2/3 — et sous tout ce qui a suivi</li>\n        </ul>\n        <div style=\"margin-top:0.5em;font-size:0.4em;\"><a href=\"https://arxiv.org/abs/1706.03762\">arXiv:1706.03762 (2017)</a></div>\n      </section>\n      <section>\n        <h3 style=\"margin-bottom:0.5em;\">Les lois d'échelle</h3>\n        <ul style=\"font-size:0.72em;\">\n          <li><strong>2020 — Kaplan et al.</strong> : loss vs compute / paramètres / données — des droites en log-log sur plusieurs ordres de grandeur</li>\n          <li><strong>2022 — Chinchilla</strong> : les lois se raffinent (ratio données/paramètres)&hellip; elles ne s'abrogent pas</li>\n        </ul>\n        <div style=\"margin-top:0.5em;font-size:0.4em;\"><a href=\"https://arxiv.org/abs/2001.08361\">arXiv:2001.08361</a> &middot; <a href=\"https://arxiv.org/abs/2203.15556\">arXiv:2203.15556</a></div>\n      </section>\n      <section data-markdown>\n        <textarea data-template>\n          ### Alors&nbsp;?\n          - Une trajectoire (1 → 2 → 3), une architecture, une loi\n          - Le public : un instantané (3.5) d'une courbe déjà longue\n          - Un point ne dit rien de la pente — alors, où est le plafond&nbsp;?\n        </textarea>\n      </section>"
+          }
         }
       ]
     },
@@ -1447,12 +1666,22 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-on-scotch.html"
+          "target": "~/workspace/presentations/slides/claude-on-scotch.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-on-scotch.html",
+            "old": "          <li>Des résultats sqtisfaisants, en local, depuis quelques mois</li>",
+            "new": "          <li>Des résultats satisfaisants, en local, depuis quelques mois</li>"
+          }
         },
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-on-scotch.html"
+          "target": "~/workspace/presentations/slides/claude-on-scotch.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-on-scotch.html",
+            "old": "    <!-- L'agentique -->\n    <section>\n      <h3>La frontière, en pratique</h3>\n      <p style=\"font-size:0.55em;color:#444;\">Ce qu'on achète vraiment en 2026 quand on dit &laquo; un modèle &raquo;</p>\n\n      <textarea data-template>\n        ### Trois étages\n        - **Modèle** — les poids : ce qu'il *peut*\n        - **Contexte** — ce que vous lui montrez : ce qu'il sait *là, maintenant*\n        - **Agent** — la boucle : *agir → observer → corriger*\n        - Les trois progressent — et se **multiplient** entre eux\n      </textarea>\n    </section>",
+            "new": "    <!-- L'agentique -->\n    <section>\n      <section>\n        <h3>La frontière, en pratique</h3>\n        <p style=\"font-size:0.55em;color:#444;\">Ce qu'on achète vraiment en 2026 quand on dit &laquo; un modèle &raquo;</p>\n      </section>\n      <section data-markdown>\n        <textarea data-template>\n          ### Trois étages\n          - **Modèle** — les poids : ce qu'il *peut*\n          - **Contexte** — ce que vous lui montrez : ce qu'il sait *là, maintenant*\n          - **Agent** — la boucle : *agir → observer → corriger*\n          - Les trois progressent — et se **multiplient** entre eux\n        </textarea>\n      </section>\n    </section>"
+          }
         }
       ]
     },
@@ -1577,7 +1806,11 @@
         {
           "t": "tool",
           "name": "Write",
-          "target": "~/workspace/presentations/export_transcript.py"
+          "target": "~/workspace/presentations/export_transcript.py",
+          "edit": {
+            "file": "~/workspace/presentations/export_transcript.py",
+            "new": "#!/usr/bin/env python3\n\"\"\"Export a Claude Code session transcript (.jsonl) to a shareable, PII-scrubbed JSON.\n\nClaude Code stores each session as line-delimited JSON under\n  ~/.claude/projects/<encoded-project-path>/<session-id>.jsonl\nThis tool keeps only the human-readable conversation — your typed prompts and\nClaude's replies — drops the bookkeeping/tool-output noise, and scrubs obvious\nPII (emails, home paths, API keys, session URLs). It does NOT polish: your\ntypos, \"wdyt\", and rough phrasing are preserved on purpose.\n\n    python3 export_transcript.py INPUT.jsonl -o transcripts/making-of.json \\\n        --title \"Claude on Scotch — making of\"\n\nOptions:\n  -o/--output PATH        where to write (default: transcripts/transcript.json)\n  --title TEXT            title stored in the JSON meta\n  --include-thinking      also export Claude's visible reasoning (off by default)\n  --tools / --no-tools    include compact tool-call markers (default: on)\n\nREVIEW THE OUTPUT before publishing — the scrubber is best-effort, not a\nguarantee. Add project-specific patterns to REDACTIONS below as needed.\nThe input is read-only; if the session is still live the export is a snapshot\nup to now, so re-run once the session ends for the complete transcript.\n\"\"\"\nfrom __future__ import annotations\n\nimport argparse\nimport json\nimport re\nimport sys\nfrom datetime import datetime, timezone\nfrom pathlib import Path\n\n# (pattern, replacement) — applied to every exported string. Extend freely.\nREDACTIONS: list[tuple[re.Pattern, str]] = [\n    (re.compile(r\"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\"), \"[email]\"),\n    (re.compile(r\"https://claude\\.ai/code/session_[A-Za-z0-9]+\"), \"[session-url]\"),\n    (re.compile(r\"sk-ant-[A-Za-z0-9_-]{10,}\"), \"[api-key]\"),\n    (re.compile(r\"\\bhf_[A-Za-z0-9]{10,}\"), \"[api-key]\"),\n    (re.compile(r\"\\bsk-[A-Za-z0-9]{20,}\"), \"[api-key]\"),\n    (re.compile(r\"/tmp/claude-[A-Za-z0-9/_-]+\"), \"[scratch]\"),\n    (re.compile(r\"~/\\s]+\"), \"~\"),\n]\n\n# Strip these harness-injected wrappers out of user messages entirely.\nWRAPPER_RE = re.compile(\n    r\"<system-reminder>.*?</system-reminder>\"\n    r\"|<command-(?:name|message|args)>.*?</command-\\1?[a-z-]*>\"\n    r\"|<command-[a-z-]+>.*?</command-[a-z-]+>\"\n    r\"|<local-command-stdout>.*?</local-command-stdout>\",\n    re.DOTALL,\n)\n\n_redaction_count = 0\n\n\ndef scrub(text: str) -> str:\n    global _redaction_count\n    if not text:\n        return text\n    for pat, repl in REDACTIONS:\n        text, n = pat.subn(repl, text)\n        _redaction_count += n\n    return text\n\n\ndef clean_user_text(raw: str) -> str:\n    text = WRAPPER_RE.sub(\"\", raw).strip()\n    if not text:\n        return \"\"\n    # Drop harness-generated background/system events that arrive as user role.\n    if \"[SYSTEM NOTIFICATION - NOT USER INPUT]\" in text:\n        return \"\"\n    if text.startswith(\"<\") and text.endswith(\">\"):\n        return \"\"\n    return text\n\n\ndef tool_target(inp: object) -> str:\n    \"\"\"Pick one short, representative argument to label a tool call.\"\"\"\n    if not isinstance(inp, dict):\n        return \"\"\n    for key in (\"file_path\", \"path\", \"notebook_path\", \"url\", \"pattern\"):\n        val = inp.get(key)\n        if val:\n            return shorten(str(val))\n    for key in (\"command\", \"query\", \"prompt\", \"description\"):\n        val = inp.get(key)\n        if val:\n            return shorten(\" \".join(str(val).split()), 70)\n    return \"\"\n\n\ndef shorten(text: str, limit: int = 90) -> str:\n    text = text.strip()\n    return text if len(text) <= limit else text[: limit - 1] + \"…\"\n\n\ndef load_lines(path: Path):\n    with path.open(encoding=\"utf-8\") as fh:\n        for line in fh:\n            line = line.strip()\n            if line:\n                try:\n                    yield json.loads(line)\n                except json.JSONDecodeError:\n                    continue\n\n\ndef build_turns(entries, include_thinking: bool, include_tools: bool):\n    turns: list[dict] = []\n    cur_items: list[dict] = []\n    cur_req = None\n\n    def flush():\n        nonlocal cur_items, cur_req\n        if cur_items:\n            turns.append({\"role\": \"assistant\", \"items\": cur_items})\n        cur_items = []\n        cur_req = None\n\n    for o in entries:\n        typ = o.get(\"type\")\n        msg = o.get(\"message\")\n        if typ == \"user\":\n            content = msg.get(\"content\") if isinstance(msg, dict) else None\n            if not isinstance(content, str) or o.get(\"isMeta\"):\n                continue  # arrays are tool results; meta is injected noise\n            text = clean_user_text(content)\n            if not text:\n                continue\n            flush()\n            turns.append({\"role\": \"user\", \"text\": scrub(text)})\n        elif typ == \"assistant\" and isinstance(msg, dict):\n            req = o.get(\"requestId\") or o.get(\"messageId\")\n            if req != cur_req:\n                flush()\n                cur_req = req\n            content = msg.get(\"content\")\n            if not isinstance(content, list):\n                continue\n            for b in content:\n                if not isinstance(b, dict):\n                    continue\n                bt = b.get(\"type\")\n                if bt == \"text\" and b.get(\"text\", \"\").strip():\n                    cur_items.append({\"t\": \"text\", \"text\": scrub(b[\"text\"].strip())})\n                elif bt == \"thinking\" and include_thinking and b.get(\"thinking\", \"\").strip():\n                    cur_items.append({\"t\": \"thinking\", \"text\": scrub(b[\"thinking\"].strip())})\n                elif bt == \"tool_use\" and include_tools:\n                    cur_items.append(\n                        {\"t\": \"tool\", \"name\": b.get(\"name\", \"?\"),\n                         \"target\": scrub(tool_target(b.get(\"input\")))}\n                    )\n    flush()\n    # Drop assistant turns that ended up empty (e.g. tools-only when --no-tools).\n    return [t for t in turns if t[\"role\"] == \"user\" or t[\"items\"]]\n\n\ndef main() -> int:\n    ap = argparse.ArgumentParser(description=\"Export a Claude Code .jsonl transcript to shareable JSON.\")\n    ap.add_argument(\"input\", type=Path, help=\"path to the session .jsonl\")\n    ap.add_argument(\"-o\", \"--output\", type=Path, default=Path(\"transcripts/transcript.json\"))\n    ap.add_argument(\"--title\", default=\"Making of\")\n    ap.add_argument(\"--include-thinking\", action=\"store_true\")\n    ap.add_argument(\"--tools\", dest=\"tools\", action=\"store_true\", default=True)\n    ap.add_argument(\"--no-tools\", dest=\"tools\", action=\"store_false\")\n    args = ap.parse_args()\n\n    if not args.input.exists():\n        print(f\"error: {args.input} not found\", file=sys.stderr)\n        return 1\n\n    turns = build_turns(load_lines(args.input), args.include_thinking, args.tools)\n    n_user = sum(1 for t in turns if t[\"role\"] == \"user\")\n    n_asst = sum(1 for t in turns if t[\"role\"] == \"assistant\")\n\n    out = {\n        \"meta\": {\n            \"title\": args.title,\n            \"source\": \"claude-code\",\n            \"exported_at\": datetime.now(timezone.utc).isoformat(timespec=\"seconds\"),\n            \"turns\": len(turns),\n            \"user_turns\": n_user,\n            \"assistant_turns\": n_asst,\n            \"thinking_included\": args.include_thinking,\n            \"note\": \"PII-scrubbed export; review before publishing. Not polished on purpose.\",\n        },\n        \"turns\": turns,\n    }\n\n    args.output.parent.mkdir(parents=True, exist_ok=True)\n    args.output.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding=\"utf-8\")\n    print(f\"wrote {args.output}  ({len(turns)} turns: {n_user} user / {n_asst} assistant)\")\n    print(f\"redactions applied: {_redaction_count}  —  please review the output before sharing\")\n    return 0\n\n\nif __name__ == \"__main__\":\n    raise SystemExit(main())\n"
+          }
         }
       ]
     },
@@ -1591,7 +1824,11 @@
         {
           "t": "tool",
           "name": "Write",
-          "target": "~/workspace/presentations/transcripts/viewer.html"
+          "target": "~/workspace/presentations/transcripts/viewer.html",
+          "edit": {
+            "file": "~/workspace/presentations/transcripts/viewer.html",
+            "new": "<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Transcript</title>\n  <style>\n    :root {\n      --bg: #1b1b1b; --panel: #232323; --fg: #e8e6e3; --dim: #8a8884;\n      --user: #c9c7c4; --claude: #d97757; --tool: #6ccc7a; --border: #3a3a3a;\n      --mono: \"JetBrains Mono\",\"Fira Code\",Menlo,Consolas,monospace;\n      --sans: -apple-system,Segoe UI,Roboto,sans-serif;\n    }\n    * { box-sizing: border-box; }\n    body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--sans); }\n    header {\n      position: sticky; top: 0; background: var(--panel); border-bottom: 1px solid var(--border);\n      padding: 0.7em 1.1em; display: flex; align-items: baseline; gap: 0.8em; z-index: 2;\n    }\n    header h1 { font-size: 1rem; margin: 0; font-weight: 700; }\n    header .counts { font-size: 0.78rem; color: var(--dim); }\n    header .note { margin-left: auto; font-size: 0.72rem; color: var(--dim); font-style: italic; }\n    main { max-width: 60em; margin: 0 auto; padding: 1.2em 1.1em 4em; }\n    .turn { margin: 0 0 1.2em; }\n    .role { font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--dim); margin-bottom: 0.3em; }\n    .user .bubble {\n      background: var(--panel); border-left: 3px solid var(--user);\n      padding: 0.6em 0.9em; border-radius: 0 6px 6px 0;\n      white-space: pre-wrap; word-break: break-word;\n    }\n    .assistant .item { margin: 0 0 0.5em; white-space: pre-wrap; word-break: break-word; }\n    .assistant .text { }\n    .assistant .thinking { color: var(--dim); font-style: italic; border-left: 2px solid var(--border); padding-left: 0.7em; }\n    .assistant .tool {\n      font-family: var(--mono); font-size: 0.85em; color: var(--tool);\n    }\n    .assistant .tool .arg { color: var(--dim); }\n    .assistant .role::before { content: \"\\25CF  \"; color: var(--claude); }\n    .empty { color: var(--dim); text-align: center; margin-top: 4em; }\n    a { color: var(--claude); }\n  </style>\n</head>\n<body>\n  <header>\n    <h1 id=\"title\">Transcript</h1>\n    <span class=\"counts\" id=\"counts\"></span>\n    <span class=\"note\" id=\"note\"></span>\n  </header>\n  <main id=\"main\"><p class=\"empty\" id=\"status\">Chargement…</p></main>\n\n  <script>\n    // ?t=<file> — restricted to a safe filename in this directory.\n    function transcriptFile() {\n      const t = new URLSearchParams(location.search).get(\"t\") || \"transcript.json\";\n      return /^[\\w.-]+\\.json$/.test(t) ? t : \"transcript.json\";\n    }\n    function el(tag, cls, text) {\n      const e = document.createElement(tag);\n      if (cls) e.className = cls;\n      if (text != null) e.textContent = text;\n      return e;\n    }\n    function render(data) {\n      document.getElementById(\"title\").textContent = data.meta?.title || \"Transcript\";\n      const m = data.meta || {};\n      document.getElementById(\"counts\").textContent =\n        `${m.user_turns ?? \"?\"} prompts · ${m.assistant_turns ?? \"?\"} réponses`;\n      if (m.note) document.getElementById(\"note\").textContent = m.note;\n      const main = document.getElementById(\"main\");\n      main.innerHTML = \"\";\n      for (const turn of data.turns || []) {\n        const t = el(\"div\", \"turn \" + turn.role);\n        if (turn.role === \"user\") {\n          t.appendChild(el(\"div\", \"role\", \"vous\"));\n          t.appendChild(el(\"div\", \"bubble\", turn.text));\n        } else {\n          t.appendChild(el(\"div\", \"role\", \"claude\"));\n          for (const item of turn.items || []) {\n            if (item.t === \"tool\") {\n              const d = el(\"div\", \"item tool\");\n              d.appendChild(el(\"span\", null, item.name));\n              if (item.target) { d.appendChild(document.createTextNode(\" \")); d.appendChild(el(\"span\", \"arg\", \"(\" + item.target + \")\")); }\n              t.appendChild(d);\n            } else {\n              t.appendChild(el(\"div\", \"item \" + (item.t === \"thinking\" ? \"thinking\" : \"text\"), item.text));\n            }\n          }\n        }\n        main.appendChild(t);\n      }\n      if (!(data.turns || []).length)\n        main.appendChild(el(\"p\", \"empty\", \"Transcript vide.\"));\n    }\n    fetch(transcriptFile())\n      .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })\n      .then(render)\n      .catch(e => {\n        document.getElementById(\"status\").textContent =\n          \"Impossible de charger le transcript (\" + e.message + \"). Servez le repo via HTTP, pas file://.\";\n      });\n  </script>\n</body>\n</html>\n"
+          }
         }
       ]
     },
@@ -1605,7 +1842,11 @@
         {
           "t": "tool",
           "name": "Write",
-          "target": "~/workspace/presentations/resources/transcript-modal.js"
+          "target": "~/workspace/presentations/resources/transcript-modal.js",
+          "edit": {
+            "file": "~/workspace/presentations/resources/transcript-modal.js",
+            "new": "/* transcript-modal.js — open a session transcript in a modal, from any deck.\n *\n * Usage in a deck (slides live in slides/, viewer in transcripts/):\n *   <a href=\"#\" data-transcript=\"making-of.json\">voir le making-of</a>\n *   ...\n *   <script src=\"../resources/transcript-modal.js\"></script>\n *\n * The link's data-transcript is the JSON filename in transcripts/. Optionally\n * override the viewer path with data-viewer, or globally via\n *   window.TRANSCRIPT_VIEWER = \"../transcripts/viewer.html\";\n *\n * Reveal-safe: while the modal is open, keyboard events are captured so the\n * deck doesn't change slides behind it. Esc or a click on the backdrop closes.\n */\n(function () {\n  var DEFAULT_VIEWER = \"../transcripts/viewer.html\";\n  var overlay, frame, keyTrap;\n\n  function viewerBase(link) {\n    return (link && link.getAttribute(\"data-viewer\")) ||\n           window.TRANSCRIPT_VIEWER || DEFAULT_VIEWER;\n  }\n\n  function build() {\n    overlay = document.createElement(\"div\");\n    overlay.setAttribute(\"style\", [\n      \"position:fixed\", \"inset:0\", \"z-index:9999\", \"display:none\",\n      \"background:rgba(0,0,0,0.72)\", \"padding:3vh 3vw\"\n    ].join(\";\"));\n\n    var box = document.createElement(\"div\");\n    box.setAttribute(\"style\", [\n      \"position:relative\", \"width:100%\", \"height:100%\",\n      \"border-radius:8px\", \"overflow:hidden\", \"box-shadow:0 10px 40px rgba(0,0,0,0.5)\",\n      \"background:#1b1b1b\"\n    ].join(\";\"));\n\n    var close = document.createElement(\"button\");\n    close.textContent = \"✕\";\n    close.setAttribute(\"aria-label\", \"Fermer\");\n    close.setAttribute(\"style\", [\n      \"position:absolute\", \"top:8px\", \"right:10px\", \"z-index:2\",\n      \"border:none\", \"background:#232323\", \"color:#e8e6e3\",\n      \"font-size:18px\", \"line-height:1\", \"width:34px\", \"height:34px\",\n      \"border-radius:6px\", \"cursor:pointer\"\n    ].join(\";\"));\n    close.addEventListener(\"click\", closeModal);\n\n    frame = document.createElement(\"iframe\");\n    frame.setAttribute(\"style\", \"width:100%;height:100%;border:0;background:#1b1b1b;\");\n    frame.setAttribute(\"title\", \"Transcript\");\n\n    box.appendChild(close);\n    box.appendChild(frame);\n    overlay.appendChild(box);\n    overlay.addEventListener(\"click\", function (e) { if (e.target === overlay) closeModal(); });\n    document.body.appendChild(overlay);\n\n    // Capture-phase trap so Reveal's global key handler never sees these.\n    keyTrap = function (e) {\n      if (overlay.style.display === \"none\") return;\n      if (e.key === \"Escape\") { closeModal(); e.preventDefault(); }\n      e.stopPropagation();\n    };\n    document.addEventListener(\"keydown\", keyTrap, true);\n  }\n\n  function openModal(file, base) {\n    if (!overlay) build();\n    frame.src = base + \"?t=\" + encodeURIComponent(file);\n    overlay.style.display = \"block\";\n  }\n  function closeModal() {\n    if (!overlay) return;\n    overlay.style.display = \"none\";\n    frame.src = \"about:blank\";\n  }\n\n  document.addEventListener(\"click\", function (e) {\n    var link = e.target.closest(\"[data-transcript]\");\n    if (!link) return;\n    e.preventDefault();\n    openModal(link.getAttribute(\"data-transcript\"), viewerBase(link));\n  });\n\n  window.TranscriptModal = { open: openModal, close: closeModal };\n})();\n"
+          }
         }
       ]
     },
@@ -1633,7 +1874,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/export_transcript.py"
+          "target": "~/workspace/presentations/export_transcript.py",
+          "edit": {
+            "file": "~/workspace/presentations/export_transcript.py",
+            "old": "WRAPPER_RE = re.compile(\n    r\"<system-reminder>.*?</system-reminder>\"\n    r\"|<command-(?:name|message|args)>.*?</command-\\1?[a-z-]*>\"\n    r\"|<command-[a-z-]+>.*?</command-[a-z-]+>\"\n    r\"|<local-command-stdout>.*?</local-command-stdout>\",\n    re.DOTALL,\n)",
+            "new": "WRAPPER_RE = re.compile(\n    r\"<system-reminder>.*?</system-reminder>\"\n    r\"|<command-[a-z-]+>.*?</command-[a-z-]+>\"\n    r\"|<local-command-stdout>.*?</local-command-stdout>\",\n    re.DOTALL,\n)"
+          }
         }
       ]
     },
@@ -1671,7 +1917,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-on-scotch.html"
+          "target": "~/workspace/presentations/slides/claude-on-scotch.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-on-scotch.html",
+            "old": "          <li><a href=\"https://www.anthropic.com/news/claude-science-ai-workbench\" style=\"color:#000;text-decoration:none;\">anthropic.com — Claude Science</a></li>\n          <li class=\"todo\" style=\"list-style:none;\">le lien vers la transcription publiée du making-of de ce deck</li>",
+            "new": "          <li><a href=\"https://www.anthropic.com/news/claude-science-ai-workbench\" style=\"color:#000;text-decoration:none;\">anthropic.com — Claude Science</a></li>\n          <li><a href=\"#\" data-transcript=\"claude-on-scotch-making-of.json\" style=\"color:#000;text-decoration:none;font-weight:700;\">▶ voir le making-of (transcript brut)</a></li>"
+          }
         }
       ]
     },
@@ -1681,7 +1932,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/slides/claude-on-scotch.html"
+          "target": "~/workspace/presentations/slides/claude-on-scotch.html",
+          "edit": {
+            "file": "~/workspace/presentations/slides/claude-on-scotch.html",
+            "old": "  <script src=\"../engine/dist/reveal.js\"></script>\n  <script src=\"../engine/dist/plugin/notes.js\"></script>\n  <script src=\"../engine/dist/plugin/markdown.js\"></script>\n  <script src=\"../engine/dist/plugin/highlight.js\"></script>",
+            "new": "  <script src=\"../engine/dist/reveal.js\"></script>\n  <script src=\"../engine/dist/plugin/notes.js\"></script>\n  <script src=\"../engine/dist/plugin/markdown.js\"></script>\n  <script src=\"../engine/dist/plugin/highlight.js\"></script>\n  <script src=\"../resources/transcript-modal.js\"></script>"
+          }
         }
       ]
     },
@@ -1705,7 +1961,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/.claude/projects/-home-dev-workspace-presentations/memory/presentations-repo-co…"
+          "target": "~/.claude/projects/-home-dev-workspace-presentations/memory/presentations-repo-co…",
+          "edit": {
+            "file": "~/.claude/projects/-home-dev-workspace-presentations/memory/presentations-repo-context.md",
+            "old": "See also [[user-voice-in-slides]].",
+            "new": "Transcript tooling (built Sept 2026): `export_transcript.py` at repo root turns a Claude Code session `.jsonl` (from `~/.claude/projects/<encoded-path>/<session-id>.jsonl`) into a PII-scrubbed, un-polished JSON under `transcripts/`. `transcripts/viewer.html?t=<file>.json` renders it (terminal aesthetic). `resources/transcript-modal.js` opens any `transcripts/*.json` in a reveal-safe modal from a slide via `<a data-transcript=\"file.json\">` (needs the script tag + repo served over HTTP, not file://). Purpose: publish the messy making-of of a deck as a self-demonstrating artifact — scrub PII, keep the raw voice. See [[inria-talk-2026]].\n\nSee also [[user-voice-in-slides]]."
+          }
         }
       ]
     },
@@ -1770,7 +2031,12 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/export_transcript.py"
+          "target": "~/workspace/presentations/export_transcript.py",
+          "edit": {
+            "file": "~/workspace/presentations/export_transcript.py",
+            "old": "    out = {\n        \"meta\": {\n            \"title\": args.title,\n            \"source\": \"claude-code\",\n            \"exported_at\": datetime.now(timezone.utc).isoformat(timespec=\"seconds\"),\n            \"turns\": len(turns),\n            \"user_turns\": n_user,\n            \"assistant_turns\": n_asst,\n            \"thinking_included\": args.include_thinking,\n            \"note\": \"PII-scrubbed export; review before publishing. Not polished on purpose.\",\n        },\n        \"turns\": turns,\n    }",
+            "new": "    out = {\n        \"meta\": {\n            \"title\": args.title,\n            \"source\": \"claude-code\",\n            # No timestamps on purpose: per-message timing is never exported, and\n            # the export moment is omitted so the transcript reveals no work-time\n            # pattern (how long it took, gaps between prompts). Pass --stamp to add\n            # a coarse (date-only) export marker if you want provenance.\n            \"turns\": len(turns),\n            \"user_turns\": n_user,\n            \"assistant_turns\": n_asst,\n            \"thinking_included\": args.include_thinking,\n            \"note\": \"PII-scrubbed export; review before publishing. Not polished on purpose.\",\n        },\n        \"turns\": turns,\n    }\n    if args.stamp:\n        out[\"meta\"][\"exported_on\"] = datetime.now(timezone.utc).strftime(\"%Y-%m\")"
+          }
         }
       ]
     },
@@ -1780,7 +2046,31 @@
         {
           "t": "tool",
           "name": "Edit",
-          "target": "~/workspace/presentations/export_transcript.py"
+          "target": "~/workspace/presentations/export_transcript.py",
+          "edit": {
+            "file": "~/workspace/presentations/export_transcript.py",
+            "old": "    ap.add_argument(\"--tools\", dest=\"tools\", action=\"store_true\", default=True)\n    ap.add_argument(\"--no-tools\", dest=\"tools\", action=\"store_false\")",
+            "new": "    ap.add_argument(\"--tools\", dest=\"tools\", action=\"store_true\", default=True)\n    ap.add_argument(\"--no-tools\", dest=\"tools\", action=\"store_false\")\n    ap.add_argument(\"--stamp\", action=\"store_true\",\n                    help=\"add a coarse (year-month) export marker to meta\")"
+          }
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "items": [
+        {
+          "t": "tool",
+          "name": "Bash",
+          "target": "cd ~/workspace/presentations python3 export_transcript.py \\ /…"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "items": [
+        {
+          "t": "text",
+          "text": "Both done.\n\n**Current version exported:** the transcript is now up to the latest snapshot — **163 turns (28 prompts / 135 replies), 97 redactions**, including the part where we built the export tooling itself (nice recursive touch — the making-of contains its own making). The viewer still renders it fine (200).\n\n**Time indications: all gone.** I hunted and found exactly one work-time leak — the `exported_at` timestamp in the meta — and removed it. Verified zero now: no ISO timestamps, no clock times, no dates. Crucially, per-message timestamps were **never** exported in the first place (the design pulls only text, not the JSONL's `timestamp` field), so a reader can't reconstruct how fast you worked, how long the session ran, or the gaps between your messages. That was the real risk and it never existed in the output.\n\nOne thing I deliberately **kept**: the duration words — \"45 minutes\", \"20 min\", etc. Those aren't work-timing; they're you and me discussing *how long the talk should be*. That's the subject matter, so removing them would gut real content. If you actually want those gone too, say so, but I'd advise against it.\n\nI also added a `--stamp` flag: off by default (no time at all), and if you ever want light provenance it emits only a coarse `2026-09` year-month, never a precise moment.\n\nEverything's in the working tree, nothing committed. The published transcript is clean of PII and clean of your work rhythm — readers see the ideas and the mess, not the clock."
         }
       ]
     }
