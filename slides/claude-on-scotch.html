@@ -60,7 +60,7 @@
       <section>
         <h2>Scotch</h2>
         <ul>
-          <li>Partitionnement de graphes, renumérotation de matrices creuses</li>
+          <li>Partitionnement de graphes</li>
           <li>Plus de 30 ans, C, MPI — au cœur du HPC</li>
           <li>Développé ici, à l'Inria</li>
           <li>Je connais l'auteur</li>
@@ -68,9 +68,12 @@
       </section>
       <!-- ===== Le plan ===== -->
       <section>
+        <!-- <li><strong>Présenter des résultats concrets sur des projets sérieux</strong> -->
+        <!-- <li><strong>Offrir des examples supplémentaires avec des toy projects</strong> -->
+        <!-- <li><strong>Build in public => des liens vers ce que je présente</strong> -->
         <h3 style="margin-bottom:0.6em;">Le plan</h3>
         <ol style="font-size:0.8em;line-height:1.9;text-align:left;display:inline-block;">
-          <li><strong>Mon bon modèle mental des LLM</strong><!--comment je pense qu'il faut les considérer, pourquoi j'ai pu supposer que le progrès allait continuer, et comment je travaille avec pour avoir de bons résultats-->
+          <li><strong>Mon modèle mental des LLM</strong><!--comment je pense qu'il faut les considérer, pourquoi j'ai pu supposer que le progrès allait continuer, et comment je travaille avec pour avoir de bons résultats-->
           <li><strong>Parcours avec Scotch</strong><!--pourquoi j'ai choisi cette codebase, et pourquoi j'ai choisi de raconter cette histoire de manière chronologique-->
           <li><strong>Leçons générales de Scotch et d'autres projets</strong><!--présenter des idées claires qui sont généralisables facilement et permettent de travailler plus efficacement avec Claude, et ne rentraient pas dans mon parcours avec Scotch-->
         </ol>
@@ -112,47 +115,41 @@
         <h3 style="margin-bottom:0.5em;">2020 — GPT-3</h3>
         <div class="todo">échantillon GPT-3 publié (few-shot, papier 2020) — le même saut, encore</div>
       </section>
-    </section>
-
-    <!-- L'erreur facile -->
-    <section>
-      <section data-markdown>
-        <textarea data-template>
-          ### L'erreur facile
-          - 2019 : &laquo; un générateur de texte rigolo &raquo;
-          - Chaque verdict était *localement* raisonnable
-          - L'erreur n'était pas de mal juger un modèle&hellip;
-          - &hellip;c'était de juger un **point** au lieu d'une **courbe**
-        </textarea>
-      </section>
       <section>
-        <h3 style="margin-bottom:0.5em;">Ce qui a changé : le compute</h3>
-        <ul style="font-size:0.75em;">
-          <li>2018, OpenAI : le compute des gros entraînements ×2 / ~3,4 mois</li>
-          <li>GPT-3 → ChatGPT → GPT-4 → agents (2025) → Claude 5 / Mythos (2026)</li>
-          <li>La recette n'a presque pas bougé. L'échelle, si.</li>
+        <h3 style="margin-bottom:0.5em;">2022 — et le grand public</h3>
+        <ul style="font-size:0.8em;">
+          <li>ChatGPT — construit sur GPT-3.5</li>
+          <li>Pour beaucoup : le <em>premier</em> contact</li>
+          <li>Un instantané d'une courbe déjà longue</li>
         </ul>
-        <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://openai.com/research/ai-and-compute">openai.com — AI and Compute</a></div>
       </section>
     </section>
 
     <!-- Scaling laws -->
     <section>
       <section>
-        <h3 style="margin-bottom:0.5em;">2020 — Scaling Laws (Kaplan et al.)</h3>
+        <h3 style="margin-bottom:0.5em;">L'architecture — &laquo; Attention Is All You Need &raquo;</h3>
         <ul style="font-size:0.8em;">
-          <li>Loss vs compute, paramètres, données</li>
-          <li>Des droites en log-log, sur plusieurs ordres de grandeur</li>
+          <li>Les <strong>transformers</strong>, 2017</li>
+          <li>La brique sous GPT-1/2/3 — et sous tout ce qui a suivi</li>
         </ul>
-        <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://arxiv.org/abs/2001.08361">arXiv:2001.08361</a></div>
+        <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://arxiv.org/abs/1706.03762">arXiv:1706.03762 (2017)</a></div>
       </section>
       <section>
-        <h3 style="margin-bottom:0.5em;">2022 — Chinchilla</h3>
-        <ul style="font-size:0.8em;">
-          <li>Les lois se raffinent (ratio données/paramètres)&hellip;</li>
-          <li>&hellip;elles ne s'abrogent pas</li>
+        <h3 style="margin-bottom:0.5em;">Les lois d'échelle</h3>
+        <ul style="font-size:0.72em;">
+          <li><strong>2020 — Kaplan et al.</strong> : loss vs compute / paramètres / données — des droites en log-log sur plusieurs ordres de grandeur</li>
+          <li><strong>2022 — Chinchilla</strong> : les lois se raffinent (ratio données/paramètres)&hellip; elles ne s'abrogent pas</li>
         </ul>
-        <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://arxiv.org/abs/2203.15556">arXiv:2203.15556</a></div>
+        <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://arxiv.org/abs/2001.08361">arXiv:2001.08361</a> &middot; <a href="https://arxiv.org/abs/2203.15556">arXiv:2203.15556</a></div>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Alors&nbsp;?
+          - Une trajectoire (1 → 2 → 3), une architecture, une loi
+          - Le public : un instantané (3.5) d'une courbe déjà longue
+          - Un point ne dit rien de la pente — alors, où est le plafond&nbsp;?
+        </textarea>
       </section>
       <section>
         <h3 style="margin-bottom:0.5em;">Soyons honnêtes : loi de puissance ≠ absence de limite</h3>
@@ -173,42 +170,31 @@
         <p style="font-size:0.7em;">Richard Sutton (2019)</p>
         <p style="font-size:0.75em;"><strong>Les méthodes générales qui exploitent le calcul scalent mieux que l'ingénierie astucieuse spécifique à un domaine.</strong></p>
       </section>
+      <section>
+        <h3 style="margin-bottom:0.5em;"> Les modèles locaux</h3>
+        <ul>
+          <li>Des résultats satisfaisants, en local, depuis quelques mois</li>
+          <li>Ce qui tourne en local aujourd'hui<br>≈ la frontière d'il y a 1 ou 2 ans</li>
+          <li>Certains modèles Open Source hébergés sur des clouds spécialisés sont à 6 mois de la frontière</li>
+        </ul>
+      </section>
     </section>
 
-    <!-- Vos modèles locaux : le payoff -->
+    <!-- L'agentique -->
     <section>
       <section>
-        <h3 style="margin-bottom:0.5em;">Vos modèles locaux</h3>
-        <ul>
-          <li>Des résultats, en local, depuis quelques mois</li>
-          <li>Ce qui tourne sur vos machines aujourd'hui<br>≈ la frontière d'il y a ~2 ans</li>
-        </ul>
-        <div style="margin-top:0.7em;font-size:0.6em;color:#000;">Ce n'est pas du retard. C'est la courbe, rendue tangible sur votre bureau.</div>
+        <h3>La frontière, en pratique</h3>
+        <p style="font-size:0.55em;color:#444;">Ce qu'on achète vraiment en 2026 quand on dit &laquo; un modèle &raquo;</p>
       </section>
       <section data-markdown>
         <textarea data-template>
-          ### La même erreur facile est en vente libre
-          - &laquo; ça marche en local, donc je vois où on en est &raquo;
-          - C'est juger un point. La courbe, elle, continue.
-          - Donc : où est la frontière, *maintenant* ?
+          ### Trois étages
+          - **Modèle** — les poids : ce qu'il *peut*
+          - **Contexte** — ce que vous lui montrez : ce qu'il sait *là, maintenant*
+          - **Agent** — la boucle : *agir → observer → corriger*
+          - Les trois progressent — et se **multiplient** entre eux
         </textarea>
       </section>
-    </section>
-
-    <!-- Chapitre : la frontière, en pratique -->
-    <section>
-      <h3>La frontière, en pratique</h3>
-      <p style="font-size:0.55em;color:#444;">Ce qu'on achète vraiment en 2026 quand on dit &laquo; un modèle &raquo;</p>
-    </section>
-
-    <section data-markdown>
-      <textarea data-template>
-        ### Trois étages
-        - **Modèle** — les poids : ce qu'il *peut*
-        - **Contexte** — ce que vous lui montrez : ce qu'il sait *là, maintenant*
-        - **Agent** — la boucle : *agir → observer → corriger*
-        - Les trois progressent — et se **multiplient** entre eux
-      </textarea>
     </section>
 
     <section>
@@ -409,13 +395,30 @@
     <section>
       <section data-markdown>
         <textarea data-template>
-          ### Le plan d'attaque
-          1. **pyscotch** — un wrapper ctypes, vibé
-          2. **Tests différentiels** — octet par octet vs `gpart` / `gord`
-          3. **Lire le C** — premier bug, trouvé par lecture
-          4. **Hypothesis** — la machine choisit les entrées
-          5. **hegel-c** — du PBT *en C*, avec réduction
+          ### Initialement
+          - Trouver des bugs avec l'IA dans une codebase sérieuse
+          - Je connais l'auteur, vrai projet d'ingéniérie
+          - Property based testing => **Hypothesis**
+          - Je dois trouver un moyen d'éxecuter hypothesis sur scotch
         </textarea>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          from hypothesis import given, strategies as st
+
+@given(st.lists(st.integers() | st.floats()))
+def test_sort_correctness_using_properties(lst):
+    result = my_sort(lst)
+    assert set(lst) == set(result)
+    assert all(a <= b for a, b in zip(result, result[1:]))
+        </textarea>
+        source : https://hypothesis.readthedocs.io/en/latest/
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+            https://arxiv.org/abs/2510.09907
+        </textarea>
+        X mois avant la vague mythos
       </section>
     </section>
 
@@ -431,7 +434,14 @@
         </textarea>
       </section>
       <section>
-        <div class="todo">1-2 slides de détails croustillants du wrapper — SCOTCH_*Sizeof pour les structs dynamiques ? suffixes 32/64 bits ? la couche FILE* ? choisis ce qui raconte le mieux</div>
+        - vibe engineering autant que possible
+          - creer des systemes automatisés d'ecriture de code scotch en c
+          - genere un equivalent python
+          - doit verifier l'equivalence, on itere
+        - a permis de trouver des bugs avant de faire tourner hypothesis
+        - scotchpy existe deja mais mise a jour en retard
+        - je veux un equivalent avec lequel j'ai plus de controle
+          - initialement uniquement un bridge le moins couteux possible...
       </section>
     </section>
 
@@ -650,15 +660,15 @@ int main (void) { hegel_run_test (test_add_commutes); return 0; }
     <section>
       <div class="flex" style="align-items:center;justify-content:center;gap:1.6em;width:100%;">
         <div style="flex:0 0 auto;text-align:center;">
-          <div style="width:300px;height:300px;border:3px dashed #c00;display:flex;align-items:center;justify-content:center;font-size:0.5em;color:#c00;font-weight:700;">TODO — QR<br>(qr-claude-at-inria.svg)</div>
+          <div style="width:300px;height:300px;border:3px dashed #c00;display:flex;align-items:center;justify-content:center;font-size:0.5em;color:#c00;font-weight:700;">TODO — QR<br>(qr-claude-on-scotch.svg)</div>
         </div>
         <ul style="flex:0 1 auto;text-align:left;font-size:0.6em;line-height:2.0;list-style:none;margin:0;padding:0;">
-          <li><a href="https://presentations.cafeine.dev/slides/claude-at-inria.html" style="color:#000;text-decoration:none;">presentations.cafeine.dev/slides/claude-at-inria.html</a></li>
+          <li><a href="https://presentations.cafeine.dev/slides/claude-on-scotch.html" style="color:#000;text-decoration:none;">presentations.cafeine.dev/slides/claude-on-scotch.html</a></li>
           <li><a href="https://github.com/c4ffein/pyscotch" style="color:#000;text-decoration:none;">github.com/c4ffein/pyscotch</a></li>
           <li><a href="https://github.com/c4ffein/hegel-c" style="color:#000;text-decoration:none;">github.com/c4ffein/hegel-c</a></li>
           <li><a href="https://www.anthropic.com/research/vibe-physics" style="color:#000;text-decoration:none;">anthropic.com/research/vibe-physics</a></li>
           <li><a href="https://www.anthropic.com/news/claude-science-ai-workbench" style="color:#000;text-decoration:none;">anthropic.com — Claude Science</a></li>
-          <li class="todo" style="list-style:none;">le lien vers la transcription publiée du making-of de ce deck</li>
+          <li><a href="#" data-transcript="claude-on-scotch-making-of.json" style="color:#000;text-decoration:none;font-weight:700;">▶ voir le making-of (transcript brut)</a></li>
         </ul>
       </div>
     </section>
@@ -669,6 +679,7 @@ int main (void) { hegel_run_test (test_add_commutes); return 0; }
   <script src="../engine/dist/plugin/notes.js"></script>
   <script src="../engine/dist/plugin/markdown.js"></script>
   <script src="../engine/dist/plugin/highlight.js"></script>
+  <script src="../resources/transcript-modal.js"></script>
   <script>
     Reveal.initialize({
       hash: true,
