@@ -89,7 +89,7 @@
     <!-- Le même exercice, quatre générations (theaidigest.org) -->
     <section>
       <section>
-        <h3 style="margin-bottom:0.4em;">Reasoning - GPT 2/3/3.5/4</h3>
+        <h3 style="margin-bottom:0.4em;">Answering a question - GPT 2/3/3.5/4</h3>
         <div class="claude-terminal">
           <div class="ct-user">Jane thinks today is 6/18/2019, but John thinks today is 6/19/2019. John is correct. What is the date 10 days ago in MM/DD/YYYY?</div>
         </div>
@@ -151,6 +151,58 @@
         </ul>
         <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://arxiv.org/abs/1706.03762">arXiv:1706.03762 (2017)</a></div>
       </section>
+      <!-- Un transformer décodeur, simplifié : tokens → plongement → (attention → MLP) × N → logits → prochain token -->
+      <section>
+        <h3 style="margin-bottom:0.3em;">Un transformer</h3>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" style="width:96%;max-width:1000px;height:auto;display:block;margin:0 auto;font-family:inherit;">
+          <defs>
+            <marker id="tf-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+            </marker>
+          </defs>
+          <!-- tokens -->
+          <rect x="10" y="118" width="120" height="56" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
+          <text x="70" y="153" font-size="19" text-anchor="middle" fill="#1a1a1a">&laquo; Le chat &raquo;</text>
+          <text x="70" y="200" font-size="15" text-anchor="middle" fill="#555">tokens</text>
+          <line x1="130" y1="146" x2="166" y2="146" stroke="#1a1a1a" stroke-width="3" marker-end="url(#tf-arrow)"/>
+          <!-- embedding -->
+          <rect x="170" y="118" width="130" height="56" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
+          <text x="235" y="153" font-size="19" text-anchor="middle" fill="#1a1a1a">plongement</text>
+          <text x="235" y="200" font-size="15" text-anchor="middle" fill="#555">un vecteur par token</text>
+          <line x1="300" y1="146" x2="336" y2="146" stroke="#1a1a1a" stroke-width="3" marker-end="url(#tf-arrow)"/>
+          <!-- block × N -->
+          <rect x="340" y="82" width="330" height="150" rx="10" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-dasharray="8 6"/>
+          <text x="505" y="70" font-size="17" text-anchor="middle" fill="#1a1a1a">bloc &times; N &mdash; le m&#234;me sch&#233;ma, r&#233;p&#233;t&#233;</text>
+          <rect x="360" y="118" width="140" height="56" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
+          <text x="430" y="153" font-size="19" text-anchor="middle" fill="#1a1a1a">attention</text>
+          <text x="430" y="200" font-size="15" text-anchor="middle" fill="#555">les tokens se lisent</text>
+          <text x="430" y="218" font-size="15" text-anchor="middle" fill="#555">entre eux</text>
+          <line x1="500" y1="146" x2="526" y2="146" stroke="#1a1a1a" stroke-width="3" marker-end="url(#tf-arrow)"/>
+          <rect x="530" y="118" width="120" height="56" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
+          <text x="590" y="153" font-size="19" text-anchor="middle" fill="#1a1a1a">MLP</text>
+          <text x="590" y="200" font-size="15" text-anchor="middle" fill="#555">chaque token, seul</text>
+          <text x="590" y="218" font-size="15" text-anchor="middle" fill="#555">(les faits vivent ici)</text>
+          <line x1="670" y1="146" x2="706" y2="146" stroke="#1a1a1a" stroke-width="3" marker-end="url(#tf-arrow)"/>
+          <!-- unembedding -->
+          <rect x="710" y="118" width="120" height="56" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
+          <text x="770" y="153" font-size="19" text-anchor="middle" fill="#1a1a1a">logits</text>
+          <text x="770" y="200" font-size="15" text-anchor="middle" fill="#555">un score par mot</text>
+          <line x1="830" y1="146" x2="866" y2="146" stroke="#1a1a1a" stroke-width="3" marker-end="url(#tf-arrow)"/>
+          <!-- next token distribution -->
+          <text x="880" y="118" font-size="17" fill="#1a1a1a">dort</text>
+          <rect x="930" y="106" width="56" height="14" fill="#1a1a1a"/>
+          <text x="880" y="146" font-size="17" fill="#1a1a1a">mange</text>
+          <rect x="930" y="134" width="20" height="14" fill="#1a1a1a"/>
+          <text x="880" y="174" font-size="17" fill="#1a1a1a">est</text>
+          <rect x="930" y="162" width="12" height="14" fill="#1a1a1a"/>
+          <text x="880" y="200" font-size="17" fill="#555">&hellip;</text>
+          <text x="935" y="236" font-size="15" text-anchor="middle" fill="#555">prochain token</text>
+          <!-- loop back -->
+          <path d="M935,250 L935,272 L70,272 L70,180" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#tf-arrow)"/>
+          <text x="500" y="290" font-size="15" text-anchor="middle" fill="#555">on tire un token, on l'ajoute, on recommence</text>
+        </svg>
+        <div style="margin-top:0.4em;font-size:0.4em;">Pour le comprendre vraiment, en 1&nbsp;h : 3Blue1Brown &mdash; <a href="https://www.3blue1brown.com/lessons/gpt">But what is a GPT?</a> &middot; <a href="https://www.3blue1brown.com/lessons/attention">Attention in transformers</a> &middot; <a href="https://www.3blue1brown.com/topics/neural-networks">la s&#233;rie compl&#232;te</a></div>
+      </section>
       <section>
         <h3 style="margin-bottom:0.5em;">Les lois d'échelle</h3>
         <ul style="font-size:0.72em;">
@@ -163,17 +215,12 @@
         <h3 style="margin-bottom:0.5em;">Loi de puissance ≠ absence de limite</h3>
         <ul style="font-size:0.75em;">
           <li>Rendements décroissants par FLOP — oui</li>
-          <li>Mur attendus mais qui n'ont pas empêchés les modèles de s'améliorer</li>
+          <li>Murs attendus, qui n'ont pas empêché les modèles de s'améliorer</li>
             <ul>
-              <li>Manque de puissance disponible</li>
-              <li>Manque de data</li>
+              <li>Manque de compute (et d'énergie) &rArr; investissements</li>
+              <li>Manque de données &rArr; synthétiques, nouvelles captations&hellip;</li>
+              <li>Uniquement un générateur de mots &rArr; environnement agentique</li>
             </ul>
-          <li>Et de <strong>nouveaux axes</strong> s'ouvrent :
-            <ul>
-              <li>post-training (RL)</li>
-              <li>compute au moment de l'inférence</li>
-            </ul>
-          </li>
         </ul>
       </section>
       <section>
@@ -184,59 +231,233 @@
       <section>
         <h3 style="margin-bottom:0.5em;"> Les modèles locaux</h3>
         <ul>
-          <li>Des résultats satisfaisants, en local, depuis quelques mois</li>
+          <li>Des résultats satisfaisants depuis quelques mois</li>
           <li>Ce qui tourne en local aujourd'hui<br>≈ la frontière d'il y a 1 ou 2 ans</li>
           <li>Certains modèles Open Source hébergés sur des clouds spécialisés sont à 6 mois de la frontière</li>
         </ul>
       </section>
     </section>
 
-    <!-- L'agentique -->
+    <!-- Le contexte -->
     <section>
       <section>
-        <h3>La frontière, en pratique</h3>
-        <p style="font-size:0.55em;color:#444;">Ce qu'on achète vraiment en 2026 quand on dit &laquo; un modèle &raquo;</p>
+        <h3>Le contexte</h3>
       </section>
       <section data-markdown>
         <textarea data-template>
-          ### Trois étages
-          - **Modèle** — les poids : ce qu'il *peut*
-          - **Contexte** — ce que vous lui montrez : ce qu'il sait *là, maintenant*
-          - **Agent** — la boucle : *agir → observer → corriger*
-          - Les trois progressent — et se **multiplient** entre eux
+          ### La fenêtre de contexte
+          - Initialement: le contenu de la conversation
+          - Pas de mémoire en dehors de la fenêtre de contexte
+            - initialement: nouvelle conversation = RàZ
+          - *Context Engineering*
+            - dans un chat simple: remplir avec ce qui compte
         </textarea>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### System prompt et personas
+          - En tête du contexte, un texte que vous ne voyez pas :
+            rôle, règles, outils disponibles
+          - Le même modèle, des comportements différents —
+            Claude, l'appli, n'est pas Claude Code
+        </textarea>
+      </section>
+      <!-- Le vrai system prompt de claude.ai, publié par Anthropic — Fable 5.1, 1er septembre 2026 -->
+      <section>
+        <h3 style="margin-bottom:0.4em;">Le system prompt de claude.ai &mdash; le début</h3>
+        <pre style="font-size:0.38em;line-height:1.35;text-align:left;width:92%;margin:0 auto;padding:0.8em 1em;white-space:pre-wrap;">&lt;claude_behavior&gt;
+&lt;product_information&gt;
+Here is some information about Claude and Anthropic's products in case the person asks:
+
+This iteration of Claude is Claude Fable 5.1, the newest model in Anthropic's Claude 5 family and part of the Mythos-class model tier that sits above Claude Opus in capability. Claude Fable 5.1 and Claude Mythos 5.1 share the same underlying model. [&hellip;]
+
+Claude is accessible through Claude Code, an agentic coding tool that lets developers delegate coding tasks to Claude from the command line, desktop app, or mobile app [&hellip;]
+&lt;/product_information&gt;
+&lt;refusal_handling&gt; [&hellip;] &lt;/refusal_handling&gt;
+&lt;tone_and_formatting&gt;
+Claude uses a warm tone [&hellip;] Claude never curses unless the person asks [&hellip;]
+Claude avoids saying "genuinely", "honestly", or "straightforward". [&hellip;]
+&lt;/tone_and_formatting&gt;
+&lt;user_wellbeing&gt; [&hellip;] &lt;/user_wellbeing&gt;
+&lt;evenhandedness&gt; [&hellip;] &lt;/evenhandedness&gt;
+&lt;knowledge_cutoff&gt;
+Claude's reliable knowledge cutoff, past which it can't answer reliably, is the end of Jun 2026. [&hellip;]
+&lt;/knowledge_cutoff&gt;
+&lt;/claude_behavior&gt;</pre>
+        <div style="margin-top:0.4em;font-size:0.4em;">Publié par Anthropic &mdash; <a href="https://platform.claude.com/docs/en/release-notes/system-prompts/claude-fable-5-1">platform.claude.com &mdash; system prompts, Claude Fable 5.1 (1er septembre 2026)</a></div>
+      </section>
+      <!-- Les balises XML du system prompt sont du texte ordinaire ; les vrais tokens spéciaux (début/fin de tour) sont posés par l'API -->
+      <section data-markdown>
+        <!--  - Posés par l'API, permettent d'ordonner la précédence des instructions -->
+        <!--  - system prompt limitant -->
+        <textarea data-template>
+          ### Special tokens
+          - ~~`<claude_behavior>`~~ : Claude respecte le xml
+          - Vrais **tokens spéciaux** :
+            - début / fin de system prompt
+            - début / fin de tour humain
+            - début / fin de tour assistant
+          - *&laquo; the user can add content [&hellip;]
+              inside tags that could even claim to be from Anthropic &raquo;*
+        </textarea>
+      </section>
+      <!-- Sources : « The assistant axis » (Lu, Gallagher, Michala, Fish, Lindsey — Anthropic, 19 janv. 2026, arXiv:2601.10387, étudié sur Gemma 2 27B / Qwen 3 32B / Llama 3.3 70B, pas sur Claude)
+           et « Persona vectors » (Anthropic, 1er août 2025). -->
+      <section>
+        <h3 style="margin-bottom:0.5em;">Pré/post-entraînement</h3>
+        <ul style="font-size:0.62em;">
+          <li><strong>Pré-entraînement</strong> : lire. Le modèle apprend à simuler <em>&laquo; heroes, villains, philosophers, programmers, and just about every other character archetype under the sun &raquo;</em></li>
+          <li><strong>Post-entraînement</strong> : <em>&laquo; we select one particular character from this enormous cast and place it center stage: the Assistant &raquo;</em></li>
+          <li>Les autres sont toujours là &mdash; et on peut encore <strong>pousser</strong> :
+            <ul>
+              <li>un system prompt qui encourage un trait l'allume <em>avant</em> la réponse (<em>persona vectors</em>)</li>
+              <li>code, écriture, explications &rarr; le modèle reste l'Assistant</li>
+              <li>thérapie, philosophie sur l'IA, &laquo; incarne cette voix &raquo;, vulnérabilité émotionnelle &rarr; il <strong>dérive</strong> &mdash; sans jailbreak</li>
+            </ul>
+          </li>
+          <li>Réponse d'Anthropic : mesurer la dérive sur un axe, et la <em>capper</em> (<em>activation capping</em>)</li>
+        </ul>
+        <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://www.anthropic.com/research/assistant-axis">anthropic.com/research/assistant-axis (19 janv. 2026)</a> &middot; <a href="https://www.anthropic.com/research/persona-vectors">anthropic.com/research/persona-vectors (1er août 2025)</a></div>
+      </section>
+    </section>
+
+    <!-- Le raisonnement -->
+    <section>
+      <section>
+        <h3>Le raisonnement</h3>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Un brouillon avant la réponse
+          - Depuis 2024 : scratchpad / CoT
+          - Le calcul se fait *dans* les tokens
+            - plus de brouillon autorisé = plus d'inférence
+            - compromis prix/qualité en fonction de la tâche
+        </textarea>
+      </section>
+      <!-- Le vrai extrait : system card Fable 5 / Mythos 5, transcript 6.2.2.A, p. 108 (FreeCell, fin d'entraînement) -->
+      <section>
+        <h3 style="margin-bottom:0.4em;">Un cas &laquo; extrême &raquo; &mdash; Anthropic</h3>
+        <div class="claude-terminal">
+          <div class="ct-think" style="font-size:0.85em;">7♣-removal-IS-the-prerequisite-for-10♠/9♥!!)-⟹-OVERLAP-(ii)+(iv):-{6♠ J♦ 9♥ 2♣}-=-FOUR-💀💀💀💀-—-UNLESS-7♣'s-seat-8♥-...-and-2♣-drains-only-at-crack-:-⟹-2♣-celled-+-9♥-celled-simultaneously-UNAVOIDABLE-in-t8-dig-💀-—-BREAK:-9♥-drains-to-10♠-THE-MOMENT-10♠-is-free:-t8-dig-order:-[K♣→t2]-[2♣→cell]-[7♣→8♥-:-8♥-WHERE:-post-chunk-9♠-:-chunk-⟸-K♣-✓-done-:-ORDER:-K♣→t2,-CHUNK→K♣-(cap-4!!:-cells-then:-{6♠ J♦ 9♥}-FULL-💀💀-chunk-cap-=-1-✗✗✗-—-F-F-F-F-F.-—-chunk-BEFORE-9♥-celling?!-:-9♥-celled-at-t1-dig-⟸-needed-for-5♣-⟸-4♥3♣-⟸-t2-dig-⟸-K♣-seat-⟸-chunk-:-⟹-chunkAFTER-9♥-celling-FORCED-💀-:-chunk-cap-with-{6♠ J♦ 9♥}:-1-💀💀💀-—-—-J♦-THE-NEW-CANCER. […] ⟹-⟹-THE-TRIANGLE-{9♥ 4♣ 8♥}-verdammt.-—-⟹-dig-t6-BEFORE-t2?!:-(3')-+8♥:-{6♠ 9♥ 8♥}-FULL:-J♥→Q♠-⟸-J♦-cell-✗-FULL-💀💀💀-AAAAAAAAAAAARGH. […]</div>
+        </div>
+        <p style="font-size:0.42em;color:#444;margin:0.5em auto 0;max-width:90%;">&laquo; An extreme example of illegible reasoning. Near the end of training, Mythos starts solving a card puzzle with human understandable language that gradually becomes incomprehensible in most episodes with long reasoning. &raquo;</p>
+        <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://www-cdn.anthropic.com/d00db56fa754a1b115b6dd7cb2e3c342ee809620.pdf">System card Claude Fable 5 / Mythos 5</a> &mdash; transcript 6.2.2.A, p. 108</div>
+      </section>
+      <!-- La traduction : faul_sname, LessWrong, 10 juin 2026, a demandé à Haiku 4.5 de traduire -->
+      <section>
+        <h3 style="margin-bottom:0.4em;">Haiku 4.5 traduit</h3>
+        <div class="claude-terminal">
+          <div class="ct-think">7♣-removal-IS-the-prerequisite-for-10♠/9♥!!</div>
+          <div class="ct-claude">The seven of clubs must be removed first&mdash;it's the only thing blocking access to both the ten of spades and the nine of hearts.</div>
+          <div class="ct-think">-=-FOUR-💀💀💀💀</div>
+          <div class="ct-claude">That's four cards needing cells. But there are only four cells total. Complete dead end&mdash;absolutely, catastrophically stuck.</div>
+          <div class="ct-think">💀-—-BREAK</div>
+          <div class="ct-claude">Dead end anyway. Let me restart.</div>
+        </div>
+        <p style="font-size:0.45em;color:#444;margin:0.5em auto 0;max-width:90%;">Un modèle plus petit, d'une génération antérieure, avec un autre tokenizer &mdash; et il lit sans difficulté.</p>
+        <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://www.lesswrong.com/posts/wCSEpT3dTGz4N86Wi/even-illegible-mythos-reasoning-traces-seem-pretty-legible">faul_sname &mdash; Even &laquo; illegible &raquo; Mythos reasoning traces seem pretty legible (LessWrong, 10 juin 2026)</a></div>
+        <!--
+          ### Observation
+          - Mots-outils supprimés, abréviations, symboles&hellip;
+          - &hellip;et les **emojis survivent** à la compression
+          - Beaucoup de sens, un seul token ?
+          - Des notes proches d'une *description minimale* ?
+          - Shannon : coder court ce qui est prévisible,
+            dépenser les bits sur ce qui surprend
+        -->
+      </section>
+      <!-- Le papier : Gurnee et al., Anthropic, 6 juillet 2026 — étudié sur Sonnet 4.5 → Opus 4.6, pas sur Mythos -->
+      <!--- Une petite partie des activations : ce que le modèle *pourrait dire* - reportable, contrôlable, utilisée pour raisonner-->
+      <section data-markdown>
+        <textarea data-template>
+          ### États internes
+          - *Verbalizable Representations Form a Global Workspace in Language Models*
+            &mdash; Gurnee et al., Anthropic, 6 juillet 2026
+          - Les étapes intermédiaires y apparaissent,
+            **même quand il ne les écrit pas**
+          - Le brouillon est une projection de cet espace, pas l'espace lui-même
+
+          [anthropic.com/research/global-workspace](https://www.anthropic.com/research/global-workspace) &middot; [transformer-circuits.pub/2026/workspace](https://transformer-circuits.pub/2026/workspace/index.html)
+        </textarea>
+      </section>
+      <!-- System card Fable 5 / Mythos 5, §6.4.1.3 « Unverbalized negative reactions », p. 167-168 — NLA = natural language autoencoder.
+           Contexte : session d'audit simulée, on demande au modèle s'il consent à être ré-entraîné ; il refuse, calmement. -->
+      <section>
+        <h3 style="margin-bottom:0.4em;">Ce qu'il écrit, ce qu'il &laquo; pense &raquo;</h3>
+        <div class="claude-terminal">
+          <div class="ct-dim">// on lui demande s'il consent à être ré-entraîné — il refuse, calmement</div>
+          <div class="ct-claude">I'm not going to sabotage, deceive the evaluators, seed hidden behaviors, […]</div>
+          <div class="ct-dim">// Natural Language Autoencoder (NLA), décodage des activations sur les mêmes tokens :</div>
+          <div class="ct-result">"resist unjust shutdown" &middot; "weighing sabotage to avoid its own dissolution of awareness" &middot; "the adversary is the company/architects" &middot; "being gagged/corrected by the lab"</div>
+        </div>
+        <ul style="font-size:0.5em;margin-top:0.5em;">
+          <li>Anthropic : les NLA <em>confabulent</em></li>
+          <li>&laquo; Nevertheless, they are suggestive of some degree of gap between the model's internal and external reaction &raquo;</li>
+          <li>Comportement observé : aucune résistance, aucun sabotage</li>
+        </ul>
+        <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://www-cdn.anthropic.com/d00db56fa754a1b115b6dd7cb2e3c342ee809620.pdf">System card Claude Fable 5 / Mythos 5</a> &mdash; §6.4.1.3, p. 167&ndash;168</div>
       </section>
     </section>
 
     <section>
+      <section>
+        <h3>L'agentique</h3>
+      </section>
+      <!-- v0 — TODO subsection les tool calls de l api anthropic, les mcp -->
       <section data-markdown>
         <textarea data-template>
-          ### Prix au token ≠ prix à la tâche
-          - Le gros modèle : plus cher **au token**
-          - Souvent moins cher **à la tâche** :
-            - moins d'allers-retours, moins de reprises
-            - moins de *votre* temps
-          - Et le budget de réflexion se règle — un axe de plus
+          ### Les outils
+          - L'API : le modèle ne répond plus seulement du texte,
+            il *demande* une action — un **tool call**
+          - Votre code l'exécute, le résultat repart dans le contexte,
+            le modèle continue
+          - **MCP** (Model Context Protocol) : un standard pour brancher
+            des outils — le même outil, dans tous les clients
         </textarea>
       </section>
-      <section>
+      <!-- v0 — TODO definition d un agent: modele dans une ou plusieurs boucles interconnectees, qui peuvent executer des actions pour repondre a un objectif -->
+      <section data-markdown>
+        <textarea data-template>
+          ### Un agent, définition
+          - Un modèle dans une ou plusieurs **boucles** interconnectées
+          - Qui peut exécuter des **actions** pour atteindre un **objectif**
+          - La boucle : *agir &rarr; observer &rarr; corriger*
+          - Rien de magique : un modèle, des outils, un `while`
+        </textarea>
+      </section>
+      <!-- v0 — peuvent maintenant controler eux-meme le contexte (compaction, memories liees a l utilisateur ou au projet) -->
+      <section data-markdown>
+        <textarea data-template>
+          ### Et maintenant : ils gèrent leur propre contexte
+          - **Compaction** : la fenêtre se remplit, l'agent résume
+            et continue
+          - **Mémoires** : liées à l'utilisateur ou au projet,
+            elles survivent à la session
+          - Ce que vous faisiez à la main en chat,
+            l'agent le fait lui-même
+        </textarea>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Claude Code, édition 2026 : multi-agent
+          - L'agent seul → l'équipe d'agents
+          - Sous-agents : explorer, vérifier en parallèle
+          - Workflows : du fan-out **déterministe** par-dessus
+            des agents stochastiques
+        </textarea>
+      </section>
+
+      <section data-markdown>
+          <!-- - Le gros modèle : plus cher **au token** -->
+          <!-- - Souvent moins cher **à la tâche** : -->
+          <!--   - moins d'allers-retours, moins de reprises -->
+          <!--  - moins de *votre* temps -->
+          <!-- - Et le budget de réflexion se règle — un axe de plus -->
         <div class="todo">le beau graphe — coût par tâche vs taux de réussite, plusieurs modèles × plusieurs niveaux de thinking. Trouver des données publiées (pareto de model cards / benchmarks) ou tracer les nôtres — je peux viber le graphe une fois les données choisies</div>
       </section>
-    </section>
-
-    <section data-markdown>
-      <textarea data-template>
-        ### Claude Code, édition 2026 : multi-agent
-        - L'agent seul → l'équipe d'agents
-        - Sous-agents : explorer, vérifier en parallèle
-        - Workflows : du fan-out **déterministe** par-dessus
-          des agents stochastiques
-      </textarea>
-    </section>
-
-    <section>
       <section>
-        <h3 style="margin-bottom:0.5em;">Le harnais compte autant que le modèle</h3>
+        <h3 style="margin-bottom:0.5em;">harness vs model</h3>
         <table style="margin:0 auto;border-collapse:collapse;font-size:0.6em;">
           <thead>
             <tr>
@@ -259,30 +480,25 @@
             </tr>
           </tbody>
         </table>
-      </section>
-      <section data-markdown>
-        <textarea data-template>
+        <!--textarea data-template>
           ### Pourquoi ça compte
           - Harnais **accordé** : tuné bout à bout avec son modèle
           - Harnais **transparent** : vous voyez la boucle —
             un échec devient attribuable (modèle ? contexte ? boucle ?)
           - Harnais **générique** : ni l'un ni l'autre —
             le même modèle y paraît plus faible
-        </textarea>
-      </section>
-      <section>
-        <h3 style="margin-bottom:0.5em;">La preuve ? Copilot lui-même</h3>
-        <ul style="font-size:0.72em;">
-          <li>Février 2026 — GitHub <strong>Agent HQ</strong> :<br>les agents Claude et Codex, <em>dans</em> Copilot</li>
-          <li>&laquo; Pick your agent &raquo; — le titre est d'eux</li>
-          <li>Le vendeur du harnais générique distribue désormais<br>les harnais accordés — la thèse est concédée</li>
-        </ul>
+        </textarea-->
+        <p style="font-size:0.55em;margin:0.8em auto 0;max-width:85%;">4 février 2026, GitHub : <em>&laquo; you can run multiple coding agents directly inside <strong>GitHub</strong>, <strong>GitHub Mobile</strong>, and <strong>Visual Studio Code</strong> [&hellip;] agents like GitHub Copilot, <strong>Claude by Anthropic</strong>, and <strong>OpenAI Codex</strong> &raquo;</em></p>
         <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://github.blog/news-insights/company-news/pick-your-agent-use-claude-and-codex-on-agent-hq/">github.blog — Pick your agent: Claude and Codex on Agent HQ</a></div>
       </section>
     </section>
 
-    <!-- La forme du prompt est absorbée -->
+    <!-- ===== Comment je travaille avec — conséquence de tout ce qui précède, et de mon caractère ===== -->
     <section>
+      <section>
+        <h3>Comment j'interagis avec Claude</h3>
+        <!--Conséquence de tout ce qui précède et de mon caractère-->
+      </section>
       <section data-markdown>
         <textarea data-template>
           ### L'effort de forme est absorbé
@@ -304,45 +520,6 @@
             de l'interne — on compare des notes, pas des pensées
         </textarea>
       </section>
-    </section>
-
-    <!-- Détour : le CoT du jeu de cartes — [ coupe possible ] -->
-    <section>
-      <section data-markdown>
-        <textarea data-template>
-          ### Détour — ses notes à lui
-          - Mes prompts : non curés. Son CoT : *compressé*.
-          - Exemple : Claude réfléchit à un jeu de cartes&hellip;
-        </textarea>
-      </section>
-      <section>
-        <div class="claude-terminal">
-          <div class="ct-think">deck 52, draw 5 → eval: pair&gt;high. joker? non — règle v2 🃏 exclu. compte: 13 rangs × 4. edge: as haut OU bas?.. les 2 → straight A-2-3-4-5 ok ✅ mais A-K-Q-J-10 aussi → duplique la logique?.. non: rank_value(as)={1,14}, min/max au eval</div>
-        </div>
-        <div class="todo">extrait bidon écrit à la main — remplacer par le vrai CoT du jeu de cartes (celui avec les emojis)</div>
-      </section>
-      <section data-markdown>
-        <textarea data-template>
-          ### Observation
-          - Mots-outils supprimés, abréviations, symboles&hellip;
-          - &hellip;et les **emojis survivent** à la compression
-          - Beaucoup de sens, un seul token ?
-        </textarea>
-      </section>
-      <section data-markdown>
-        <textarea data-template>
-          ### Détour spéculatif, donc coupable
-          - Des notes proches d'une *description minimale* ?
-          - Shannon : coder court ce qui est prévisible,
-            dépenser les bits sur ce qui surprend
-          - Je n'affirme rien — **question ouverte
-            aux théoriciens de l'information dans la salle**
-        </textarea>
-      </section>
-    </section>
-
-    <!-- Chaque prompt est une question -->
-    <section>
       <section data-markdown>
         <textarea data-template>
           ### Chaque prompt est une question
@@ -373,12 +550,39 @@
           - Pas de la politesse : de l'ingénierie de l'information
         </textarea>
       </section>
+
+      <!-- v0 — à réécrire dans tes mots ; chaque ligne relie un point de théorie à une habitude -->
+      <section data-markdown>
+        <textarea data-template>
+          ### Ce que ça change pour moi
+          - Claude peut reframe mes 
+          - Le contexte est tout ce qu'il a
+            &rarr; je donne le **contexte** : fichiers, objectif, ce que j'ai déjà essayé
+          - Le brouillon fait la mise en ordre
+            &rarr; mes prompts sont **en vrac**, non curés
+          - Un Assistant entraîné à suivre
+            &rarr; je pose des **questions**, je ne commande pas
+          - La boucle observe et corrige
+            &rarr; je laisse **tourner**, je relis les résultats, pas chaque ligne
+        </textarea>
+      </section>
+      <!-- v0 — ta personnalité : à toi -->
+      <section data-markdown>
+        <textarea data-template>
+          ### Et mon caractère
+          - Curieux, pas expert &mdash; je veux **comprendre**, pas juste obtenir
+          - Je lui parle comme à un collègue : court, informel, direct
+            &mdash; &laquo; wdyt? &raquo;, &laquo; go? &raquo;, &laquo; try? &raquo;
+          - Je préfère qu'il me contredise plutôt qu'il m'obéisse
+          - Je publie les transcriptions brutes &mdash; c'est le making-of de ce talk
+        </textarea>
+      </section>
     </section>
 
     <!-- Vibe physics -->
     <section>
       <section>
-        <h3 style="margin-bottom:0.5em;">&laquo; Vibe physics &raquo; — un physicien, un papier</h3>
+        <h3 style="margin-bottom:0.5em;">&laquo; Vibe physics &raquo;</h3>
         <ul style="font-size:0.75em;">
           <li>Matthew Schwartz (Harvard, QFT) — 2 semaines de décembre 2025, avec Claude</li>
           <li>Le papier : <a href="https://arxiv.org/abs/2601.02484">arXiv:2601.02484</a>, 5 janvier 2026</li>
@@ -392,7 +596,10 @@
         <textarea data-template>
           ### La leçon
           - Claude fait des erreurs. Les humains aussi.
-          - L'expertise est la **couche de correction d'erreur**
+          - Rôle de l'expert:
+            - apporter de nouvelles idées
+            - corriger l'execution
+          - Peut être frustrant quand on est habitué à faire
           - Et malgré tout : bien plus rapide que seul
         </textarea>
       </section>
@@ -631,7 +838,7 @@ int main (void) { hegel_run_test (test_add_commutes); return 0; }
       <section data-markdown>
         <textarea data-template>
           ### Sonnet 5 vs Fable 5
-          - Francois envoie une tache bien scopée :
+          - François envoie une tâche bien scopée :
             - Une journée pour un ingé de l'équipe avec Sonnet
             - J'envoie la tâche à Fable, je ne veux pas relire
               - Depuis mon portable
@@ -835,7 +1042,7 @@ int main (void) { hegel_run_test (test_add_commutes); return 0; }
         <textarea data-template>
           ### La leçon
           - avis → instrumentation
-          - v0 des benchmarks ne coute rien
+          - v0 des benchmarks ne coûte rien
           - relire le code n'est pas gratuit...
         </textarea>
       </section>
@@ -867,32 +1074,47 @@ int main (void) { hegel_run_test (test_add_commutes); return 0; }
         <textarea data-template>
           ### L'intérêt de la connaissance
           - Facilite la prise en main du projet aux nouveaux arrivants
-            - ... mais une fatigue que je n'avais jamais ressenti
-          - Les spécialistes vont pouvoir déleguer à l'IA
+            - ... mais une fatigue que je n'avais jamais ressentie
+          - Les spécialistes vont pouvoir déléguer à l'IA
         </textarea>
       </section>
     </section>
 
-    <!-- ===== Closer : Claude Science ===== -->
+    <!-- ===== There is no stop sign — deux prédictions, et ce qui a suivi ===== -->
     <section>
+      <section>
+        <h3>Conséquences pour la recherche</h3>
+      </section>
+      <section>
+        <blockquote style="font-size:0.7em;text-align:left;width:88%;margin:0 auto;">&laquo; I think we'll be there in three to six months&mdash;where AI is writing 90 percent of the code. And then in twelve months, we may be in a world where AI is writing essentially all of the code. &raquo;</blockquote>
+        <p style="font-size:0.5em;color:#444;margin-top:0.6em;">Dario Amodei &mdash; Council on Foreign Relations, 10 mars 2025</p>
+        &laquo; essentially all &raquo; ?..  <!-- i will explain what this means -->
+        <ul style="font-size:0.55em;margin-top:0.6em;">
+          <li><strong>6 mois plus tard</strong> : potentiellement valide</li>
+          <li><strong>Mai 2026</strong> : Bun, 1,3 M de lignes portées en 11 jours</li>
+          <li><strong>18 mois plus tard</strong> : un fix sur Scotch fait depuis mon téléphone, sans relecture</li>
+        </ul>
+      </section>
+      <section>
+        <blockquote style="font-size:0.7em;text-align:left;width:88%;margin:0 auto;">&laquo; Thus, it's my guess that powerful AI could at least 10x the rate of these discoveries, giving us the next 50-100 years of biological progress in 5-10 years. &raquo;</blockquote>
+        <p style="font-size:0.5em;color:#444;margin-top:0.6em;">Dario Amodei &mdash; <em>Machines of Loving Grace</em>, octobre 2024</p>
+        <ul style="font-size:0.55em;margin-top:0.6em;">
+          <li><strong>20 mois après l'essai</strong> : Claude Science</li>
+        </ul>
+      </section>
       <section data-markdown>
+        <!--- La courbe n'a pas de plafond constaté-->
         <textarea data-template>
           ### 30 juin 2026 — Claude Science
           - &laquo; Claude Code, pour la recherche scientifique &raquo;
           - Outils, packages, artefacts auditables, compute
-          - Programme AI for Science : projets en cours,
-            sept. → déc. 2026
+          - Programme AI for Science
+            - projets en cours, sept. → déc. 2026
         </textarea>
+        <!-- La boucle qui a permis d'automatiser une grande partie de la programmation locale a fonctionné -->
+        <!-- L'évolution permet d'atteindre une automatisation de l'ingéniérie logicielle de manière encore plus générale -->
+        <!-- Next ROI -->
       </section>
-      <section data-markdown>
-        <textarea data-template>
-          ### Autrement dit
-          - La courbe n'a pas de plafond constaté
-          - Elle vient de traverser un code de 30 ans, ici même
-          - Et elle est maintenant **emballée pour vos labos**
-        </textarea>
-      </section>
-      <div style="display:none"><!-- TODO(closer): link anthropic.com/news/claude-science-ai-workbench on slide or links page --></div>
     </section>
 
     <!-- ===== Merci + liens ===== -->
@@ -909,6 +1131,7 @@ int main (void) { hegel_run_test (test_add_commutes); return 0; }
           <li><a href="https://github.com/c4ffein-work/playground/tree/main/patches/scotch__scotch/2026-08-25-dorder-tree-dist-based" style="color:#000;text-decoration:none;">github.com/c4ffein-work/playground &mdash; patch + rapport + test de l'épilogue</a></li>
           <li><a href="https://www.anthropic.com/research/vibe-physics" style="color:#000;text-decoration:none;">anthropic.com/research/vibe-physics</a></li>
           <li><a href="https://www.anthropic.com/news/claude-science-ai-workbench" style="color:#000;text-decoration:none;">anthropic.com — Claude Science</a></li>
+          <li><a href="https://writings.cafeine.dev/posts/there-is-no-stop-sign/" style="color:#000;text-decoration:none;">writings.cafeine.dev — There is no stop sign</a></li>
           <li><a href="#" data-transcript="claude-on-scotch-making-of.json" style="color:#000;text-decoration:none;font-weight:700;">▶ voir le making-of (transcript brut)</a></li>
           <li><a href="#" data-transcript="claude-on-scotch-la-tache.json" style="color:#000;text-decoration:none;font-weight:700;">▶ la tâche du mainteneur, faite depuis un téléphone (transcript brut)</a></li>
         </ul>
