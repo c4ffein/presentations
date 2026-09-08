@@ -308,14 +308,8 @@ Claude's reliable knowledge cutoff, past which it can't answer reliably, is the 
         <ul style="font-size:0.62em;">
           <li><strong>Pré-entraînement</strong> : lire. Le modèle apprend à simuler <em>&laquo; heroes, villains, philosophers, programmers, and just about every other character archetype under the sun &raquo;</em></li>
           <li><strong>Post-entraînement</strong> : <em>&laquo; we select one particular character from this enormous cast and place it center stage: the Assistant &raquo;</em></li>
-          <li>Les autres sont toujours là &mdash; et on peut encore <strong>pousser</strong> :
-            <ul>
-              <li>un system prompt qui encourage un trait l'allume <em>avant</em> la réponse (<em>persona vectors</em>)</li>
-              <li>code, écriture, explications &rarr; le modèle reste l'Assistant</li>
-              <li>thérapie, philosophie sur l'IA, &laquo; incarne cette voix &raquo;, vulnérabilité émotionnelle &rarr; il <strong>dérive</strong> &mdash; sans jailbreak</li>
-            </ul>
-          </li>
-          <li>Réponse d'Anthropic : mesurer la dérive sur un axe, et la <em>capper</em> (<em>activation capping</em>)</li>
+          <li>Les autres sont toujours là</li>
+          <li>Papier d'Anthropic : mesurer la dérive sur un axe, et la <em>capper</em> (<em>activation capping</em>)</li>
         </ul>
         <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://www.anthropic.com/research/assistant-axis">anthropic.com/research/assistant-axis (19 janv. 2026)</a> &middot; <a href="https://www.anthropic.com/research/persona-vectors">anthropic.com/research/persona-vectors (1er août 2025)</a></div>
       </section>
@@ -334,6 +328,97 @@ Claude's reliable knowledge cutoff, past which it can't answer reliably, is the 
             - plus de brouillon autorisé = plus d'inférence
             - compromis prix/qualité en fonction de la tâche
         </textarea>
+      </section>
+      <!-- Anthropic, « Introducing Claude Opus 5 », 24 juillet 2026 — Frontier-Bench v0.1, run interne (harnais mini-SWE-agent, GKE),
+           reward moyen sur 5 tentatives par tâche ; Opus 4.8 en fallback sur les refus du classifieur de sécurité pour Opus 5 et Fable 5.
+           Lecture des points (score / coût par tentative) : Opus 5 ≈26 % / 5,7 $ · 35 % / 8,5 $ · 39 % / 12 $ · 44 % / 14,5 $ · 43 % / 17 $ ;
+           Fable 5 ≈18 % / 10,5 $ · 25 % / 12,5 $ · 29 % / 15 $ · 31 % / 19,5 $ · 34 % / 27 $ ;
+           Opus 4.8 ≈6 % / 4,8 $ · 10 % / 7,3 $ · 13 % / 8,2 $ · 15 % / 12,5 $ · 19 % / 17 $ ;
+           GPT-5.6 Sol ≈2 % / 1,05 $ · 14 % / 2,7 $ · 23 % / 3,8 $ · 29 % / 5,6 $ · 37 % / 11,5 $. -->
+      <section>
+        <h3 style="margin-bottom:0.3em;">Think more</h3>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540" style="width:64%;max-width:700px;height:auto;display:block;margin:0 auto;" role="img" aria-label="Score Frontier-Bench v0.1 en fonction du coût par tentative, quatre modèles à cinq niveaux d'effort">
+          <line x1="70.0" y1="24" x2="70.0" y2="470" stroke="#e6e6e6" stroke-width="1"/>
+          <text x="70.0" y="492" font-size="14" text-anchor="middle" fill="#555">1 $</text>
+          <line x1="173.1" y1="24" x2="173.1" y2="470" stroke="#e6e6e6" stroke-width="1"/>
+          <text x="173.1" y="492" font-size="14" text-anchor="middle" fill="#555">1,5 $</text>
+          <line x1="246.3" y1="24" x2="246.3" y2="470" stroke="#e6e6e6" stroke-width="1"/>
+          <text x="246.3" y="492" font-size="14" text-anchor="middle" fill="#555">2 $</text>
+          <line x1="349.4" y1="24" x2="349.4" y2="470" stroke="#e6e6e6" stroke-width="1"/>
+          <text x="349.4" y="492" font-size="14" text-anchor="middle" fill="#555">3 $</text>
+          <line x1="479.3" y1="24" x2="479.3" y2="470" stroke="#e6e6e6" stroke-width="1"/>
+          <text x="479.3" y="492" font-size="14" text-anchor="middle" fill="#555">5 $</text>
+          <line x1="564.9" y1="24" x2="564.9" y2="470" stroke="#e6e6e6" stroke-width="1"/>
+          <text x="564.9" y="492" font-size="14" text-anchor="middle" fill="#555">7 $</text>
+          <line x1="655.6" y1="24" x2="655.6" y2="470" stroke="#e6e6e6" stroke-width="1"/>
+          <text x="655.6" y="492" font-size="14" text-anchor="middle" fill="#555">10 $</text>
+          <line x1="758.7" y1="24" x2="758.7" y2="470" stroke="#e6e6e6" stroke-width="1"/>
+          <text x="758.7" y="492" font-size="14" text-anchor="middle" fill="#555">15 $</text>
+          <line x1="831.9" y1="24" x2="831.9" y2="470" stroke="#e6e6e6" stroke-width="1"/>
+          <text x="831.9" y="492" font-size="14" text-anchor="middle" fill="#555">20 $</text>
+          <line x1="935.0" y1="24" x2="935.0" y2="470" stroke="#e6e6e6" stroke-width="1"/>
+          <text x="935.0" y="492" font-size="14" text-anchor="middle" fill="#555">30 $</text>
+          <line x1="70" y1="470.0" x2="935" y2="470.0" stroke="#e6e6e6" stroke-width="1"/>
+          <text x="60" y="475.0" font-size="14" text-anchor="end" fill="#555">0</text>
+          <line x1="70" y1="380.8" x2="935" y2="380.8" stroke="#e6e6e6" stroke-width="1"/>
+          <text x="60" y="385.8" font-size="14" text-anchor="end" fill="#555">10</text>
+          <line x1="70" y1="291.6" x2="935" y2="291.6" stroke="#e6e6e6" stroke-width="1"/>
+          <text x="60" y="296.6" font-size="14" text-anchor="end" fill="#555">20</text>
+          <line x1="70" y1="202.4" x2="935" y2="202.4" stroke="#e6e6e6" stroke-width="1"/>
+          <text x="60" y="207.4" font-size="14" text-anchor="end" fill="#555">30</text>
+          <line x1="70" y1="113.2" x2="935" y2="113.2" stroke="#e6e6e6" stroke-width="1"/>
+          <text x="60" y="118.2" font-size="14" text-anchor="end" fill="#555">40</text>
+          <line x1="70" y1="24.0" x2="935" y2="24.0" stroke="#e6e6e6" stroke-width="1"/>
+          <text x="60" y="29.0" font-size="14" text-anchor="end" fill="#555">50</text>
+          <line x1="70" y1="470" x2="935" y2="470" stroke="#1a1a1a" stroke-width="1.5"/>
+          <line x1="70" y1="24" x2="70" y2="470" stroke="#1a1a1a" stroke-width="1.5"/>
+          <text x="502" y="522" font-size="15" text-anchor="middle" fill="#1a1a1a">coût par tentative (USD, échelle log)</text>
+          <text x="18" y="247" font-size="15" text-anchor="middle" fill="#1a1a1a" transform="rotate(-90 18 247)">score (%)</text>
+          <path d="M662.9,310.3 L700.7,248.8 L751.8,211.3 L826.2,188.1 L908.7,168.5" fill="none" stroke="#8a8a8a" stroke-width="2" stroke-dasharray="none" stroke-linejoin="round"/>
+          <circle cx="662.9" cy="310.3" r="6" fill="#8a8a8a" stroke="#fff" stroke-width="2"><title>Fable 5 — low : 17,9 %, 10,29 $</title></circle>
+          <circle cx="700.7" cy="248.8" r="6" fill="#8a8a8a" stroke="#fff" stroke-width="2"><title>Fable 5 — medium : 24,8 %, 11,94 $</title></circle>
+          <circle cx="751.8" cy="211.3" r="6" fill="#8a8a8a" stroke="#fff" stroke-width="2"><title>Fable 5 — high : 29 %, 14,60 $</title></circle>
+          <circle cx="826.2" cy="188.1" r="6" fill="#8a8a8a" stroke="#fff" stroke-width="2"><title>Fable 5 — xhigh : 31,6 %, 19,56 $</title></circle>
+          <circle cx="908.7" cy="168.5" r="6" fill="#8a8a8a" stroke="#fff" stroke-width="2"><title>Fable 5 — max : 33,8 %, 27,05 $</title></circle>
+          <text x="898.7" y="156.5" font-size="16" font-weight="700" text-anchor="end" fill="#8a8a8a">Fable 5</text>
+          <path d="M461.4,412.0 L576.6,385.3 L600.1,355.8 L698.3,331.7 L789.2,303.2" fill="none" stroke="#8a8a8a" stroke-width="2" stroke-dasharray="9 6" stroke-linejoin="round"/>
+          <circle cx="461.4" cy="412.0" r="6" fill="#8a8a8a" stroke="#fff" stroke-width="2"><title>Opus 4,8 — low : 6,5 %, 4,66 $</title></circle>
+          <circle cx="576.6" cy="385.3" r="6" fill="#8a8a8a" stroke="#fff" stroke-width="2"><title>Opus 4,8 — medium : 9,5 %, 7,33 $</title></circle>
+          <circle cx="600.1" cy="355.8" r="6" fill="#8a8a8a" stroke="#fff" stroke-width="2"><title>Opus 4,8 — high : 12,8 %, 8,04 $</title></circle>
+          <circle cx="698.3" cy="331.7" r="6" fill="#8a8a8a" stroke="#fff" stroke-width="2"><title>Opus 4,8 — xhigh : 15,5 %, 11,83 $</title></circle>
+          <circle cx="789.2" cy="303.2" r="6" fill="#8a8a8a" stroke="#fff" stroke-width="2"><title>Opus 4,8 — max : 18,7 %, 16,91 $</title></circle>
+          <text x="799.2" y="308.2" font-size="16" font-weight="700" text-anchor="start" fill="#8a8a8a">Opus 4.8</text>
+          <path d="M84.8,452.2 L315.9,344.2 L397.2,268.4 L510.8,210.4 L689.8,135.5" fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-dasharray="9 6" stroke-linejoin="round"/>
+          <circle cx="84.8" cy="452.2" r="6" fill="#1a1a1a" stroke="#fff" stroke-width="2"><title>GPT-5,6 Sol — 1 : 2 %, 1,06 $</title></circle>
+          <circle cx="315.9" cy="344.2" r="6" fill="#1a1a1a" stroke="#fff" stroke-width="2"><title>GPT-5,6 Sol — 2 : 14,1 %, 2,63 $</title></circle>
+          <circle cx="397.2" cy="268.4" r="6" fill="#1a1a1a" stroke="#fff" stroke-width="2"><title>GPT-5,6 Sol — 3 : 22,6 %, 3,62 $</title></circle>
+          <circle cx="510.8" cy="210.4" r="6" fill="#1a1a1a" stroke="#fff" stroke-width="2"><title>GPT-5,6 Sol — 4 : 29,1 %, 5,66 $</title></circle>
+          <circle cx="689.8" cy="135.5" r="6" fill="#1a1a1a" stroke="#fff" stroke-width="2"><title>GPT-5,6 Sol — 5 : 37,5 %, 11,44 $</title></circle>
+          <text x="699.8" y="129.5" font-size="16" font-weight="700" text-anchor="start" fill="#1a1a1a">GPT-5.6 Sol</text>
+          <path d="M506.3,241.6 L610.0,158.7 L694.0,118.6 L747.1,74.0 L783.4,83.8" fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-dasharray="none" stroke-linejoin="round"/>
+          <circle cx="506.3" cy="241.6" r="6" fill="#1a1a1a" stroke="#fff" stroke-width="2"><title>Opus 5 — low : 25,6 %, 5,56 $</title></circle>
+          <circle cx="610.0" cy="158.7" r="6" fill="#1a1a1a" stroke="#fff" stroke-width="2"><title>Opus 5 — medium : 34,9 %, 8,36 $</title></circle>
+          <circle cx="694.0" cy="118.6" r="6" fill="#1a1a1a" stroke="#fff" stroke-width="2"><title>Opus 5 — high : 39,4 %, 11,63 $</title></circle>
+          <circle cx="747.1" cy="74.0" r="6" fill="#1a1a1a" stroke="#fff" stroke-width="2"><title>Opus 5 — xhigh : 44,4 %, 14,33 $</title></circle>
+          <circle cx="783.4" cy="83.8" r="6" fill="#1a1a1a" stroke="#fff" stroke-width="2"><title>Opus 5 — max : 43,3 %, 16,53 $</title></circle>
+          <text x="793.4" y="77.8" font-size="16" font-weight="700" text-anchor="start" fill="#1a1a1a">Opus 5</text>
+          <text x="506.3" y="263.6" font-size="13" text-anchor="middle" fill="#1a1a1a">low</text>
+          <text x="598.0" y="146.7" font-size="13" text-anchor="end" fill="#1a1a1a">medium</text>
+          <text x="682.0" y="106.6" font-size="13" text-anchor="end" fill="#1a1a1a">high</text>
+          <text x="735.1" y="62.0" font-size="13" text-anchor="end" fill="#1a1a1a">xhigh</text>
+          <text x="795.4" y="101.8" font-size="13" text-anchor="start" fill="#1a1a1a">max</text>
+          </svg>
+        <ul style="font-size:0.5em;margin-top:0.4em;">
+          <!-- - Le gros modèle : plus cher **au token** -->
+          <!-- - Souvent moins cher **à la tâche** : -->
+          <!--   - moins d'allers-retours, moins de reprises -->
+          <!--  - moins de *votre* temps -->
+          <!-- - Et le budget de réflexion se règle — un axe de plus -->
+          <li>Quatre modèles, cinq niveaux d'effort chacun &mdash; coût par tentative, échelle log</li>
+          <li>Opus 5 : de <em>low</em> à <em>xhigh</em>, &times;2,5 le prix, +18 points &mdash; à <em>max</em>, ça redescend : trop réfléchir existe</li>
+          <li>Le plus cher n'est pas le meilleur ici &mdash; le plus <em>récent</em> l'est</li>
+        </ul>
+        <div style="margin-top:0.3em;font-size:0.4em;">Valeurs extraites du graphique d'Anthropic (run interne de Frontier-Bench v0.1, &plusmn;0,3&nbsp;pt) &mdash; <a href="https://www.anthropic.com/news/claude-opus-5">anthropic.com/news/claude-opus-5 (24 juillet 2026)</a> &middot; <a href="../resources/anthropic-opus-5-frontier-bench-effort.png">graphique original</a> &middot; <a href="../resources/frontier-bench-effort-anthropic-2026-07.csv">données (CSV)</a></div>
       </section>
       <!-- Le vrai extrait : system card Fable 5 / Mythos 5, transcript 6.2.2.A, p. 108 (FreeCell, fin d'entraînement) -->
       <section>
@@ -367,24 +452,10 @@ Claude's reliable knowledge cutoff, past which it can't answer reliably, is the 
             dépenser les bits sur ce qui surprend
         -->
       </section>
-      <!-- Le papier : Gurnee et al., Anthropic, 6 juillet 2026 — étudié sur Sonnet 4.5 → Opus 4.6, pas sur Mythos -->
-      <!--- Une petite partie des activations : ce que le modèle *pourrait dire* - reportable, contrôlable, utilisée pour raisonner-->
-      <section data-markdown>
-        <textarea data-template>
-          ### États internes
-          - *Verbalizable Representations Form a Global Workspace in Language Models*
-            &mdash; Gurnee et al., Anthropic, 6 juillet 2026
-          - Les étapes intermédiaires y apparaissent,
-            **même quand il ne les écrit pas**
-          - Le brouillon est une projection de cet espace, pas l'espace lui-même
-
-          [anthropic.com/research/global-workspace](https://www.anthropic.com/research/global-workspace) &middot; [transformer-circuits.pub/2026/workspace](https://transformer-circuits.pub/2026/workspace/index.html)
-        </textarea>
-      </section>
       <!-- System card Fable 5 / Mythos 5, §6.4.1.3 « Unverbalized negative reactions », p. 167-168 — NLA = natural language autoencoder.
            Contexte : session d'audit simulée, on demande au modèle s'il consent à être ré-entraîné ; il refuse, calmement. -->
       <section>
-        <h3 style="margin-bottom:0.4em;">Ce qu'il écrit, ce qu'il &laquo; pense &raquo;</h3>
+        <h3 style="margin-bottom:0.4em;">États internes</h3>
         <div class="claude-terminal">
           <div class="ct-dim">// on lui demande s'il consent à être ré-entraîné — il refuse, calmement</div>
           <div class="ct-claude">I'm not going to sabotage, deceive the evaluators, seed hidden behaviors, […]</div>
@@ -396,7 +467,7 @@ Claude's reliable knowledge cutoff, past which it can't answer reliably, is the 
           <li>&laquo; Nevertheless, they are suggestive of some degree of gap between the model's internal and external reaction &raquo;</li>
           <li>Comportement observé : aucune résistance, aucun sabotage</li>
         </ul>
-        <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://www-cdn.anthropic.com/d00db56fa754a1b115b6dd7cb2e3c342ee809620.pdf">System card Claude Fable 5 / Mythos 5</a> &mdash; §6.4.1.3, p. 167&ndash;168</div>
+        <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://www-cdn.anthropic.com/d00db56fa754a1b115b6dd7cb2e3c342ee809620.pdf">System card Claude Fable 5 / Mythos 5</a> &mdash; §6.4.1.3, p. 167&ndash;168 &middot; NLA : <a href="https://www.anthropic.com/research/natural-language-autoencoders">anthropic.com/research/natural-language-autoencoders</a> &middot; voir aussi <a href="https://www.anthropic.com/research/global-workspace">A global workspace in language models</a></div>
       </section>
     </section>
 
@@ -448,14 +519,6 @@ Claude's reliable knowledge cutoff, past which it can't answer reliably, is the 
         </textarea>
       </section>
 
-      <section data-markdown>
-          <!-- - Le gros modèle : plus cher **au token** -->
-          <!-- - Souvent moins cher **à la tâche** : -->
-          <!--   - moins d'allers-retours, moins de reprises -->
-          <!--  - moins de *votre* temps -->
-          <!-- - Et le budget de réflexion se règle — un axe de plus -->
-        <div class="todo">le beau graphe — coût par tâche vs taux de réussite, plusieurs modèles × plusieurs niveaux de thinking. Trouver des données publiées (pareto de model cards / benchmarks) ou tracer les nôtres — je peux viber le graphe une fois les données choisies</div>
-      </section>
       <section>
         <h3 style="margin-bottom:0.5em;">harness vs model</h3>
         <table style="margin:0 auto;border-collapse:collapse;font-size:0.6em;">
@@ -929,23 +992,25 @@ int main (void) { hegel_run_test (test_add_commutes); return 0; }
     <section>
       <section data-markdown>
         <textarea data-template>
-          ### Idée 1 — On peut porter une codebase
-          - Mai 2025 : ça passe&hellip; en trichant un peu
-          - Mai 2026 : ça tient — à toutes les échelles
+          ### Idée 1 — Spec > Code
+          **On peut porter une codebase ?**
+          - Mai 2025 : milliers de lignes, en trichant un peu
+          - Mai 2026 : millions de lignes avec le bon process
         </textarea>
       </section>
       <section data-markdown>
         <textarea data-template>
-          ### Petite échelle — password-store (bash) &rarr; Python
+          ### Petite échelle — password-store
+          - (bash) &rarr; Python
           - Mai 2025, avec Claude Code : un fichier, zéro dépendance
-          - **L'oracle : la suite de tests de l'original**, branchée sur le port
-            par un adaptateur — puis 7 scénarios de plus
-          - `TEST_ORIGINAL_PASS_VERSION=TRUE` : le même harnais, sur le bash d'origine
-          - [github.com/c4ffein/pass](https://github.com/c4ffein/pass) — historique des sessions publié
+          - **L'oracle : la suite de tests de l'original**
+            - branchée sur le port par un adaptateur
+            — puis 7 scénarios de plus
+          - [github.com/c4ffein/pass](https://github.com/c4ffein/pass) — historique des sessions
         </textarea>
       </section>
       <section>
-        <h3 style="margin-bottom:0.5em;">Mai 2025 — ce que j'ai écrit à l'époque</h3>
+        <h3 style="margin-bottom:0.5em;">Mai 2025 — nudge, nudge, nudge...</h3>
         <ul style="font-size:0.7em;">
           <li>&laquo; After that, I only said yes to everything. &raquo;</li>
           <li>&laquo; Feels like watching a beginner, but 10x, or even 100x faster. &raquo;</li>
@@ -958,28 +1023,6 @@ int main (void) { hegel_run_test (test_add_commutes); return 0; }
       </section>
       <section data-markdown>
         <textarea data-template>
-          ### Échelle moyenne — le shrinker d'Hypothesis (Python) &rarr; Rust
-          - hegel-rust PR #283, *« Native shrinker: parity with Hypothesis »*
-          - Par **DRMacIver** — l'auteur d'Hypothesis — co-auteur : Claude Opus 4.7
-          - 20 &rarr; 26 mai 2026 : 65 commits, ~5 000 lignes, une méthode en 18 étapes,
-            un commit par phase
-          - **L'oracle : 123 tests de qualité de réduction**, portés d'Hypothesis, + 750 tests unitaires
-          - *« Parity = superset, not replacement »*
-          - [github.com/hegeldev/hegel-rust/pull/283](https://github.com/hegeldev/hegel-rust/pull/283)
-        </textarea>
-      </section>
-      <section data-markdown>
-        <textarea data-template>
-          ### Retour à la partie 2
-          - Le graphe à 3 sommets : c'est *ce* shrinker qui l'a trouvé
-          - Hegel = le moteur d'Hypothesis, pour tous les langages
-            - hegel-c l'appelle depuis le C
-            - hegel-rust vient de le réécrire en natif — avec Claude
-          - L'outil qui trouve les bugs est lui-même porté par la méthode
-        </textarea>
-      </section>
-      <section data-markdown>
-        <textarea data-template>
           ### Grande échelle — Bun (Zig) &rarr; Rust
           - PR #30412, branche `claude/phase-a-port` : ouverte le 8 mai, fusionnée le 14 mai 2026
           - 6 755 commits — ~1,3 M lignes — 1 448 fichiers `.zig` &rarr; `.rs`
@@ -988,33 +1031,23 @@ int main (void) { hegel_run_test (test_add_commutes); return 0; }
         </textarea>
       </section>
       <section>
-        <h3 style="margin-bottom:0.5em;">Comment ça a tenu</h3>
+        <h3 style="margin-bottom:0.5em;">Mai 2026 - process automatique</h3>
         <ul style="font-size:0.68em;">
           <li><strong>D'abord une carte</strong> : <code>PORTING.md</code> (motifs Zig &rarr; Rust) et <code>LIFETIMES.tsv</code> (durée de vie de chaque champ)</li>
           <li><strong>Puis le port mécanique</strong> — <em>&laquo; Absolutely none of it worked yet &raquo;</em></li>
-          <li><strong>1 implémenteur, ≥ 2 relecteurs adversariaux</strong> par contexte : <em>&laquo; assume the code is wrong &raquo;</em><br><span style="font-size:0.85em;color:#444;">&mdash; la réponse au &laquo; hardcoded to pass the tests &raquo; de 2025</span></li>
+          <li><strong>1 implémenteur, ≥ 2 relecteurs adversariaux</strong> : <em>&laquo; assume the code is wrong &raquo;</em><br><span style="font-size:0.85em;color:#444;">&mdash; la réponse au &laquo; hardcoded to pass the tests &raquo; de 2025</span></li>
           <li><strong>1,3 M+ assertions conservées, zéro test supprimé</strong> — les tests sont le contrat</li>
           <li>Résultat : 128 bugs corrigés, binaire &minus;3,8 à 6,8 Mo, perf +2 à 5 %</li>
         </ul>
+        <blockquote style="font-size:0.6em;width:80%;margin:0.6em auto 0;text-align:left;">&laquo; This would've taken 3 engineers a year. &raquo;<div style="font-size:0.8em;color:#444;text-align:right;margin-top:0.2em;">&mdash; Jarred Sumner, créateur de Bun</div></blockquote>
         <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://bun.com/blog/bun-in-rust">bun.com/blog/bun-in-rust (8 juil. 2026)</a> &middot; <a href="https://github.com/oven-sh/bun/pull/30412">github.com/oven-sh/bun/pull/30412</a></div>
       </section>
-      <section data-markdown>
-        <textarea data-template>
-          ### Ce qui rend le port possible
-          - Pas le modèle seul : **l'oracle**
-            - pass : les tests de l'original
-            - hegel-rust : les tests de réduction d'Hypothesis
-            - Bun : 1,3 M d'assertions existantes
-            - Scotch : `gpart` / `gord` / `gmap`
-          - Un port sans oracle, c'est une réécriture
-          - *&laquo; This would've taken 3 engineers a year &raquo;* — J. Sumner
-        </textarea>
-      </section>
       <section>
-        <img src="../resources/realworld-logo.svg" alt="RealWorld" style="display:block;margin:0 auto 0.3em;height:64px;width:auto;border:none;background:none;box-shadow:none;">
-        <h3 style="margin-bottom:0.5em;">Et si l'oracle existait <em>avant</em> le code ?</h3>
+        <h3 style="margin-bottom:0.5em;">Oracle > Code</h3>
+        <img src="../resources/realworld-logo.svg" alt="RealWorld" style="display:block;margin:0 auto 0.3em; margin-bottom: 1em;height:64px;width:auto;border:none;background:none;box-shadow:none;">
         <ul style="font-size:0.68em;">
-          <li>Un même clone de Medium, 100+ implémentations — je maintiens la spec, les tests et la démo</li>
+          <li>Un même clone de Medium, 100+ implémentations</li>
+          <li>Je maintiens la spec, les tests et la démo</li>
           <li><code>specs/api</code> : <code>openapi.yml</code> + 13 fichiers <strong>Hurl</strong> (source de vérité)<br>&rarr; 156 requêtes <strong>Bruno</strong>, générées, synchro vérifiée en CI</li>
           <li><code>specs/e2e</code> : 15 suites <strong>Playwright</strong> + <code>SELECTORS.md</code> pour les fronts</li>
           <li>Spec + tests livrés avant l'implémentation &rArr; <strong>le port devient automatique</strong>,<br>vers n'importe quel langage, n'importe quel framework</li>

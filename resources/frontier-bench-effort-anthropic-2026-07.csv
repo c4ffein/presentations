@@ -1,0 +1,26 @@
+# Valeurs extraites du graphique « Agentic coding by effort level — Frontier-Bench v0.1 » publié par Anthropic
+# (anthropic.com/news/claude-opus-5, 24 juillet 2026), par détection des points dans le PNG 3840x2160, calibrée sur les axes.
+# Précision estimée : ±0,3 point de score, ±2 % sur le coût. Contrôle : les points « max » d'Opus 5 (43,3) et de Fable 5 (33,8) coïncident avec le leaderboard public.
+# Run interne Anthropic : harnais mini-SWE-agent, backend GKE, reward moyen sur 5 tentatives par tâche ; Opus 4.8 en fallback sur les refus du classifieur de sécurité pour Opus 5 et Fable 5.
+# Les niveaux d'effort de GPT-5.6 Sol ne sont pas nommés par Anthropic : la colonne « effort » est positionnelle pour cette ligne.
+model,effort,score_pct,cost_usd_per_attempt
+Opus 5,low,25.6,5.56
+Opus 5,medium,34.9,8.36
+Opus 5,high,39.4,11.63
+Opus 5,xhigh,44.4,14.33
+Opus 5,max,43.3,16.53
+Fable 5,low,17.9,10.29
+Fable 5,medium,24.8,11.94
+Fable 5,high,29.0,14.60
+Fable 5,xhigh,31.6,19.56
+Fable 5,max,33.8,27.05
+Opus 4.8,low,6.5,4.66
+Opus 4.8,medium,9.5,7.33
+Opus 4.8,high,12.8,8.04
+Opus 4.8,xhigh,15.5,11.83
+Opus 4.8,max,18.7,16.91
+GPT-5.6 Sol,1,2.0,1.06
+GPT-5.6 Sol,2,14.1,2.63
+GPT-5.6 Sol,3,22.6,3.62
+GPT-5.6 Sol,4,29.1,5.66
+GPT-5.6 Sol,5,37.5,11.44
