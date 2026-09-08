@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>term-player demo</title>
+  <!-- standalone test page, NOT a reveal deck. Serve the repo over HTTP:
+         python3 -m http.server   (from the repo root)
+       then open http://localhost:8000/resources/term-player-demo.html
+       (file:// blocks fetch(), you would only see the error case). -->
+  <link rel="stylesheet" href="../resources/claude-terminal.css">
+  <link rel="stylesheet" href="../resources/term-player.css">
+  <style>
+    body { font-family: system-ui, sans-serif; background: #f4f2ee; color: #222; max-width: 60rem; margin: 2rem auto; padding: 0 1rem; }
+    h2 { font-size: 1.05rem; margin: 2.2rem 0 0.4rem; }
+    p.note { font-size: 0.85rem; color: #555; margin: 0 0 0.7rem; }
+    code { background: #e9e6e0; padding: 0 0.25em; border-radius: 3px; }
+    /* mimic the deck: .claude-terminal uses 0.45em of the slide font (~40px) */
+    .slide-mock { font-size: 40px; background: #fff; border: 1px solid #ddd; padding: 1em; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <h1 style="font-size:1.4rem;">term-player.js — demo</h1>
+  <p class="note">Nothing autoplays on load. Click ▶ or the body to play, ⏭ fin to jump to the end, ↺ to restart,
+    the select to change speed. Space and arrow keys are deliberately not bound (reveal uses them).
+    The <code>test-*.json</code> recordings are throwaway fixtures.</p>
+
+  <h2>1. demo.json — 5 chunks, one <code>\r</code> overwrite ("progress: 10%" becomes "progress: 100%")</h2>
+  <div class="term-replay" data-recording="../resources/recordings/demo.json"></div>
+
+  <h2>2. test-progress.json — progress bar redrawn 9× with <code>\r</code>, 2× speed</h2>
+  <p class="note">The whole bar lives on one line until the final newline; the 20-char bar is overwritten column by column.</p>
+  <div class="term-replay" data-recording="../resources/recordings/test-progress.json" data-speed="2"></div>
+
+  <h2>3. test-seq.json — 300 lines, <code>data-max-lines="10"</code>, <code>data-max-delay="400"</code></h2>
+  <p class="note">Exercises scrolling / auto-follow and the per-chunk delay cap. Try ⏭ fin then scroll up inside the body.</p>
+  <div class="term-replay" data-recording="../resources/recordings/test-seq.json" data-max-lines="10" data-max-delay="400"></div>
+
+  <h2>4. test-pytest.json — pytest-like output with provenance meta, <code>data-speed="0.5"</code></h2>
+  <p class="note">Header shows <code>scotch_commit</code> / <code>pyscotch_commit</code> / <code>kind</code> from meta. Also has a static fallback <code>&lt;pre&gt;</code> that only shows when printing.</p>
+  <div class="term-replay" data-recording="../resources/recordings/test-pytest.json" data-speed="0.5">
+    <pre class="term-replay-static">(static fallback: paste the final output here for print / no-JS)</pre>
+  </div>
+
+  <h2>4b. hypothesis-coloring.json (real) — 4 chunks, one is a 34-line burst; <code>data-line-delay="80"</code> reveals it line by line</h2>
+  <p class="note">Without <code>data-line-delay</code> the whole pytest output pops in 1.7 s. Pause mid-burst then ▶ to resume where it stopped; ⏭ fin flushes everything.</p>
+  <div class="term-replay" data-recording="../resources/recordings/hypothesis-coloring.json" data-line-delay="80" data-max-lines="16"></div>
+
+  <h2>5. fetch error — <code>data-recording="../resources/recordings/does-not-exist.json"</code></h2>
+  <div class="term-replay" data-recording="../resources/recordings/does-not-exist.json"></div>
+
+  <h2>6. exactly as it goes in a reveal <code>&lt;section&gt;</code> — inside <code>.claude-terminal</code>, <code>data-autoplay="1"</code></h2>
+  <p class="note">Without <code>window.Reveal</code> the autoplay hook falls back to IntersectionObserver: this one starts when scrolled into view and pauses when scrolled out. In a deck it starts when its slide becomes current.</p>
+  <div class="slide-mock">
+    <div class="claude-terminal"><div class="term-replay" data-recording="../resources/recordings/demo.json" data-autoplay="1"></div></div>
+  </div>
+
+  <h2>7. programmatic <code>TermPlayer.mount(el, recordingObject)</code>, no fetch, <code>data-wrap="0"</code></h2>
+  <div id="inline" class="term-replay" data-wrap="0" data-max-lines="6"></div>
+
+  <script src="../resources/term-player.js"></script>
+  <script>
+    // an inline recording: shows shorter \r rewrites leaving the old tail (real terminal behaviour)
+    TermPlayer.mount(document.getElementById("inline"), {
+      meta: { title: "inline", command: "python -c 'import sys; ...'", duration_s: 2.4, chunks: 7, source: "inline object" },
+      chunks: [
+        [0, "a very long line that will not wrap because data-wrap=\"0\" is set on this player ......................................................... end\n"],
+        [400, "counting: 1"], [300, "\rcounting: 2"], [300, "\rcounting: 3"], [300, "\rcounting: 10\n"],
+        [400, "hello world\rHELLO\n"],           // overwrite in the same chunk -> "HELLO world"
+        [400, "done\n"]
+      ]
+    });
+  </script>
+</body>
+</html>

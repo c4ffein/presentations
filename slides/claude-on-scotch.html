@@ -16,6 +16,7 @@
     <!-- Theme used for syntax highlighted code -->
     <link rel="stylesheet" href="../engine/dist/plugin/highlight/c4ffein-light.css">
     <link rel="stylesheet" href="../resources/claude-terminal.css">
+    <link rel="stylesheet" href="../resources/term-player.css">
     <link rel="stylesheet" href="../engine/runcss/runcss.min.css">
     <script src="../engine/runcss/runcss.min.js" defer watch></script>
     <style>
@@ -418,7 +419,7 @@ Claude's reliable knowledge cutoff, past which it can't answer reliably, is the 
           <li>Opus 5 : de <em>low</em> à <em>xhigh</em>, &times;2,5 le prix, +18 points &mdash; à <em>max</em>, ça redescend : trop réfléchir existe</li>
           <li>Le plus cher n'est pas le meilleur ici &mdash; le plus <em>récent</em> l'est</li>
         </ul>
-        <div style="margin-top:0.3em;font-size:0.4em;">Valeurs extraites du graphique d'Anthropic (run interne de Frontier-Bench v0.1, &plusmn;0,3&nbsp;pt) &mdash; <a href="https://www.anthropic.com/news/claude-opus-5">anthropic.com/news/claude-opus-5 (24 juillet 2026)</a> &middot; <a href="../resources/anthropic-opus-5-frontier-bench-effort.png">graphique original</a> &middot; <a href="../resources/frontier-bench-effort-anthropic-2026-07.csv">données (CSV)</a></div>
+        <div style="margin-top:0.3em;font-size:0.4em;">Valeurs extraites du graphique d'Anthropic (run interne de Frontier-Bench v0.1, &plusmn;0,3&nbsp;pt) &mdash; <a href="https://www.anthropic.com/news/claude-opus-5">anthropic.com/news/claude-opus-5 (24 juillet 2026)</a> &middot; <a href="https://www-cdn.anthropic.com/images/4zrzovbb/website/7530b1086992936d7e9d5796a892d1e8fa063253-3840x2160.png">graphique original</a> &middot; <a href="../resources/frontier-bench-effort-anthropic-2026-07.csv">données (CSV)</a></div>
       </section>
       <!-- Le vrai extrait : system card Fable 5 / Mythos 5, transcript 6.2.2.A, p. 108 (FreeCell, fin d'entraînement) -->
       <section>
@@ -487,11 +488,35 @@ Claude's reliable knowledge cutoff, past which it can't answer reliably, is the 
             des outils — le même outil, dans tous les clients
         </textarea>
       </section>
+      <!-- AJOUT 2026-09-08 : l'exemple concret d'un outil MCP, avec pyscotch, avant la définition d'agent -->
+      <section>
+        <h3 style="margin-bottom:0.4em;">Un outil, concrètement (MCP, Python)</h3>
+        <pre><code class="language-python" data-trim data-noescape style="font-size:0.5em;line-height:1.3;">
+from mcp.server.fastmcp import FastMCP
+from pyscotch import Graph
+
+mcp = FastMCP("scotch")
+
+@mcp.tool()
+def partition(graph_file: str, parts: int) -> list[int]:
+    """Partitionne un graphe Scotch en `parts` parties."""
+    return Graph.load(graph_file).partition(parts).tolist()
+</code></pre>
+        <p style="font-size:0.5em;color:#444;margin:0.4em auto 0.3em;">Le nom, la signature et la docstring deviennent la description de l'outil. Le modèle ne voit que ça &mdash; et répond, quand il le juge utile, par un appel :</p>
+        <pre><code class="language-json" data-trim data-noescape style="font-size:0.45em;line-height:1.3;">
+{"type": "tool_use", "id": "toolu_01…", "name": "partition",
+ "input": {"graph_file": "ring.grf", "parts": 2}}
+                                 ⇩  votre code l'exécute  ⇩
+{"type": "tool_result", "tool_use_id": "toolu_01…",
+ "content": "[0, 0, 0, 0, 1, 1, 1, 1]"}
+</code></pre>
+        <p style="font-size:0.45em;color:#444;margin-top:0.3em;">Le résultat repart dans le contexte, le modèle continue. Rien de plus : une fonction, un schéma, un aller-retour JSON.</p>
+      </section>
       <!-- v0 — TODO definition d un agent: modele dans une ou plusieurs boucles interconnectees, qui peuvent executer des actions pour repondre a un objectif -->
       <section data-markdown>
         <textarea data-template>
           ### Un agent, définition
-          - Un modèle dans une ou plusieurs **boucles** interconnectées
+          - Un modèle, ou plusieurs, dans une ou plusieurs **boucles** interconnectées
           - Qui peut exécuter des **actions** pour atteindre un **objectif**
           - La boucle : *agir &rarr; observer &rarr; corriger*
           - Rien de magique : un modèle, des outils, un `while`
@@ -744,19 +769,31 @@ Claude's reliable knowledge cutoff, past which it can't answer reliably, is the 
         <div style="margin-top:0.5em;font-size:0.5em;color:#444;">Scotch : 30 ans de C, un oracle qui existe déjà (Scotch lui-même) &rarr; la colonne PBT</div>
       </section>
       <section>
-        <h3 style="margin-bottom:0.5em;">Pas le seul à avoir l'idée&hellip; =&gt; déjà un papier</h3>
+        <h3 style="margin-bottom:0.5em;">Déjà un papier</h3>
         <ul style="font-size:0.68em;">
           <li><em>Agentic Property-Based Testing: Finding Bugs Across the Python Ecosystem</em></li>
-          <li>Maaz, <strong>DeVoe</strong>, <strong>Hatfield-Dodds</strong> (mainteneurs d'Hypothesis), Carlini &mdash; 10 octobre 2025</li>
+          <li>Maaz<span style="font-size:0.7em;vertical-align:0.25em;">&dagger;</span>, DeVoe<span style="font-size:0.7em;vertical-align:0.25em;">*</span>, Hatfield-Dodds<span style="font-size:0.7em;vertical-align:0.25em;">*&dagger;</span>, Carlini<span style="font-size:0.7em;vertical-align:0.25em;">&dagger;</span> &mdash; 10 octobre 2025<br><span style="font-size:0.75em;color:#444;">* mainteneur d'Hypothesis &middot; &dagger; Anthropic (Maaz : MATS, Anthropic ; DeVoe : Northeastern University)</span></li>
           <li>Un agent lit le code, <em>infère</em> les propriétés, écrit les tests, rédige le rapport</li>
           <li>56&nbsp;% des rapports générés : des bugs valides</li>
           <li>~6 mois avant la vague Mythos</li>
         </ul>
         <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://arxiv.org/abs/2510.09907">arXiv:2510.09907</a></div>
-        <div class="todo">« vague Mythos » : confirmer la date que tu as en tête (avril 2026 ?) et ajuster le « ~6 mois »</div>
+        <div style="margin-top:0.3em;font-size:0.4em;">« vague Mythos » = Claude Mythos Preview + Project Glasswing, <strong>7 avril 2026</strong> (Bloomberg : des failles dans « every major operating system and every major web browser » ; Mozilla : 271 failles corrigées dans Firefox, Ars Technica, 21 avril 2026) &mdash; <a href="https://en.wikipedia.org/wiki/Claude_Mythos">en.wikipedia.org/wiki/Claude_Mythos</a>. Papier du 10 oct. 2025 &rarr; 7 avr. 2026 : 6 mois, tout juste.</div>
       </section>
     </section>
 
+
+    <!-- ===== L'ARC SCOTCH, EN DATES (copie texte pour relecture ; la slide est avant « Le bilan ») =====
+         nov. 2025      pyscotch, jour 7            premier bug upstream (module.h), corrigé le jour même — f7cd80c, crédité
+         déc. 2025      Hypothesis sur le wrapper    graphColor invalide → corrigé 15 janv. 2026 — e0a90c7
+         mars 2026      Claude relit les tests C     23 tests reçoivent des assertions (fork, add-output-validity-checks)
+         avr. 2026      hegel en C, sur le fork      hgraphOrderCp, rc = 0 + permutation invalide → corrigé 15 avr. — 0642921 + test, crédité
+         avr. 2026      hegel-c                      même bug retrouvé seul, réduit à 3 sommets (isolé + K2)
+         juil. 2026     pyscotch 7.0, le balayage    6 bugs chez nous ; upstream : memFree/meshBuildElem corrigés le lendemain, 4 ouverts
+         juil.–août     tests différentiels          gpart/gord/gmap/dgpart/dgord octet pour octet ; 1 bug chez nous
+         août 2026      archDecoArchBuild            corrigé 18 août — 911ebdf, crédité (source du signalement : ?)
+         24–27 août     la même tâche, deux fois     ingénieur adb2b64 (24, 21:18) / Fable (25, 11:54→12:09, heure de Paris) / refactor FP (25) / v7.0.14 (27)
+         ===== -->
     <!-- Barreau 1 : pyscotch -->
     <section>
       <section data-markdown>
@@ -779,48 +816,177 @@ Claude's reliable knowledge cutoff, past which it can't answer reliably, is the 
           - [github.com/c4ffein/pyscotch](https://github.com/c4ffein/pyscotch)
         </textarea>
       </section>
-    </section>
-
-    <!-- Barreau 2 : différentiel -->
-    <section>
-      <section data-markdown>
-        <textarea data-template>
-          ### 2. Tests différentiels
-          - Même entrée → pyscotch vs `gpart` / `gord` / `gmap`
-          - Comparaison octet par octet
-          - L'oracle, c'est Scotch lui-même
-        </textarea>
-      </section>
-    </section>
-
-    <!-- Barreau 3 : lire le C -->
-    <section>
-      <section data-markdown>
-        <textarea data-template>
-          ### 3. Lire le C
-          - Premier bug : trouvé par *lecture* du code
-        </textarea>
+      <!-- AJOUT 2026-09-08 -->
+      <section>
+        <h3 style="margin-bottom:0.4em;">Jour 7 : le premier bug est dans Scotch</h3>
+        <ul style="font-size:0.62em;">
+          <li><strong>4 nov. 2025</strong> : premier commit, sessions Claude Code <em>web</em> (7 branches <code>claude/&hellip;</code>)</li>
+          <li>Objectif : charger 32 <em>et</em> 64 bits, séquentiel <em>et</em> MPI, dans un même process</li>
+          <li><strong>11 nov.</strong> : <em>&laquo; Building with suffixes worked fine, but when loading BOTH 32-bit and 64-bit variants in the same process, there were symbol name collisions because some symbols weren't getting suffixed. &raquo;</em></li>
+          <li>12 macros manquantes dans <code>module.h</code> : 1 constante, 1 type, 10 fonctions <code>dmesh</code></li>
+          <li>Trouvé par le build, confirmé en lisant le C</li>
+        </ul>
+        <div style="margin-top:0.4em;font-size:0.4em;"><a href="https://github.com/c4ffein/pyscotch/commit/1b632ef">pyscotch 1b632ef (11 nov. 2025), patches/README.md</a></div>
       </section>
       <section>
+        <h3 style="margin-bottom:0.4em;">Le reçu, le jour même</h3>
         <div class="claude-terminal">
-          <div class="ct-user">[ transcript à insérer ]</div>
-        </div>
-        <div class="todo">la vraie transcription de la découverte du premier bug en lisant le C — colle-la brute, je la mets en forme (divs ct-user / ct-claude / ct-tool / ct-result)</div>
+  <div class="ct-user">git log --date=short --format='%h %ad %an | %s' --grep='report C. Pellegrini' | tail -1</div>
+  <div class="ct-result">f7cd80c 2025-11-11 Francois PELLEGRINI | Bugfix: add missing suffix renaming macros [report C. Pellegrini]</div>
+  <div class="ct-dim">// src/libscotch/module.h | 14 +++++++++++++-</div>
+</div>
+        <p style="font-size:0.55em;margin-top:0.6em;">Signalé le 11, corrigé le 11.</p>
+        <div style="margin-top:0.4em;font-size:0.4em;">le rapport : <a href="https://github.com/c4ffein/pyscotch/blob/1b632ef/patches/README.md">pyscotch/patches/README.md (11 nov. 2025)</a> &middot; le fix : <a href="https://gitlab.inria.fr/scotch/scotch/-/commit/f7cd80c585fee2fe13df1492489eee93b717dec1">scotch f7cd80c</a></div>
       </section>
     </section>
 
     <!-- Barreau 4 : Hypothesis -->
     <section>
-      <section data-markdown>
-        <textarea data-template>
-          ### 4. Hypothesis sur le wrapper
-          - Des propriétés, pas des exemples
-            *(cf. mon talk Hypothesis — la suite, c'est maintenant)*
-          - La machine choisit les graphes
-        </textarea>
+      <!-- AJOUT 2026-09-08 -->
+      <section>
+        <h3 style="margin-bottom:0.4em;">2. Hypothesis sur le wrapper</h3>
+        <pre><code class="language-python" data-trim data-noescape>
+@given(graph_data=simple_graph(min_vertices=2, max_vertices=20))
+def test_coloring_no_adjacent_same_color(self, graph_data):
+    num_vertices, edges = graph_data
+    graph = Graph.from_edges(edges, num_vertices=num_vertices)
+    coloring, num_colors = graph.color()
+
+    for u, v in edges:
+        assert coloring[u] != coloring[v]
+</code></pre>
+        La propriété &mdash; 5 décembre 2025
+        <p style="font-size:0.5em;color:#444;margin-top:0.4em;">L'invariant du coloriage. Le test C de Scotch, lui, vérifiait le code de retour et imprimait un histogramme.</p>
+        <div style="margin-top:0.4em;font-size:0.4em;"><a href="https://github.com/c4ffein/pyscotch/blob/master/tests/hypothesis/test_graph_properties.py">tests/hypothesis/test_graph_properties.py</a></div>
       </section>
       <section>
-        <div class="todo">ce qu'Hypothesis a trouvé — la propriété + le falsifying example, un bug par slide</div>
+        <h3 style="margin-bottom:0.4em;">Hypothesis trouve un bug</h3>
+        <div class="claude-terminal">
+  <div class="ct-claude">Interesting! Hypothesis found a potential bug! The test found that for a graph with 19 vertices and a single edge (0, 9), the color() function assigned the same color (0) to both adjacent vertices 0 and 9. [&hellip;] However, the failure is marked as "Flaky" &mdash; it failed initially but couldn't reproduce on retry.</div>
+  <div class="ct-tool">Bash(python3 -c "from pyscotch import Graph&hellip;")</div>
+  <div class="ct-result">Run 1: color[0]=1, color[9]=0, same=False, num_colors=2<br>Run 3: color[0]=0, color[9]=0, same=True, num_colors=1</div>
+  <div class="ct-claude">This is a genuine bug in Scotch's SCOTCH_graphColor function! The bug is reproducible &mdash; about 50% of the time [&hellip;] Would you like me to add this bug to QUESTIONS_FOR_SCOTCH_TEAM.md?</div>
+  <div class="ct-user">No. This is perfect already. I'll just show this context to Francois (the author), and we'll check with him if this is a bug in scotch, pyscotch, or a misunderstanding from our side.</div>
+  <div class="ct-user">Hey, I wonder if the problem is not just that we should automatically call SCOTCH_randomReset from our side automatically. Will check with him, and he'll discover /hypothesis for the next real bugs, will be fun.</div>
+</div>
+        <div style="margin-top:0.4em;font-size:0.4em;">transcription brute, 5 déc. 2025 — <a href="https://github.com/c4ffein/pyscotch/blob/master/docs/SAVED_CONTEXT_FOR_NEXT_FP.md">pyscotch/docs/SAVED_CONTEXT_FOR_NEXT_FP.md</a></div>
+      </section>
+      <!-- AJOUT 2026-09-08 : rejeu d'un vrai run, enregistré avec `script` (voir resources/recordings/hypothesis-coloring.md) -->
+      <section>
+        <h3 style="margin-bottom:0.4em;">Replay Hypothesis</h3>
+        <div class="claude-terminal" style="width:70%;margin:0 auto;font-size:0.4em;">
+          <div class="term-replay" data-recording="../resources/recordings/hypothesis-coloring.json" data-autoplay="1" data-line-delay="80" data-max-lines="16"></div>
+        </div>
+        <p style="font-size:0.45em;color:#444;margin-top:0.4em;">Scotch <code>34ea137</code> (14 janv. 2026, la veille du fix) &middot; pyscotch <code>a32f242</code> (déc. 2025) &middot; Hypothesis 6.168, seed 1 &rarr; 17 échecs en 0,4 s, 69 réductions, <strong><code>graph_data=(11, [(1, 10)])</code></strong>. Sur v7.0.14 : 100 exemples, 0 échec.</p>
+        <div style="margin-top:0.3em;font-size:0.4em;"><a href="../resources/recordings/hypothesis-coloring.md">comment c'est enregistré</a> &middot; <a href="../resources/recordings/hypothesis-coloring.json">hypothesis-coloring.json</a> &middot; <a href="../resources/recordings/hypothesis-coloring-fixed.json">le même run sur v7.0.14</a></div>
+        <div class="todo">rejeu à vérifier en vrai (servi en HTTP, pas file://) : ▶ se lance à l'arrivée sur la slide, clic = pause, ⏭ = fin. Le run est enregistré, pas simulé : sortie brute de pytest, ANSI retiré. Garder aussi la version « fixed » sur la slide, ou en parler seulement ?</div>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.4em;">Le pattern, à la main</h3>
+        <table style="margin:0 auto;border-collapse:collapse;font-size:0.48em;">
+<tbody>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">n = 10, arête (1, 9)</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">2 couleurs</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">OK</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">n = 11, arête (1, 10)</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">1 couleur</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>BUG</strong></td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">n = 12, arête (1, 11)</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">1 couleur</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>BUG</strong></td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">n = 13, arête (1, 12)</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">2 couleurs</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">OK</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">n = 11, arête (0, 10)</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">2 couleurs</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">OK &mdash; sommet 0 connecté</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">n = 11, arête (5, 10)</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">1 couleur</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>BUG</strong> &mdash; sommet 0 isolé, arête vers le dernier</td></tr>
+</tbody></table>
+        <ul style="font-size:0.5em;margin-top:0.4em;">
+          <li>Déterministe après <code>SCOTCH_randomReset()</code> &mdash; pas un problème de PRNG</li>
+          <li><code>num_colors = 1</code> sur un graphe avec une arête : impossible</li>
+          <li>Lecture de <code>library_graph_color.c</code>, ligne 145 : <code>if (colotax[vertend] &gt;= 0) continue;</code> ignore <em>aussi</em> les voisins coloriés dans le passage courant</li>
+          <li>Test marqué <code>xfail</code>, rapport écrit</li>
+        </ul>
+        <div style="margin-top:0.4em;font-size:0.4em;"><a href="https://github.com/c4ffein/pyscotch/blob/master/docs/QUESTIONS_FOR_SCOTCH_TEAM_2.md">pyscotch/docs/QUESTIONS_FOR_SCOTCH_TEAM_2.md</a></div>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.4em;">Le reçu &mdash; janvier 2026</h3>
+        <div class="claude-terminal">
+  <div class="ct-result">34ea137 2026-01-14 Francois PELLEGRINI | Add coloring checking routine in test_scotch_graph_color.c</div>
+  <div class="ct-result">e0a90c7 2026-01-15 Francois PELLEGRINI | Bugfix: sequential coloring now considers neighbors colored in same pass</div>
+</div>
+        <pre><code class="language-diff" data-trim data-noescape style="font-size:0.48em;line-height:1.3;">
+-        if (colotax[vertend] >= 0)
+-          continue;
++        if ((coloend >= 0) &&                     /* If vertex has been colored    */
++            (coloend < colonum))                  /* In a former pass              */
++          continue;                               /* Do not consider it any longer */
+</code></pre>
+        <p style="font-size:0.5em;margin-top:0.4em;">L'analyse de décembre était la bonne. Le vérificateur d'abord, le fix le lendemain. 25 mars 2026 : <code>xfail</code> retiré, test vert.</p>
+      </section>
+    </section>
+
+    <!-- Barreau 3 : lire le C -->
+    <section>
+      <!-- AJOUT 2026-09-08 -->
+      <section>
+          <h3 style="margin-bottom:0.4em;">3. mars 2026 : lecture des <em>tests</em> C</h3>
+        <ul style="font-size:0.6em;">
+          <li>CLAUDE.md pyscotch : <em>&laquo; Scotch's C tests often only verify return codes, not output validity &raquo;</em></li>
+          <li><strong>22 mars 2026</strong>, fork <code>c4ffein/scotch</code>, branche <code>add-output-validity-checks</code> : 23 tests C reçoivent des assertions, +523 lignes</li>
+        </ul>
+        <pre><code class="language-c" data-trim data-noescape style="font-size:0.42em;line-height:1.3;">
+static void
+checkOrder (const SCOTCH_Num * const permtab, const SCOTCH_Num * const peritab,
+            const SCOTCH_Num baseval, const SCOTCH_Num vertnbr)
+{
+  for (vertnum = 0; vertnum &lt; vertnbr; vertnum ++) {
+    /* ... permtab[vertnum] et peritab[vertnum] dans [baseval, baseval + vertnbr) ... */
+    if (peritab[permtab[vertnum] - baseval] != vertnum + baseval) {
+      SCOTCH_errorPrint ("checkOrder: permutation not bijective at vertex " SCOTCH_NUMSTRING, vertnum + baseval);
+      exit (EXIT_FAILURE);
+    }
+  }
+}
+</code></pre>
+        <div style="margin-top:0.4em;font-size:0.4em;"><a href="https://github.com/c4ffein/scotch/commit/c01ce8f">c4ffein/scotch c01ce8f — Add output validity checks (22 mars 2026)</a></div>
+        <div style="margin-top:0.3em;font-size:0.4em;">Envoyée à François. Côté Scotch, ensuite : <a href="https://gitlab.inria.fr/scotch/scotch/-/commit/eb5f1efcab56ddcabe44e9f9bb7c474743d8b633">« Improve tests », 10 avr. 2026</a> &middot; <a href="https://gitlab.inria.fr/scotch/scotch/-/commit/010974ee9ea7af89ecf20558c0e7e866362d899b">« Add test for ordering a disconnected graph », 15 avr.</a> &middot; <a href="https://gitlab.inria.fr/scotch/scotch/-/commit/bda2db3c3b35c187ddbc617be09608980a70aaa4">« Improve tests », 16 juin</a></div>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.4em;">Épisode 1 &mdash; 2 avril 2026 : Claude a d'abord eu tort</h3>
+        <div class="claude-terminal">
+  <div class="ct-dim">// fork c4ffein/scotch, branche hegel, REPORTS/REPORT.md — 67 tests PBT en C, 65 passent, 1 bug NOUVEAU</div>
+  <div class="ct-claude">Bug found: SCOTCH_STRATDISCONNECTED ordering produces garbage permutation. <code>rc == 0</code> (success) but <code>permtab[13] == 0xBBBBBBBB</code> (uninitialized). Approximately 25% of random sparse graphs with 4-20 vertices trigger it.</div>
+  <div class="ct-claude"><strong>Probable root cause (not confirmed)</strong>: The SCOTCH_STRATDISCONNECTED flag adds a disconnected-component handling wrapper to the ordering strategy. [&hellip;] Isolated vertices (single-vertex components with no edges) may be skipped by the component iterator, leaving their permtab entries unwritten.</div>
+  <div class="ct-user">Note from c4ffein: obv just a wild guess from Claude at this point</div>
+</div>
+        <p style="font-size:0.5em;color:#444;margin-top:0.5em;">git log du fork : 2 avr. « hegel report » &middot; 3 avr. « gaslighted again by me good Claude » &middot; 5 avr. « add hgraph_order_cp.c fix actually »</p>
+        <div style="margin-top:0.4em;font-size:0.4em;"><a href="https://github.com/c4ffein/scotch/blob/ff403d445b36ee1723ff53d2478d368b21a3341f/REPORTS/REPORT.md">REPORTS/REPORT.md</a> &middot; <a href="https://github.com/c4ffein/scotch/blob/ff403d445b36ee1723ff53d2478d368b21a3341f/REPORTS/BUG_REPORT.md">REPORTS/BUG_REPORT.md</a></div>
+        <div class="todo">la session entre le 2 et le 5 avril (fausse piste &rarr; vraie cause) est la meilleure transcription « lire le C » de tout l'arc. Où est-elle ?</div>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.4em;">Épisode 2 &mdash; 5 avril : une variable</h3>
+        <p style="font-size:0.55em;margin:0 auto 0.4em;">Fausse piste : les sommets isolés. Vraie cause : le chemin <em>compression</em> de <code>hgraphOrderCp</code> ignore <code>ordenum</code>.</p>
+        <table style="margin:0 auto;border-collapse:collapse;font-size:0.45em;">
+<tbody>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>hgraphOrderSi</code></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>peritab[ordenum + i]</code></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">✓</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>hgraphOrderHf</code> / <code>Hd</code></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>peritab + ordenum</code></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">✓</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>hgraphOrderNd</code></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">récursif, <code>ordenum</code> ajusté</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">✓</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>hgraphOrderCc</code></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>ordenum + roottab[rootnum]</code></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">✓</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>hgraphOrderCp</code>, sans compression</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">transmis à la sous-stratégie</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">✓</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong><code>hgraphOrderCp</code>, avec compression</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>ignoré</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>✗</strong></td></tr>
+</tbody></table>
+        <pre><code class="language-diff" data-trim data-noescape style="font-size:0.5em;line-height:1.3;">
+-  for (coarvertnum = coargrafdat.s.baseval, finevsizsum = 0;
++  for (coarvertnum = coargrafdat.s.baseval, finevsizsum = ordenum;
+</code></pre>
+        <p style="font-size:0.48em;color:#444;margin-top:0.3em;">Conditions : <code>STRATDISCONNECTED</code> + &ge; 2 composantes + une composante non première qui compresse (une paire K<sub>2</sub> suffit). Présent depuis v6.0 au moins. Corruption <em>silencieuse</em> : <code>rc = 0</code>.</p>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.4em;">Le reçu &mdash; 15 avril 2026</h3>
+        <div class="claude-terminal">
+  <div class="ct-result">0642921 2026-04-15 Francois PELLEGRINI | Bugfix: make `hgraphOrderCp()` work on (disconnected) subgraphs [report C. Pellegrini]</div>
+  <div class="ct-result">010974e 2026-04-15 Francois PELLEGRINI | Add test for ordering a disconnected graph</div>
+</div>
+        <pre><code class="language-diff" data-trim data-noescape style="font-size:0.42em;line-height:1.3;">
++  if (finegrafptr->s.vertnbr &lt;= 2)                /* Do not lose time when compression is irrelevant */
++    return (hgraphOrderSt (finegrafptr, fineordeptr, ordenum, cblkptr, paraptr->stratunc));
+ [...]
+-  for (coarvertnum = coargrafdat.s.baseval, finevsizsum = 0; /* Compute initial indices for inverse permutation expansion */
++  for (coarvertnum = coargrafdat.s.baseval, finevsizsum = ordenum; /* Compute initial indices for inverse permutation expansion */
+</code></pre>
+        <p style="font-size:0.5em;margin-top:0.4em;">Le mainteneur reprend le fix, ajoute un court-circuit pour &le; 2 sommets, et le test qui manquait. Le même jour. Signalé le 5, corrigé le 15.</p>
       </section>
     </section>
 
@@ -832,7 +998,7 @@ Claude's reliable knowledge cutoff, past which it can't answer reliably, is the 
           - Hegel : le moteur d'Hypothesis, pour tous les langages
           - hegel-c : le client C — vibé ensemble, avec Claude
           - Propriétés en C, réduction automatique
-          - [github.com/c4ffein/hegel-c](https://github.com/c4ffein/hegel-c)
+          - [github.com/c4ffein/hegel-c](https://github.com/c4ffein/hegel-c) &mdash; en pause, en expérimentation
         </textarea>
       </section>
       <section>
@@ -865,13 +1031,148 @@ int main (void) { hegel_run_test (test_add_commutes); return 0; }
           Trouvé sur un graphe aléatoire, réduit tout seul au <strong>minimum</strong>.
         </div>
       </section>
+      <!-- AJOUT 2026-09-08 -->
+      <section>
+        <h3 style="margin-bottom:0.4em;">Un graphe à 3 sommets &mdash; le vrai</h3>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 240" style="width:50%;max-width:600px;height:auto;display:block;margin:0 auto;">
+          <line x1="440" y1="120" x2="640" y2="120" stroke="#1a1a1a" stroke-width="3"/>
+          <circle cx="120" cy="120" r="26" fill="#fff" stroke="#1a1a1a" stroke-width="3" stroke-dasharray="6 5"/>
+          <circle cx="440" cy="120" r="26" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
+          <circle cx="640" cy="120" r="26" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
+          <text x="120" y="127" font-size="20" text-anchor="middle" fill="#1a1a1a">0</text>
+          <text x="440" y="127" font-size="20" text-anchor="middle" fill="#1a1a1a">1</text>
+          <text x="640" y="127" font-size="20" text-anchor="middle" fill="#1a1a1a">2</text>
+          <text x="120" y="180" font-size="15" text-anchor="middle" fill="#555">composante A, ordenum = 0</text>
+          <text x="540" y="180" font-size="15" text-anchor="middle" fill="#555">composante B, ordenum = 1 &mdash; K&#8322;, se compresse</text>
+        </svg>
+        <div class="claude-terminal">
+  <div class="ct-result">MINIMAL nvert=3 nedges=1 edges=[(1,2)]</div>
+</div>
+        <ul style="font-size:0.5em;margin-top:0.4em;">
+          <li>Le rapport de bug avait un reproducteur à <strong>14 sommets</strong>, écrit à la main</li>
+          <li>hegel-c repart de zéro (3&ndash;20 sommets, 0&ndash;30 arêtes), touche le bug en quelques essais (~25 %), et réduit</li>
+          <li>~2 runs sur 5 atteignent le minimum théorique ; les autres s'arrêtent à 4 sommets ou 2 arêtes. La CI exige nvert &le; 5</li>
+        </ul>
+        <div style="margin-top:0.4em;font-size:0.4em;"><a href="https://github.com/c4ffein/hegel-c/blob/master/docs/shrinking.md">hegel-c/docs/shrinking.md</a> &middot; <a href="https://github.com/c4ffein/hegel-c/blob/master/tests/irl/scotch/test_graph_order_shrink.c">tests/irl/scotch/test_graph_order_shrink.c</a></div>
+        <div class="todo">remplace la slide précédente : le chemin 0-1-2 est connexe et ne déclenche pas le bug. Il faut un sommet isolé + une paire.</div>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.4em;">Le schéma qui l'a trouvé</h3>
+        <pre><code class="language-c" data-trim data-noescape style="font-size:0.45em;line-height:1.3;">
+hegel_schema_t edge_schema = HEGEL_STRUCT (EdgePair,
+    HEGEL_INT (0, MAX_VERT - 1),
+    HEGEL_INT (0, MAX_VERT - 1));
+
+graph_schema = HEGEL_STRUCT (Graph,
+    HEGEL_INT (3, MAX_VERT),
+    HEGEL_ARRAY_INLINE (edge_schema, sizeof (EdgePair), 0, MAX_EDGES));
+
+/* ... build CSR, SCOTCH_graphOrder with SCOTCH_STRATDISCONNECTED ... */
+memset (permtab, 0xBB, nvert * sizeof (SCOTCH_Num));   /* sentinel */
+hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the final replay only */
+</code></pre>
+        <p style="font-size:0.5em;color:#444;margin-top:0.4em;">Pas une ligne de logique de réduction : elle vient du flux d'octets, comme dans Hypothesis. Le <code>0xBB</code> rend visible ce que Scotch n'a pas écrit.</p>
+      </section>
+      <!-- AJOUT 2026-09-08 : rejeu d'un vrai run, enregistré avec `script` (voir resources/recordings/hegel-order-shrink.md) -->
+      <section>
+        <h3 style="margin-bottom:0.4em;">Replay hegel-c</h3>
+        <div class="claude-terminal" style="width:70%;margin:0 auto;font-size:0.4em;">
+          <div class="term-replay" data-recording="../resources/recordings/hegel-order-shrink.json" data-autoplay="1" data-max-lines="16"></div>
+        </div>
+        <p style="font-size:0.45em;color:#444;margin-top:0.4em;">Scotch <strong>v7.0.11</strong> (avant le fix du 15 avril) &middot; hegel-c <code>ce16904</code>, moteur hegel-rust v0.17.4. Cas n°6 : premier échec sur 20 sommets. Cas n°185 : déjà 3 sommets, 1 arête. 10 175 cas en 17 s, puis <strong><code>MINIMAL nvert=3 nedges=1 edges=[(1,2)]</code></strong> &mdash; 6 runs sur 6. Sur v7.0.14 : 200 cas, rien.</p>
+        <div style="margin-top:0.3em;font-size:0.4em;">trace filtrée (documentée) : tous les cas jusqu'au premier échec, puis les nouveaux minima et un cas sur 250 &middot; les arêtes sont tirées dans [0, 19] et réduites modulo nvert &middot; <a href="../resources/recordings/hegel-order-shrink.md">comment c'est enregistré</a> &middot; <a href="../resources/recordings/hegel-order-shrink-plain.json">le même run sans trace : 16 s de silence, puis MINIMAL</a> &middot; <a href="../resources/recordings/hegel-order-shrink-fixed.json">sur v7.0.14</a></div>
+        <div class="todo">à vérifier en vrai (HTTP). Nuance honnête : le mode trace n'existe pas dans hegel-c ce16904 (la doc shrinking.md est périmée), l'agent a ajouté un patch de 30 lignes de trace dans une copie ; la version « plain », sans patch, atteint le même minimum.</div>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.4em;">20 avril 2026 &mdash; « review from my dad lol »</h3>
+        <div class="claude-terminal">
+  <div class="ct-dim">// hegel-c, TODO.md, section « From FP » — commit 29c1e40</div>
+  <div class="ct-result">- lance combien de fois? parametrisable ou?<br>- HEGEL_SELF =&gt; prevenir des le debut, parametriser proba<br>- free pas en macro? bizarre... free schema vs shape =&gt; il a raison, j ai toujours pas clean mdr<br>- scotch src libscotch arch.h =&gt; pointer vers classe<br>- lo et hi? comment gerer le min/max? [&hellip;] en particulier, comment je gere le u64? =&gt; expliciter que bien fait</div>
+</div>
+        <p style="font-size:0.5em;margin-top:0.5em;">Le mainteneur de Scotch relit l'outil qui vient de trouver un bug dans Scotch.</p>
+        <div class="todo">à garder ? c'est l'anecdote « l'auteur est dans la salle » sans le dire.</div>
+      </section>
+    </section>
+
+    <!-- Épisode 3 (juillet 2026) — sorti de « 3. Lire le C » le 2026-09-08 pour l'ordre chronologique -->
+    <section>
+      <section>
+        <h3 style="margin-bottom:0.4em;">Épisode 3 &mdash; juillet 2026 : <code>switch (optival)</code></h3>
+        <pre><code class="language-c" data-trim data-noescape style="font-size:0.42em;line-height:1.3;">
+int
+SCOTCH_contextOptionSetNum (SCOTCH_Context * const libcontptr, const int optinum, const SCOTCH_Num optival)
+{
+  optitmp = optival;
+  switch (optival) {                                /* &lt;-- optinum ? */
+    case CONTEXTOPTIONNUMRANDOMFIXEDSEED :          /* == 1 */
+      if (optitmp != 0) optitmp = 1;
+      break;
+    case CONTEXTOPTIONNUMDETERMINISTIC :            /* == 0 */
+      if (optitmp != 0) { optitmp = 1; o = contextValuesSetInt (..., CONTEXTOPTIONNUMRANDOMFIXEDSEED, 1); }
+      break;
+    default :
+      errorPrint (STRINGIFY (SCOTCH_contextOptionSetNum) ": invalid option name");
+      return (1);
+  }
+</code></pre>
+        <ul style="font-size:0.5em;margin-top:0.3em;">
+          <li>Marche <em>par accident</em> pour 0 et 1 : les deux indices d'option valent justement 0 et 1</li>
+          <li>La cascade documentée DETERMINISTIC &rArr; RANDOMFIXEDSEED ne se produit jamais ; toute valeur &ge; 2 : « invalid option name »</li>
+          <li>Trouvé en écrivant des tests de comportement, 12 juil. 2026. Toujours là en v7.0.14 (<code>library_context.c:306</code>)</li>
+        </ul>
+        <div class="todo">signalé dans <code>docs/QUESTIONS_FOR_SCOTCH_TEAM_2.md</code> de pyscotch (14 juil.) — François l'a-t-il vu ? Même question pour contextAlloc, NEEDED et les 8 fonctions non documentées.</div>
+      </section>
+    </section>
+
+    <!-- Barreau 2 : différentiel -->
+    <!-- déplacé le 2026-09-08 (décision c4ffein) : juste avant le bilan, dans l'ordre des dates -->
+    <section>
+      <section data-markdown>
+        <textarea data-template>
+          ### 2. Tests différentiels
+          - Même entrée → pyscotch vs `gpart` / `gord` / `gmap`
+          - Comparaison octet par octet
+          - L'oracle, c'est Scotch lui-même
+        </textarea>
+      </section>
+      <!-- AJOUT 2026-09-08 -->
+      <section>
+        <h3 style="margin-bottom:0.4em;">Le différentiel, en dates</h3>
+        <ul style="font-size:0.62em;">
+          <li><strong>30 juil. 2026</strong> : <code>gpart</code> &mdash; sous réglages déterministes, le fichier de mapping est <strong>identique octet pour octet</strong></li>
+          <li><strong>11 août 2026</strong> : <code>gord</code>, <code>gmap</code>, et sous <code>mpirun</code> : <code>dgpart</code>, <code>dgord</code></li>
+          <li><em>&laquo; First run of the partition tier found a real bug: save_mapping wrote 0-based labels for based graphs, where gpart preserves the graph's base. &raquo;</em><br><span style="color:#444;">&rarr; un bug <strong>chez nous</strong>, pas chez Scotch</span></li>
+          <li>Reproduire <code>dgpart</code> octet pour octet oblige à seeder le PRNG <em>par process</em> (<code>random_proc(rank)</code>), comme les outils</li>
+        </ul>
+        <div style="margin-top:0.4em;font-size:0.4em;"><a href="https://github.com/c4ffein/pyscotch/blob/master/tests/pyscotch_base/test_differential.py">tests/pyscotch_base/test_differential.py</a> &middot; CHANGELOG 7.0.1 (30 juil.) et 7.0.4 (11 août)</div>
+      </section>
+    </section>
+
+    <!-- ===== AJOUT 2026-09-08 (Claude) : l'arc en dates, vérifié dans git — repos clonés dans ~/workspace ===== -->
+    <section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">L'arc, en dates &mdash; récap</h3>
+<table style="margin:0 auto;border-collapse:collapse;font-size:0.55em;">
+<tbody>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>nov. 2025</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">pyscotch, jour 7</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">premier bug upstream, corrigé le jour même</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>déc. 2025</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">Hypothesis sur le wrapper</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">coloriage invalide &rarr; corrigé en janv. 2026</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>mars 2026</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">Claude relit les tests C de Scotch</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">23 tests reçoivent des assertions</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>avr. 2026</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">hegel en C, sur le fork</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">permutation invalide, rc = 0 &rarr; corrigé en 10 jours</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>avr. 2026</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">hegel-c</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">le même bug, retrouvé seul, réduit à 3 sommets</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>juil. 2026</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">pyscotch 7.0, le balayage</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">6 bugs chez nous, 6 signalements upstream</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>juil.&ndash;août 2026</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">tests différentiels</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">l'oracle, c'est gpart / gord / gmap</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>août 2026</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">la même tâche, deux fois</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">épilogue</td></tr>
+</tbody></table>
+        <p style="font-size:0.5em;color:#444;margin-top:0.6em;">3 commits upstream « [report C. Pellegrini] » &middot; 3 autres corrections tracées à nos signalements &middot; 4 toujours ouverts en v7.0.14</p>
+        <div class="todo">récap avant le bilan (déplacé ici le 8 sept., décision c4ffein). Les barreaux qui précèdent sont encore dans l'ordre de ton plan, pas des dates — à réordonner.</div>
+      </section>
     </section>
 
     <!-- Le bilan des bugs -->
     <section>
       <section>
-        <h3 style="margin-bottom:0.5em;">Le bilan</h3>
-        <table style="margin:0 auto;border-collapse:collapse;font-size:0.55em;">
+        <h3 style="margin-bottom:0.5em;">Le bilan &mdash; chez Scotch</h3>
+        <table style="margin:0 auto;border-collapse:collapse;font-size:0.38em;">
           <thead>
             <tr>
               <th style="padding:0.35em 0.7em;border-bottom:2px solid #333;text-align:left;">Bug</th>
@@ -881,10 +1182,32 @@ int main (void) { hegel_run_test (test_add_commutes); return 0; }
             </tr>
           </thead>
           <tbody>
-            <tr><td style="padding:0.3em 0.7em;" colspan="4">[ à remplir — un bug par ligne ]</td></tr>
+            <tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>module.h</code> : 12 macros de renommage manquantes<br><span style="color:#666;">nov. 2025</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">build 32+64 bits, puis lecture</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">lien impossible en build suffixé</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">corrigé le jour même &mdash; <code>f7cd80c</code> ✓ crédité</td></tr>
+<tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>graphColor</code> : voisins du même passage<br><span style="color:#666;">déc. 2025</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">Hypothesis</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">coloriage invalide, silencieux</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">corrigé 15 janv. 2026 &mdash; <code>e0a90c7</code></td></tr>
+<tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>hgraphOrderCp</code> : off-by-<code>ordenum</code><br><span style="color:#666;">avr. 2026</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">hegel en C, puis lecture</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">permutation invalide, <code>rc = 0</code></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">corrigé 15 avr. 2026 &mdash; <code>0642921</code> + test ✓ crédité</td></tr>
+<tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>memFree</code>, <code>meshBuildElem</code> hors table de renommage<br><span style="color:#666;">juil. 2026</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">vérificateur de signatures</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">7.0.12 ne compile pas en <code>RENAME_ALL</code></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">corrigé le lendemain &mdash; <code>770f26e</code>, <code>eef80bd</code></td></tr>
+<tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>contextOptionSetNum</code> : <code>switch (optival)</code><br><span style="color:#666;">juil. 2026</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">lecture</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">cascade DETERMINISTIC jamais appliquée</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>ouvert</strong> en 7.0.14</td></tr>
+<tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>contextAlloc</code> hors table de renommage<br><span style="color:#666;">juil. 2026</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">balayage <code>library.h</code> / <code>module.h</code></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">lien impossible en build suffixé</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>ouvert</strong></td></tr>
+<tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>libscotch.so</code> sans <code>NEEDED</code> zlib/libm/pthread<br><span style="color:#666;">juil. 2026</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">build des wheels</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>dlopen</code> échoue en liaison immédiate</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>ouvert</strong></td></tr>
+<tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">8 fonctions publiques absentes des manuels<br><span style="color:#666;">juil. 2026</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">génération de la doc</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">doc</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>ouvert</strong></td></tr>
+<tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>archDecoArchBuild</code> : mauvais domaines pour les distances<br><span style="color:#666;">août 2026</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><span style="color:#c00;">?</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">distances fausses</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">corrigé 18 août 2026 &mdash; <code>911ebdf</code> ✓ crédité</td></tr>
           </tbody>
         </table>
-        <div class="todo">LA slide de crédibilité — un bug par ligne, et distinguer bug upstream vs mauvais usage du wrapper. C'est celle que la salle va challenger.</div>
+        <div class="todo">rempli par Claude le 8 sept. depuis git (upstream, pyscotch, fork). À relire ligne par ligne : ce sont mes lectures, pas les tiennes. archDecoArchBuild : je n'ai trouvé la source du signalement dans aucun repo &mdash; d'où vient-il ? C'est la slide que la salle va challenger.</div>
+      </section>
+      <!-- AJOUT 2026-09-08 -->
+      <section>
+        <h3 style="margin-bottom:0.5em;">Le bilan &mdash; chez nous</h3>
+        <table style="margin:0 auto;border-collapse:collapse;font-size:0.45em;">
+<thead><tr><th style="padding:0.3em 0.6em;border-bottom:2px solid #333;text-align:left;">Bug</th><th style="padding:0.3em 0.6em;border-bottom:2px solid #333;text-align:left;">Effet</th><th style="padding:0.3em 0.6em;border-bottom:2px solid #333;text-align:left;">Trouvé par</th></tr></thead>
+<tbody>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>SCOTCH_Dgraph</code> opaque à 256 octets, taille réelle plus grande<br><span style="color:#666;">28 nov. 2025</span></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">segfaults au GC, après <code>MPI_Finalize</code></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>SCOTCH_*Sizeof()</code>, jamais de taille fixe</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">6 signatures ctypes fausses, dont <code>MPI_Comm</code> reçu dans 4 octets<br><span style="color:#666;">12 juil. 2026</span></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">corruption mémoire sous OpenMPI</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">vérificateur signatures vs headers, en CI</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">stratégies « m » / « n » creuses : partition à &minus;1 dans 7.0.0<br><span style="color:#666;">31 juil. 2026</span></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">partitionneur qui rend tout à &minus;1</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">round-trip <code>SCOTCH_stratSave</code>, la lib est le détecteur</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>save_mapping</code> en base 0 sur graphe basé<br><span style="color:#666;">30 juil. 2026</span></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">mapping inutilisable par les outils Scotch</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">test différentiel <code>gpart</code></td></tr>
+</tbody></table>
+        <p style="font-size:0.52em;margin-top:0.6em;">La règle : un bug chez nous n'est pas un bug chez Scotch. L'oracle sert aussi à ça.</p>
+        <div style="margin-top:0.4em;font-size:0.4em;"><a href="https://github.com/c4ffein/pyscotch/blob/master/docs/FINDINGS.md">pyscotch/docs/FINDINGS.md</a> &middot; CHANGELOG 7.0.0 / 7.0.1</div>
       </section>
       <section>
         <h3 style="margin-bottom:0.5em;">Les reçus</h3>
@@ -893,6 +1216,17 @@ int main (void) { hegel_run_test (test_add_commutes); return 0; }
           <li>Les logs de conversation avec le mainteneur</li>
         </ul>
         <div class="todo">captures du bug tracker (ton nom visible) + extraits choisis des échanges avec François — le &laquo; SLA du mainteneur upstream : le dîner de famille &raquo; peut être une très bonne slide, à toi de voir</div>
+      </section>
+      <!-- AJOUT 2026-09-08 -->
+      <section>
+        <h3 style="margin-bottom:0.4em;">Les reçus, dans git</h3>
+        <div class="claude-terminal">
+  <div class="ct-user">git log --date=short --format='%h %ad %an | %s' --grep='report C. Pellegrini'</div>
+  <div class="ct-result">911ebdf 2026-08-18 Francois PELLEGRINI | Bugfix: use proper domains for distance computations in `archDecoArchBuild()` [report C. Pellegrini]<br>0642921 2026-04-15 Francois PELLEGRINI | Bugfix: make `hgraphOrderCp()` work on (disconnected) subgraphs [report C. Pellegrini]<br>f7cd80c 2025-11-11 Francois PELLEGRINI | Bugfix: add missing suffix renaming macros [report C. Pellegrini]</div>
+  <div class="ct-dim">// trois autres corrections ont suivi nos signalements, sans mention dans le commit : e0a90c7 (coloriage, signalé le 5 déc., corrigé le 15 janv.), 770f26e + eef80bd (renommage, signalé le 12 juil., corrigé le 13)</div>
+</div>
+        <p style="font-size:0.55em;margin-top:0.6em;">9 signalements, 5 corrigés dans les jours ou semaines qui ont suivi, dont 3 crédités dans l'historique. 4 ouverts.</p>
+        <div style="margin-top:0.4em;font-size:0.4em;"><a href="https://gitlab.inria.fr/scotch/scotch">gitlab.inria.fr/scotch/scotch</a>, master au 27 août 2026 (v7.0.14)</div>
       </section>
     </section>
 
@@ -909,6 +1243,22 @@ int main (void) { hegel_run_test (test_add_commutes); return 0; }
           - **Zéro relecture** du code &mdash; volontairement
           - Je n'ai lu cette session qu'en préparant ces slides
         </textarea>
+      </section>
+      <!-- AJOUT 2026-09-08 -->
+      <section>
+        <h3 style="margin-bottom:0.4em;">La chronologie, dans git</h3>
+        <table style="margin:0 auto;border-collapse:collapse;font-size:0.5em;">
+<tbody>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>24 août, 21:18</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">l'ingénieur commit son fix sur sa machine &mdash; <code>adb2b64</code> « Bugfix: base treetab in dorderTreeDist() »</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>25 août, 11:54</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">clone de <code>master</code> depuis mon téléphone : HEAD = <code>9259939</code> (5 août). Le fix n'y est pas</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>25 août, 11:55</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">la tâche de François, collée telle quelle</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>25 août, 12:09</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">patch + rapport + test MPI poussés. 14 minutes</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>25 août, 20:50</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">François refactore les deux routines par-dessus la version de l'ingénieur &mdash; <code>2b1a9d8</code></td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>26 août</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>dorderTreeDist()</code> documentée dans le manuel de maintenance &mdash; <code>410cd12</code></td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>27 août</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">push upstream, v7.0.14</td></tr>
+</tbody></table>
+        <p style="font-size:0.5em;color:#444;margin-top:0.5em;">Heures de Paris (UTC+2). Aucun des deux n'a vu l'autre : le seul accès réseau de la session vers Scotch est le clone, et le log brut le montre.</p>
+        <div class="todo">François OK par téléphone (8 sept.). Reste son mail avec le verdict, à citer sur la slide « Le verdict ».</div>
       </section>
       <section>
         <div class="claude-terminal">
@@ -966,6 +1316,52 @@ int main (void) { hegel_run_test (test_add_commutes); return 0; }
         </code></pre>
         <!-- « Verified with an MPI test on 2 and 4 ranks, baseval 0 and 1 » est dans le commit du playground, pas dans le patch ; le test et le rapport sont publiés — moi, je n'ai pas vérifié -->
         <div style="margin-top:0.4em;font-size:0.4em;"><a href="#" data-transcript="claude-on-scotch-la-tache.json">▶ la session complète</a></div>
+      </section>
+      <!-- AJOUT 2026-09-08 : comparaison écrite par Claude, pour discussion en direct — version longue : notes/treetab-deux-patchs.md ; fichiers côte à côte : treetab-theirs.c / treetab-ours.c -->
+      <section>
+        <h3 style="margin-bottom:0.4em;">Deux patchs, une tâche</h3>
+        <table style="margin:0 auto;border-collapse:collapse;font-size:0.55em;">
+<thead><tr><th style="padding:0.3em 0.6em;border-bottom:2px solid #333;text-align:left;"></th><th style="padding:0.3em 0.6em;border-bottom:2px solid #333;text-align:left;">L'ingénieur (Sonnet 5)</th><th style="padding:0.3em 0.6em;border-bottom:2px solid #333;text-align:left;">Moi (Fable 5, téléphone)</th></tr></thead>
+<tbody>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">Commit</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>adb2b64</code>, 24 août 21:18</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">patch dans <code>playground</code>, 25 août 12:09</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">Temps</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">une journée (dit François)</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">14 min entre le brief et le patch</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">Fichiers</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">3 (<code>dorder_tree_dist.c</code>, <code>dorder.h</code>, wrapper public)</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">1</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">Test livré</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">non</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">oui : programme MPI + rapport</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">Merge</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">upstream, v7.0.14</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">jamais : arrivé après</td></tr>
+</tbody></table>
+        <p style="font-size:0.5em;margin-top:0.5em;"><strong>Identique</strong>, ligne pour ligne : <code>dblkglbnum + baseval</code>, puis <code>treeglbtax = treeglbtab - baseval</code>. La racine reste à &minus;1. Jusqu'au commentaire <code>/* TRICK: ... */</code>.</p>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.4em;">Ce qui diffère</h3>
+        <div class="flex" style="gap:1.2em;align-items:flex-start;font-size:0.52em;text-align:left;">
+          <div style="flex:1;">
+            <p><strong>L'ingénieur a fait, et pas moi</strong></p>
+            <ul>
+              <li><strong>Supprimé le paramètre <code>grafptr</code></strong> devenu inutile : <code>baseval</code> lu sur <code>ordeptr</code>. Prototype et wrapper changés. Moins de surface.</li>
+              <li><strong>Retiré <code>restrict</code> sur <code>cblkdsptab</code></strong>, qui aliasait <code>dblkcnttab</code> dans la même allocation. Un comportement indéfini latent, hors sujet, corrigé au passage.</li>
+              <li>Commenté chaque ligne du tableau de données.</li>
+            </ul>
+          </div>
+          <div style="flex:1;">
+            <p><strong>J'ai fait, et pas lui</strong></p>
+            <ul>
+              <li><strong>Pris le brief au pied de la lettre</strong> : <code>grafptr-&gt;baseval</code>, puisque la tâche disait « le champ du graphe grafptr passé en paramètre ». Il a lu l'intention ; j'ai lu le texte.</li>
+              <li><strong>Vérifié avant de conclure</strong> : le manuel promettait déjà des indices basés, <code>orderTree()</code> le faisait déjà en séquentiel, le wrapper ParMeTiS soustrayait déjà <code>baseval</code>.</li>
+              <li><strong>Livré une preuve</strong> : test MPI sur 2 et 4 rangs, base 0 et 1, bit-identique en base 0.</li>
+            </ul>
+          </div>
+        </div>
+        <div style="margin-top:0.4em;font-size:0.4em;">côte à côte, annotés : <code>treetab-theirs.c</code> / <code>treetab-ours.c</code> (<code>vi -O</code>) &middot; <a href="https://gitlab.inria.fr/scotch/scotch/-/commit/adb2b64">adb2b64</a> &middot; <a href="https://github.com/c4ffein-work/playground/tree/main/patches/scotch__scotch/2026-08-25-dorder-tree-dist-based">notre patch</a></div>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.4em;">Mon avis, à contredire</h3>
+        <div class="claude-terminal">
+  <div class="ct-dim">// Claude (Fable 5.1), 8 sept. 2026, après lecture des trois commits — sans accès à la session de l'ingénieur</div>
+  <div class="ct-claude">Deux patchs corrects. Le sien est le meilleur C : moins de surface, un UB en moins. Le mien est le mieux vérifié et le mieux expliqué.</div>
+  <div class="ct-claude">Si je relisais les deux à l'aveugle : je merge le sien, je garde mon test.</div>
+  <div class="ct-claude">Le verdict de François ne mesure pas « qui écrit le meilleur C ». Il mesure « quel livrable aide le plus un mainteneur qui relit » : un patch seul, ou un patch avec sa preuve et son raisonnement.</div>
+</div>
+        <div class="todo">format discussion : on part de ce texte et tu me contredis en direct ? Version longue dans <code>notes/treetab-deux-patchs.md</code>. Le mainteneur a gardé la version de l'ingénieur (signature sans grafptr) et refactoré par-dessus : à dire avant ou après le verdict ?</div>
       </section>
       <section data-markdown>
         <textarea data-template>
@@ -1037,7 +1433,7 @@ int main (void) { hegel_run_test (test_add_commutes); return 0; }
           <li><strong>Puis le port mécanique</strong> — <em>&laquo; Absolutely none of it worked yet &raquo;</em></li>
           <li><strong>1 implémenteur, ≥ 2 relecteurs adversariaux</strong> : <em>&laquo; assume the code is wrong &raquo;</em><br><span style="font-size:0.85em;color:#444;">&mdash; la réponse au &laquo; hardcoded to pass the tests &raquo; de 2025</span></li>
           <li><strong>1,3 M+ assertions conservées, zéro test supprimé</strong> — les tests sont le contrat</li>
-          <li>Résultat : 128 bugs corrigés, binaire &minus;3,8 à 6,8 Mo, perf +2 à 5 %</li>
+          <li>Résultat : 128 bugs corrigés, binaire plus léger de 3,8 Mo (Windows) à 6,8 Mo (Linux), 2 à 5 % plus rapide</li>
         </ul>
         <blockquote style="font-size:0.6em;width:80%;margin:0.6em auto 0;text-align:left;">&laquo; This would've taken 3 engineers a year. &raquo;<div style="font-size:0.8em;color:#444;text-align:right;margin-top:0.2em;">&mdash; Jarred Sumner, créateur de Bun</div></blockquote>
         <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://bun.com/blog/bun-in-rust">bun.com/blog/bun-in-rust (8 juil. 2026)</a> &middot; <a href="https://github.com/oven-sh/bun/pull/30412">github.com/oven-sh/bun/pull/30412</a></div>
@@ -1148,6 +1544,17 @@ int main (void) { hegel_run_test (test_add_commutes); return 0; }
         <!-- L'évolution permet d'atteindre une automatisation de l'ingéniérie logicielle de manière encore plus générale -->
         <!-- Next ROI -->
       </section>
+      <!-- AJOUT 2026-09-08 : captures officielles de l'annonce Claude Science (30 juin 2026) -->
+      <section>
+        <img src="../resources/claude-science-901245fa.jpg" alt="Claude Science : un balayage d'hyperparamètres à 8 bras envoyé sur les A100 d'un cluster de labo, notebook partagé en direct" style="width:88%;height:auto;border:none;box-shadow:0 6px 22px rgba(0,0,0,0.25);">
+        <p style="font-size:0.45em;color:#444;margin-top:0.4em;">Un balayage à 8 bras envoyé sur les A100 du cluster du labo, le notebook partagé avec l'agent, en direct. Le compute, c'est le vôtre.</p>
+        <div style="font-size:0.4em;"><a href="https://www.anthropic.com/news/claude-science-ai-workbench">anthropic.com/news/claude-science-ai-workbench (30 juin 2026)</a> &mdash; capture de l'annonce</div>
+      </section>
+      <section>
+        <img src="../resources/claude-science-5db35fb5.jpg" alt="Claude Science : une revue de littérature, cinq agents en parallèle, un relecteur qui signale un PMID attribué à deux papiers" style="width:88%;height:auto;border:none;box-shadow:0 6px 22px rgba(0,0,0,0.25);">
+        <p style="font-size:0.45em;color:#444;margin-top:0.4em;">Cinq agents en parallèle, et un <strong>relecteur</strong> qui signale un PMID attribué à deux papiers &mdash; les relecteurs adversariaux de Bun, version labo.</p>
+        <div style="font-size:0.4em;"><a href="https://www.anthropic.com/news/claude-science-ai-workbench">anthropic.com/news/claude-science-ai-workbench</a> &mdash; capture de l'annonce</div>
+      </section>
     </section>
 
     <!-- ===== Merci + liens ===== -->
@@ -1178,6 +1585,7 @@ int main (void) { hegel_run_test (test_add_commutes); return 0; }
   <script src="../engine/dist/plugin/markdown.js"></script>
   <script src="../engine/dist/plugin/highlight.js"></script>
   <script src="../resources/transcript-modal.js"></script>
+  <script src="../resources/term-player.js"></script>
   <script>
     Reveal.initialize({
       hash: true,

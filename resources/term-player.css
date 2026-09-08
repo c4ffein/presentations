@@ -1,0 +1,159 @@
+/* term-player.css — styling for resources/term-player.js.
+ *
+ * Palette and fonts follow claude-terminal.css (#1b1b1b bg, #e8e6e3 text,
+ * #8a8884 dim, #d97757 claude orange, #6ccc7a tool green). Standalone, a
+ * .term-replay is its own dark box; inside a .claude-terminal it inherits
+ * the box, font-size and colors and just lays out its parts.
+ */
+
+.term-replay {
+  --tp-bg: #1b1b1b;
+  --tp-fg: #e8e6e3;
+  --tp-dim: #8a8884;
+  --tp-accent: #d97757;
+  --tp-green: #6ccc7a;
+  --tp-border: #3a3a3a;
+  --tp-btn: #232323;
+  background: var(--tp-bg);
+  color: var(--tp-fg);
+  font-family: "JetBrains Mono", "Fira Code", Menlo, Consolas, monospace;
+  font-size: 14px;
+  line-height: 1.55;
+  text-align: left;
+  padding: 0.9em 1.2em 1.1em;
+  border-radius: 8px;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35);
+  max-width: 52em;
+  margin: 0 auto;
+  /* claude-terminal.css sets pre-wrap on child divs; undo it so source
+     whitespace between our parts is not rendered */
+  white-space: normal;
+  text-indent: 0;
+}
+
+/* nested in the deck's terminal mock: it already provides box, font, colors */
+.claude-terminal > .term-replay {
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  max-width: none;
+  font: inherit;
+  line-height: inherit;
+}
+
+/* header: command + provenance */
+.term-replay .tp-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4em 1.2em;
+  border-bottom: 1px solid var(--tp-border);
+  padding-bottom: 0.45em;
+  margin-bottom: 0.45em;
+}
+.term-replay .tp-cmd {
+  color: var(--tp-green);
+  font-family: inherit;
+  font-size: inherit;
+  white-space: pre-wrap;
+}
+.term-replay .tp-cmd::before {
+  content: "$ ";
+  color: var(--tp-dim);
+}
+.term-replay .tp-meta {
+  color: var(--tp-dim);
+  font-size: 0.8em;
+  margin-left: auto;
+}
+
+/* controls: small, click-only (no key bindings, reveal owns the keyboard) */
+.term-replay .tp-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.35em;
+  margin-bottom: 0.45em;
+  font-size: 0.8em;
+}
+.term-replay .tp-controls button,
+.term-replay .tp-controls select {
+  font: inherit;
+  color: var(--tp-fg);
+  background: var(--tp-btn);
+  border: 1px solid var(--tp-border);
+  border-radius: 4px;
+  padding: 0.1em 0.55em;
+  line-height: 1.5;
+  cursor: pointer;
+  opacity: 0.75;
+}
+.term-replay .tp-controls button:hover,
+.term-replay .tp-controls select:hover { opacity: 1; }
+.term-replay .tp-controls button:focus,
+.term-replay .tp-controls select:focus { outline: 1px solid var(--tp-accent); }
+.term-replay .tp-play { color: var(--tp-accent); min-width: 2.2em; }
+.term-replay .tp-speed { margin-left: auto; }
+
+/* body: fixed height in lines, scrolls, follows the output while playing */
+.term-replay .tp-body {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  line-height: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  box-shadow: none;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  overflow-y: auto;
+  max-height: calc(var(--tp-max-lines, 22) * 1.55em);
+  width: auto;
+  cursor: pointer;                 /* click = play / pause */
+  scrollbar-width: thin;
+  scrollbar-color: var(--tp-border) transparent;
+}
+.term-replay .tp-body.tp-nowrap {
+  white-space: pre;
+  overflow-x: auto;
+}
+
+/* blinking block cursor, only while playing */
+.term-replay .tp-cursor {
+  display: none;
+  width: 0.55em;
+  height: 1.1em;
+  vertical-align: text-bottom;
+  background: var(--tp-accent);
+  opacity: 0.85;
+}
+.term-replay.tp-playing .tp-cursor {
+  display: inline-block;
+  animation: tp-blink 1s steps(2, start) infinite;
+}
+@keyframes tp-blink { to { visibility: hidden; } }
+
+/* "— fin (N s) —" and error messages, dim like ct-dim */
+.term-replay .tp-fin {
+  color: var(--tp-dim);
+  font-style: italic;
+  white-space: pre-wrap;
+}
+.term-replay .tp-fin:empty { display: none; }
+.term-replay .tp-error-msg { color: var(--tp-accent); cursor: default; }
+
+/* static fallback: author-pasted final text, for print / no-JS */
+.term-replay.tp-mounted > .term-replay-static,
+.term-replay.tp-mounted + .term-replay-static { display: none; }
+@media print {
+  .term-replay .tp-controls,
+  .term-replay.tp-mounted .tp-body { display: none; }
+  .term-replay.tp-mounted > .term-replay-static,
+  .term-replay.tp-mounted + .term-replay-static { display: block; }
+}
+.term-replay-static {
+  font: inherit;
+  margin: 0;
+  white-space: pre-wrap;
+}

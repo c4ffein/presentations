@@ -1,0 +1,1 @@
+{"meta": {"title": "demo", "command": "demo loop", "recorded_at": "2026-09-08T19:12:38+00:00", "duration_s": 1.11, "chunks": 5}, "chunks": [[1, "line 1\n"], [301, "line 2\n"], [302, "line 3\n"], [301, "progress: 10%\r"], [202, "progress: 100%\n"]]}
