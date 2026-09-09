@@ -11,6 +11,7 @@ Replayable terminal sessions for the decks, played by `resources/term-player.js`
 | `test-seq.json`, `test-progress.json`, `test-pytest.json` | **throwaway** fixtures made with fake commands, only used by `resources/term-player-demo.html`; delete freely |
 | `hypothesis-coloring.json`, `hypothesis-coloring-fixed.json` | the real pyscotch/Hypothesis recordings for the Inria talk (notes: `hypothesis-coloring.md`) |
 | `hegel-order-shrink.json`, `hegel-order-shrink-fixed.json`, `hegel-order-shrink-plain.json` | the real hegel-c recordings for the Inria talk (notes: `hegel-order-shrink.md`) |
+| `pyscotch-install.json`, `pyscotch-doctor.json`, `pyscotch-build.json`, `pyscotch-doctor-parallel.json` | the pyscotch end-user journey from PyPI (install, doctor, `scotch build --parallel`, Dgraph under mpirun) for the Inria talk (notes: `pyscotch-user.md`; CI overview: `pyscotch-pipeline.md`) |
 
 ## JSON contract (from `record_to_json.py`)
 
@@ -87,7 +88,8 @@ Optional attributes on `.term-replay`:
 - `data-line-delay="80"` — ms between the lines of a multi-line chunk (default 0 =
   whole chunk at once). pytest writes in bursts (`hypothesis-coloring.json` is 4 chunks,
   one of them 34 lines), this keeps the replay feel; scaled by speed, ⏭ fin flushes all
-- `data-max-lines="22"` — body height in lines, scrolls beyond (default 22)
+- `data-max-lines="22"` — body height in lines, FIXED (the box never grows; scrolls beyond, default 22)
+- `data-info="1"` — show the command + provenance overlay from the start (otherwise it sits behind the ⓘ button; click the overlay to close it)
 - `data-wrap="0"` — no wrapping, horizontal scroll instead
 
 Controls: ▶/⏸ (also: click on the body), ⏭ fin (jump to the end), ↺ (restart),

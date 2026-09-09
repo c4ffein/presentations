@@ -100,10 +100,10 @@
       for (const turn of data.turns || []) {
         const t = el("div", "turn " + turn.role);
         if (turn.role === "user") {
-          t.appendChild(el("div", "role", "vous"));
+          t.appendChild(el("div", "role", (m.labels && m.labels.user) || "vous"));
           t.appendChild(el("div", "bubble", turn.text));
         } else {
-          t.appendChild(el("div", "role", "claude"));
+          t.appendChild(el("div", "role", (m.labels && m.labels.assistant) || "claude"));
           for (const item of turn.items || []) {
             if (item.t === "tool" && item.edit) {
               // Full edit content, collapsed by default; click the line to toggle.

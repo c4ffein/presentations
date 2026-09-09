@@ -42,16 +42,24 @@
   line-height: inherit;
 }
 
-/* header: command + provenance */
+/* header: command + provenance — an overlay on top of the output, hidden until ⓘ */
+.term-replay .tp-stage { position: relative; }
 .term-replay .tp-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.4em 1.2em;
-  border-bottom: 1px solid var(--tp-border);
-  padding-bottom: 0.45em;
-  margin-bottom: 0.45em;
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: auto;
+  flex-direction: column;
+  gap: 0.6em;
+  padding: 0.6em 0.8em;
+  background: rgba(27, 27, 27, 0.95);
+  border: 1px solid var(--tp-border);
+  border-radius: 6px;
+  cursor: pointer;                 /* click = close */
+  scrollbar-width: thin;
 }
+.term-replay.tp-show-info .tp-head { display: flex; }
 .term-replay .tp-cmd {
   color: var(--tp-green);
   font-family: inherit;
@@ -64,8 +72,8 @@
 }
 .term-replay .tp-meta {
   color: var(--tp-dim);
-  font-size: 0.8em;
-  margin-left: auto;
+  font-size: 0.85em;
+  white-space: pre-wrap;
 }
 
 /* controls: small, click-only (no key bindings, reveal owns the keyboard) */
@@ -93,6 +101,8 @@
 .term-replay .tp-controls button:focus,
 .term-replay .tp-controls select:focus { outline: 1px solid var(--tp-accent); }
 .term-replay .tp-play { color: var(--tp-accent); min-width: 2.2em; }
+.term-replay .tp-info { color: var(--tp-dim); }
+.term-replay.tp-show-info .tp-info { color: var(--tp-accent); opacity: 1; }
 .term-replay .tp-speed { margin-left: auto; }
 
 /* body: fixed height in lines, scrolls, follows the output while playing */
@@ -108,7 +118,8 @@
   white-space: pre-wrap;
   overflow-wrap: break-word;
   overflow-y: auto;
-  max-height: calc(var(--tp-max-lines, 22) * 1.55em);
+  height: calc(var(--tp-max-lines, 22) * 1.55em);   /* fixed: the box never grows with the output */
+  box-sizing: content-box;
   width: auto;
   cursor: pointer;                 /* click = play / pause */
   scrollbar-width: thin;

@@ -219,3 +219,250 @@ tests/hypothesis/test_graph_properties.py::TestColoringProperties::test_coloring
   just do not read its return code as the test result.
 - The pytest "Explanation" line shows the absolute path
   `/home/dev/workspace/builds/pyscotch-a32f242/tests/...` — cosmetic.
+
+
+## Third recording (2026-09-08, added by Claude): `hypothesis-coloring-shrink.json` — the shrink, step by step
+
+Same buggy library (34ea137), same pyscotch (a32f242), same seed (1), but `--hypothesis-verbosity=debug -s`
+instead of `--hypothesis-show-statistics`, piped through `hyp-trace-filter.py` (copied next to this file).
+Debug verbosity prints every test case with its verdict (`N choices -> Status.VALID|INTERESTING|INVALID|OVERRUN`)
+and the shrinker's pass names; the filter collapses each case to one line
+`#k graph_data=(...) -> ok | FAIL <assertion> | OVERRUN | INVALID`, counts consecutive OVERRUN/INVALID probes
+instead of listing them, prints a pass name once when it changes, and drops choice tuples and tracebacks.
+Hypothesis' "explain" phase (dozens of re-runs after the report) is skipped except for its `E` lines.
+Driver: `/home/dev/workspace/builds/recordings/run-shrink.sh`. Raw `script` files: `shrink.out` / `shrink.timing`.
+
+Result (230 lines, 3.0 s): generation finds 17-vertex / 38-edge failures within ~20 cases; the shrinker then
+drops edges one by one (17 vertices, 7 edges → 1 edge), finds `(17, [(5, 10)])`, then `(17, [(1, 10)])`,
+then lowers the vertex count 17 → 15 → 13 → 11 and stops at `(11, [(1, 10)])`: "Run complete after 107 test
+cases (28 valid) and 16 shrinks". The filtered output is a faithful projection of the debug log, not a re-ordering.
+
+```
+# scotch    : 34ea137 2026-01-14 Add coloring checking routine in test_scotch_graph_color.c
+# pyscotch  : a32f242 2025-12-09 added missing test updates
+# python    : 3.13.5   hypothesis 6.168.0   pytest 9.1.1
+# libscotch : /home/dev/workspace/builds/lib64-precolorfix/libscotch.so
+# filtre    : hyp-trace-filter.py — une ligne par cas (graph_data -> ok | FAIL | OVERRUN | INVALID), passes de réduction, tuples de choix et tracebacks omis
+
+$ rm -rf .hypothesis && PYSCOTCH_INT_SIZE=64 pytest tests/hypothesis/test_graph_properties.py -k coloring_no_adjacent -p no:cacheprovider -q --tb=short --runxfail --hypothesis-seed=1 --hypothesis-verbosity=debug -s 2>&1 | python3 -u hyp-trace-filter.py
+✓ Loaded Scotch: 64-bit from /home/dev/workspace/builds/pyscotch-a32f242/scotch-builds/lib64/libscotch.so
+✓ Structure sizes: graph=120, strat=8, arch=96, dgraph=None
+── génération ──
+        … 5 essais INVALID
+#6    graph_data=(2, [(0, 1)])  -> ok
+#7    graph_data=(2, [(0, 1)])  -> ok
+        … 4 essais INVALID
+#12   graph_data=(2, [(0, 1)])  -> ok
+        … 5 essais INVALID
+#18   graph_data=(6, [(2, 4), (3, 4), (1, 5), (0, 3), (0, 2), (2, 5), (1, 3)])  -> ok
+#19   graph_data=(17, 38 arêtes)  -> FAIL  Adjacent vertices 7 and 13 have same color 1
+#20   graph_data=(17, 38 arêtes)  -> FAIL  Adjacent vertices 7 and 13 have same color 1
+#21   graph_data=(17, 38 arêtes)  -> FAIL  Adjacent vertices 7 and 13 have same color 1
+#22   graph_data=(17, [(3, 14), (0, 4), (5, 8), (7, 10), (1, 14), (3, 9), (7, 8)])  -> FAIL  Adjacent vertices 7 and 10 have same color 1
+#23   graph_data=(17, [(13, 14), (3, 14), (5, 8), (7, 10), (1, 14), (3, 9), (7, 8)])  -> FAIL  Adjacent vertices 7 and 10 have same color 1
+        … 1 essai OVERRUN
+#25   graph_data=(17, [(13, 14), (5, 8), (3, 7), (7, 10), (1, 14), (3, 9), (7, 8)])  -> FAIL  Adjacent vertices 7 and 10 have same color 1
+#26   graph_data=(16, 44 arêtes)  -> FAIL  Adjacent vertices 3 and 10 have same color 4
+#27   graph_data=(16, 44 arêtes)  -> FAIL  Adjacent vertices 3 and 10 have same color 4
+#28   graph_data=(16, 44 arêtes)  -> FAIL  Adjacent vertices 3 and 10 have same color 4
+        … 1 essai OVERRUN
+#30   graph_data=(16, 44 arêtes)  -> FAIL  Adjacent vertices 3 and 10 have same color 4
+#31   graph_data=(16, 44 arêtes)  -> FAIL  Adjacent vertices 3 and 10 have same color 4
+#32   graph_data=(16, 44 arêtes)  -> FAIL  Adjacent vertices 3 and 10 have same color 4
+#33   graph_data=(11, 35 arêtes)  -> FAIL  Adjacent vertices 1 and 10 have same color 4
+#34   graph_data=(11, 35 arêtes)  -> FAIL  Adjacent vertices 1 and 10 have same color 4
+#35   graph_data=(11, 35 arêtes)  -> FAIL  Adjacent vertices 1 and 10 have same color 4
+        … 1 essai OVERRUN
+#37   graph_data=(11, 35 arêtes)  -> FAIL  Adjacent vertices 1 and 10 have same color 4
+#38   graph_data=(11, 35 arêtes)  -> FAIL  Adjacent vertices 1 and 10 have same color 4
+── réduction (shrinking) ──
+#39   graph_data=(17, [(13, 14), (5, 8), (3, 7), (7, 10), (1, 14), (3, 9), (7, 8)])  -> FAIL  Adjacent vertices 7 and 10 have same color 1
+   départ : choix (17, 7, 8, 7, 7, 3, 8, 5, 10, 7, 3, 9, 14, 13, 14, 1)…
+#40   graph_data=(17, [(0, 7), (13, 14), (5, 8), (7, 10), (3, 7), (1, 14), (3, 9)])  -> FAIL  Adjacent vertices 7 and 10 have same color 0
+        … 1 essai OVERRUN
+#42   graph_data=(17, [(0, 7), (13, 14), (5, 8), (7, 10), (0, 3), (1, 14), (3, 9)])  -> FAIL  Adjacent vertices 7 and 10 have same color 0
+        … 1 essai OVERRUN
+#44   graph_data=(17, [(0, 7), (13, 14), (7, 10), (0, 3), (1, 14), (3, 9), (0, 5)])  -> FAIL  Adjacent vertices 7 and 10 have same color 0
+        … 2 essais OVERRUN
+#47   graph_data=(17, [(0, 7), (13, 14), (0, 10), (0, 3), (1, 14), (3, 9), (0, 5)])  -> ok
+#48   graph_data=(17, [(0, 7), (13, 14), (7, 10), (0, 3), (0, 9), (1, 14), (0, 5)])  -> FAIL  Adjacent vertices 7 and 10 have same color 0
+        … 1 essai OVERRUN
+#50   graph_data=(17, [(0, 7), (13, 14), (7, 10), (0, 3), (0, 9), (0, 5), (0, 14)])  -> FAIL  Adjacent vertices 7 and 10 have same color 0
+   passe : try_trivial_spans
+        … 2 essais OVERRUN
+#53   graph_data=(17, [(0, 7), (7, 10), (0, 13), (0, 3), (0, 9), (0, 5), (0, 14)])  -> FAIL  Adjacent vertices 7 and 10 have same color 0
+        … 1 essai OVERRUN
+#55   graph_data=(17, [(0, 7), (0, 10), (0, 13), (0, 3), (0, 9), (0, 5), (0, 14)])  -> ok
+        … 4 essais OVERRUN
+#60   graph_data=(17, [(0, 7)])  -> ok
+        … 1 essai INVALID
+        … 2 essais OVERRUN
+   passe : node_program_XXXXX
+        … 8 essais OVERRUN
+#72   graph_data=(17, [(5, 10)])  -> FAIL  Adjacent vertices 5 and 10 have same color 0
+   passe : node_program_XX
+        … 2 essais OVERRUN
+   passe : node_program_X
+        … 2 essais OVERRUN
+   passe : minimize_individual_choices
+#77   graph_data=(17, [(0, 5)])  -> ok
+#78   graph_data=(17, [(1, 5)])  -> ok
+#79   graph_data=(17, [(2, 5)])  -> ok
+        … 1 essai OVERRUN
+#81   graph_data=(17, [(1, 8)])  -> ok
+#82   graph_data=(17, [(5, 8)])  -> ok
+#83   graph_data=(17, [(5, 9)])  -> ok
+#84   graph_data=(17, [(0, 10)])  -> ok
+#85   graph_data=(17, [(1, 10)])  -> FAIL  Adjacent vertices 1 and 10 have same color 0
+#86   graph_data=(8, [(0, 1)])  -> ok
+#87   graph_data=(15, [(1, 10)])  -> FAIL  Adjacent vertices 1 and 10 have same color 0
+#88   graph_data=(13, [(1, 10)])  -> FAIL  Adjacent vertices 1 and 10 have same color 0
+#89   graph_data=(11, [(1, 10)])  -> FAIL  Adjacent vertices 1 and 10 have same color 0
+#90   graph_data=(9, [(0, 1)])  -> ok
+#91   graph_data=(10, [(0, 1)])  -> ok
+#92   graph_data=(3, [(0, 1)])  -> ok
+#93   graph_data=(5, [(0, 1)])  -> ok
+#94   graph_data=(11, [(0, 1)])  -> ok
+        … 1 essai OVERRUN
+#96   graph_data=(11, [(7, 9)])  -> FAIL  Adjacent vertices 7 and 9 have same color 0
+#97   graph_data=(11, [(1, 2)])  -> ok
+#98   graph_data=(11, [(1, 5)])  -> ok
+#99   graph_data=(11, [(1, 8)])  -> ok
+#100  graph_data=(11, [(1, 9)])  -> ok
+#101  graph_data=(11, [(0, 10)])  -> ok
+   passe : redistribute_numeric_pairs
+#102  graph_data=(10, [(0, 2)])  -> ok
+        … 1 essai OVERRUN
+   passe : lower_integers_together
+#104  graph_data=(11, [(0, 9)])  -> ok
+#105  graph_data=(10, [(1, 9)])  -> ok
+   passe : node_program_XX
+        … 1 essai OVERRUN
+   passe : node_program_X
+        … 1 essai OVERRUN
+Shrinking made a total of 68 calls of which 11 shrank and 8 were misaligned. This deleted 12 choices out of 16.
+  * minimize_individual_choices made 25 calls of which 4 shrank and 5 were misaligned, deleting 0 choices.
+  * try_trivial_spans made 13 calls of which 1 shrank and 0 were misaligned, deleting 0 choices.
+  * node_program_XXXXX made 9 calls of which 1 shrank and 1 were misaligned, deleting 12 choices.
+  * node_program_XX made 3 calls of which 0 shrank and 0 were misaligned, deleting 0 choices.
+  * node_program_X made 3 calls of which 0 shrank and 0 were misaligned, deleting 0 choices.
+  * redistribute_numeric_pairs made 2 calls of which 0 shrank and 2 were misaligned, deleting 0 choices.
+  * lower_integers_together made 2 calls of which 0 shrank and 0 were misaligned, deleting 0 choices.
+#108  graph_data=(rejeu du minimum)  -> FAIL  
+============================================= FAILURES =============================================
+___________________ TestColoringProperties.test_coloring_no_adjacent_same_color ____________________
+tests/hypothesis/test_graph_properties.py:226: in test_coloring_no_adjacent_same_color
+    @given(graph_data=simple_graph(min_vertices=2, max_vertices=20))
+               ^^^^^^^
+../venv-a32f242/lib/python3.13/site-packages/hypothesis/core.py:1691: in _raise_to_user
+    raise the_error_hypothesis_found
+../venv-a32f242/lib/python3.13/site-packages/hypothesis/core.py:1161: in execute_once
+    result = self.test_runner(data, run)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../venv-a32f242/lib/python3.13/site-packages/hypothesis/core.py:828: in default_executor
+    return function(data)
+           ^^^^^^^^^^^^^^
+../venv-a32f242/lib/python3.13/site-packages/hypothesis/core.py:1118: in run
+    return test(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+tests/hypothesis/test_graph_properties.py:226: in test_coloring_no_adjacent_same_color
+    @given(graph_data=simple_graph(min_vertices=2, max_vertices=20))
+               ^^^^^^^^^^^^^^^^^^^
+../venv-a32f242/lib/python3.13/site-packages/hypothesis/core.py:1025: in test
+    result = self.test(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/hypothesis/test_graph_properties.py:245: in test_coloring_no_adjacent_same_color
+    assert coloring[u] != coloring[v], \
+E   AssertionError: Adjacent vertices 1 and 10 have same color 0
+E   assert np.int64(0) != np.int64(0)
+E   Failing test case: test_coloring_no_adjacent_same_color(
+E       self=<tests.hypothesis.test_graph_properties.TestColoringProperties object at 0x7fabb6b80b90>,
+E       graph_data=(11, [(1, 10)]),
+E   )
+E   Explanation:
+E       These lines were always and only run by failing test cases:
+E           /home/dev/workspace/builds/pyscotch-a32f242/tests/hypothesis/test_graph_properties.py:246
+E   AssertionError: Adjacent vertices 7 and 13 have same color 1
+E   assert np.int64(1) != np.int64(1)
+E   AssertionError: Adjacent vertices 7 and 13 have same color 1
+E   assert np.int64(1) != np.int64(1)
+E   AssertionError: Adjacent vertices 7 and 13 have same color 1
+E   assert np.int64(1) != np.int64(1)
+E   AssertionError: Adjacent vertices 7 and 10 have same color 1
+E   assert np.int64(1) != np.int64(1)
+E   AssertionError: Adjacent vertices 7 and 10 have same color 1
+E   assert np.int64(1) != np.int64(1)
+E   AssertionError: Adjacent vertices 7 and 10 have same color 1
+E   assert np.int64(1) != np.int64(1)
+E   AssertionError: Adjacent vertices 3 and 10 have same color 4
+E   assert np.int64(4) != np.int64(4)
+E   AssertionError: Adjacent vertices 3 and 10 have same color 4
+E   assert np.int64(4) != np.int64(4)
+E   AssertionError: Adjacent vertices 3 and 10 have same color 4
+E   assert np.int64(4) != np.int64(4)
+E   AssertionError: Adjacent vertices 3 and 10 have same color 4
+E   assert np.int64(4) != np.int64(4)
+E   AssertionError: Adjacent vertices 3 and 10 have same color 4
+E   assert np.int64(4) != np.int64(4)
+E   AssertionError: Adjacent vertices 3 and 10 have same color 4
+E   assert np.int64(4) != np.int64(4)
+E   AssertionError: Adjacent vertices 1 and 10 have same color 4
+E   assert np.int64(4) != np.int64(4)
+E   AssertionError: Adjacent vertices 1 and 10 have same color 4
+E   assert np.int64(4) != np.int64(4)
+E   AssertionError: Adjacent vertices 1 and 10 have same color 4
+E   assert np.int64(4) != np.int64(4)
+E   AssertionError: Adjacent vertices 1 and 10 have same color 4
+E   assert np.int64(4) != np.int64(4)
+E   AssertionError: Adjacent vertices 1 and 10 have same color 4
+E   assert np.int64(4) != np.int64(4)
+E   AssertionError: Adjacent vertices 7 and 10 have same color 1
+E   assert np.int64(1) != np.int64(1)
+E   AssertionError: Adjacent vertices 7 and 10 have same color 0
+E   assert np.int64(0) != np.int64(0)
+E   AssertionError: Adjacent vertices 7 and 10 have same color 0
+E   assert np.int64(0) != np.int64(0)
+E   AssertionError: Adjacent vertices 7 and 10 have same color 0
+E   assert np.int64(0) != np.int64(0)
+E   AssertionError: Adjacent vertices 7 and 10 have same color 0
+E   assert np.int64(0) != np.int64(0)
+E   AssertionError: Adjacent vertices 7 and 10 have same color 0
+E   assert np.int64(0) != np.int64(0)
+E   AssertionError: Adjacent vertices 7 and 10 have same color 0
+E   assert np.int64(0) != np.int64(0)
+E   AssertionError: Adjacent vertices 5 and 10 have same color 0
+E   assert np.int64(0) != np.int64(0)
+E   AssertionError: Adjacent vertices 1 and 10 have same color 0
+E   assert np.int64(0) != np.int64(0)
+E   AssertionError: Adjacent vertices 1 and 10 have same color 0
+E   assert np.int64(0) != np.int64(0)
+E   AssertionError: Adjacent vertices 1 and 10 have same color 0
+E   assert np.int64(0) != np.int64(0)
+E   AssertionError: Adjacent vertices 1 and 10 have same color 0
+E   assert np.int64(0) != np.int64(0)
+E   AssertionError: Adjacent vertices 7 and 9 have same color 0
+E   assert np.int64(0) != np.int64(0)
+Shrink pass profiling
+---------------------
+
+Shrinking made a total of 68 calls of which 11 shrank and 8 were misaligned. This deleted 12 choices out of 16.
+
+Useful passes:
+
+  * minimize_individual_choices made 25 calls of which 4 shrank and 5 were misaligned, deleting 0 choices.
+  * try_trivial_spans made 13 calls of which 1 shrank and 0 were misaligned, deleting 0 choices.
+  * node_program_XXXXX made 9 calls of which 1 shrank and 1 were misaligned, deleting 12 choices.
+
+Useless passes:
+
+  * node_program_XX made 3 calls of which 0 shrank and 0 were misaligned, deleting 0 choices.
+  * node_program_X made 3 calls of which 0 shrank and 0 were misaligned, deleting 0 choices.
+  * redistribute_numeric_pairs made 2 calls of which 0 shrank and 2 were misaligned, deleting 0 choices.
+  * lower_integers_together made 2 calls of which 0 shrank and 0 were misaligned, deleting 0 choices.
+
+Run complete after 107 test cases (28 valid) and 16 shrinks
+===================================== short test summary info ======================================
+FAILED tests/hypothesis/test_graph_properties.py::TestColoringProperties::test_coloring_no_adjacent_same_color
+1 failed, 9 deselected in 2.26s
+
+```

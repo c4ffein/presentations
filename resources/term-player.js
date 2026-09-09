@@ -16,7 +16,9 @@
  *   data-max-delay  cap per-chunk delay in ms (default 1200)
  *   data-line-delay ms between lines of a multi-line chunk (default 0 = chunk shown at once;
  *                   pytest writes 40-line bursts, 60-100 keeps the "typing" feel)
- *   data-max-lines  visible height of the body in lines (default 22, then it scrolls)
+ *   data-max-lines  height of the body in lines (default 22): FIXED size, the body scrolls
+ *   data-info       "1" = show the command + provenance overlay from the start; otherwise
+ *                   the header is hidden behind the ⓘ button (click = toggle overlay over the output)
  *   data-wrap       "0" = no line wrapping, horizontal scroll instead
  * A <pre class="term-replay-static"> child or next sibling is left untouched
  * (hidden on screen once the player is mounted, shown when printing).
@@ -76,12 +78,14 @@
     var ctl = h("div", "tp-controls");
     var ui = { head: head, ctl: ctl,
       play: h("button", "tp-play", "▶"), fin: h("button", "tp-fin-btn", "⏭ fin"),
-      restart: h("button", "tp-restart", "↺"), speed: h("select", "tp-speed") };
+      restart: h("button", "tp-restart", "↺"), speed: h("select", "tp-speed"),
+      info: h("button", "tp-info", "ⓘ") };
     ui.play.title = "play / pause"; ui.fin.title = "jump to the end"; ui.restart.title = "restart";
+    ui.info.title = "command + provenance";
     var want = num(el, "data-speed", 1);
     SPEEDS.concat(SPEEDS.indexOf(want) < 0 ? [want] : []).sort(function (a, b) { return a - b; })
       .forEach(function (s) { var o = h("option", null, s + "×"); o.value = s; o.selected = s === want; ui.speed.appendChild(o); });
-    [ui.play, ui.fin, ui.restart, ui.speed].forEach(function (n) { ctl.appendChild(n); });
+    [ui.play, ui.fin, ui.restart, ui.info, ui.speed].forEach(function (n) { ctl.appendChild(n); });
 
     var body = h("pre", "tp-body");
     if (el.getAttribute("data-wrap") === "0") body.classList.add("tp-nowrap");
@@ -89,7 +93,11 @@
     ui.cursor = h("span", "tp-cursor"); ui.finLine = h("div", "tp-fin");
     [ui.doneNode, ui.lineNode, ui.cursor, ui.finLine].forEach(function (n) { body.appendChild(n); });
     el.style.setProperty("--tp-max-lines", num(el, "data-max-lines", 22));
-    el.appendChild(head); el.appendChild(ctl); el.appendChild(body);
+    // the header is an overlay on top of the output, toggled by ⓘ (hidden by default:
+    // the recording usually prints its own provenance lines anyway)
+    var stage = h("div", "tp-stage"); stage.appendChild(body); stage.appendChild(head);
+    if (el.getAttribute("data-info") === "1") el.classList.add("tp-show-info");
+    el.appendChild(ctl); el.appendChild(stage);
     return ui;
   }
 
@@ -162,6 +170,8 @@
     // is focused, so a later Space/arrow would both act here and change slide.
     function onClick(btn, fn) { btn.addEventListener("click", function (e) { e.stopPropagation(); fn(); btn.blur(); }); }
     onClick(p.ui.play, p.toggle); onClick(p.ui.fin, p.skip); onClick(p.ui.restart, p.restart);
+    onClick(p.ui.info, function () { el.classList.toggle("tp-show-info"); });
+    p.ui.head.addEventListener("click", function (e) { e.stopPropagation(); el.classList.remove("tp-show-info"); });
     p.ui.speed.addEventListener("change", function () { p.setSpeed(parseFloat(p.ui.speed.value) || 1); p.ui.speed.blur(); });
     p.ui.body.addEventListener("click", function () {
       if (!String(window.getSelection && window.getSelection()).length) p.toggle();   // not while selecting text

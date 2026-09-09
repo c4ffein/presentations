@@ -241,31 +241,60 @@
 
     <!-- Le contexte -->
     <section>
+      <!-- AJOUT 2026-09-08 : la fenêtre dessinée + les bullets des deux slides suivantes fusionnés — pourrait remplacer « La fenêtre de contexte » et « System prompt et personas » -->
       <section>
-        <h3>Le contexte</h3>
-      </section>
-      <section data-markdown>
-        <textarea data-template>
-          ### La fenêtre de contexte
-          - Initialement: le contenu de la conversation
-          - Pas de mémoire en dehors de la fenêtre de contexte
-            - initialement: nouvelle conversation = RàZ
-          - *Context Engineering*
-            - dans un chat simple: remplir avec ce qui compte
-        </textarea>
-      </section>
-      <section data-markdown>
-        <textarea data-template>
-          ### System prompt et personas
-          - En tête du contexte, un texte que vous ne voyez pas :
-            rôle, règles, outils disponibles
-          - Le même modèle, des comportements différents —
-            Claude, l'appli, n'est pas Claude Code
-        </textarea>
+        <h3 style="margin-bottom:0.3em;">La fenêtre de contexte</h3>
+        <div class="flex" style="align-items:center;gap:1.6em;">
+          <div style="flex:0 0 42%;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 560" style="width:100%;max-width:420px;height:auto;display:block;font-family:inherit;">
+            <defs><marker id="cw-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker></defs>
+            <!-- la fenêtre -->
+            <rect x="20" y="30" width="300" height="500" rx="10" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
+            <text x="170" y="20" font-size="15" text-anchor="middle" fill="#1a1a1a">la fenêtre de contexte</text>
+            <!-- system prompt -->
+            <rect x="34" y="44" width="272" height="72" rx="6" fill="#fbe9e1" stroke="#d97757" stroke-width="2"/>
+            <text x="170" y="86" font-size="16" font-weight="700" text-anchor="middle" fill="#1a1a1a">system prompt</text>
+            <!-- tours -->
+            <rect x="34" y="128" width="272" height="34" rx="6" fill="#f4f4f4" stroke="#1a1a1a" stroke-width="1.5"/>
+            <text x="46" y="150" font-size="14" fill="#1a1a1a"><tspan font-weight="700" fill="#8a8884">&gt;</tspan>  utilisateur</text>
+            <rect x="34" y="168" width="272" height="34" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="1.5"/>
+            <text x="46" y="190" font-size="14" fill="#1a1a1a"><tspan fill="#d97757">●</tspan>  assistant</text>
+            <rect x="34" y="208" width="272" height="34" rx="6" fill="#f4f4f4" stroke="#1a1a1a" stroke-width="1.5"/>
+            <text x="46" y="230" font-size="14" fill="#1a1a1a"><tspan font-weight="700" fill="#8a8884">&gt;</tspan>  utilisateur</text>
+            <rect x="34" y="248" width="272" height="34" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="1.5"/>
+            <text x="46" y="270" font-size="14" fill="#1a1a1a"><tspan fill="#d97757">●</tspan>  assistant</text>
+            <rect x="34" y="288" width="272" height="34" rx="6" fill="#f4f4f4" stroke="#1a1a1a" stroke-width="1.5"/>
+            <text x="46" y="310" font-size="14" fill="#1a1a1a"><tspan font-weight="700" fill="#8a8884">&gt;</tspan>  utilisateur</text>
+            <rect x="34" y="328" width="272" height="34" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="1.5"/>
+            <text x="46" y="350" font-size="14" fill="#1a1a1a"><tspan fill="#d97757">●</tspan>  assistant</text>
+            <text x="170" y="386" font-size="18" text-anchor="middle" fill="#555">&#8942;</text>
+            <!-- espace libre -->
+            <rect x="34" y="396" width="272" height="120" rx="6" fill="none" stroke="#bbb" stroke-width="1.5" stroke-dasharray="4 4"/>
+            <text x="170" y="462" font-size="13" text-anchor="middle" fill="#888">la place qui reste</text>
+            <!-- jauge -->
+            <rect x="340" y="30" width="18" height="500" rx="4" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+            <rect x="340" y="30" width="18" height="316" rx="4" fill="#1a1a1a"/>
+            <text x="376" y="42" font-size="12" fill="#555">0</text>
+            <text x="376" y="534" font-size="12" fill="#555">N tokens</text>
+            <text x="376" y="352" font-size="12" fill="#1a1a1a">rempli</text>
+            <!-- flèche prochain token -->
+            <line x1="170" y1="530" x2="170" y2="552" stroke="#1a1a1a" stroke-width="2" marker-end="url(#cw-arrow)"/>
+            <text x="186" y="556" font-size="12" fill="#555">&rarr; prochain token</text>
+          </svg>
+          </div>
+          <ul style="flex:1;font-size:0.62em;text-align:left;">
+            <li>Initialement: très simple, un système prompt, des échanges entre tours du modèle et de l'utilisateur</li>
+            <li>Tout ce qui n'est pas appris par le modèle à l'entrainement tient <em>là-dedans</em></li>
+            <li>En tête, un texte que vous ne voyez pas : rôle, règles, outils &mdash; le <strong>system prompt</strong></li>
+            <li>Le même modèle, des system prompts différents &rArr; Claude, l'appli, n'est pas Claude Code</li>
+            <li>Pas de mémoire en dehors : nouvelle conversation = remise à zéro</li>
+            <li><em>Context engineering</em> : remplir avec ce qui compte</li>
+          </ul>
+        </div>
       </section>
       <!-- Le vrai system prompt de claude.ai, publié par Anthropic — Fable 5.1, 1er septembre 2026 -->
       <section>
-        <h3 style="margin-bottom:0.4em;">Le system prompt de claude.ai &mdash; le début</h3>
+        <h3 style="margin-bottom:0.4em;">Le system prompt de claude.ai</h3>
         <pre style="font-size:0.38em;line-height:1.35;text-align:left;width:92%;margin:0 auto;padding:0.8em 1em;white-space:pre-wrap;">&lt;claude_behavior&gt;
 &lt;product_information&gt;
 Here is some information about Claude and Anthropic's products in case the person asks:
@@ -318,14 +347,11 @@ Claude's reliable knowledge cutoff, past which it can't answer reliably, is the 
 
     <!-- Le raisonnement -->
     <section>
-      <section>
-        <h3>Le raisonnement</h3>
-      </section>
       <section data-markdown>
         <textarea data-template>
-          ### Un brouillon avant la réponse
+          ### Le raisonnement
           - Depuis 2024 : scratchpad / CoT
-          - Le calcul se fait *dans* les tokens
+          - Le modèle peut explorer différentes pistes
             - plus de brouillon autorisé = plus d'inférence
             - compromis prix/qualité en fonction de la tâche
         </textarea>
@@ -473,25 +499,23 @@ Claude's reliable knowledge cutoff, past which it can't answer reliably, is the 
     </section>
 
     <section>
-      <section>
-        <h3>L'agentique</h3>
-      </section>
-      <!-- v0 — TODO subsection les tool calls de l api anthropic, les mcp -->
+      <!-- v0 — TODO definition d un agent: modele dans une ou plusieurs boucles interconnectees, qui peuvent executer des actions pour repondre a un objectif -->
       <section data-markdown>
         <textarea data-template>
-          ### Les outils
-          - L'API : le modèle ne répond plus seulement du texte,
-            il *demande* une action — un **tool call**
-          - Votre code l'exécute, le résultat repart dans le contexte,
-            le modèle continue
-          - **MCP** (Model Context Protocol) : un standard pour brancher
-            des outils — le même outil, dans tous les clients
+          ### Un agent
+          - Un ou plusieurs modèles
+          - Dans une ou plusieurs **boucles** interconnectées
+          - Exécutent des **actions** pour atteindre un **objectif**
+          - Les boucle : *observation &rarr; action*
+          
+          *une boucle while et un appel à un modèle* &rarr; **un agent**
         </textarea>
       </section>
       <!-- AJOUT 2026-09-08 : l'exemple concret d'un outil MCP, avec pyscotch, avant la définition d'agent -->
       <section>
-        <h3 style="margin-bottom:0.4em;">Un outil, concrètement (MCP, Python)</h3>
-        <pre><code class="language-python" data-trim data-noescape style="font-size:0.5em;line-height:1.3;">
+        <h3 style="margin-bottom:0.2em;">MCP : déclaration d'un outil</h3>
+        <p style="font-size:0.5em;color:#444;margin:0 0 0.5em;">Model Context Protocol, en Python</p>
+        <pre><code class="language-python" data-trim data-noescape style="font-size:0.75em;line-height:1.3;">
 from mcp.server.fastmcp import FastMCP
 from pyscotch import Graph
 
@@ -502,45 +526,66 @@ def partition(graph_file: str, parts: int) -> list[int]:
     """Partitionne un graphe Scotch en `parts` parties."""
     return Graph.load(graph_file).partition(parts).tolist()
 </code></pre>
-        <p style="font-size:0.5em;color:#444;margin:0.4em auto 0.3em;">Le nom, la signature et la docstring deviennent la description de l'outil. Le modèle ne voit que ça &mdash; et répond, quand il le juge utile, par un appel :</p>
-        <pre><code class="language-json" data-trim data-noescape style="font-size:0.45em;line-height:1.3;">
-{"type": "tool_use", "id": "toolu_01…", "name": "partition",
- "input": {"graph_file": "ring.grf", "parts": 2}}
-                                 ⇩  votre code l'exécute  ⇩
-{"type": "tool_result", "tool_use_id": "toolu_01…",
+        <p style="font-size:0.5em;color:#444;margin-top:0.5em;">Nom, signature, docstring : c'est tout ce que le modèle voit de l'outil.</p>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.3em;">MCP : interaction avec le modèle</h3>
+        <div class="flex" style="align-items:stretch;gap:0;text-align:left;">
+          <div style="flex:1 1 50%;padding-right:0.8em;">
+            <p style="font-size:0.45em;color:#444;margin:0 0 0.3em;"><strong>1.</strong> reçu dans le contexte : la fonction, traduite en schéma</p>
+            <pre style="width:100%;margin:0;"><code class="language-json" data-trim data-noescape style="font-size:0.65em;line-height:1.25;">
+{"name": "partition",
+ "description":
+   "Partitionne un graphe Scotch
+    en `parts` parties.",
+ "input_schema": {
+   "type": "object",
+   "properties": {
+     "graph_file": {"type": "string"},
+     "parts":      {"type": "integer"}},
+   "required": ["graph_file", "parts"]}}
+</code></pre>
+            <p style="font-size:0.4em;color:#444;margin-top:0.4em;">La docstring est devenue la <em>description</em> : c'est elle qui décide si l'outil sera appelé.</p>
+          </div>
+          <div style="flex:1 1 50%;padding-left:0.8em;border-left:2px solid #333;">
+            <p style="font-size:0.45em;color:#444;margin:0 0 0.3em;"><strong>2.</strong> appel par le modèle et réception du résultat</p>
+            <pre style="width:100%;margin:0;"><code class="language-json" data-trim data-noescape style="font-size:0.65em;line-height:1.25;">
+{"type": "tool_use",
+ "id": "toolu_01…",
+ "name": "partition",
+ "input": {"graph_file": "ring.grf",
+           "parts": 2}}
+
+   ⇩  votre code l'exécute  ⇩
+
+{"type": "tool_result",
+ "tool_use_id": "toolu_01…",
  "content": "[0, 0, 0, 0, 1, 1, 1, 1]"}
 </code></pre>
-        <p style="font-size:0.45em;color:#444;margin-top:0.3em;">Le résultat repart dans le contexte, le modèle continue. Rien de plus : une fonction, un schéma, un aller-retour JSON.</p>
-      </section>
-      <!-- v0 — TODO definition d un agent: modele dans une ou plusieurs boucles interconnectees, qui peuvent executer des actions pour repondre a un objectif -->
-      <section data-markdown>
-        <textarea data-template>
-          ### Un agent, définition
-          - Un modèle, ou plusieurs, dans une ou plusieurs **boucles** interconnectées
-          - Qui peut exécuter des **actions** pour atteindre un **objectif**
-          - La boucle : *agir &rarr; observer &rarr; corriger*
-          - Rien de magique : un modèle, des outils, un `while`
-        </textarea>
+            <p style="font-size:0.4em;color:#444;margin-top:0.4em;">Le résultat repart dans le contexte, le modèle continue.</p>
+          </div>
+        </div>
       </section>
       <!-- v0 — peuvent maintenant controler eux-meme le contexte (compaction, memories liees a l utilisateur ou au projet) -->
       <section data-markdown>
         <textarea data-template>
-          ### Et maintenant : ils gèrent leur propre contexte
-          - **Compaction** : la fenêtre se remplit, l'agent résume
-            et continue
-          - **Mémoires** : liées à l'utilisateur ou au projet,
-            elles survivent à la session
-          - Ce que vous faisiez à la main en chat,
-            l'agent le fait lui-même
+          ### Auto-gestion du contexte
+          - **Compaction**
+            - déclenchement automatique
+            - l'agent trie les informations importants
+          - **Mémories**
+            - liées à l'utilisateur ou au projet
+            - survivent à la session
         </textarea>
       </section>
       <section data-markdown>
         <textarea data-template>
-          ### Claude Code, édition 2026 : multi-agent
-          - L'agent seul → l'équipe d'agents
-          - Sous-agents : explorer, vérifier en parallèle
-          - Workflows : du fan-out **déterministe** par-dessus
-            des agents stochastiques
+          ### Subagents
+          - Delegation
+            - exploratoire en parallèle
+            - permet d'utiliser un modèle moins cher sur un scope réduit
+          - Escalation
+            - un modèle bas de gamme peut faire appel à un modèle haut-de gamme
         </textarea>
       </section>
 
@@ -585,84 +630,61 @@ def partition(graph_file: str, parts: int) -> list[int]:
     <section>
       <section>
         <h3>Comment j'interagis avec Claude</h3>
+        <ul>
+          <li>vibe engineering != vibe coding</li>
+          <li>mind dump</li>
+          <li>poser des questions et pas donner des ordres</li>
+        </ul>
         <!--Conséquence de tout ce qui précède et de mon caractère-->
       </section>
-      <section data-markdown>
-        <textarea data-template>
-          ### L'effort de forme est absorbé
-          - Même demande, deux prompts :
-            - un **rangé**, un **en vrac**
-          - Les notes de travail visibles (CoT) convergent
-            vers à peu près le même plan
-        </textarea>
+      <!-- AJOUT 2026-09-08 : le terme, ses deux sources -->
+      <section>
+        <h3 style="margin-bottom:0.5em;">Vibe engineering</h3>
+        <blockquote style="font-size:0.62em;width:88%;margin:0 auto;text-align:left;">&laquo; seasoned professionals accelerate their work with LLMs while staying proudly and confidently accountable for the software they produce &raquo;</blockquote>
+        <p style="font-size:0.45em;color:#444;margin-top:0.4em;">Simon Willison &mdash; <a href="https://simonwillison.net/2025/Oct/7/vibe-engineering/">Vibe engineering</a>, 7 octobre 2025 &mdash; par opposition au <em>vibe coding</em></p>
+        <blockquote style="font-size:0.58em;width:88%;margin:0.7em auto 0;text-align:left;">&laquo; You could have thirty agents working for you simultaneously. You cannot watch all of them and micromanage each one. You wouldn't do this with your human team either. Instead: write a better harness. &raquo;</blockquote>
+        <p style="font-size:0.45em;color:#444;margin-top:0.4em;">@mrexodia &mdash; <a href="https://x.com/mrexodia/status/2010157660885176767">Vibe Engineering: What I've Learned Working with AI Coding Agents</a></p>
+      </section>
+      <!-- AJOUT 2026-09-08 : la citation + l'échange à coller (c4ffein) -->
+      <section>
+        <h3 style="margin-bottom:0.5em;">Structures de données</h3>
+        <blockquote style="font-size:0.75em;width:88%;margin:0 auto;text-align:left;">&laquo; Bad programmers worry about the code. Good programmers worry about data structures and their relationships. &raquo;</blockquote>
+        <p style="font-size:0.5em;color:#444;margin-top:0.5em;">Linus Torvalds &mdash; liste git, 2006</p>
+        <div class="claude-terminal">
+          <div class="ct-user">hey, can you refresh my memory about the data structures of this project?...</div>
+          <div class="ct-dim">3 skills available</div>
+          <div class="ct-claude">Let me re-read the current state first — the repo has moved since my last pass (source of truth is now in-repo, referee self-clones).</div>
+          <div class="ct-tool">Read 2 files</div>
+          <div class="ct-claude">Sure — here's the map of the state-carrying structures, from the trunk out (the authoritative version lives in docs/architecture.md, state ownership table + invariants).</div>
+        </div>
       </section>
       <section>
-        <div class="todo">le vrai côte-à-côte : prompt en vrac vs prompt rangé, et les deux extraits de CoT quasi identiques (claude-terminal ou deux colonnes)</div>
+        <h3 style="margin-bottom:0.4em;">L'agent reformule</h3>
+        <div class="flex" style="align-items:stretch;gap:1em;text-align:left;">
+          <div style="flex:1 1 50%;">
+            <p style="font-size:0.5em;margin:0 0 0.3em;"><strong>Moi &rarr; l'agent</strong> <span style="color:#666;">(deux prompts, tels quels)</span></p>
+            <div class="claude-terminal" data-transcript="reframe-humain-agent.json" title="cliquer : la transcription complète" style="font-size:0.38em;max-width:none;cursor:pointer;">
+              <div class="ct-user">could we decide to not use the check-e2e in our regular dev loop, only before the final commit?...   ;    could the editor be part of the rust thing instead of a web app?.... WDYT?   ;</div>
+              <div class="ct-claude">1. E2E only before commits — yes, agreed, and I'll enforce it. [&hellip;] 2. Editor in Rust instead of a web app — WDYT: yes, in phases, and the reasons matter. [&hellip;]</div>
+              <div class="ct-user">can you start the rust editor in a worktree, without waiting for the sprite system?</div>
+              <div class="ct-tool">Agent(Rust/wasm level editor phase 1 + prop placement)</div>
+            </div>
+          </div>
+          <div style="flex:1 1 50%;">
+            <p style="font-size:0.5em;margin:0 0 0.3em;"><strong>L'agent &rarr; son sous-agent</strong> <span style="color:#666;">(le prompt exact, 6 700 caractères)</span></p>
+            <div class="claude-terminal" data-transcript="reframe-agent-sousagent.json" title="cliquer : le prompt entier" style="font-size:0.38em;max-width:none;cursor:pointer;">
+              <div class="ct-user">[&hellip;]<br><br>GOAL — Phase 1 of a NATIVE (Rust/wasm, drawn with the game's own renderer) level editor + PROP PLACEMENT end to end: [&hellip;]<br><br>CONSTRAINTS: no new deps; opcode tables untouched (no new opcodes needed); CLAUDE.md updated [&hellip;]; localized lib.rs edits (dispatch + a few fields), all real code in src/editor*.rs; unit tests for the JSON writer round-trip [&hellip;]<br><br>[&hellip;]</div>
+            </div>
+          </div>
+        </div>
+        <p style="font-size:0.5em;margin:0.5em auto 0;">Deux lignes en vrac, un cahier des charges. La mise en ordre, c'est lui qui la fait.</p>
+        <div style="margin-top:0.4em;font-size:0.5em;"><a href="#" data-transcript="reframe-humain-agent.json" style="display:inline-block;padding:0.2em 0.8em;border:2px solid #333;border-radius:6px;color:#000;text-decoration:none;">▶ moi ↔ l'agent, 12 tours</a> &nbsp; <a href="#" data-transcript="reframe-agent-sousagent.json" style="display:inline-block;padding:0.2em 0.8em;border:2px solid #333;border-radius:6px;color:#000;text-decoration:none;">▶ l'agent → son sous-agent, le prompt entier</a></div>
       </section>
       <section data-markdown>
         <textarea data-template>
-          ### Ce que ça veut dire (et ne veut pas dire)
-          - Le modèle fait le travail de **mise en ordre**
-          - Dépensez votre énergie sur les *idées*, pas sur la forme
-          - Nuance : le CoT visible n'est pas une lecture fidèle
-            de l'interne — on compare des notes, pas des pensées
-        </textarea>
-      </section>
-      <section data-markdown>
-        <textarea data-template>
-          ### Chaque prompt est une question
-          - Je ne donne (presque) jamais d'ordres
+          ### ? vs !
           - &laquo; wdyt? &raquo; &mdash; &laquo; EDYT? &raquo; &mdash; &laquo; still too blunt? &raquo;
-          - *(vrais prompts &mdash; voir la transcription publiée)*
-        </textarea>
-      </section>
-      <section data-markdown>
-        <textarea data-template>
-          ### Pourquoi
-          - Le produit est entraîné pour **suivre vos instructions**
-          - Ordonnez : il obéira &mdash; même si vous avez tort
-          - Demandez : vous récupérez l'information
-            que l'ordre aurait écrasée
-          - Ce talk : le framing &laquo; ils étaient en retard &raquo;
-            a été inversé *parce que c'était une question*
-        </textarea>
-      </section>
-      <section data-markdown>
-        <textarea data-template>
-          ### La nuance
-          - Les ordres restent parfaits pour le mécanique :
-            &laquo; kill 8080! serve on 8080! &raquo; *(vrai prompt aussi)*
-          - Accorder l'acte de langage à la tâche :
-            - jugement &rarr; **question**
-            - mécanique &rarr; **ordre**
-          - Pas de la politesse : de l'ingénierie de l'information
-        </textarea>
-      </section>
-
-      <!-- v0 — à réécrire dans tes mots ; chaque ligne relie un point de théorie à une habitude -->
-      <section data-markdown>
-        <textarea data-template>
-          ### Ce que ça change pour moi
-          - Claude peut reframe mes 
-          - Le contexte est tout ce qu'il a
-            &rarr; je donne le **contexte** : fichiers, objectif, ce que j'ai déjà essayé
-          - Le brouillon fait la mise en ordre
-            &rarr; mes prompts sont **en vrac**, non curés
-          - Un Assistant entraîné à suivre
-            &rarr; je pose des **questions**, je ne commande pas
-          - La boucle observe et corrige
-            &rarr; je laisse **tourner**, je relis les résultats, pas chaque ligne
-        </textarea>
-      </section>
-      <!-- v0 — ta personnalité : à toi -->
-      <section data-markdown>
-        <textarea data-template>
-          ### Et mon caractère
-          - Curieux, pas expert &mdash; je veux **comprendre**, pas juste obtenir
-          - Je lui parle comme à un collègue : court, informel, direct
-            &mdash; &laquo; wdyt? &raquo;, &laquo; go? &raquo;, &laquo; try? &raquo;
-          - Je préfère qu'il me contredise plutôt qu'il m'obéisse
-          - Je publie les transcriptions brutes &mdash; c'est le making-of de ce talk
+          - &laquo; kill 8080! serve on 8080! &raquo;
         </textarea>
       </section>
     </section>
@@ -818,7 +840,7 @@ def partition(graph_file: str, parts: int) -> list[int]:
       </section>
       <!-- AJOUT 2026-09-08 -->
       <section>
-        <h3 style="margin-bottom:0.4em;">Jour 7 : le premier bug est dans Scotch</h3>
+        <h3 style="margin-bottom:0.4em;">Jour 7 : le premier bug Scotch</h3>
         <ul style="font-size:0.62em;">
           <li><strong>4 nov. 2025</strong> : premier commit, sessions Claude Code <em>web</em> (7 branches <code>claude/&hellip;</code>)</li>
           <li>Objectif : charger 32 <em>et</em> 64 bits, séquentiel <em>et</em> MPI, dans un même process</li>
@@ -874,31 +896,10 @@ def test_coloring_no_adjacent_same_color(self, graph_data):
       <!-- AJOUT 2026-09-08 : rejeu d'un vrai run, enregistré avec `script` (voir resources/recordings/hypothesis-coloring.md) -->
       <section>
         <h3 style="margin-bottom:0.4em;">Replay Hypothesis</h3>
-        <div class="claude-terminal" style="width:70%;margin:0 auto;font-size:0.4em;">
-          <div class="term-replay" data-recording="../resources/recordings/hypothesis-coloring.json" data-autoplay="1" data-line-delay="80" data-max-lines="16"></div>
+        <div class="claude-terminal" style="width:94%;max-width:none;margin:0 auto;font-size:0.4em;">
+          <div class="term-replay" data-recording="../resources/recordings/hypothesis-coloring-shrink.json" data-autoplay="1" data-line-delay="150" data-max-lines="16"></div>
         </div>
-        <p style="font-size:0.45em;color:#444;margin-top:0.4em;">Scotch <code>34ea137</code> (14 janv. 2026, la veille du fix) &middot; pyscotch <code>a32f242</code> (déc. 2025) &middot; Hypothesis 6.168, seed 1 &rarr; 17 échecs en 0,4 s, 69 réductions, <strong><code>graph_data=(11, [(1, 10)])</code></strong>. Sur v7.0.14 : 100 exemples, 0 échec.</p>
-        <div style="margin-top:0.3em;font-size:0.4em;"><a href="../resources/recordings/hypothesis-coloring.md">comment c'est enregistré</a> &middot; <a href="../resources/recordings/hypothesis-coloring.json">hypothesis-coloring.json</a> &middot; <a href="../resources/recordings/hypothesis-coloring-fixed.json">le même run sur v7.0.14</a></div>
-        <div class="todo">rejeu à vérifier en vrai (servi en HTTP, pas file://) : ▶ se lance à l'arrivée sur la slide, clic = pause, ⏭ = fin. Le run est enregistré, pas simulé : sortie brute de pytest, ANSI retiré. Garder aussi la version « fixed » sur la slide, ou en parler seulement ?</div>
-      </section>
-      <section>
-        <h3 style="margin-bottom:0.4em;">Le pattern, à la main</h3>
-        <table style="margin:0 auto;border-collapse:collapse;font-size:0.48em;">
-<tbody>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">n = 10, arête (1, 9)</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">2 couleurs</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">OK</td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">n = 11, arête (1, 10)</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">1 couleur</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>BUG</strong></td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">n = 12, arête (1, 11)</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">1 couleur</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>BUG</strong></td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">n = 13, arête (1, 12)</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">2 couleurs</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">OK</td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">n = 11, arête (0, 10)</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">2 couleurs</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">OK &mdash; sommet 0 connecté</td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">n = 11, arête (5, 10)</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">1 couleur</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>BUG</strong> &mdash; sommet 0 isolé, arête vers le dernier</td></tr>
-</tbody></table>
-        <ul style="font-size:0.5em;margin-top:0.4em;">
-          <li>Déterministe après <code>SCOTCH_randomReset()</code> &mdash; pas un problème de PRNG</li>
-          <li><code>num_colors = 1</code> sur un graphe avec une arête : impossible</li>
-          <li>Lecture de <code>library_graph_color.c</code>, ligne 145 : <code>if (colotax[vertend] &gt;= 0) continue;</code> ignore <em>aussi</em> les voisins coloriés dans le passage courant</li>
-          <li>Test marqué <code>xfail</code>, rapport écrit</li>
-        </ul>
-        <div style="margin-top:0.4em;font-size:0.4em;"><a href="https://github.com/c4ffein/pyscotch/blob/master/docs/QUESTIONS_FOR_SCOTCH_TEAM_2.md">pyscotch/docs/QUESTIONS_FOR_SCOTCH_TEAM_2.md</a></div>
+        <p style="font-size:0.45em;color:#444;margin-top:0.4em;">Scotch <code>34ea137</code> (14 janv. 2026, la veille du fix) &middot; pyscotch <code>a32f242</code> (déc. 2025) &middot; Hypothesis 6.168, seed 1, verbosité <em>debug</em>, un cas par ligne. Premier échec au cas n°19 : 17 sommets, 38 arêtes. Puis la réduction : les arêtes tombent une à une, <code>(17, [(5, 10)])</code>, <code>(17, [(1, 10)])</code>, 17 &rarr; 15 &rarr; 13 &rarr; 11 sommets. <strong>107 cas, 16 réductions, 3 s : <code>graph_data=(11, [(1, 10)])</code>.</strong> Sur v7.0.14 : 100 exemples, 0 échec.</p>
       </section>
       <section>
         <h3 style="margin-bottom:0.4em;">Le reçu &mdash; janvier 2026</h3>
@@ -917,9 +918,8 @@ def test_coloring_no_adjacent_same_color(self, graph_data):
       </section>
     </section>
 
-    <!-- Barreau 3 : lire le C -->
+    <!-- Barreau 3+5 fusionnés le 2026-09-08 : lire le C + hegel-c, dans l'ordre du récit (hegel trouve → hegel-c réduit → la cause → le reçu) -->
     <section>
-      <!-- AJOUT 2026-09-08 -->
       <section>
           <h3 style="margin-bottom:0.4em;">3. mars 2026 : lecture des <em>tests</em> C</h3>
         <ul style="font-size:0.6em;">
@@ -944,7 +944,7 @@ checkOrder (const SCOTCH_Num * const permtab, const SCOTCH_Num * const peritab,
         <div style="margin-top:0.3em;font-size:0.4em;">Envoyée à François. Côté Scotch, ensuite : <a href="https://gitlab.inria.fr/scotch/scotch/-/commit/eb5f1efcab56ddcabe44e9f9bb7c474743d8b633">« Improve tests », 10 avr. 2026</a> &middot; <a href="https://gitlab.inria.fr/scotch/scotch/-/commit/010974ee9ea7af89ecf20558c0e7e866362d899b">« Add test for ordering a disconnected graph », 15 avr.</a> &middot; <a href="https://gitlab.inria.fr/scotch/scotch/-/commit/bda2db3c3b35c187ddbc617be09608980a70aaa4">« Improve tests », 16 juin</a></div>
       </section>
       <section>
-        <h3 style="margin-bottom:0.4em;">Épisode 1 &mdash; 2 avril 2026 : Claude a d'abord eu tort</h3>
+        <h3 style="margin-bottom:0.4em;">2 avril 2026 : unconfirmed cause</h3>
         <div class="claude-terminal">
   <div class="ct-dim">// fork c4ffein/scotch, branche hegel, REPORTS/REPORT.md — 67 tests PBT en C, 65 passent, 1 bug NOUVEAU</div>
   <div class="ct-claude">Bug found: SCOTCH_STRATDISCONNECTED ordering produces garbage permutation. <code>rc == 0</code> (success) but <code>permtab[13] == 0xBBBBBBBB</code> (uninitialized). Approximately 25% of random sparse graphs with 4-20 vertices trigger it.</div>
@@ -953,8 +953,77 @@ checkOrder (const SCOTCH_Num * const permtab, const SCOTCH_Num * const peritab,
 </div>
         <p style="font-size:0.5em;color:#444;margin-top:0.5em;">git log du fork : 2 avr. « hegel report » &middot; 3 avr. « gaslighted again by me good Claude » &middot; 5 avr. « add hgraph_order_cp.c fix actually »</p>
         <div style="margin-top:0.4em;font-size:0.4em;"><a href="https://github.com/c4ffein/scotch/blob/ff403d445b36ee1723ff53d2478d368b21a3341f/REPORTS/REPORT.md">REPORTS/REPORT.md</a> &middot; <a href="https://github.com/c4ffein/scotch/blob/ff403d445b36ee1723ff53d2478d368b21a3341f/REPORTS/BUG_REPORT.md">REPORTS/BUG_REPORT.md</a></div>
-        <div class="todo">la session entre le 2 et le 5 avril (fausse piste &rarr; vraie cause) est la meilleure transcription « lire le C » de tout l'arc. Où est-elle ?</div>
       </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### hegel
+          - le moteur d'Hypothesis, pour tous les langages
+          - [hegel-c](https://github.com/hegeldev/hegel-rust/tree/main/hegel-c) : le binding C de la lib Rust
+          - [hegel-c](https://github.com/c4ffein/hegel-c) : le client C — vibé ensemble, avec Claude
+            - en pause, en expérimentation
+        </textarea>
+      </section>
+      <section>
+        <h3>exemple du binding C</h3>
+        <pre><code class="language-c" data-trim data-noescape>
+static void test_add_commutes (hegel_testcase *tc) {
+  int a = HEGEL_DRAW_INT (-1000, 1000);
+  int b = HEGEL_DRAW_INT (-1000, 1000);
+  HEGEL_ASSERT (a + b == b + a, "a=%d b=%d", a, b);
+}
+
+int main (void) { hegel_run_test (test_add_commutes); return 0; }
+        </code></pre>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.4em;">Schémas de mon wrapper</h3>
+        <pre><code class="language-c" data-trim data-noescape style="font-size:0.62em;line-height:1.3;">
+hegel_schema_t edge_schema = HEGEL_STRUCT (EdgePair,
+    HEGEL_INT (0, MAX_VERT - 1),
+    HEGEL_INT (0, MAX_VERT - 1));
+
+graph_schema = HEGEL_STRUCT (Graph,
+    HEGEL_INT (3, MAX_VERT),
+    HEGEL_ARRAY_INLINE (edge_schema, sizeof (EdgePair), 0, MAX_EDGES));
+
+/* ... build CSR, SCOTCH_graphOrder with SCOTCH_STRATDISCONNECTED ... */
+memset (permtab, 0xBB, nvert * sizeof (SCOTCH_Num));   /* sentinel */
+hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the final replay only */
+</code></pre>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.4em;">Replay hegel-c</h3>
+        <p style="font-size:0.42em;color:#666;margin:0 0 0.3em;">enregistré aujourd'hui avec le hegel-c de juillet 2026, sur le Scotch d'avant le fix &mdash; la branche du 2 avril faisait la même chose, en moins propre</p>
+        <div class="claude-terminal" style="width:70%;margin:0 auto;font-size:0.4em;">
+          <div class="term-replay" data-recording="../resources/recordings/hegel-order-shrink.json" data-autoplay="1" data-max-lines="16"></div>
+        </div>
+        <p style="font-size:0.45em;color:#444;margin-top:0.4em;">Scotch <strong>v7.0.11</strong> (avant le fix du 15 avril) &middot; hegel-c <code>ce16904</code>, moteur hegel-rust v0.17.4. Cas n°6 : premier échec sur 20 sommets. Cas n°185 : déjà 3 sommets, 1 arête. 10 175 cas en 17 s, puis <strong><code>MINIMAL nvert=3 nedges=1 edges=[(1,2)]</code></strong> &mdash; 6 runs sur 6. Sur v7.0.14 : 200 cas, rien.</p>
+      </section>
+      <!-- AJOUT 2026-09-08 -->
+      <section>
+        <h3 style="margin-bottom:0.4em;">Un graphe à 3 sommets</h3>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 240" style="width:50%;max-width:600px;height:auto;display:block;margin:0 auto;">
+          <line x1="440" y1="120" x2="640" y2="120" stroke="#1a1a1a" stroke-width="3"/>
+          <circle cx="120" cy="120" r="26" fill="#fff" stroke="#1a1a1a" stroke-width="3" stroke-dasharray="6 5"/>
+          <circle cx="440" cy="120" r="26" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
+          <circle cx="640" cy="120" r="26" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
+          <text x="120" y="127" font-size="20" text-anchor="middle" fill="#1a1a1a">0</text>
+          <text x="440" y="127" font-size="20" text-anchor="middle" fill="#1a1a1a">1</text>
+          <text x="640" y="127" font-size="20" text-anchor="middle" fill="#1a1a1a">2</text>
+          <text x="120" y="180" font-size="15" text-anchor="middle" fill="#555">composante A, ordenum = 0</text>
+          <text x="540" y="180" font-size="15" text-anchor="middle" fill="#555">composante B, ordenum = 1 &mdash; K&#8322;, se compresse</text>
+        </svg>
+        <div class="claude-terminal">
+  <div class="ct-result">MINIMAL nvert=3 nedges=1 edges=[(1,2)]</div>
+</div>
+        <ul style="font-size:0.5em;margin-top:0.4em;">
+          <li>Notre rapport du 5 avril : un reproducteur à <strong>14 sommets</strong>, écrit à la main. Le test ajouté par François le 15 : <strong>6 sommets</strong> (trois isolés, un triangle). hegel-c : <strong>3</strong>.</li>
+          <li>hegel-c repart de zéro (3&ndash;20 sommets, 0&ndash;30 arêtes), touche le bug en quelques essais (~25 %), et réduit</li>
+          <li>~2 runs sur 5 atteignent le minimum théorique ; les autres s'arrêtent à 4 sommets ou 2 arêtes. La CI exige nvert &le; 5</li>
+        </ul>
+        <div style="margin-top:0.4em;font-size:0.4em;"><a href="https://github.com/c4ffein/hegel-c/blob/master/docs/shrinking.md">hegel-c/docs/shrinking.md</a> &middot; <a href="https://github.com/c4ffein/hegel-c/blob/master/tests/irl/scotch/test_graph_order_shrink.c">tests/irl/scotch/test_graph_order_shrink.c</a></div>
+      </section>
+      <!-- AJOUT 2026-09-08 : rejeu d'un vrai run, enregistré avec `script` (voir resources/recordings/hegel-order-shrink.md) -->
       <section>
         <h3 style="margin-bottom:0.4em;">Épisode 2 &mdash; 5 avril : une variable</h3>
         <p style="font-size:0.55em;margin:0 auto 0.4em;">Fausse piste : les sommets isolés. Vraie cause : le chemin <em>compression</em> de <code>hgraphOrderCp</code> ignore <code>ordenum</code>.</p>
@@ -990,162 +1059,116 @@ checkOrder (const SCOTCH_Num * const permtab, const SCOTCH_Num * const peritab,
       </section>
     </section>
 
-    <!-- Barreau 5 : hegel-c -->
+
+
+    <!-- ===== Améliorations de pyscotch (2026-09-08) — remplace « Tests différentiels », dont les deux slides sont conservées à la fin du groupe ===== -->
     <section>
       <section data-markdown>
         <textarea data-template>
-          ### 5. hegel-c
-          - Hegel : le moteur d'Hypothesis, pour tous les langages
-          - hegel-c : le client C — vibé ensemble, avec Claude
-          - Propriétés en C, réduction automatique
-          - [github.com/c4ffein/hegel-c](https://github.com/c4ffein/hegel-c) &mdash; en pause, en expérimentation
+          ### pyscotch, aujourd'hui
+          - `uv pip install pyscotch`
+          - `pyscotch doctor`
+          - `pyscotch scotch build --parallel`
+          - Stratégies validées par le parseur de Scotch
+          - Sorties identiques à `gpart` / `gord` / `gmap`
         </textarea>
       </section>
       <section>
-        <pre><code class="language-c" data-trim data-noescape>
-static void test_add_commutes (hegel_testcase *tc) {
-  int a = HEGEL_DRAW_INT (-1000, 1000);
-  int b = HEGEL_DRAW_INT (-1000, 1000);
-  HEGEL_ASSERT (a + b == b + a, "a=%d b=%d", a, b);
-}
-
-int main (void) { hegel_run_test (test_add_commutes); return 0; }
-        </code></pre>
+        <h3 style="margin-bottom:0.4em;">Replay : installation</h3>
+        <div class="claude-terminal" style="width:94%;max-width:none;margin:0 auto;font-size:0.4em;">
+          <div class="term-replay" data-recording="../resources/recordings/pyscotch-install.json" data-autoplay="1" data-line-delay="60" data-max-lines="16"></div>
+        </div>
+        <p style="font-size:0.45em;color:#444;margin-top:0.4em;">Machine sans aucun Scotch. <code>uv venv</code>, <code>uv pip install "pyscotch[parallel]"</code> : pyscotch 7.0.4 depuis PyPI, mpi4py en wheel binaire, rien à compiler. Cinq lignes de Python : <code>parts: [0 1 1 0]</code> avec le Scotch 7.0.13 embarqué dans la wheel. <strong>1,4 s.</strong></p>
+        <div style="margin-top:0.3em;font-size:0.4em;"><a href="../resources/recordings/pyscotch-user.md">comment c'est enregistré</a> &middot; <a href="https://pypi.org/project/pyscotch/">pypi.org/project/pyscotch</a></div>
       </section>
       <section>
-        <h3 style="margin-bottom:0.4em;">Un graphe à 3 sommets</h3>
-        <!-- TODO(scotch): remplacer par le vrai contre-exemple minimal de hegel-c
-             (test_graph_order_shrink.c) — arêtes exactes + quel invariant casse -->
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 320" width="760" height="320" style="width:58%;max-width:760px;height:auto;display:block;margin:0 auto;">
-          <line x1="180" y1="240" x2="380" y2="80" stroke="#1a1a1a" stroke-width="3"/>
-          <line x1="380" y1="80" x2="580" y2="240" stroke="#1a1a1a" stroke-width="3"/>
-          <circle cx="180" cy="240" r="26" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
-          <circle cx="380" cy="80" r="26" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
-          <circle cx="580" cy="240" r="26" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
-          <text x="180" y="247" font-size="20" text-anchor="middle" fill="#1a1a1a">0</text>
-          <text x="380" y="87" font-size="20" text-anchor="middle" fill="#1a1a1a">1</text>
-          <text x="580" y="247" font-size="20" text-anchor="middle" fill="#1a1a1a">2</text>
-        </svg>
-        <div style="margin-top:0.4em;font-size:0.55em;color:#000;">
-          <code>SCOTCH_graphOrder</code> — un vrai bug.<br>
-          Trouvé sur un graphe aléatoire, réduit tout seul au <strong>minimum</strong>.
+        <h3 style="margin-bottom:0.4em;">Replay : <code>pyscotch doctor</code></h3>
+        <div class="claude-terminal" style="width:94%;max-width:none;margin:0 auto;font-size:0.4em;">
+          <div class="term-replay" data-recording="../resources/recordings/pyscotch-doctor.json" data-autoplay="1" data-line-delay="60" data-max-lines="16"></div>
         </div>
+        <p style="font-size:0.45em;color:#444;margin-top:0.4em;">Juste après l'install : la wheel, « No problems detected ». Puis <code>PYSCOTCH_PARALLEL=1</code> : « Loaded NO », le fichier qui manque, et la commande exacte qui le construit. <strong>Le diagnostic est la documentation.</strong></p>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.4em;">Replay : <code>pyscotch scotch build</code></h3>
+        <div class="claude-terminal" style="width:94%;max-width:none;margin:0 auto;font-size:0.4em;">
+          <div class="term-replay" data-recording="../resources/recordings/pyscotch-build.json" data-autoplay="1" data-line-delay="40" data-max-lines="16"></div>
+        </div>
+        <p style="font-size:0.45em;color:#444;margin-top:0.4em;"><code>pyscotch scotch build --parallel --use</code> : preflight, source Scotch 7.0.13 téléchargée depuis gitlab.inria.fr (8,3 Mo, sha256 vérifié), aucun quickfix nécessaire pour cette version, <code>make libscotch</code> + <code>libptscotch</code>, sélection. <strong>1 min 00 s</strong> sur 8 cœurs, sans root. Puis <code>doctor</code> en parallèle, et un Dgraph 8×8×8 partitionné en 4 sous <code>mpirun -n 2</code>.</p>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.3em;">La pipeline</h3>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 470" style="width:96%;max-width:1000px;height:auto;display:block;margin:0 auto;font-family:inherit;">
+<defs><marker id="pl-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker></defs>
+<!-- lane labels -->
+<text x="10" y="28" font-size="14" font-weight="700" fill="#d97757">à chaque push / PR</text>
+<text x="10" y="208" font-size="14" font-weight="700" fill="#d97757">sur un tag v*</text>
+<text x="10" y="343" font-size="14" font-weight="700" fill="#d97757">après publication &middot; chaque lundi</text>
+<line x1="10" y1="190" x2="990" y2="190" stroke="#ddd" stroke-width="1.5"/>
+<line x1="10" y1="325" x2="990" y2="325" stroke="#ddd" stroke-width="1.5"/>
+<rect x="10" y="40" width="300" height="130" rx="7" fill="#fff" stroke="#1a1a1a" stroke-width="2.5"/>
+<text x="22" y="62" font-size="15" font-weight="700" fill="#1a1a1a">Test PyScotch</text>
+<text x="22" y="82" font-size="13" fill="#444">Python 3.9 → 3.12, × 4 jobs</text>
+<text x="22" y="99" font-size="13" fill="#444">make build-all : 32/64 bits × seq/par</text>
+<text x="22" y="116" font-size="13" fill="#444">test-quadrant : les 4 variantes + Hypothesis</text>
+<text x="22" y="133" font-size="13" fill="#444">build-reference-tools → test-differential :</text>
+<text x="22" y="150" font-size="13" fill="#444">gpart · gord · gmap · dgpart · dgord, octet à octet</text>
+<rect x="325" y="40" width="215" height="130" rx="7" fill="#fff" stroke="#1a1a1a" stroke-width="2.5"/>
+<text x="337" y="62" font-size="15" font-weight="700" fill="#1a1a1a">Golden master</text>
+<text x="337" y="82" font-size="13" fill="#444">sdist → venv vide, sans Scotch</text>
+<text x="337" y="99" font-size="13" fill="#444">14 étapes du parcours utilisateur</text>
+<text x="337" y="116" font-size="13" fill="#444">doctor · build · partition · mpirun…</text>
+<text x="337" y="133" font-size="13" fill="#444">comparées octet à octet à tests/golden/</text>
+<rect x="555" y="40" width="215" height="130" rx="7" fill="#fff" stroke="#1a1a1a" stroke-width="2.5"/>
+<text x="567" y="62" font-size="15" font-weight="700" fill="#1a1a1a">Build Scotch from CLI</text>
+<text x="567" y="82" font-size="13" fill="#444">7.0.13 · 7.0.12 (quickfix) · 7.0.11</text>
+<text x="567" y="99" font-size="13" fill="#444">tarball upstream, sha256 pinné</text>
+<text x="567" y="116" font-size="13" fill="#444">build seq + par, doctor, nm -D</text>
+<text x="567" y="133" font-size="13" fill="#444">« --pristine 7.0.12 doit échouer »</text>
+<rect x="785" y="40" width="205" height="130" rx="7" fill="#fff" stroke="#1a1a1a" stroke-width="2.5"/>
+<text x="797" y="62" font-size="15" font-weight="700" fill="#1a1a1a">Verify docs API</text>
+<text x="797" y="82" font-size="13" fill="#444">Python 3.14, build 64 bits seq+par</text>
+<text x="797" y="99" font-size="13" fill="#444">régénère api_data.json</text>
+<text x="797" y="116" font-size="13" fill="#444">git diff --exit-code :</text>
+<text x="797" y="133" font-size="13" fill="#444">le catalogue ne peut pas être périmé</text>
+<rect x="10" y="215" width="330" height="95" rx="7" fill="#fff" stroke="#1a1a1a" stroke-width="2.5"/>
+<text x="22" y="237" font-size="15" font-weight="700" fill="#1a1a1a">Build wheels</text>
+<text x="22" y="257" font-size="13" fill="#444">cibuildwheel, manylinux_2_28</text>
+<text x="22" y="274" font-size="13" fill="#444">x86_64 + aarch64 (runner ARM natif)</text>
+<text x="22" y="291" font-size="13" fill="#444">Scotch séquentiel 32 + 64 bits embarqué</text>
+<rect x="365" y="215" width="120" height="95" rx="7" fill="#fff" stroke="#1a1a1a" stroke-width="2.5"/>
+<text x="377" y="237" font-size="15" font-weight="700" fill="#1a1a1a">Test wheels</text>
+<text x="377" y="257" font-size="13" fill="#444">venv propre,</text>
+<text x="377" y="274" font-size="13" fill="#444">hors du dépôt,</text>
+<text x="377" y="291" font-size="13" fill="#444">32 et 64 bits</text>
+<rect x="510" y="215" width="150" height="95" rx="7" fill="#fff" stroke="#1a1a1a" stroke-width="2.5"/>
+<text x="522" y="237" font-size="15" font-weight="700" fill="#1a1a1a">Publish to PyPI</text>
+<text x="522" y="257" font-size="13" fill="#444">Trusted Publishing</text>
+<text x="522" y="274" font-size="13" fill="#444">(OIDC), sur le tag</text>
+<text x="522" y="291" font-size="13" fill="#444">+ sdist sans .so</text>
+<rect x="685" y="215" width="305" height="95" rx="7" fill="#fff" stroke="#1a1a1a" stroke-width="2.5"/>
+<text x="697" y="237" font-size="15" font-weight="700" fill="#1a1a1a">Verify install methods</text>
+<text x="697" y="257" font-size="13" fill="#444">pip-wheel · uv-wheel · pip-sdist-system</text>
+<text x="697" y="274" font-size="13" fill="#444">· conda-scotch-sdist</text>
+<text x="697" y="291" font-size="13" fill="#444">Scotch Debian (32 bits) et conda-forge (64 bits)</text>
+<rect x="10" y="350" width="470" height="105" rx="7" fill="#fff" stroke="#1a1a1a" stroke-width="2.5" stroke-dasharray="7 5"/>
+<text x="22" y="372" font-size="15" font-weight="700" fill="#1a1a1a">Verify published PyPI release</text>
+<text x="22" y="392" font-size="13" fill="#444">sans aucun checkout : pip install pyscotch</text>
+<text x="22" y="409" font-size="13" fill="#444">wheel-smoke : partition, order, save, doctor, CLI</text>
+<text x="22" y="426" font-size="13" fill="#444">Scotch 7.0.13 / 7.0.12 depuis la tarball, build --parallel,</text>
+<text x="22" y="443" font-size="13" fill="#444">Dgraph sous mpirun -n 2</text>
+<rect x="505" y="350" width="485" height="105" rx="7" fill="#fff" stroke="#1a1a1a" stroke-width="2.5" stroke-dasharray="7 5"/>
+<text x="517" y="372" font-size="15" font-weight="700" fill="#1a1a1a">Chiens de garde hebdomadaires</text>
+<text x="517" y="392" font-size="13" fill="#444">lundi 06:00 UTC : Verify install methods (nouveau Scotch Debian / conda ?)</text>
+<text x="517" y="409" font-size="13" fill="#444">lundi 06:30 UTC : Build Scotch from CLI (tarball upstream déplacée ou</text>
+<text x="517" y="426" font-size="13" fill="#444">régénérée ? les sha256 pinnés le diraient)</text>
+<line x1="340" y1="262" x2="362" y2="262" stroke="#1a1a1a" stroke-width="2.5" marker-end="url(#pl-arrow)"/>
+<line x1="485" y1="262" x2="507" y2="262" stroke="#1a1a1a" stroke-width="2.5" marker-end="url(#pl-arrow)"/>
+<line x1="585" y1="310" x2="300" y2="348" stroke="#1a1a1a" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#pl-arrow)"/>
+</svg>
+        <p style="font-size:0.42em;color:#444;margin-top:0.3em;">8 workflows GitHub Actions. Deux jumeaux : « Build Scotch from CLI » installe depuis le dépôt et garde le code, « Verify published PyPI release » installe depuis PyPI et certifie le paquet publié. L'oracle, à chaque push : les outils de Scotch eux-mêmes, et 14 sorties dorées.</p>
+        <div style="margin-top:0.2em;font-size:0.4em;"><a href="https://github.com/c4ffein/pyscotch/actions">github.com/c4ffein/pyscotch/actions</a> &middot; détail des jobs, matrices et cibles Makefile : <a href="../resources/recordings/pyscotch-pipeline.md">pyscotch-pipeline.md</a></div>
       </section>
       <!-- AJOUT 2026-09-08 -->
-      <section>
-        <h3 style="margin-bottom:0.4em;">Un graphe à 3 sommets &mdash; le vrai</h3>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 240" style="width:50%;max-width:600px;height:auto;display:block;margin:0 auto;">
-          <line x1="440" y1="120" x2="640" y2="120" stroke="#1a1a1a" stroke-width="3"/>
-          <circle cx="120" cy="120" r="26" fill="#fff" stroke="#1a1a1a" stroke-width="3" stroke-dasharray="6 5"/>
-          <circle cx="440" cy="120" r="26" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
-          <circle cx="640" cy="120" r="26" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
-          <text x="120" y="127" font-size="20" text-anchor="middle" fill="#1a1a1a">0</text>
-          <text x="440" y="127" font-size="20" text-anchor="middle" fill="#1a1a1a">1</text>
-          <text x="640" y="127" font-size="20" text-anchor="middle" fill="#1a1a1a">2</text>
-          <text x="120" y="180" font-size="15" text-anchor="middle" fill="#555">composante A, ordenum = 0</text>
-          <text x="540" y="180" font-size="15" text-anchor="middle" fill="#555">composante B, ordenum = 1 &mdash; K&#8322;, se compresse</text>
-        </svg>
-        <div class="claude-terminal">
-  <div class="ct-result">MINIMAL nvert=3 nedges=1 edges=[(1,2)]</div>
-</div>
-        <ul style="font-size:0.5em;margin-top:0.4em;">
-          <li>Le rapport de bug avait un reproducteur à <strong>14 sommets</strong>, écrit à la main</li>
-          <li>hegel-c repart de zéro (3&ndash;20 sommets, 0&ndash;30 arêtes), touche le bug en quelques essais (~25 %), et réduit</li>
-          <li>~2 runs sur 5 atteignent le minimum théorique ; les autres s'arrêtent à 4 sommets ou 2 arêtes. La CI exige nvert &le; 5</li>
-        </ul>
-        <div style="margin-top:0.4em;font-size:0.4em;"><a href="https://github.com/c4ffein/hegel-c/blob/master/docs/shrinking.md">hegel-c/docs/shrinking.md</a> &middot; <a href="https://github.com/c4ffein/hegel-c/blob/master/tests/irl/scotch/test_graph_order_shrink.c">tests/irl/scotch/test_graph_order_shrink.c</a></div>
-        <div class="todo">remplace la slide précédente : le chemin 0-1-2 est connexe et ne déclenche pas le bug. Il faut un sommet isolé + une paire.</div>
-      </section>
-      <section>
-        <h3 style="margin-bottom:0.4em;">Le schéma qui l'a trouvé</h3>
-        <pre><code class="language-c" data-trim data-noescape style="font-size:0.45em;line-height:1.3;">
-hegel_schema_t edge_schema = HEGEL_STRUCT (EdgePair,
-    HEGEL_INT (0, MAX_VERT - 1),
-    HEGEL_INT (0, MAX_VERT - 1));
-
-graph_schema = HEGEL_STRUCT (Graph,
-    HEGEL_INT (3, MAX_VERT),
-    HEGEL_ARRAY_INLINE (edge_schema, sizeof (EdgePair), 0, MAX_EDGES));
-
-/* ... build CSR, SCOTCH_graphOrder with SCOTCH_STRATDISCONNECTED ... */
-memset (permtab, 0xBB, nvert * sizeof (SCOTCH_Num));   /* sentinel */
-hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the final replay only */
-</code></pre>
-        <p style="font-size:0.5em;color:#444;margin-top:0.4em;">Pas une ligne de logique de réduction : elle vient du flux d'octets, comme dans Hypothesis. Le <code>0xBB</code> rend visible ce que Scotch n'a pas écrit.</p>
-      </section>
-      <!-- AJOUT 2026-09-08 : rejeu d'un vrai run, enregistré avec `script` (voir resources/recordings/hegel-order-shrink.md) -->
-      <section>
-        <h3 style="margin-bottom:0.4em;">Replay hegel-c</h3>
-        <div class="claude-terminal" style="width:70%;margin:0 auto;font-size:0.4em;">
-          <div class="term-replay" data-recording="../resources/recordings/hegel-order-shrink.json" data-autoplay="1" data-max-lines="16"></div>
-        </div>
-        <p style="font-size:0.45em;color:#444;margin-top:0.4em;">Scotch <strong>v7.0.11</strong> (avant le fix du 15 avril) &middot; hegel-c <code>ce16904</code>, moteur hegel-rust v0.17.4. Cas n°6 : premier échec sur 20 sommets. Cas n°185 : déjà 3 sommets, 1 arête. 10 175 cas en 17 s, puis <strong><code>MINIMAL nvert=3 nedges=1 edges=[(1,2)]</code></strong> &mdash; 6 runs sur 6. Sur v7.0.14 : 200 cas, rien.</p>
-        <div style="margin-top:0.3em;font-size:0.4em;">trace filtrée (documentée) : tous les cas jusqu'au premier échec, puis les nouveaux minima et un cas sur 250 &middot; les arêtes sont tirées dans [0, 19] et réduites modulo nvert &middot; <a href="../resources/recordings/hegel-order-shrink.md">comment c'est enregistré</a> &middot; <a href="../resources/recordings/hegel-order-shrink-plain.json">le même run sans trace : 16 s de silence, puis MINIMAL</a> &middot; <a href="../resources/recordings/hegel-order-shrink-fixed.json">sur v7.0.14</a></div>
-        <div class="todo">à vérifier en vrai (HTTP). Nuance honnête : le mode trace n'existe pas dans hegel-c ce16904 (la doc shrinking.md est périmée), l'agent a ajouté un patch de 30 lignes de trace dans une copie ; la version « plain », sans patch, atteint le même minimum.</div>
-      </section>
-      <section>
-        <h3 style="margin-bottom:0.4em;">20 avril 2026 &mdash; « review from my dad lol »</h3>
-        <div class="claude-terminal">
-  <div class="ct-dim">// hegel-c, TODO.md, section « From FP » — commit 29c1e40</div>
-  <div class="ct-result">- lance combien de fois? parametrisable ou?<br>- HEGEL_SELF =&gt; prevenir des le debut, parametriser proba<br>- free pas en macro? bizarre... free schema vs shape =&gt; il a raison, j ai toujours pas clean mdr<br>- scotch src libscotch arch.h =&gt; pointer vers classe<br>- lo et hi? comment gerer le min/max? [&hellip;] en particulier, comment je gere le u64? =&gt; expliciter que bien fait</div>
-</div>
-        <p style="font-size:0.5em;margin-top:0.5em;">Le mainteneur de Scotch relit l'outil qui vient de trouver un bug dans Scotch.</p>
-        <div class="todo">à garder ? c'est l'anecdote « l'auteur est dans la salle » sans le dire.</div>
-      </section>
-    </section>
-
-    <!-- Épisode 3 (juillet 2026) — sorti de « 3. Lire le C » le 2026-09-08 pour l'ordre chronologique -->
-    <section>
-      <section>
-        <h3 style="margin-bottom:0.4em;">Épisode 3 &mdash; juillet 2026 : <code>switch (optival)</code></h3>
-        <pre><code class="language-c" data-trim data-noescape style="font-size:0.42em;line-height:1.3;">
-int
-SCOTCH_contextOptionSetNum (SCOTCH_Context * const libcontptr, const int optinum, const SCOTCH_Num optival)
-{
-  optitmp = optival;
-  switch (optival) {                                /* &lt;-- optinum ? */
-    case CONTEXTOPTIONNUMRANDOMFIXEDSEED :          /* == 1 */
-      if (optitmp != 0) optitmp = 1;
-      break;
-    case CONTEXTOPTIONNUMDETERMINISTIC :            /* == 0 */
-      if (optitmp != 0) { optitmp = 1; o = contextValuesSetInt (..., CONTEXTOPTIONNUMRANDOMFIXEDSEED, 1); }
-      break;
-    default :
-      errorPrint (STRINGIFY (SCOTCH_contextOptionSetNum) ": invalid option name");
-      return (1);
-  }
-</code></pre>
-        <ul style="font-size:0.5em;margin-top:0.3em;">
-          <li>Marche <em>par accident</em> pour 0 et 1 : les deux indices d'option valent justement 0 et 1</li>
-          <li>La cascade documentée DETERMINISTIC &rArr; RANDOMFIXEDSEED ne se produit jamais ; toute valeur &ge; 2 : « invalid option name »</li>
-          <li>Trouvé en écrivant des tests de comportement, 12 juil. 2026. Toujours là en v7.0.14 (<code>library_context.c:306</code>)</li>
-        </ul>
-        <div class="todo">signalé dans <code>docs/QUESTIONS_FOR_SCOTCH_TEAM_2.md</code> de pyscotch (14 juil.) — François l'a-t-il vu ? Même question pour contextAlloc, NEEDED et les 8 fonctions non documentées.</div>
-      </section>
-    </section>
-
-    <!-- Barreau 2 : différentiel -->
-    <!-- déplacé le 2026-09-08 (décision c4ffein) : juste avant le bilan, dans l'ordre des dates -->
-    <section>
-      <section data-markdown>
-        <textarea data-template>
-          ### 2. Tests différentiels
-          - Même entrée → pyscotch vs `gpart` / `gord` / `gmap`
-          - Comparaison octet par octet
-          - L'oracle, c'est Scotch lui-même
-        </textarea>
-      </section>
-      <!-- AJOUT 2026-09-08 -->
-      <section>
-        <h3 style="margin-bottom:0.4em;">Le différentiel, en dates</h3>
-        <ul style="font-size:0.62em;">
-          <li><strong>30 juil. 2026</strong> : <code>gpart</code> &mdash; sous réglages déterministes, le fichier de mapping est <strong>identique octet pour octet</strong></li>
-          <li><strong>11 août 2026</strong> : <code>gord</code>, <code>gmap</code>, et sous <code>mpirun</code> : <code>dgpart</code>, <code>dgord</code></li>
-          <li><em>&laquo; First run of the partition tier found a real bug: save_mapping wrote 0-based labels for based graphs, where gpart preserves the graph's base. &raquo;</em><br><span style="color:#444;">&rarr; un bug <strong>chez nous</strong>, pas chez Scotch</span></li>
-          <li>Reproduire <code>dgpart</code> octet pour octet oblige à seeder le PRNG <em>par process</em> (<code>random_proc(rank)</code>), comme les outils</li>
-        </ul>
-        <div style="margin-top:0.4em;font-size:0.4em;"><a href="https://github.com/c4ffein/pyscotch/blob/master/tests/pyscotch_base/test_differential.py">tests/pyscotch_base/test_differential.py</a> &middot; CHANGELOG 7.0.1 (30 juil.) et 7.0.4 (11 août)</div>
-      </section>
     </section>
 
     <!-- ===== AJOUT 2026-09-08 (Claude) : l'arc en dates, vérifié dans git — repos clonés dans ~/workspace ===== -->
@@ -1164,7 +1187,6 @@ SCOTCH_contextOptionSetNum (SCOTCH_Context * const libcontptr, const int optinum
 <tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>août 2026</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">la même tâche, deux fois</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">épilogue</td></tr>
 </tbody></table>
         <p style="font-size:0.5em;color:#444;margin-top:0.6em;">3 commits upstream « [report C. Pellegrini] » &middot; 3 autres corrections tracées à nos signalements &middot; 4 toujours ouverts en v7.0.14</p>
-        <div class="todo">récap avant le bilan (déplacé ici le 8 sept., décision c4ffein). Les barreaux qui précèdent sont encore dans l'ordre de ton plan, pas des dates — à réordonner.</div>
       </section>
     </section>
 
@@ -1193,41 +1215,9 @@ SCOTCH_contextOptionSetNum (SCOTCH_Context * const libcontptr, const int optinum
 <tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>archDecoArchBuild</code> : mauvais domaines pour les distances<br><span style="color:#666;">août 2026</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><span style="color:#c00;">?</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">distances fausses</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">corrigé 18 août 2026 &mdash; <code>911ebdf</code> ✓ crédité</td></tr>
           </tbody>
         </table>
-        <div class="todo">rempli par Claude le 8 sept. depuis git (upstream, pyscotch, fork). À relire ligne par ligne : ce sont mes lectures, pas les tiennes. archDecoArchBuild : je n'ai trouvé la source du signalement dans aucun repo &mdash; d'où vient-il ? C'est la slide que la salle va challenger.</div>
       </section>
       <!-- AJOUT 2026-09-08 -->
-      <section>
-        <h3 style="margin-bottom:0.5em;">Le bilan &mdash; chez nous</h3>
-        <table style="margin:0 auto;border-collapse:collapse;font-size:0.45em;">
-<thead><tr><th style="padding:0.3em 0.6em;border-bottom:2px solid #333;text-align:left;">Bug</th><th style="padding:0.3em 0.6em;border-bottom:2px solid #333;text-align:left;">Effet</th><th style="padding:0.3em 0.6em;border-bottom:2px solid #333;text-align:left;">Trouvé par</th></tr></thead>
-<tbody>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>SCOTCH_Dgraph</code> opaque à 256 octets, taille réelle plus grande<br><span style="color:#666;">28 nov. 2025</span></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">segfaults au GC, après <code>MPI_Finalize</code></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>SCOTCH_*Sizeof()</code>, jamais de taille fixe</td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">6 signatures ctypes fausses, dont <code>MPI_Comm</code> reçu dans 4 octets<br><span style="color:#666;">12 juil. 2026</span></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">corruption mémoire sous OpenMPI</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">vérificateur signatures vs headers, en CI</td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">stratégies « m » / « n » creuses : partition à &minus;1 dans 7.0.0<br><span style="color:#666;">31 juil. 2026</span></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">partitionneur qui rend tout à &minus;1</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">round-trip <code>SCOTCH_stratSave</code>, la lib est le détecteur</td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>save_mapping</code> en base 0 sur graphe basé<br><span style="color:#666;">30 juil. 2026</span></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">mapping inutilisable par les outils Scotch</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">test différentiel <code>gpart</code></td></tr>
-</tbody></table>
-        <p style="font-size:0.52em;margin-top:0.6em;">La règle : un bug chez nous n'est pas un bug chez Scotch. L'oracle sert aussi à ça.</p>
-        <div style="margin-top:0.4em;font-size:0.4em;"><a href="https://github.com/c4ffein/pyscotch/blob/master/docs/FINDINGS.md">pyscotch/docs/FINDINGS.md</a> &middot; CHANGELOG 7.0.0 / 7.0.1</div>
-      </section>
-      <section>
-        <h3 style="margin-bottom:0.5em;">Les reçus</h3>
-        <ul style="font-size:0.7em;">
-          <li>Mon nom, dans le bug tracker de Scotch</li>
-          <li>Les logs de conversation avec le mainteneur</li>
-        </ul>
-        <div class="todo">captures du bug tracker (ton nom visible) + extraits choisis des échanges avec François — le &laquo; SLA du mainteneur upstream : le dîner de famille &raquo; peut être une très bonne slide, à toi de voir</div>
-      </section>
       <!-- AJOUT 2026-09-08 -->
-      <section>
-        <h3 style="margin-bottom:0.4em;">Les reçus, dans git</h3>
-        <div class="claude-terminal">
-  <div class="ct-user">git log --date=short --format='%h %ad %an | %s' --grep='report C. Pellegrini'</div>
-  <div class="ct-result">911ebdf 2026-08-18 Francois PELLEGRINI | Bugfix: use proper domains for distance computations in `archDecoArchBuild()` [report C. Pellegrini]<br>0642921 2026-04-15 Francois PELLEGRINI | Bugfix: make `hgraphOrderCp()` work on (disconnected) subgraphs [report C. Pellegrini]<br>f7cd80c 2025-11-11 Francois PELLEGRINI | Bugfix: add missing suffix renaming macros [report C. Pellegrini]</div>
-  <div class="ct-dim">// trois autres corrections ont suivi nos signalements, sans mention dans le commit : e0a90c7 (coloriage, signalé le 5 déc., corrigé le 15 janv.), 770f26e + eef80bd (renommage, signalé le 12 juil., corrigé le 13)</div>
-</div>
-        <p style="font-size:0.55em;margin-top:0.6em;">9 signalements, 5 corrigés dans les jours ou semaines qui ont suivi, dont 3 crédités dans l'historique. 4 ouverts.</p>
-        <div style="margin-top:0.4em;font-size:0.4em;"><a href="https://gitlab.inria.fr/scotch/scotch">gitlab.inria.fr/scotch/scotch</a>, master au 27 août 2026 (v7.0.14)</div>
-      </section>
     </section>
 
     <!-- ===== Épilogue de l'arc Scotch : la même tâche, deux fois ===== -->
@@ -1236,7 +1226,7 @@ SCOTCH_contextOptionSetNum (SCOTCH_Context * const libcontptr, const int optinum
         <textarea data-template>
           ### Sonnet 5 vs Fable 5
           - François envoie une tâche bien scopée :
-            - Une journée pour un ingé de l'équipe avec Sonnet
+            - Un ingé de l'équipe avec Sonnet
             - J'envoie la tâche à Fable, je ne veux pas relire
               - Depuis mon portable
               - Dans la voiture et au restaurant
@@ -1258,7 +1248,6 @@ SCOTCH_contextOptionSetNum (SCOTCH_Context * const libcontptr, const int optinum
 <tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>27 août</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">push upstream, v7.0.14</td></tr>
 </tbody></table>
         <p style="font-size:0.5em;color:#444;margin-top:0.5em;">Heures de Paris (UTC+2). Aucun des deux n'a vu l'autre : le seul accès réseau de la session vers Scotch est le clone, et le log brut le montre.</p>
-        <div class="todo">François OK par téléphone (8 sept.). Reste son mail avec le verdict, à citer sur la slide « Le verdict ».</div>
       </section>
       <section>
         <div class="claude-terminal">
@@ -1319,7 +1308,7 @@ SCOTCH_contextOptionSetNum (SCOTCH_Context * const libcontptr, const int optinum
       </section>
       <!-- AJOUT 2026-09-08 : comparaison écrite par Claude, pour discussion en direct — version longue : notes/treetab-deux-patchs.md ; fichiers côte à côte : treetab-theirs.c / treetab-ours.c -->
       <section>
-        <h3 style="margin-bottom:0.4em;">Deux patchs, une tâche</h3>
+        <h3 style="margin-bottom:0.4em;">Deux patchs</h3>
         <table style="margin:0 auto;border-collapse:collapse;font-size:0.55em;">
 <thead><tr><th style="padding:0.3em 0.6em;border-bottom:2px solid #333;text-align:left;"></th><th style="padding:0.3em 0.6em;border-bottom:2px solid #333;text-align:left;">L'ingénieur (Sonnet 5)</th><th style="padding:0.3em 0.6em;border-bottom:2px solid #333;text-align:left;">Moi (Fable 5, téléphone)</th></tr></thead>
 <tbody>
@@ -1354,14 +1343,12 @@ SCOTCH_contextOptionSetNum (SCOTCH_Context * const libcontptr, const int optinum
         <div style="margin-top:0.4em;font-size:0.4em;">côte à côte, annotés : <code>treetab-theirs.c</code> / <code>treetab-ours.c</code> (<code>vi -O</code>) &middot; <a href="https://gitlab.inria.fr/scotch/scotch/-/commit/adb2b64">adb2b64</a> &middot; <a href="https://github.com/c4ffein-work/playground/tree/main/patches/scotch__scotch/2026-08-25-dorder-tree-dist-based">notre patch</a></div>
       </section>
       <section>
-        <h3 style="margin-bottom:0.4em;">Mon avis, à contredire</h3>
+        <h3 style="margin-bottom:0.4em;">Avis de Fable 5.1</h3>
         <div class="claude-terminal">
   <div class="ct-dim">// Claude (Fable 5.1), 8 sept. 2026, après lecture des trois commits — sans accès à la session de l'ingénieur</div>
   <div class="ct-claude">Deux patchs corrects. Le sien est le meilleur C : moins de surface, un UB en moins. Le mien est le mieux vérifié et le mieux expliqué.</div>
   <div class="ct-claude">Si je relisais les deux à l'aveugle : je merge le sien, je garde mon test.</div>
-  <div class="ct-claude">Le verdict de François ne mesure pas « qui écrit le meilleur C ». Il mesure « quel livrable aide le plus un mainteneur qui relit » : un patch seul, ou un patch avec sa preuve et son raisonnement.</div>
 </div>
-        <div class="todo">format discussion : on part de ce texte et tu me contredis en direct ? Version longue dans <code>notes/treetab-deux-patchs.md</code>. Le mainteneur a gardé la version de l'ingénieur (signature sans grafptr) et refactoré par-dessus : à dire avant ou après le verdict ?</div>
       </section>
       <section data-markdown>
         <textarea data-template>
@@ -1373,15 +1360,12 @@ SCOTCH_contextOptionSetNum (SCOTCH_Context * const libcontptr, const int optinum
             pour faire le meilleur travail possible
         </textarea>
       </section>
-      <section>
-        <div class="todo">reçus : le mail de François avec son verdict (extrait), + s'assurer qu'il est OK pour que ce soit dit en public &mdash; l'ingénieur est peut-être dans la salle, ou identifiable</div>
-      </section>
     </section>
 
     <!-- ===== Partie 3 ===== -->
     <section>
       <h2>Partie 3</h2>
-      <h3>Trois idées — en accéléré</h3>
+      <h3>Trois changements de paradigme</h3>
     </section>
 
     <!-- Idée 1 : porter une codebase -->
@@ -1561,19 +1545,17 @@ SCOTCH_contextOptionSetNum (SCOTCH_Context * const libcontptr, const int optinum
     <section>
       <div class="flex" style="align-items:center;justify-content:center;gap:1.6em;width:100%;">
         <div style="flex:0 0 auto;text-align:center;">
-          <div style="width:300px;height:300px;border:3px dashed #c00;display:flex;align-items:center;justify-content:center;font-size:0.5em;color:#c00;font-weight:700;">TODO — QR<br>(qr-claude-on-scotch.svg)</div>
+          <img src="../resources/qr-claude-on-scotch.svg" alt="QR code vers les slides" style="width:300px;height:300px;border:none;background:none;box-shadow:none;image-rendering:pixelated;">
         </div>
         <ul style="flex:0 1 auto;text-align:left;font-size:0.6em;line-height:2.0;list-style:none;margin:0;padding:0;">
-          <li><a href="https://presentations.cafeine.dev/slides/claude-on-scotch.html" style="color:#000;text-decoration:none;">presentations.cafeine.dev/slides/claude-on-scotch.html</a></li>
+          <li><a href="https://presentations.cafeine.dev/slides/claude-on-scotch.html" style="color:#000;text-decoration:none;font-weight:700;">presentations.cafeine.dev/slides/claude-on-scotch.html</a></li>
           <li><a href="https://github.com/c4ffein/pyscotch" style="color:#000;text-decoration:none;">github.com/c4ffein/pyscotch</a></li>
           <li><a href="https://github.com/c4ffein/hegel-c" style="color:#000;text-decoration:none;">github.com/c4ffein/hegel-c</a></li>
-          <li><a href="https://github.com/realworld-apps/realworld" style="color:#000;text-decoration:none;">github.com/realworld-apps/realworld</a></li>
-          <li><a href="https://github.com/c4ffein-work/playground/tree/main/patches/scotch__scotch/2026-08-25-dorder-tree-dist-based" style="color:#000;text-decoration:none;">github.com/c4ffein-work/playground &mdash; patch + rapport + test de l'épilogue</a></li>
-          <li><a href="https://www.anthropic.com/research/vibe-physics" style="color:#000;text-decoration:none;">anthropic.com/research/vibe-physics</a></li>
-          <li><a href="https://www.anthropic.com/news/claude-science-ai-workbench" style="color:#000;text-decoration:none;">anthropic.com — Claude Science</a></li>
-          <li><a href="https://writings.cafeine.dev/posts/there-is-no-stop-sign/" style="color:#000;text-decoration:none;">writings.cafeine.dev — There is no stop sign</a></li>
-          <li><a href="#" data-transcript="claude-on-scotch-making-of.json" style="color:#000;text-decoration:none;font-weight:700;">▶ voir le making-of (transcript brut)</a></li>
-          <li><a href="#" data-transcript="claude-on-scotch-la-tache.json" style="color:#000;text-decoration:none;font-weight:700;">▶ la tâche du mainteneur, faite depuis un téléphone (transcript brut)</a></li>
+          <li><a href="https://gitlab.inria.fr/scotch/scotch" style="color:#000;text-decoration:none;">gitlab.inria.fr/scotch/scotch</a> <span style="color:#666;">&mdash; les reçus, dans l'historique</span></li>
+          <li><a href="https://github.com/c4ffein-work/playground/tree/main/patches/scotch__scotch/2026-08-25-dorder-tree-dist-based" style="color:#000;text-decoration:none;">github.com/c4ffein-work/playground</a> <span style="color:#666;">&mdash; patch, rapport et test de l'épilogue</span></li>
+          <li><a href="#" data-transcript="claude-on-scotch-making-of.json" style="color:#000;text-decoration:none;font-weight:700;">▶ le making-of de ce talk (transcript brut)</a></li>
+          <li><a href="#" data-transcript="claude-on-scotch-la-tache.json" style="color:#000;text-decoration:none;font-weight:700;">▶ la tâche du mainteneur, depuis un téléphone (transcript brut)</a></li>
+          <li><a href="https://writings.cafeine.dev/posts/there-is-no-stop-sign/" style="color:#000;text-decoration:none;">writings.cafeine.dev &mdash; There is no stop sign</a></li>
         </ul>
       </div>
     </section>
