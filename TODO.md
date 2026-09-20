@@ -74,5 +74,4 @@ changelog or transcript. Need:
 - [ ] Ladder order ≠ chronology: differential tests (gpart byte-identity) are
       2026-07-30, after Hypothesis (Dec 2025) and hegel (Apr 2026)
 - [ ] "vague Mythos" date for the "~6 mois" on the Agentic PBT slide
-- [ ] QR asset `qr-claude-on-scotch.svg`
 - [ ] truncated bullet "Claude peut reframe mes " in "Ce que ça change pour moi"

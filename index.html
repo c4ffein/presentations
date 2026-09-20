@@ -175,6 +175,11 @@
         #content:focus { outline: none; } /* spa-nav focuses it after a swap (a11y), no ring */
         article { margin-bottom: 3rem; }
         .post-meta { color: var(--chrome); font-size: 0.9rem; }
+        /* Presentations index: the description is chrome (it takes the field like the
+           date line), indented 5% under its title, tight to the title, roomier before
+           the next one. Narrow screens: a fixed indent, 5% of a phone is too little. */
+        .presentation-desc { color: var(--chrome); font-size: 0.9rem; margin: 0.15rem 0 1.25rem 5%; }
+        @media (max-width: 600px) { .presentation-desc { margin-left: 1rem; } }
         .tags { margin-top: 0.5rem; }
         .tag { background: var(--chrome); color: var(--bg); padding: 0.2rem 0.5rem; border-radius: 3px; font-size: 0.8rem; }
         details { margin: 1rem 0; }
@@ -251,15 +256,47 @@
 <h1>Presentations</h1>
 <ul>
     
-    <li><a href="slides&#x2F;claude-on-scotch.html">Claude on Scotch</a></li>
+    <li>
+        <a href="slides&#x2F;claude-on-scotch.html">Claude on Scotch</a>
+        
+        <p class="presentation-desc">For researchers at Inria, some at the top of their field with zero agentic coding experience. Three parts: my mental model of LLMs, a ten-month journey finding real bugs in Scotch (a 30-year-old C&#x2F;MPI graph partitioner) with Claude, and general lessons from Scotch and other projects. FR.</p>
+        
+    </li>
     
-    <li><a href="slides&#x2F;dev-with-ai-in-late-2025.html">Coding with Claude Code - fin 2025</a></li>
+    <li>
+        <a href="slides&#x2F;dev-with-ai-in-late-2025.html">Coding with Claude Code - fin 2025</a>
+        
+        <p class="presentation-desc">How I actually coded with Claude Code in late 2025: a short LLM primer, real sessions, and where it still needs a nudge. FR&#x2F;EN.</p>
+        
+    </li>
     
-    <li><a href="slides&#x2F;django-ninja.html">Django Ninja</a></li>
+    <li>
+        <a href="slides&#x2F;django-ninja.html">Django Ninja</a>
+        
+        <p class="presentation-desc">A Django REST Framework alternative inspired by FastAPI, with a first performance assessment. FR.</p>
+        
+    </li>
     
-    <li><a href="slides&#x2F;hypothesis.html">Hypothesis</a></li>
+    <li>
+        <a href="slides&#x2F;hypothesis.html">Hypothesis</a>
+        
+        <p class="presentation-desc">Property-based testing in Python: let the machine find your edge cases. FR.</p>
+        
+    </li>
     
-    <li><a href="slides&#x2F;learning-python-as-a-programmer.html">Learning Python as a Programmer</a></li>
+    <li>
+        <a href="slides&#x2F;learning-python-as-a-programmer.html">Learning Python as a Programmer</a>
+        
+        <p class="presentation-desc">A dense syntax tour for programmers who never tried Python, built to support a live discussion rather than a lecture. Unlike most Python tutorials, it expects intermediate to advanced knowledge of other languages. EN.</p>
+        
+    </li>
+    
+    <li>
+        <a href="slides&#x2F;vibe-coding-vs-vibe-engineering.html">Vibe coding vs vibe engineering</a>
+        
+        <p class="presentation-desc">Ten minutes: Karpathy&#x27;s vibe coding, Willison&#x27;s and Ogilvie&#x27;s vibe engineering, and what it looks like in practice. Your new job is tech lead + QA. FR.</p>
+        
+    </li>
     
 </ul>
 </main>
@@ -830,7 +867,7 @@ fn fmain(@builtin(position) fc : vec4f) -> @location(0) vec4f {
     uncurtain(); return; // belt-and-suspenders: loader already skips
   }
 
-  var SEL = "nav a, #theme-toggle, h1, h2, h3, article hr, article blockquote, .fc-date, .fc-slab, .fc-ring, li .post-meta, .fc-bullet";
+  var SEL = "nav a, #theme-toggle, h1, h2, h3, article hr, article blockquote, .fc-date, .fc-slab, .fc-ring, li .post-meta, li .presentation-desc, .fc-bullet";
 
   function prep() {
     // Code chips inside headings lose their opaque background: the GPU stencil cuts by

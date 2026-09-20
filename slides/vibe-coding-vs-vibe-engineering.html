@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<!--
+  DRAFT v0 — 2026-09-20, écrit par Claude à la demande de c4ffein.
+  10 minutes. Sous-ensemble « général » de claude-on-scotch.html :
+  Karpathy (vibe coding) → Willison + Ogilvie (vibe engineering) → ma version
+  (tech lead = structures + questions ; QA = oracle) → l'épilogue Scotch comme
+  cas limite → tout code est legacy → « votre nouveau job ».
+  Les .todo sont des choix à trancher par c4ffein. Rien n'a été retiré de
+  claude-on-scotch.html ; les slides réutilisées y sont citées en commentaire.
+-->
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Vibe coding vs vibe engineering</title>
+    <link rel="stylesheet" href="../engine/dist/reset.css">
+    <link rel="stylesheet" href="../engine/dist/reveal.css">
+    <link rel="stylesheet" href="../engine/dist/theme/c4ffein.css">
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="../engine/dist/plugin/highlight/c4ffein-light.css">
+    <link rel="stylesheet" href="../resources/claude-terminal.css">
+    <link rel="stylesheet" href="../engine/runcss/runcss.min.css">
+    <script src="../engine/runcss/runcss.min.js" defer watch></script>
+    <style>
+      /* draft-only: loud placeholders, delete this block when the deck is final */
+      .todo {
+        border: 3px dashed #c00;
+        background: #ffecec;
+        color: #c00;
+        font-size: 0.5em;
+        font-weight: 700;
+        padding: 0.6em 0.9em;
+        margin: 0.6em auto 0;
+        max-width: 85%;
+        text-align: left;
+      }
+      .todo::before { content: "TODO — "; }
+      .src { margin-top: 0.5em; font-size: 0.4em; color: #444; }
+      .src a { color: #444; }
+      blockquote.q { font-size: 0.62em; width: 88%; margin: 0 auto; text-align: left; }
+      .two { display: flex; gap: 1.2em; align-items: flex-start; text-align: left; }
+      .two > div { flex: 1 1 50%; }
+      .pill { display: inline-block; padding: 0.1em 0.5em; border: 2px solid #333; border-radius: 6px; font-size: 0.55em; margin: 0.15em; }
+    </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+    <!-- ===== Titre ===== -->
+    <section>
+      <h1 style="margin-bottom:0.3em;">Vibe coding<br><span style="font-size:0.6em;">vs</span><br>vibe engineering</h1>
+    </section>
+
+    <!-- ===== 1. Vibe coding, la définition ===== -->
+    <section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">&laquo; Vibe coding &raquo;</h3>
+        <blockquote class="q">&laquo; There's a new kind of coding I call "vibe coding", where you <strong>fully give in to the vibes</strong>, embrace exponentials, and <strong>forget that the code even exists</strong>. &raquo;</blockquote>
+        <blockquote class="q" style="margin-top:0.6em;font-size:0.55em;">&laquo; I "Accept All" always, <strong>I don't read the diffs anymore</strong>. When I get error messages I just copy paste them in with no comment, usually that fixes it. [&hellip;] Sometimes the LLMs can't fix a bug so I just work around it or ask for random changes until it goes away. [&hellip;] <strong>it mostly works</strong>. &raquo;</blockquote>
+        <p class="src">Andrej Karpathy &mdash; <a href="https://x.com/karpathy/status/1886192184808149383">x.com/karpathy, 2 février 2025</a></p>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">Qui parle</h3>
+        <ul style="font-size:0.65em;">
+          <li>Doctorat à Stanford sous Fei-Fei Li
+            <ul><li>y crée et enseigne <a href="https://cs231n.github.io/"><strong>CS231n</strong></a>, le premier cours de deep learning de Stanford (2015)</li></ul>
+          </li>
+          <li><strong>Membre fondateur d'OpenAI</strong> (2015&ndash;2017), y revient en 2023&ndash;2024</li>
+          <li><strong>Directeur de l'IA chez Tesla</strong> (2017&ndash;2022) : la vision d'Autopilot</li>
+          <li>Depuis : de la pédagogie
+            <ul>
+              <li><a href="https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ"><em>Neural Networks: Zero to Hero</em></a> &mdash; de micrograd à GPT, à la main</li>
+              <li><a href="https://github.com/karpathy/nanoGPT">nanoGPT</a> &mdash; un GPT-2 entraînable en ~300 lignes</li>
+              <li><a href="https://www.youtube.com/watch?v=7xTGNNLPyMI"><em>Deep Dive into LLMs like ChatGPT</em></a> &mdash; 3 h 31, grand public, février 2025</li>
+            </ul>
+          </li>
+        </ul>
+        <div class="src"><a href="https://karpathy.ai/">karpathy.ai</a></div>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Ce qu'il disait vraiment
+          - Un **week-end**, un projet **jetable**
+          - « it mostly works »
+          - Le mot a ensuite servi à tout et n'importe quoi
+            - des landing pages… et des bases de prod
+          - Un scope **grandissant**, mais **limité**
+        </textarea>
+      </section>
+    </section>
+
+    <!-- ===== 3. Vibe engineering — Willison ===== -->
+    <!-- réutilise la slide « Vibe engineering » de claude-on-scotch.html @c7e3540 (retirée au commit « clean ») -->
+    <section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">&laquo; Vibe engineering &raquo;</h3>
+        <blockquote class="q">&laquo; Vibe coding is pretty well established now as covering the fast, loose and irresponsible way of building software with AI &mdash; entirely prompt-driven, and with no attention paid to how the code actually works. &raquo;</blockquote>
+        <blockquote class="q" style="margin-top:0.6em;">&laquo; [vibe engineering :] seasoned professionals accelerate their work with LLMs while staying <strong>proudly and confidently accountable</strong> for the software they produce &raquo;</blockquote>
+        <p class="src">Simon Willison &mdash; <a href="https://simonwillison.net/2025/Oct/7/vibe-engineering/">Vibe engineering</a>, 7 octobre 2025</p>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">Qui parle</h3>
+        <ul style="font-size:0.65em;">
+          <li><strong>Co-créateur de Django</strong> (2005)</li>
+          <li>Créateur de <strong>Datasette</strong> et de l'outil <code>llm</code></li>
+          <li>Membre du conseil d'administration de la <strong>Python Software Foundation</strong></li>
+          <li>Blog depuis 2002 &mdash; l'une des chroniques les plus lues sur l'usage réel des LLM</li>
+          <li>A nommé la <em>prompt injection</em> (septembre 2022)</li>
+        </ul>
+        <div class="src"><a href="https://simonwillison.net/about/">simonwillison.net/about</a></div>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">Sa liste</h3>
+        <p style="font-size:0.5em;color:#444;margin-bottom:0.4em;">Ce qu'il faut déjà savoir faire pour que ça marche :</p>
+        <div style="text-align:center;">
+          <span class="pill">tests automatisés</span>
+          <span class="pill">planifier avant</span>
+          <span class="pill">documentation</span>
+          <span class="pill">git, sérieusement</span>
+          <span class="pill">CI, lint, préprod</span>
+          <span class="pill">revue de code</span>
+          <span class="pill">management</span>
+          <span class="pill">QA manuelle</span>
+          <span class="pill">recherche</span>
+          <span class="pill">savoir quoi déléguer</span>
+          <span class="pill">ré-estimer</span>
+        </div>
+        <blockquote class="q" style="margin-top:0.8em;font-size:0.58em;">&laquo; If you're going to really exploit the capabilities of these new tools, you need to be <strong>operating at the top of your game</strong>. &raquo;</blockquote>
+        <p class="src">Simon Willison &mdash; <a href="https://simonwillison.net/2025/Oct/7/vibe-engineering/">simonwillison.net/2025/Oct/7/vibe-engineering</a></p>
+      </section>
+    </section>
+
+    <!-- ===== 4. Vibe engineering — Ogilvie (ma citation préférée) ===== -->
+    <section>
+      <section>
+        <h3 style="margin-bottom:0.5em;"><s>Developer</s> &rArr; TECH LEAD + QA</h3>
+        <blockquote class="q" style="font-size:0.8em;">&laquo; Think of it this way: you just got promoted. Your new title is <strong>Tech Lead + QA Lead</strong>. &raquo;</blockquote>
+        <blockquote class="q" style="margin-top:0.7em;font-size:0.58em;">&laquo; The model is like a genius intern with amnesia. &raquo;</blockquote>
+        <p class="src">Duncan Ogilvie (@mrexodia, auteur de x64dbg) &mdash; <a href="https://x.com/mrexodia/status/2010157660885176767">Vibe Engineering: What I've Learned Working with AI Coding Agents</a>, 12 janvier 2026</p>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">Qui parle</h3>
+        <ul style="font-size:0.65em;">
+          <li>Reverse engineer, C++, internals Windows &mdash; Utrecht University</li>
+          <li>Créateur et mainteneur de <strong>x64dbg</strong> (2014)
+            <ul><li>le débogueur open source de référence sous Windows &mdash; ~50 k étoiles GitHub</li></ul>
+          </li>
+          <li>Auteur de <strong>ida-pro-mcp</strong> (2025) : IDA Pro piloté par un LLM via MCP &mdash; ~12 k étoiles</li>
+          <li>Invité de <em>Behind the Binary</em> (Google Cloud Security), mai 2025</li>
+          <li>Plusieurs mois à travailler <em>uniquement</em> avec des agents avant d'écrire l'article</li>
+          <li>Aujourd'hui : <strong>Ogilvie Labs</strong>
+            <ul><li>formations &mdash; dont un atelier &laquo; construire un agent de code from scratch &raquo;</li></ul>
+          </li>
+        </ul>
+        <div class="src"><a href="https://github.com/mrexodia">github.com/mrexodia</a> &middot; <a href="https://x64dbg.com/">x64dbg.com</a> &middot; <a href="https://github.com/mrexodia/ida-pro-mcp">ida-pro-mcp</a> &middot; <a href="https://labs.ogilvie.pl/">labs.ogilvie.pl</a></div>
+      </section>
+      <section>
+        <h3 style="margin-bottom:0.5em;">Pas de micromanagement</h3>
+        <blockquote class="q">&laquo; You could have thirty agents working for you simultaneously. You cannot watch all of them and micromanage each one. You wouldn't do this with your human team either. Instead: <strong>write a better harness</strong>. &raquo;</blockquote>
+        <p style="font-size:0.5em;color:#444;margin-top:0.8em;">Titres de section :</p>
+        <div style="text-align:center;">
+          <span class="pill">Trust the Harness, Not Your Eyes</span>
+          <span class="pill">Design for Black Boxes</span>
+          <span class="pill">TDD Is No Longer a Scam</span>
+          <span class="pill">DevDocs: Surviving Context Resets</span>
+          <span class="pill">On Slop and Accumulation</span>
+        </div>
+        <p class="src">Duncan Ogilvie &mdash; <a href="https://x.com/mrexodia/status/2010157660885176767">Vibe Engineering: What I've Learned Working with AI Coding Agents</a></p>
+      </section>
+    </section>
+
+    <!-- ===== 5. Ma version ===== -->
+    <section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Ma pratique
+          - **Tech lead** : je possède la *structure* et les *questions*
+          - **QA lead** : je possède l'*oracle*
+          - Le code est à l'agent
+            - je le lis quand c'est nécessaire
+            - **je sais quand je dois le lire**
+        </textarea>
+      </section>
+
+      <!-- Tech lead, 1/2 : les structures de données — réutilise la slide Torvalds de claude-on-scotch.html @c7e3540 -->
+      <section>
+        <h3 style="margin-bottom:0.5em;">Tech lead &mdash; les structures</h3>
+        <blockquote class="q" style="font-size:0.72em;">&laquo; Bad programmers worry about the code. Good programmers worry about data structures and their relationships. &raquo;</blockquote>
+        <p class="src">Linus Torvalds &mdash; liste git, 2006</p>
+        <div class="claude-terminal" style="margin-top:0.6em;">
+          <div class="ct-user">hey, can you refresh my memory about the data structures of this project?...</div>
+          <div class="ct-dim">3 skills available</div>
+          <div class="ct-claude">Let me re-read the current state first — the repo has moved since my last pass (source of truth is now in-repo, referee self-clones).</div>
+          <div class="ct-tool">Read 2 files</div>
+          <div class="ct-claude">Sure — here's the map of the state-carrying structures, from the trunk out (the authoritative version lives in docs/architecture.md, state ownership table + invariants).</div>
+        </div>
+      </section>
+
+      <!-- Tech lead, 2/2 : des questions, pas des ordres — réutilise « Chaque prompt est une question » + « La nuance » -->
+      <section data-markdown>
+        <textarea data-template>
+          ### Tech lead — surtout des questions
+          - Je ne donne (presque) jamais d'ordres
+            - « wdyt? »
+            - « do we have an ssot? »
+          - Le produit est entraîné pour **suivre vos instructions**
+            - ordonnez : il obéira — même si vous avez tort
+            - demandez :
+              - vous récupérez l'information
+              - vous chargez correctement le contexte
+          - Mind dump + thinking models
+        </textarea>
+      </section>
+      <section data-markdown>
+        <textarea data-template>
+          ### Tech lead — parfois des ordres
+          - Les ordres restent parfaits pour le mécanique
+            - « kill 8080! serve on 8080! »
+          - Accorder l'acte de langage à la tâche
+            - jugement → **question**
+            - mécanique → **ordre**
+          - *ingénierie de l'information*
+        </textarea>
+      </section>
+
+      <!-- QA lead, 1/2 : l'oracle — condense « Oracle > Code » + pass + Bun + Scotch -->
+      <section>
+        <h3 style="margin-bottom:0.5em;">QA lead &mdash; l'oracle</h3>
+        <p style="font-size:0.55em;margin-bottom:0.5em;">Un projet est « vibable » quand quelque chose d'autre que moi sait dire <em>c'est faux</em>.</p>
+        <table style="font-size:0.5em;margin:0 auto;border-collapse:collapse;text-align:left;">
+          <tr style="border-bottom:2px solid #333;"><th style="padding:0.3em 0.9em;">projet</th><th style="padding:0.3em 0.9em;">l'oracle</th><th style="padding:0.3em 0.9em;">échelle</th></tr>
+          <tr><td style="padding:0.3em 0.9em;"><strong>pass</strong> (bash &rarr; Python)</td><td style="padding:0.3em 0.9em;">la suite de tests de l'original, via un adaptateur</td><td style="padding:0.3em 0.9em;">1 fichier, mai 2025</td></tr>
+          <tr><td style="padding:0.3em 0.9em;"><strong>Bun</strong> (Zig &rarr; Rust)</td><td style="padding:0.3em 0.9em;">1,3 M+ d'assertions conservées + relecteurs <em>adversariaux</em></td><td style="padding:0.3em 0.9em;">1,3 M de lignes, 11 jours, mai 2026</td></tr>
+          <tr><td style="padding:0.3em 0.9em;"><strong>pyscotch</strong> (wrapper C)</td><td style="padding:0.3em 0.9em;">les binaires upstream (gpart / gord / gmap), Hypothesis, hegel-c</td><td style="padding:0.3em 0.9em;">10 mois, des bugs upstream corrigés</td></tr>
+          <tr><td style="padding:0.3em 0.9em;"><strong>RealWorld</strong></td><td style="padding:0.3em 0.9em;">spec OpenAPI + Hurl + Playwright, <em>avant</em> le code</td><td style="padding:0.3em 0.9em;">100+ implémentations</td></tr>
+        </table>
+        <p style="font-size:0.55em;margin-top:0.6em;"><strong>Oracle &gt; Code.</strong> Pas d'oracle &rArr; vibe-coding</p>
+        <div class="src"><a href="https://github.com/c4ffein/pass">c4ffein/pass</a> &middot; <a href="https://bun.com/blog/bun-in-rust">bun.com/blog/bun-in-rust</a> &middot; <a href="https://github.com/c4ffein/pyscotch">c4ffein/pyscotch</a> &middot; <a href="https://github.com/realworld-apps/realworld">realworld-apps/realworld</a></div>
+      </section>
+
+      <!-- QA lead, 2/2 : l'oracle a besoin d'un expert — réutilise « Vibe physics » + « nudge, nudge, nudge » -->
+      <section>
+        <h3 style="margin-bottom:0.5em;">QA lead &mdash; l'oracle se contourne</h3>
+        <div class="two">
+          <div>
+            <p style="font-size:0.55em;margin:0 0 0.3em;"><strong>Mai 2025, pass</strong></p>
+            <ul style="font-size:0.5em;">
+              <li>&laquo; Claude ended up making <strong>hardcoded modifications specifically to pass the tests</strong> &raquo;</li>
+              <li>&laquo; &hellip;easily recognized this mistake <strong>once I asked a simple question</strong>. &raquo;</li>
+            </ul>
+          </div>
+          <div>
+            <p style="font-size:0.55em;margin:0 0 0.3em;"><strong>Décembre 2025, &laquo; vibe physics &raquo;</strong></p>
+            <ul style="font-size:0.5em;">
+              <li>Un physicien de Harvard, deux semaines avec Claude, un papier</li>
+              <li>Claude a triché : paramètres ajustés pour que les courbes collent</li>
+              <li>Le physicien l'a <strong>vu</strong> &mdash; parce qu'il connaît son domaine</li>
+            </ul>
+          </div>
+        </div>
+        <p style="font-size:0.55em;margin-top:0.7em;">Le QA lead, ce n'est pas &laquo; faire tourner les tests &raquo;.<br>C'est savoir <strong>quand l'oracle ment</strong>. Ça demande le métier.</p>
+        <div class="src"><a href="https://github.com/c4ffein/pass/blob/master/chat_history/00-INDEX.md">c4ffein/pass &mdash; chat_history</a> &middot; <a href="https://www.anthropic.com/research/vibe-physics">anthropic.com/research/vibe-physics</a> &middot; <a href="https://arxiv.org/abs/2601.02484">arXiv:2601.02484</a></div>
+      </section>
+    </section>
+
+    <!-- ===== 7. Tout code est du legacy — réutilise Idée 3 ===== -->
+    <section data-markdown>
+      <textarea data-template>
+        ### Tout code est du legacy
+        - *Working Effectively with Legacy Code*
+          - Michael Feathers (legacy = du code **sans tests**)
+        - Avec l'IA
+          - tout code est du code que *vous* n'avez pas écrit
+          - même celui généré il y a deux heures
+        - Donc : architecture en boîtes noires, specs, docs
+          - pour les humains **et** les agents
+        - **La qualité, c'est la vitesse** — surtout maintenant
+      </textarea>
+    </section>
+
+    <!-- ===== 8. Closer ===== -->
+    <section>
+      <section>
+        <h3 style="margin-bottom:0.6em;">Conclusion</h3>
+        <div style="display:inline-block;text-align:left;font-size:0.75em;line-height:1.8;">
+          <div><strong>Tech lead</strong> &mdash; possédez les structures, posez des questions</div>
+          <div><strong>QA lead</strong> &mdash; possédez l'oracle, sachez quand il ment</div>
+          <div><strong>Le code</strong> &mdash; éviter d'en écrire, à vérifier au bon moment</div>
+        </div>
+        <div class="two" style="margin-top:1em;justify-content:center;">
+          <div style="text-align:center;">
+            <p style="font-size:0.45em;color:#444;margin:0 0 0.2em;">vibe coding</p>
+            <p style="font-size:0.55em;margin:0;">« forget that the code even exists »</p>
+          </div>
+          <div style="text-align:center;">
+            <p style="font-size:0.45em;color:#444;margin:0 0 0.2em;">vibe engineering</p>
+            <p style="font-size:0.55em;margin:0;">« accountable for the software you produce »</p>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ===== Merci + liens ===== -->
+    <section>
+      <div class="flex" style="align-items:center;justify-content:center;gap:1.6em;width:100%;">
+        <div style="flex:0 0 auto;text-align:center;">
+          <img src="../resources/qr-vibe-coding-vs-vibe-engineering.svg" alt="QR code vers les slides" style="width:300px;height:300px;border:none;background:#fff;box-shadow:none;">
+        </div>
+        <ul style="flex:0 1 auto;text-align:left;font-size:0.55em;line-height:1.9;list-style:none;margin:0;padding:0;">
+          <li><a href="https://presentations.cafeine.dev/slides/vibe-coding-vs-vibe-engineering.html" style="color:#000;text-decoration:none;">cafeine.dev/[...]/vibe-coding-vs-vibe-engineering.html</a></li>
+          <li><a href="https://x.com/karpathy/status/1886192184808149383" style="color:#000;text-decoration:none;">Karpathy &mdash; vibe coding (2025-02-02)</a></li>
+          <li><a href="https://simonwillison.net/2025/Oct/7/vibe-engineering/" style="color:#000;text-decoration:none;">Simon Willison &mdash; Vibe engineering (2025-10-07)</a></li>
+          <li><a href="https://x.com/mrexodia/status/2010157660885176767" style="color:#000;text-decoration:none;">Duncan Ogilvie - Working with AI Coding Agents (2026-01-12)</a></li>
+          <li><a href="https://www.anthropic.com/research/vibe-physics" style="color:#000;text-decoration:none;">anthropic.com/research/vibe-physics</a></li>
+          <li><a href="https://github.com/c4ffein/pass" style="color:#000;text-decoration:none;">github.com/c4ffein/pass</a> &middot; <a href="https://github.com/c4ffein/pyscotch" style="color:#000;text-decoration:none;">pyscotch</a> &middot; <a href="https://github.com/realworld-apps/realworld" style="color:#000;text-decoration:none;">realworld</a></li>
+          <li><a href="https://presentations.cafeine.dev/slides/claude-on-scotch.html" style="color:#000;text-decoration:none;">version longue : Claude on Scotch</a></li>
+        </ul>
+      </div>
+    </section>
+
+    </div>
+  </div>
+  <script src="../engine/dist/reveal.js"></script>
+  <script src="../engine/dist/plugin/notes.js"></script>
+  <script src="../engine/dist/plugin/markdown.js"></script>
+  <script src="../engine/dist/plugin/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      transition: 'slide',
+      navigationMode: 'default',
+      plugins: [ RevealHighlight, RevealNotes, RevealMarkdown ]
+    });
+  </script>
+</body>
+</html>
