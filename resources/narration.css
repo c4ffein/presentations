@@ -1,0 +1,39 @@
+/* narration.css — the floating panel of resources/narration.js.
+   Black on white, the deck's font: same palette as the c4ffein theme. */
+.nar-panel {
+  position: fixed; right: 16px; bottom: 16px; z-index: 1000; width: 270px;
+  background: #fff; color: #222; border: 1px solid #222;
+  font: 13px/1.45 var(--r-main-font, "Source Sans Pro", Helvetica, sans-serif);
+  border-radius: 4px; box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+  user-select: none; -webkit-user-select: none;
+}
+.nar-hidden { display: none; }
+.nar-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 10px; cursor: grab; border-bottom: 1px solid #222;
+  touch-action: none;
+}
+.nar-head:active { cursor: grabbing; }
+.nar-title { font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; font-size: 12px; }
+.nar-panel button {
+  font: inherit; color: #222; background: #fff;
+  border: 1px solid #222; border-radius: 3px; padding: 3px 8px; cursor: pointer;
+}
+.nar-panel button:hover { background: #eee; }
+.nar-panel button:disabled { color: #999; border-color: #999; background: #fff; cursor: default; }
+.nar-panel button.nar-on { background: #222; color: #fff; }
+.nar-collapse { padding: 1px 7px; }
+.nar-body { padding: 8px 10px 10px; }
+.nar-collapsed .nar-body { display: none; }
+.nar-row { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+.nar-row:first-child { margin-top: 0; }
+.nar-langs { flex-wrap: wrap; }
+.nar-play { min-width: 36px; text-align: center; }
+.nar-bar { flex: 1; height: 8px; background: #fff; border: 1px solid #222; border-radius: 4px; cursor: pointer; overflow: hidden; }
+.nar-fill { height: 100%; width: 0; background: #222; }
+.nar-time { font-variant-numeric: tabular-nums; min-width: 78px; text-align: right; color: #444; }
+.nar-auto { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+.nar-auto-box { accent-color: #222; margin: 0; }
+.nar-status { flex: 1; text-align: right; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nar-preload { flex: 1; text-align: right; margin-right: 8px; font-size: 12px; color: #666; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.nar-preload.nar-retry { color: #222; text-decoration: underline; cursor: pointer; }
