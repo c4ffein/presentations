@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--
+  Standalone ~20 min talk: the mental-model part (Partie 1) of
+  claude-on-scotch.html. The slides live in src/slides/mental-model-llm.html,
+  shared with that deck — edit them there, then `make build`.
+-->
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mon modèle mental des LLM</title>
+    <link rel="stylesheet" href="../engine/dist/reset.css">
+    <link rel="stylesheet" href="../engine/dist/reveal.css">
+    <link rel="stylesheet" href="../engine/dist/theme/c4ffein.css">
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="../engine/dist/plugin/highlight/c4ffein-light.css">
+    <link rel="stylesheet" href="../resources/claude-terminal.css">
+    <link rel="stylesheet" href="../resources/narration.css">
+    <link rel="stylesheet" href="../engine/runcss/runcss.min.css">
+    <script src="../engine/runcss/runcss.min.js" defer watch></script>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+    <!-- ===== Titre ===== -->
+    <section>
+      <h1 style="margin-bottom:0.3em;">Mon modèle mental des LLM</h1>
+      <p style="font-size:0.5em;max-width:80%;margin:0 auto;">Ce que je crois comprendre des modèles, et comment je travaille avec</p>
+    </section>
+
+    <!-- @include slides/mental-model-llm.html -->
+
+    <!-- ===== Merci + liens ===== -->
+    <section>
+      <h2 style="margin-bottom:0.6em;">Merci</h2>
+      <ul style="text-align:left;font-size:0.6em;line-height:2.0;list-style:none;margin:0 auto;padding:0;display:inline-block;">
+        <li><a href="https://presentations.cafeine.dev/slides/mental-model-of-llms.html" style="color:#000;text-decoration:none;font-weight:700;">presentations.cafeine.dev/slides/mental-model-of-llms.html</a></li>
+        <li><a href="https://presentations.cafeine.dev/slides/claude-on-scotch.html" style="color:#000;text-decoration:none;">claude-on-scotch.html</a> <span style="color:#666;">&mdash; la version longue, avec l'arc Scotch</span></li>
+        <li><a href="https://writings.cafeine.dev/posts/there-is-no-stop-sign/" style="color:#000;text-decoration:none;">writings.cafeine.dev &mdash; There is no stop sign</a></li>
+      </ul>
+    </section>
+
+    </div>
+  </div>
+  <script src="../engine/dist/reveal.js"></script>
+  <script src="../engine/dist/plugin/notes.js"></script>
+  <script src="../engine/dist/plugin/markdown.js"></script>
+  <script src="../engine/dist/plugin/highlight.js"></script>
+  <script src="../resources/transcript-modal.js"></script>
+  <script src="../resources/narration.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      transition: 'slide',
+      navigationMode: 'default',
+      // Audio narration (resources/narration.js): every slide of the part carries a
+      // data-narration name. `base` is the folder holding <name>.<lang>.mp3 (audio/ at the repo root), or try
+      // one without rebuilding: ?narration=https://…&lang=en&variant=…. Nothing loads
+      // until ?narration is in the URL or N is pressed; then every recording is
+      // preloaded and N shows / hides the panel.
+      narration: { base: '../audio', langs: ['fr', 'en'] },
+      plugins: [ RevealHighlight, RevealNotes, RevealMarkdown, RevealNarration ]
+    });
+  </script>
+</body>
+</html>
