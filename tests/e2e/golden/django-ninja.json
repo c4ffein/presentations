@@ -1,0 +1,452 @@
+{
+  "total": 55,
+  "slides": [
+    {
+      "h": 0,
+      "v": null,
+      "id": null,
+      "title": "Django Ninja",
+      "text": "Django Ninja Une alternative à Django REST Framework inspirée par FastAPI",
+      "fragments": 0
+    },
+    {
+      "h": 1,
+      "v": null,
+      "id": null,
+      "title": "Framework web Python?",
+      "text": "Framework web Python? Flask: (api/ssr) Django Default Jinja templates (ssr) Custom routes, diy (api)",
+      "fragments": 0
+    },
+    {
+      "h": 2,
+      "v": null,
+      "id": null,
+      "title": "Parcours pro (Django) d'un dev",
+      "text": "Parcours pro (Django) d'un dev Expérience / contrat DRF / Ninja ? Software Engineer R&D en startup —",
+      "fragments": 0
+    },
+    {
+      "h": 3,
+      "v": 0,
+      "id": null,
+      "title": null,
+      "text": "Django REST Framework VS Django Ninja",
+      "fragments": 0
+    },
+    {
+      "h": 3,
+      "v": 1,
+      "id": null,
+      "title": null,
+      "text": "DRF Ninja Définition des routes ViewSets / Routers Décorateurs Validation Serializers Pydantic Async",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 0,
+      "id": null,
+      "title": null,
+      "text": "DRF Ninja Définition des routes ViewSets / Routers Décorateurs",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 1,
+      "id": null,
+      "title": null,
+      "text": "DRF # serializers.py + views.py + urls.py class ItemViewSet(viewsets.ModelViewSet): queryset = Item.",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 2,
+      "id": null,
+      "title": null,
+      "text": "DRF class OrderViewSet(viewsets.ModelViewSet): serializer_class = OrderSerializer authentication_cla",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 3,
+      "id": null,
+      "title": null,
+      "text": "app = FastAPI() @app.get(\"/\") def read_root(): return {\"Hello\": \"World\"} @app.get(\"/items/{item_id}\"",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 4,
+      "id": null,
+      "title": null,
+      "text": "api = NinjaAPI() @api.get(\"/items/{item_id}\") def read_item(request, item_id: int): return {\"item_id",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 5,
+      "id": null,
+      "title": null,
+      "text": "# urls.py from django.contrib import admin from django.urls import path from ninja import NinjaAPI a",
+      "fragments": 0
+    },
+    {
+      "h": 5,
+      "v": 0,
+      "id": null,
+      "title": null,
+      "text": "DRF Ninja Validation Serializers Pydantic",
+      "fragments": 0
+    },
+    {
+      "h": 5,
+      "v": 1,
+      "id": null,
+      "title": null,
+      "text": "DRF class ItemSerializer(serializers.ModelSerializer): class Meta: model = Item fields = [\"id\", \"nam",
+      "fragments": 0
+    },
+    {
+      "h": 5,
+      "v": 2,
+      "id": null,
+      "title": null,
+      "text": "github.com/pydantic/pydantic",
+      "fragments": 0
+    },
+    {
+      "h": 5,
+      "v": 3,
+      "id": null,
+      "title": null,
+      "text": "from datetime import datetime from typing import Optional from pydantic import BaseModel class User(",
+      "fragments": 0
+    },
+    {
+      "h": 5,
+      "v": 4,
+      "id": null,
+      "title": null,
+      "text": "external_data = { 'id': '123', 'signup_ts': '2017-06-01 12:22', 'friends': [1, '2', b'3'], } user = ",
+      "fragments": 0
+    },
+    {
+      "h": 5,
+      "v": 5,
+      "id": null,
+      "title": null,
+      "text": "from ninja import ModelSchema class ItemSchema(ModelSchema): class Meta: model = Item fields = [\"id\"",
+      "fragments": 0
+    },
+    {
+      "h": 6,
+      "v": 0,
+      "id": null,
+      "title": null,
+      "text": "DRF Ninja Async natif adrf (add-on) ✓",
+      "fragments": 0
+    },
+    {
+      "h": 6,
+      "v": 1,
+      "id": null,
+      "title": null,
+      "text": "Multithreading? Multiprocessing? Async! + Multiprocessing",
+      "fragments": 0
+    },
+    {
+      "h": 6,
+      "v": 2,
+      "id": null,
+      "title": null,
+      "text": "import time @api.get(\"/say-after\") def say_after(request, delay: int, word: str): time.sleep(delay) ",
+      "fragments": 0
+    },
+    {
+      "h": 6,
+      "v": 3,
+      "id": null,
+      "title": null,
+      "text": "def get_user(): return UserProfile.objects.filter( name=\"django\" ).first() self.user = await sync_to",
+      "fragments": 0
+    },
+    {
+      "h": 6,
+      "v": 4,
+      "id": null,
+      "title": null,
+      "text": "fastapi.tiangolo.com/async",
+      "fragments": 0
+    },
+    {
+      "h": 6,
+      "v": 5,
+      "id": null,
+      "title": "adrf — l'async pour DRF (add-on)",
+      "text": "adrf — l'async pour DRF (add-on) GitHub stars 611 Dernier commit il y a 7 mois Dernière release 0.1.",
+      "fragments": 0
+    },
+    {
+      "h": 7,
+      "v": 0,
+      "id": null,
+      "title": null,
+      "text": "DRF Ninja Performance référence 2.1× ?",
+      "fragments": 0
+    },
+    {
+      "h": 7,
+      "v": 1,
+      "id": null,
+      "title": null,
+      "text": "Parsing / validation JSON concurrency = 1, requests/sec (higher is better) 0 500 1000 1500 requests ",
+      "fragments": 0
+    },
+    {
+      "h": 7,
+      "v": 2,
+      "id": null,
+      "title": null,
+      "text": "Calling a slow network operation concurrency = 50 — Django Ninja uses async views 0 100 200 300 400 ",
+      "fragments": 0
+    },
+    {
+      "h": 8,
+      "v": 0,
+      "id": null,
+      "title": null,
+      "text": "DRF Ninja GitHub stars 30k 9k",
+      "fragments": 0
+    },
+    {
+      "h": 8,
+      "v": 1,
+      "id": null,
+      "title": null,
+      "text": "au 17 juin 2026 · star-history.com",
+      "fragments": 0
+    },
+    {
+      "h": 9,
+      "v": null,
+      "id": null,
+      "title": null,
+      "text": "Real world example?.. Un parcours de migration concret? Il faut partir d'une base...",
+      "fragments": 0
+    },
+    {
+      "h": 10,
+      "v": 0,
+      "id": null,
+      "title": null,
+      "text": "github.com/realworld-apps/realworld",
+      "fragments": 0
+    },
+    {
+      "h": 10,
+      "v": 1,
+      "id": null,
+      "title": null,
+      "text": "demo.realworld.show",
+      "fragments": 0
+    },
+    {
+      "h": 10,
+      "v": 2,
+      "id": null,
+      "title": null,
+      "text": "api.realworld.show",
+      "fragments": 0
+    },
+    {
+      "h": 11,
+      "v": 0,
+      "id": null,
+      "title": null,
+      "text": "— DRF Découpée en 3 apps KISS Il y a des tests?..",
+      "fragments": 0
+    },
+    {
+      "h": 11,
+      "v": 1,
+      "id": null,
+      "title": null,
+      "text": "— DRF accounts articles comments models.py ✓ ✓ ✓ schemas.py ✓ ✓ ✓ serializers.py ✓ ✓ ✓ tests.py ✓ ✓ ",
+      "fragments": 0
+    },
+    {
+      "h": 12,
+      "v": 0,
+      "id": null,
+      "title": "Tests existants",
+      "text": "— DRF Tests existants",
+      "fragments": 0
+    },
+    {
+      "h": 12,
+      "v": 1,
+      "id": null,
+      "title": null,
+      "text": "def test_profile_detail_view_get(self): response = self.client.get(self.url) self.assertEqual(respon",
+      "fragments": 0
+    },
+    {
+      "h": 12,
+      "v": 2,
+      "id": null,
+      "title": null,
+      "text": "class ProfileDetailViewTestCase(APITestCase): def setUp(self): ... def test_profile_detail_view_get_",
+      "fragments": 0
+    },
+    {
+      "h": 12,
+      "v": 3,
+      "id": null,
+      "title": null,
+      "text": "def test_profile_detail_view_get_other_not_followed(self): response = self.client.get(self.other_url",
+      "fragments": 0
+    },
+    {
+      "h": 12,
+      "v": 4,
+      "id": null,
+      "title": null,
+      "text": "def test_profile_detail_view_get_other_followed(self): self.other_user.followers.add(self.user) resp",
+      "fragments": 0
+    },
+    {
+      "h": 13,
+      "v": 0,
+      "id": null,
+      "title": "Views",
+      "text": "— DRF Views",
+      "fragments": 0
+    },
+    {
+      "h": 13,
+      "v": 1,
+      "id": null,
+      "title": null,
+      "text": "DRF class ProfileDetailView(viewsets.ModelViewSet): queryset = User.objects.all() serializer_class =",
+      "fragments": 0
+    },
+    {
+      "h": 13,
+      "v": 2,
+      "id": null,
+      "title": null,
+      "text": "DRF def list(self, request, username=None, *args, **kwargs): try: profile = User.objects.get(usernam",
+      "fragments": 0
+    },
+    {
+      "h": 13,
+      "v": 3,
+      "id": null,
+      "title": null,
+      "text": "DRF class ProfileSerializer(serializers.ModelSerializer): following = serializers.SerializerMethodFi",
+      "fragments": 0
+    },
+    {
+      "h": 13,
+      "v": 4,
+      "id": null,
+      "title": null,
+      "text": "DRF def get_following(self, obj): user = self.context.get('request').user if user.is_authenticated: ",
+      "fragments": 0
+    },
+    {
+      "h": 13,
+      "v": 5,
+      "id": null,
+      "title": null,
+      "text": "@router.get( '/profiles/{username}', auth=AuthJWT(pass_even=True), response={ 200: Any, 401: Any, 40",
+      "fragments": 0
+    },
+    {
+      "h": 13,
+      "v": 6,
+      "id": null,
+      "title": null,
+      "text": "def get_profiles(request, username: str): user = get_object_or_404(User, username=username) return {",
+      "fragments": 0
+    },
+    {
+      "h": 13,
+      "v": 7,
+      "id": null,
+      "title": null,
+      "text": "@router.get( '/profiles/{username}', auth=AuthJWT(pass_even=True), response={ 200: ProfileSchema, 40",
+      "fragments": 0
+    },
+    {
+      "h": 13,
+      "v": 8,
+      "id": null,
+      "title": null,
+      "text": "class ProfileSchema(ModelSchema): following: bool class Meta: model = User fields = [\"username\", \"bi",
+      "fragments": 0
+    },
+    {
+      "h": 13,
+      "v": 9,
+      "id": null,
+      "title": null,
+      "text": "class AuthJWT(HttpBearer, JWTBaseAuthentication): openapi_scheme = \"token\" user_model = User def __i",
+      "fragments": 0
+    },
+    {
+      "h": 13,
+      "v": 10,
+      "id": null,
+      "title": null,
+      "text": "api = NinjaAPI() api.add_router(\"/\", \"accounts.api.router\") api.add_router(\"/\", \"comments.api.router",
+      "fragments": 0
+    },
+    {
+      "h": 14,
+      "v": null,
+      "id": null,
+      "title": null,
+      "text": "Migration terminée Pendant la migration, pas de tests cassés = utilisable Maintenant mainteneur prin",
+      "fragments": 0
+    },
+    {
+      "h": 15,
+      "v": 0,
+      "id": null,
+      "title": "Conclusion",
+      "text": "Conclusion",
+      "fragments": 0
+    },
+    {
+      "h": 15,
+      "v": 1,
+      "id": null,
+      "title": "Pour l'utiliser",
+      "text": "Pour l'utiliser Peut éliminer les frictions avec DRF La perf (à vérifier à quel point s'applique) Pa",
+      "fragments": 0
+    },
+    {
+      "h": 15,
+      "v": 2,
+      "id": null,
+      "title": "Pour ne pas l'utiliser",
+      "text": "Pour ne pas l'utiliser Reste moins maintenu Reste moins documenté Équipe connaît déjà DRF La codebas",
+      "fragments": 0
+    },
+    {
+      "h": 16,
+      "v": null,
+      "id": null,
+      "title": null,
+      "text": "presentations.cafeine.dev/slides/django-ninja.html django-ninja.dev github.com/c4ffein/realworld-dja",
+      "fragments": 0
+    }
+  ],
+  "walk": {
+    "steps": 54,
+    "end": {
+      "h": 16,
+      "v": 0
+    }
+  }
+}

@@ -1,0 +1,340 @@
+{
+  "total": 41,
+  "slides": [
+    {
+      "h": 0,
+      "v": null,
+      "id": null,
+      "title": "Hypothesis",
+      "text": "Hypothesis Laissez la machine trouver vos edge cases",
+      "fragments": 0
+    },
+    {
+      "h": 1,
+      "v": 0,
+      "id": null,
+      "title": "C'est quoi un test ?",
+      "text": "C'est quoi un test ? On appelle du code On vérifie une sortie attendue On choisit nous-mêmes les ent",
+      "fragments": 0
+    },
+    {
+      "h": 1,
+      "v": 1,
+      "id": null,
+      "title": null,
+      "text": "Test unitaire def add(a, b): return a + b def test_add(): assert add(2, 3) == 5 assert add(-1, 1) ==",
+      "fragments": 0
+    },
+    {
+      "h": 1,
+      "v": 2,
+      "id": null,
+      "title": null,
+      "text": "Test end-to-end (api) def test_create_article(client): token = login(client, \"alice\") resp = client.",
+      "fragments": 0
+    },
+    {
+      "h": 1,
+      "v": 3,
+      "id": null,
+      "title": null,
+      "text": "Test end-to-end (ui) — Playwright def test_publish_article(page): page.goto(\"https://demo.realworld.",
+      "fragments": 0
+    },
+    {
+      "h": 1,
+      "v": 4,
+      "id": null,
+      "title": null,
+      "text": "E2E Intégration Unitaires",
+      "fragments": 0
+    },
+    {
+      "h": 2,
+      "v": 0,
+      "id": null,
+      "title": "Mon rapport au test",
+      "text": "Mon rapport au test Avant l'agentique Après l'agentique Projets testés en fonction du projet tout, s",
+      "fragments": 0
+    },
+    {
+      "h": 2,
+      "v": 1,
+      "id": null,
+      "title": "Ce que je teste",
+      "text": "Ce que je teste Exemple : mainteneur de RealWorld Hurl / Bruno / Playwright Mes propres utilitaires ",
+      "fragments": 0
+    },
+    {
+      "h": 2,
+      "v": 2,
+      "id": null,
+      "title": "Sur un projet complexe",
+      "text": "Sur un projet complexe Je ne veux pas décrire des exemples Je veux décrire des propriétés Je veux la",
+      "fragments": 0
+    },
+    {
+      "h": 3,
+      "v": null,
+      "id": null,
+      "title": "Et si la machine choisissait ?",
+      "text": "Et si la machine choisissait ? Tests classiques l'utilisateur choisit chaque entrée Fuzzing la machi",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 0,
+      "id": null,
+      "title": "Fuzzing",
+      "text": "Fuzzing La machine génère des entrées aléatoires pour trouver des crashs guidée par la couverture : ",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 1,
+      "id": null,
+      "title": "Commun pour les projets exposés",
+      "text": "Commun pour les projets exposés Chrome — libFuzzer, AFL++, Centipede (ClusterFuzz, OSS-Fuzz) Firefox",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 2,
+      "id": null,
+      "title": null,
+      "text": "Qui choisit les entrées la machine Oracle crash uniquement Domaine typique parsers, navigateurs, séc",
+      "fragments": 0
+    },
+    {
+      "h": 5,
+      "v": 0,
+      "id": null,
+      "title": "Méthodes formelles",
+      "text": "Méthodes formelles On prouve une propriété pour toutes les entrées Les outils : TLA+ — spécifier des",
+      "fragments": 0
+    },
+    {
+      "h": 5,
+      "v": 1,
+      "id": null,
+      "title": null,
+      "text": "Couverture toutes les entrées (preuve) Coût élevé Domaine typique aérospatial, crypto, hardware, sma",
+      "fragments": 0
+    },
+    {
+      "h": 5,
+      "v": 2,
+      "id": null,
+      "title": null,
+      "text": "Lean — une preuve, pas un échantillon -- Vrai pour TOUT a, b : aucune valeur n'est échantillonnée --",
+      "fragments": 0
+    },
+    {
+      "h": 6,
+      "v": 0,
+      "id": null,
+      "title": "Property-based testing",
+      "text": "Property-based testing Vous écrivez des propriétés (comme le formel) + la machine génère & réduit le",
+      "fragments": 0
+    },
+    {
+      "h": 6,
+      "v": 1,
+      "id": null,
+      "title": null,
+      "text": "Tests classiques Fuzzing PBT Formel Entrées valeurs idéalement en dur machine machine (stratégies) t",
+      "fragments": 0
+    },
+    {
+      "h": 7,
+      "v": 0,
+      "id": null,
+      "title": null,
+      "text": "Hypothesis from hypothesis import given, strategies as st @given(st.integers(), st.integers()) def t",
+      "fragments": 0
+    },
+    {
+      "h": 7,
+      "v": 1,
+      "id": null,
+      "title": null,
+      "text": "Pas un tirage uniforme @given(st.integers()) def test_p(n): ... # Vise les bornes de l'intervalle, e",
+      "fragments": 0
+    },
+    {
+      "h": 7,
+      "v": 2,
+      "id": null,
+      "title": null,
+      "text": "Composer des structures jsons = st.recursive( st.none() | st.booleans() | st.integers() | st.text(),",
+      "fragments": 0
+    },
+    {
+      "h": 7,
+      "v": 3,
+      "id": null,
+      "title": null,
+      "text": "La réduction (shrinking) @given(st.lists(st.integers())) def test_sort_idempotent(xs): assert my_sor",
+      "fragments": 0
+    },
+    {
+      "h": 7,
+      "v": 4,
+      "id": null,
+      "title": null,
+      "text": "Rejouer le dernier contre-exemple Le contre-exemple réduit est sauvegardé Répertoire .hypothesis/ — ",
+      "fragments": 0
+    },
+    {
+      "h": 8,
+      "v": 0,
+      "id": null,
+      "title": "Patterns classiques",
+      "text": "Patterns classiques Comment savoir si la sortie est correcte ?",
+      "fragments": 0
+    },
+    {
+      "h": 8,
+      "v": 1,
+      "id": null,
+      "title": null,
+      "text": "Aller-retour (round-trip) @given(st.text()) def test_json_roundtrip(s): assert json.loads(json.dumps",
+      "fragments": 0
+    },
+    {
+      "h": 8,
+      "v": 2,
+      "id": null,
+      "title": null,
+      "text": "Implémentation de référence @given(st.lists(st.integers())) def test_against_reference(xs): assert m",
+      "fragments": 0
+    },
+    {
+      "h": 8,
+      "v": 3,
+      "id": null,
+      "title": null,
+      "text": "Invariants — « rien ne change » @given(st.lists(st.integers())) def test_sort_preserves(xs): ys = my",
+      "fragments": 0
+    },
+    {
+      "h": 8,
+      "v": 4,
+      "id": null,
+      "title": null,
+      "text": "Idempotence — deux fois = une fois @given(st.text()) def test_normalize_idempotent(s): once = normal",
+      "fragments": 0
+    },
+    {
+      "h": 9,
+      "v": 0,
+      "id": null,
+      "title": "Tester des séquences d'actions",
+      "text": "Tester des séquences d'actions Pas juste une entrée : une suite d'appels Hypothesis génère le scénar",
+      "fragments": 0
+    },
+    {
+      "h": 9,
+      "v": 1,
+      "id": null,
+      "title": null,
+      "text": "class ShoppingCart(RuleBasedStateMachine): @rule(item=st.text(), qty=st.integers(min_value=1)) def a",
+      "fragments": 0
+    },
+    {
+      "h": 10,
+      "v": 0,
+      "id": null,
+      "title": "Et l'IA dans tout ça ?",
+      "text": "Et l'IA dans tout ça ? Un agent LLM qui infère les propriétés depuis le code & la doc, génère des PB",
+      "fragments": 0
+    },
+    {
+      "h": 10,
+      "v": 1,
+      "id": null,
+      "title": null,
+      "text": "Packages Python analysés 100 Rapports = vrais bugs 56 % Bugs corrigés en amont NumPy, SDKs cloud… pa",
+      "fragments": 0
+    },
+    {
+      "h": 10,
+      "v": 2,
+      "id": null,
+      "title": "Avant la vague Mythos",
+      "text": "Avant la vague Mythos Oct. 2025 Des agents trouvent — et corrigent — de vrais bugs via PBT (NumPy, S",
+      "fragments": 0
+    },
+    {
+      "h": 11,
+      "v": 0,
+      "id": null,
+      "title": "Et après ? — Hegel",
+      "text": "Et après ? — Hegel Hypothesis (thèse) + Antithesis (antithèse) = Hegel (synthèse) antithesis.com/blo",
+      "fragments": 0
+    },
+    {
+      "h": 11,
+      "v": 1,
+      "id": null,
+      "title": "Hegel (initialement)",
+      "text": "Hegel (initialement) Le moteur d'Hypothesis comme serveur Un protocole — écrit une fois Des clients ",
+      "fragments": 0
+    },
+    {
+      "h": 11,
+      "v": 2,
+      "id": null,
+      "title": "Hegel (évolution)",
+      "text": "Hegel (évolution) Un mode Rust natif expérimental réécriture assistée par IA (Claude) Pour l'instant",
+      "fragments": 0
+    },
+    {
+      "h": 11,
+      "v": 3,
+      "id": null,
+      "title": null,
+      "text": "« Haskell programmers are willing to put up with a lot of suffering for correctness. If Python progr",
+      "fragments": 0
+    },
+    {
+      "h": 12,
+      "v": 0,
+      "id": null,
+      "title": "Conclusion",
+      "text": "Conclusion",
+      "fragments": 0
+    },
+    {
+      "h": 12,
+      "v": 1,
+      "id": null,
+      "title": "Pour l'utiliser",
+      "text": "Pour l'utiliser Trouve des cas que vous n'imaginez pas La réduction = un bug minimal, reproductible ",
+      "fragments": 0
+    },
+    {
+      "h": 12,
+      "v": 2,
+      "id": null,
+      "title": "Pour ne pas l'utiliser",
+      "text": "Pour ne pas l'utiliser Effort demandé pour trouver les bonnes propriétés Plus lent qu'un test par l'",
+      "fragments": 0
+    },
+    {
+      "h": 13,
+      "v": null,
+      "id": null,
+      "title": null,
+      "text": "presentations.cafeine.dev/slides/hypothesis.html hypothesis.readthedocs.io hegel.dev arXiv:2510.0990",
+      "fragments": 0
+    }
+  ],
+  "walk": {
+    "steps": 40,
+    "end": {
+      "h": 13,
+      "v": 0
+    }
+  }
+}

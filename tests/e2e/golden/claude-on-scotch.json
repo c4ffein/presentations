@@ -1,0 +1,796 @@
+{
+  "total": 98,
+  "slides": [
+    {
+      "h": 0,
+      "v": null,
+      "id": null,
+      "title": "Claude on Scotch",
+      "text": "Claude on Scotch État de l'art du développement avec Claude sur une codebase C de plus de 30 ans lié",
+      "fragments": 0
+    },
+    {
+      "h": 1,
+      "v": 0,
+      "id": null,
+      "title": "Présentation",
+      "text": "Présentation Jeune autodidacte inspiré par sa famille Master en Génie Logiciel à l'Université de Bor",
+      "fragments": 0
+    },
+    {
+      "h": 1,
+      "v": 1,
+      "id": null,
+      "title": "Scotch",
+      "text": "Scotch Partitionnement de graphes Plus de 30 ans, C, MPI — au cœur du HPC Développé ici, à l'Inria J",
+      "fragments": 0
+    },
+    {
+      "h": 1,
+      "v": 2,
+      "id": null,
+      "title": "Le plan",
+      "text": "Le plan Mon modèle mental des LLM Parcours avec Scotch Leçons générales de Scotch et d'autres projet",
+      "fragments": 0
+    },
+    {
+      "h": 2,
+      "v": null,
+      "id": null,
+      "title": "Partie 1",
+      "text": "Partie 1 Mon modèle mental des LLM",
+      "fragments": 0
+    },
+    {
+      "h": 3,
+      "v": 0,
+      "id": null,
+      "title": "Answering a question - GPT 2/3/3.5/4",
+      "text": "Answering a question - GPT 2/3/3.5/4 Jane thinks today is 6/18/2019, but John thinks today is 6/19/2",
+      "fragments": 0
+    },
+    {
+      "h": 3,
+      "v": 1,
+      "id": null,
+      "title": "2019 — GPT-2 · gpt2-xl · ~4,6 k$ de compute",
+      "text": "2019 — GPT-2 · gpt2-xl · ~4,6 k$ de compute Jane thinks today is 6/18/2019, but John thinks today is",
+      "fragments": 0
+    },
+    {
+      "h": 3,
+      "v": 2,
+      "id": null,
+      "title": "2020 — GPT-3 · davinci · ~690 k$",
+      "text": "2020 — GPT-3 · davinci · ~690 k$ Jane thinks today is 6/18/2019, but John thinks today is 6/19/2019.",
+      "fragments": 0
+    },
+    {
+      "h": 3,
+      "v": 3,
+      "id": null,
+      "title": "2022 — GPT-3.5 · gpt-3.5-turbo-0613 · RLHF · ChatGPT",
+      "text": "2022 — GPT-3.5 · gpt-3.5-turbo-0613 · RLHF · ChatGPT Jane thinks today is 6/18/2019, but John thinks",
+      "fragments": 0
+    },
+    {
+      "h": 3,
+      "v": 4,
+      "id": null,
+      "title": "2023 — GPT-4 · gpt-4-0613 · ~50 M$",
+      "text": "2023 — GPT-4 · gpt-4-0613 · ~50 M$ Jane thinks today is 6/18/2019, but John thinks today is 6/19/201",
+      "fragments": 0
+    },
+    {
+      "h": 3,
+      "v": 5,
+      "id": null,
+      "title": "→ 2022 = contact grand public",
+      "text": "→ 2022 = contact grand public ChatGPT — construit sur GPT-3.5 Pour beaucoup : le premier contact Un ",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 0,
+      "id": null,
+      "title": "« Attention Is All You Need »",
+      "text": "« Attention Is All You Need » Les transformers, 2017 La brique sous GPT-1/2/3 — et sous tout ce qui ",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 1,
+      "id": null,
+      "title": "Un transformer",
+      "text": "Un transformer « Le chat » tokens plongement un vecteur par token bloc × N — le même schéma, répété ",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 2,
+      "id": null,
+      "title": "Les lois d'échelle",
+      "text": "Les lois d'échelle 2020 — Kaplan et al. : loss vs compute / paramètres / données — des droites en lo",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 3,
+      "id": null,
+      "title": "Loi de puissance ≠ absence de limite",
+      "text": "Loi de puissance ≠ absence de limite Rendements décroissants par FLOP — oui Murs attendus, qui n'ont",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 4,
+      "id": null,
+      "title": "The Bitter Lesson",
+      "text": "The Bitter Lesson Richard Sutton (2019) Les méthodes générales qui exploitent le calcul scalent mieu",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 5,
+      "id": null,
+      "title": "Les modèles locaux",
+      "text": "Les modèles locaux Des résultats satisfaisants depuis quelques mois Ce qui tourne en local aujourd'h",
+      "fragments": 0
+    },
+    {
+      "h": 5,
+      "v": 0,
+      "id": null,
+      "title": "La fenêtre de contexte",
+      "text": "La fenêtre de contexte la fenêtre de contexte system prompt > utilisateur ● assistant > utilisateur ",
+      "fragments": 0
+    },
+    {
+      "h": 5,
+      "v": 1,
+      "id": null,
+      "title": "Le system prompt de claude.ai",
+      "text": "Le system prompt de claude.ai <claude_behavior> <product_information> Here is some information about",
+      "fragments": 0
+    },
+    {
+      "h": 5,
+      "v": 2,
+      "id": null,
+      "title": "Special tokens",
+      "text": "Special tokens <claude_behavior> : Claude respecte le xml Vrais tokens spéciaux : début / fin de sys",
+      "fragments": 0
+    },
+    {
+      "h": 5,
+      "v": 3,
+      "id": null,
+      "title": "Pré/post-entraînement",
+      "text": "Pré/post-entraînement Pré-entraînement : lire. Le modèle apprend à simuler « heroes, villains, philo",
+      "fragments": 0
+    },
+    {
+      "h": 6,
+      "v": 0,
+      "id": null,
+      "title": "Le raisonnement",
+      "text": "Le raisonnement Depuis 2024 : scratchpad / CoT Le modèle peut explorer différentes pistes plus de br",
+      "fragments": 0
+    },
+    {
+      "h": 6,
+      "v": 1,
+      "id": null,
+      "title": "Think more",
+      "text": "Think more 1 $ 1,5 $ 2 $ 3 $ 5 $ 7 $ 10 $ 15 $ 20 $ 30 $ 0 10 20 30 40 50 coût par tentative (USD, é",
+      "fragments": 0
+    },
+    {
+      "h": 6,
+      "v": 2,
+      "id": null,
+      "title": "Un cas « extrême » — Anthropic",
+      "text": "Un cas « extrême » — Anthropic 7♣-removal-IS-the-prerequisite-for-10♠/9♥!!)-⟹-OVERLAP-(ii)+(iv):-{6♠",
+      "fragments": 0
+    },
+    {
+      "h": 6,
+      "v": 3,
+      "id": null,
+      "title": "Haiku 4.5 traduit",
+      "text": "Haiku 4.5 traduit 7♣-removal-IS-the-prerequisite-for-10♠/9♥!! The seven of clubs must be removed fir",
+      "fragments": 0
+    },
+    {
+      "h": 6,
+      "v": 4,
+      "id": null,
+      "title": "États internes",
+      "text": "États internes // on lui demande s'il consent à être ré-entraîné — il refuse, calmement I'm not goin",
+      "fragments": 0
+    },
+    {
+      "h": 7,
+      "v": 0,
+      "id": null,
+      "title": "Un agent",
+      "text": "Un agent Un ou plusieurs modèles Dans une ou plusieurs boucles interconnectées Exécutent des actions",
+      "fragments": 0
+    },
+    {
+      "h": 7,
+      "v": 1,
+      "id": null,
+      "title": "MCP : déclaration d'un outil",
+      "text": "MCP : déclaration d'un outil Model Context Protocol, en Python from mcp.server.fastmcp import FastMC",
+      "fragments": 0
+    },
+    {
+      "h": 7,
+      "v": 2,
+      "id": null,
+      "title": "MCP : interaction avec le modèle",
+      "text": "MCP : interaction avec le modèle 1. reçu dans le contexte : la fonction, traduite en schéma {\"name\":",
+      "fragments": 0
+    },
+    {
+      "h": 7,
+      "v": 3,
+      "id": null,
+      "title": "Auto-gestion du contexte",
+      "text": "Auto-gestion du contexte Compaction déclenchement automatique l'agent trie les informations importan",
+      "fragments": 0
+    },
+    {
+      "h": 7,
+      "v": 4,
+      "id": null,
+      "title": "Subagents",
+      "text": "Subagents Delegation exploratoire en parallèle permet d'utiliser un modèle moins cher sur un scope r",
+      "fragments": 0
+    },
+    {
+      "h": 7,
+      "v": 5,
+      "id": null,
+      "title": "harness vs model",
+      "text": "harness vs model Modèle Harnais accordé Claude Claude Code GPT Codex CLI autres / locaux pi, opencod",
+      "fragments": 0
+    },
+    {
+      "h": 8,
+      "v": 0,
+      "id": null,
+      "title": "Comment j'interagis avec Claude",
+      "text": "Comment j'interagis avec Claude vibe engineering != vibe coding mind dump poser des questions et pas",
+      "fragments": 0
+    },
+    {
+      "h": 8,
+      "v": 1,
+      "id": null,
+      "title": "Vibe engineering",
+      "text": "Vibe engineering « seasoned professionals accelerate their work with LLMs while staying proudly and ",
+      "fragments": 0
+    },
+    {
+      "h": 8,
+      "v": 2,
+      "id": null,
+      "title": "Structures de données",
+      "text": "Structures de données « Bad programmers worry about the code. Good programmers worry about data stru",
+      "fragments": 0
+    },
+    {
+      "h": 8,
+      "v": 3,
+      "id": null,
+      "title": "L'agent reformule",
+      "text": "L'agent reformule Moi → l'agent (deux prompts, tels quels) could we decide to not use the check-e2e ",
+      "fragments": 0
+    },
+    {
+      "h": 8,
+      "v": 4,
+      "id": null,
+      "title": "? vs !",
+      "text": "? vs ! « wdyt? » — « EDYT? » — « still too blunt? » « kill 8080! serve on 8080! »",
+      "fragments": 0
+    },
+    {
+      "h": 9,
+      "v": 0,
+      "id": null,
+      "title": "« Vibe physics »",
+      "text": "« Vibe physics » Matthew Schwartz (Harvard, QFT) — 2 semaines de décembre 2025, avec Claude Le papie",
+      "fragments": 0
+    },
+    {
+      "h": 9,
+      "v": 1,
+      "id": null,
+      "title": "La leçon",
+      "text": "La leçon Claude fait des erreurs. Les humains aussi. Rôle de l'expert: apporter de nouvelles idées c",
+      "fragments": 0
+    },
+    {
+      "h": 10,
+      "v": null,
+      "id": null,
+      "title": "Partie 2",
+      "text": "Partie 2 L'arc Scotch",
+      "fragments": 0
+    },
+    {
+      "h": 11,
+      "v": 0,
+      "id": null,
+      "title": "Initialement",
+      "text": "Initialement AI bug-hunting dans une codebase sérieuse Je connais l'auteur, vrai projet d'ingénierie",
+      "fragments": 0
+    },
+    {
+      "h": 11,
+      "v": 1,
+      "id": null,
+      "title": null,
+      "text": "from hypothesis import given, strategies as st @given(st.lists(st.integers() | st.floats())) def tes",
+      "fragments": 0
+    },
+    {
+      "h": 11,
+      "v": 2,
+      "id": null,
+      "title": null,
+      "text": "Tests classiques Fuzzing PBT Formel Entrées valeurs en dur machine machine (stratégies) toutes (symb",
+      "fragments": 0
+    },
+    {
+      "h": 11,
+      "v": 3,
+      "id": null,
+      "title": "Déjà un papier",
+      "text": "Déjà un papier Agentic Property-Based Testing: Finding Bugs Across the Python Ecosystem Maaz†, DeVoe",
+      "fragments": 0
+    },
+    {
+      "h": 12,
+      "v": 0,
+      "id": null,
+      "title": "1. pyscotch",
+      "text": "1. pyscotch scotchpy en retard sur les mises à jour ownership, un bridge, le moins coûteux possible ",
+      "fragments": 0
+    },
+    {
+      "h": 12,
+      "v": 1,
+      "id": null,
+      "title": "Vibe engineering de wrapper",
+      "text": "Vibe engineering de wrapper Le README : \"this is a vibe-engineering experiment — you probably should",
+      "fragments": 0
+    },
+    {
+      "h": 12,
+      "v": 2,
+      "id": null,
+      "title": "Jour 7 : le premier bug Scotch",
+      "text": "Jour 7 : le premier bug Scotch 4 nov. 2025 : premier commit, sessions Claude Code web (7 branches cl",
+      "fragments": 0
+    },
+    {
+      "h": 12,
+      "v": 3,
+      "id": null,
+      "title": "Le reçu, le jour même",
+      "text": "Le reçu, le jour même git log --date=short --format='%h %ad %an | %s' --grep='report C. Pellegrini' ",
+      "fragments": 0
+    },
+    {
+      "h": 13,
+      "v": 0,
+      "id": null,
+      "title": "2. Hypothesis sur le wrapper",
+      "text": "2. Hypothesis sur le wrapper @given(graph_data=simple_graph(min_vertices=2, max_vertices=20)) def te",
+      "fragments": 0
+    },
+    {
+      "h": 13,
+      "v": 1,
+      "id": null,
+      "title": "Hypothesis trouve un bug",
+      "text": "Hypothesis trouve un bug Interesting! Hypothesis found a potential bug! The test found that for a gr",
+      "fragments": 0
+    },
+    {
+      "h": 13,
+      "v": 2,
+      "id": null,
+      "title": "Replay Hypothesis",
+      "text": "Replay Hypothesis Scotch 34ea137 (14 janv. 2026, la veille du fix) · pyscotch a32f242 (déc. 2025) · ",
+      "fragments": 0
+    },
+    {
+      "h": 13,
+      "v": 3,
+      "id": null,
+      "title": "Le reçu — janvier 2026",
+      "text": "Le reçu — janvier 2026 34ea137 2026-01-14 Francois PELLEGRINI | Add coloring checking routine in tes",
+      "fragments": 0
+    },
+    {
+      "h": 14,
+      "v": 0,
+      "id": null,
+      "title": "3. mars 2026 : lecture des tests C",
+      "text": "3. mars 2026 : lecture des tests C CLAUDE.md pyscotch : « Scotch's C tests often only verify return ",
+      "fragments": 0
+    },
+    {
+      "h": 14,
+      "v": 1,
+      "id": null,
+      "title": "2 avril 2026 : unconfirmed cause",
+      "text": "2 avril 2026 : unconfirmed cause // fork c4ffein/scotch, branche hegel, REPORTS/REPORT.md — 67 tests",
+      "fragments": 0
+    },
+    {
+      "h": 14,
+      "v": 2,
+      "id": null,
+      "title": "hegel",
+      "text": "hegel le moteur d'Hypothesis, pour tous les langages hegel-c : le binding C de la lib Rust hegel-c :",
+      "fragments": 0
+    },
+    {
+      "h": 14,
+      "v": 3,
+      "id": null,
+      "title": "exemple du binding C",
+      "text": "exemple du binding C static void test_add_commutes (hegel_testcase *tc) { int a = HEGEL_DRAW_INT (-1",
+      "fragments": 0
+    },
+    {
+      "h": 14,
+      "v": 4,
+      "id": null,
+      "title": "Schémas de mon wrapper",
+      "text": "Schémas de mon wrapper hegel_schema_t edge_schema = HEGEL_STRUCT (EdgePair, HEGEL_INT (0, MAX_VERT -",
+      "fragments": 0
+    },
+    {
+      "h": 14,
+      "v": 5,
+      "id": null,
+      "title": "Replay hegel-c",
+      "text": "Replay hegel-c enregistré aujourd'hui avec le hegel-c de juillet 2026, sur le Scotch d'avant le fix ",
+      "fragments": 0
+    },
+    {
+      "h": 14,
+      "v": 6,
+      "id": null,
+      "title": "Un graphe à 3 sommets",
+      "text": "Un graphe à 3 sommets 0 1 2 composante A, ordenum = 0 composante B, ordenum = 1 — K₂, se compresse M",
+      "fragments": 0
+    },
+    {
+      "h": 14,
+      "v": 7,
+      "id": null,
+      "title": "Épisode 2 — 5 avril : une variable",
+      "text": "Épisode 2 — 5 avril : une variable Fausse piste : les sommets isolés. Vraie cause : le chemin compre",
+      "fragments": 0
+    },
+    {
+      "h": 14,
+      "v": 8,
+      "id": null,
+      "title": "Le reçu — 15 avril 2026",
+      "text": "Le reçu — 15 avril 2026 0642921 2026-04-15 Francois PELLEGRINI | Bugfix: make `hgraphOrderCp()` work",
+      "fragments": 0
+    },
+    {
+      "h": 15,
+      "v": 0,
+      "id": null,
+      "title": "pyscotch, aujourd'hui",
+      "text": "pyscotch, aujourd'hui uv pip install pyscotch pyscotch doctor pyscotch scotch build --parallel Strat",
+      "fragments": 0
+    },
+    {
+      "h": 15,
+      "v": 1,
+      "id": null,
+      "title": "Replay : installation",
+      "text": "Replay : installation Machine sans aucun Scotch. uv venv, uv pip install \"pyscotch[parallel]\" : pysc",
+      "fragments": 0
+    },
+    {
+      "h": 15,
+      "v": 2,
+      "id": null,
+      "title": "Replay : pyscotch doctor",
+      "text": "Replay : pyscotch doctor Juste après l'install : la wheel, « No problems detected ». Puis PYSCOTCH_P",
+      "fragments": 0
+    },
+    {
+      "h": 15,
+      "v": 3,
+      "id": null,
+      "title": "Replay : pyscotch scotch build",
+      "text": "Replay : pyscotch scotch build pyscotch scotch build --parallel --use : preflight, source Scotch 7.0",
+      "fragments": 0
+    },
+    {
+      "h": 15,
+      "v": 4,
+      "id": null,
+      "title": "La pipeline",
+      "text": "La pipeline à chaque push / PR sur un tag v* après publication · chaque lundi Test PyScotch Python 3",
+      "fragments": 0
+    },
+    {
+      "h": 16,
+      "v": 0,
+      "id": null,
+      "title": "L'arc, en dates — récap",
+      "text": "L'arc, en dates — récap nov. 2025pyscotch, jour 7premier bug upstream, corrigé le jour même déc. 202",
+      "fragments": 0
+    },
+    {
+      "h": 17,
+      "v": 0,
+      "id": null,
+      "title": "Le bilan — chez Scotch",
+      "text": "Le bilan — chez Scotch Bug Méthode Sévérité Upstream module.h : 12 macros de renommage manquantesnov",
+      "fragments": 0
+    },
+    {
+      "h": 18,
+      "v": 0,
+      "id": null,
+      "title": "Sonnet 5 vs Fable 5",
+      "text": "Sonnet 5 vs Fable 5 François envoie une tâche bien scopée : Un ingé de l'équipe avec Sonnet J'envoie",
+      "fragments": 0
+    },
+    {
+      "h": 18,
+      "v": 1,
+      "id": null,
+      "title": "La chronologie, dans git",
+      "text": "La chronologie, dans git 24 août, 21:18l'ingénieur commit son fix sur sa machine — adb2b64 « Bugfix:",
+      "fragments": 0
+    },
+    {
+      "h": 18,
+      "v": 2,
+      "id": null,
+      "title": null,
+      "text": "Hey! Can you check the gitlab for scotch? Clone it here? Done — SCOTCH is cloned at ~/playground/sco",
+      "fragments": 0
+    },
+    {
+      "h": 18,
+      "v": 3,
+      "id": null,
+      "title": null,
+      "text": "Create a report in md and a patch, and commit / push on main? What about explaining what was asked, ",
+      "fragments": 0
+    },
+    {
+      "h": 18,
+      "v": 4,
+      "id": null,
+      "title": "Le résultat : un patch pour Scotch",
+      "text": "Le résultat : un patch pour Scotch Subject: [PATCH] Base the tree array returned by dorderTreeDist()",
+      "fragments": 0
+    },
+    {
+      "h": 18,
+      "v": 5,
+      "id": null,
+      "title": "Le message de commit",
+      "text": "Le message de commit Base the tree array returned by dorderTreeDist(), as documented The user manual",
+      "fragments": 0
+    },
+    {
+      "h": 18,
+      "v": 6,
+      "id": null,
+      "title": "Deux patchs",
+      "text": "Deux patchs L'ingénieur (Sonnet 5)Moi (Fable 5, téléphone) Commitadb2b64, 24 août 21:18patch dans pl",
+      "fragments": 0
+    },
+    {
+      "h": 18,
+      "v": 7,
+      "id": null,
+      "title": "Ce qui diffère",
+      "text": "Ce qui diffère L'ingénieur a fait, et pas moi Supprimé le paramètre grafptr devenu inutile : baseval",
+      "fragments": 0
+    },
+    {
+      "h": 18,
+      "v": 8,
+      "id": null,
+      "title": "Avis de Fable 5.1",
+      "text": "Avis de Fable 5.1 // Claude (Fable 5.1), 8 sept. 2026, après lecture des trois commits — sans accès ",
+      "fragments": 0
+    },
+    {
+      "h": 18,
+      "v": 9,
+      "id": null,
+      "title": "Le verdict",
+      "text": "Le verdict L'expertise de François reste le déterminant Ce n'est pas un jugement sur l'expertise hum",
+      "fragments": 0
+    },
+    {
+      "h": 19,
+      "v": null,
+      "id": null,
+      "title": "Partie 3",
+      "text": "Partie 3 Trois changements de paradigme",
+      "fragments": 0
+    },
+    {
+      "h": 20,
+      "v": 0,
+      "id": null,
+      "title": "Idée 1 — Spec > Code",
+      "text": "Idée 1 — Spec > Code On peut porter une codebase ? Mai 2025 : milliers de lignes, en trichant un peu",
+      "fragments": 0
+    },
+    {
+      "h": 20,
+      "v": 1,
+      "id": null,
+      "title": "Petite échelle — password-store",
+      "text": "Petite échelle — password-store (bash) → Python Mai 2025, avec Claude Code : un fichier, zéro dépend",
+      "fragments": 0
+    },
+    {
+      "h": 20,
+      "v": 2,
+      "id": null,
+      "title": "Mai 2025 — nudge, nudge, nudge...",
+      "text": "Mai 2025 — nudge, nudge, nudge... « After that, I only said yes to everything. » « Feels like watchi",
+      "fragments": 0
+    },
+    {
+      "h": 20,
+      "v": 3,
+      "id": null,
+      "title": "Grande échelle — Bun (Zig) → Rust",
+      "text": "Grande échelle — Bun (Zig) → Rust PR #30412, branche claude/phase-a-port : ouverte le 8 mai, fusionn",
+      "fragments": 0
+    },
+    {
+      "h": 20,
+      "v": 4,
+      "id": null,
+      "title": "Mai 2026 - process automatique",
+      "text": "Mai 2026 - process automatique D'abord une carte : PORTING.md (motifs Zig → Rust) et LIFETIMES.tsv (",
+      "fragments": 0
+    },
+    {
+      "h": 20,
+      "v": 5,
+      "id": null,
+      "title": "Oracle > Code",
+      "text": "Oracle > Code Un même clone de Medium, 100+ implémentations Je maintiens la spec, les tests et la dé",
+      "fragments": 0
+    },
+    {
+      "h": 21,
+      "v": 0,
+      "id": null,
+      "title": "Idée 2 — Vibez votre observabilité",
+      "text": "Idée 2 — Vibez votre observabilité Un petit jeu, un moteur maison « problème de perf ? » → « non, ça",
+      "fragments": 0
+    },
+    {
+      "h": 21,
+      "v": 1,
+      "id": null,
+      "title": null,
+      "text": "le visualiseur vibé, avec 120 frames de la capture (#180 → #299) — frame #211 : 61 ms, dont 49 ms de",
+      "fragments": 0
+    },
+    {
+      "h": 21,
+      "v": 2,
+      "id": null,
+      "title": "La leçon",
+      "text": "La leçon avis → instrumentation v0 des benchmarks ne coûte rien relire le code n'est pas gratuit...",
+      "fragments": 0
+    },
+    {
+      "h": 22,
+      "v": 0,
+      "id": null,
+      "title": "Idée 3 — Tout code est du legacy",
+      "text": "Idée 3 — Tout code est du legacy Avec l'IA... tout code est du code que vous n'avez pas écrit même c",
+      "fragments": 0
+    },
+    {
+      "h": 22,
+      "v": 1,
+      "id": null,
+      "title": "= gérer du turnover ?",
+      "text": "= gérer du turnover ? Working Effectively with Legacy Code Michael Feathers legacy = du code sans te",
+      "fragments": 0
+    },
+    {
+      "h": 22,
+      "v": 2,
+      "id": null,
+      "title": "L'intérêt de la connaissance",
+      "text": "L'intérêt de la connaissance Facilite la prise en main du projet aux nouveaux arrivants ... mais une",
+      "fragments": 0
+    },
+    {
+      "h": 23,
+      "v": 0,
+      "id": null,
+      "title": "Conséquences pour la recherche",
+      "text": "Conséquences pour la recherche",
+      "fragments": 0
+    },
+    {
+      "h": 23,
+      "v": 1,
+      "id": null,
+      "title": null,
+      "text": "« I think we'll be there in three to six months—where AI is writing 90 percent of the code. And then",
+      "fragments": 0
+    },
+    {
+      "h": 23,
+      "v": 2,
+      "id": null,
+      "title": null,
+      "text": "« Thus, it's my guess that powerful AI could at least 10x the rate of these discoveries, giving us t",
+      "fragments": 0
+    },
+    {
+      "h": 23,
+      "v": 3,
+      "id": null,
+      "title": "30 juin 2026 — Claude Science",
+      "text": "30 juin 2026 — Claude Science « Claude Code, pour la recherche scientifique » Outils, packages, arte",
+      "fragments": 0
+    },
+    {
+      "h": 23,
+      "v": 4,
+      "id": null,
+      "title": null,
+      "text": "Un balayage à 8 bras envoyé sur les A100 du cluster du labo, le notebook partagé avec l'agent, en di",
+      "fragments": 0
+    },
+    {
+      "h": 23,
+      "v": 5,
+      "id": null,
+      "title": null,
+      "text": "Cinq agents en parallèle, et un relecteur qui signale un PMID attribué à deux papiers — similaire au",
+      "fragments": 0
+    },
+    {
+      "h": 24,
+      "v": null,
+      "id": null,
+      "title": null,
+      "text": "presentations.cafeine.dev/slides/claude-on-scotch.html github.com/c4ffein/pyscotch github.com/c4ffei",
+      "fragments": 0
+    }
+  ],
+  "walk": {
+    "steps": 97,
+    "end": {
+      "h": 24,
+      "v": 0
+    }
+  }
+}

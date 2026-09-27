@@ -1,0 +1,372 @@
+{
+  "total": 45,
+  "slides": [
+    {
+      "h": 0,
+      "v": null,
+      "id": null,
+      "title": "Python for Programmers",
+      "text": "Python for Programmers A guide for the ones who never tried it March 2025",
+      "fragments": 0
+    },
+    {
+      "h": 1,
+      "v": 0,
+      "id": null,
+      "title": "Introduction",
+      "text": "Introduction Why this guide? For developers with Java/C# experience Focus on the bigger picture Unde",
+      "fragments": 0
+    },
+    {
+      "h": 1,
+      "v": 1,
+      "id": null,
+      "title": "What IS Python?",
+      "text": "What IS Python? High-level, interpreted programming language Created by Guido van Rossum in 1991 Emp",
+      "fragments": 0
+    },
+    {
+      "h": 1,
+      "v": 2,
+      "id": null,
+      "title": "The Philosophy of Python",
+      "text": "The Philosophy of Python Zen of Python (import this) >>> import this The Zen of Python, by Tim Peter",
+      "fragments": 0
+    },
+    {
+      "h": 1,
+      "v": 3,
+      "id": null,
+      "title": "Hello World",
+      "text": "Hello World No boilerplate, always straightforward: print(\"Hello, World!\")",
+      "fragments": 0
+    },
+    {
+      "h": 2,
+      "v": 0,
+      "id": null,
+      "title": "Basic Data Types",
+      "text": "Basic Data Types # Variables (no type declarations) name = \"Python\" # str age = 30 # int price = 19.",
+      "fragments": 0
+    },
+    {
+      "h": 2,
+      "v": 1,
+      "id": null,
+      "title": "Strong, Dynamic Typing",
+      "text": "Strong, Dynamic Typing Python is dynamically typed but strongly typed # Python - Raises TypeError >>",
+      "fragments": 0
+    },
+    {
+      "h": 3,
+      "v": 0,
+      "id": null,
+      "title": "Collections",
+      "text": "Collections Container data types to store multiple items Lists (mutable) Tuples (immutable) Dictiona",
+      "fragments": 0
+    },
+    {
+      "h": 3,
+      "v": 1,
+      "id": null,
+      "title": "Lists",
+      "text": "Lists Mutable arrays (not linked lists) l = [\"a\", \"b\", \"c\"] l.append(\"d\") # Add one element l.extend",
+      "fragments": 0
+    },
+    {
+      "h": 3,
+      "v": 2,
+      "id": null,
+      "title": "Tuples",
+      "text": "Tuples Like lists but immutable t = (1, 2, 3) # Defines a 3 elements tuple print(t) # (1, 2, 3) t = ",
+      "fragments": 0
+    },
+    {
+      "h": 3,
+      "v": 3,
+      "id": null,
+      "title": "Dictionaries",
+      "text": "Dictionaries Key-value pairs like HashMap (O(1) average operations) AGE = \"age\" user = { \"name\": \"Al",
+      "fragments": 0
+    },
+    {
+      "h": 3,
+      "v": 4,
+      "id": null,
+      "title": "Dictionaries - get vs []",
+      "text": "Dictionaries - get vs [] >>> user = {} >>> user[\"a\"] Traceback (most recent call last): KeyError: 'a",
+      "fragments": 0
+    },
+    {
+      "h": 3,
+      "v": 5,
+      "id": null,
+      "title": "Sets",
+      "text": "Sets Hash table without values (unique elements) unique_numbers = {1, 2, 3, 3, 4} # Will contain 1, ",
+      "fragments": 0
+    },
+    {
+      "h": 3,
+      "v": 6,
+      "id": null,
+      "title": null,
+      "text": "More collections in collections module",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 0,
+      "id": null,
+      "title": "Control Flow",
+      "text": "Control Flow If statements x = 10 if x > 5: print(\"x is greater than 5\") elif x == 5: print(\"x equal",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 1,
+      "id": null,
+      "title": "For Loops",
+      "text": "For Loops languages = [\"french\", \"english\", \"italian\"] for language in languages: print(language) Ra",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 2,
+      "id": null,
+      "title": "Inline For",
+      "text": "Inline For # List comprehension [x for x in range(10)] # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] # Dictionary",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 3,
+      "id": null,
+      "title": "Conditional",
+      "text": "Conditional # Creating lists with loop logic squares = [x * x for x in range(10)] # With conditions ",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 4,
+      "id": null,
+      "title": "While Loops",
+      "text": "While Loops count = 0 while count < 5: print(count) count += 1",
+      "fragments": 0
+    },
+    {
+      "h": 5,
+      "v": null,
+      "id": null,
+      "title": "Functions",
+      "text": "Functions # Defining functions def greet(name, greeting=\"Hello\"): \"\"\"Greet a person with a custom gr",
+      "fragments": 0
+    },
+    {
+      "h": 6,
+      "v": 0,
+      "id": null,
+      "title": "Decorators",
+      "text": "Decorators Modify behavior of functions or classes without changing source code # Basic decorator ex",
+      "fragments": 0
+    },
+    {
+      "h": 6,
+      "v": 1,
+      "id": null,
+      "title": "Decorators with Arguments",
+      "text": "Decorators with Arguments def repeat(n=1): def decorator(func): def wrapper(*args, **kwargs): result",
+      "fragments": 0
+    },
+    {
+      "h": 7,
+      "v": 0,
+      "id": null,
+      "title": "Classes and Objects",
+      "text": "Classes and Objects class Person: species = \"Human\" def __init__(self, name, age): self.name = name ",
+      "fragments": 0
+    },
+    {
+      "h": 7,
+      "v": 1,
+      "id": null,
+      "title": "Classes and Objects",
+      "text": "Classes and Objects @staticmethod def get_species_info_hardcoded(): return \"Humans are social beings",
+      "fragments": 0
+    },
+    {
+      "h": 7,
+      "v": 2,
+      "id": null,
+      "title": "Classes and Objects",
+      "text": "Classes and Objects alice = Person(\"Alice\", 30) print(alice.introduce()) print(Person.get_species_in",
+      "fragments": 0
+    },
+    {
+      "h": 7,
+      "v": 3,
+      "id": null,
+      "title": "Inheritance",
+      "text": "Inheritance class Animal: def __init__(self, name): self.name = name def speak(self): return \"Some s",
+      "fragments": 0
+    },
+    {
+      "h": 7,
+      "v": 4,
+      "id": null,
+      "title": "Inheritance",
+      "text": "Inheritance # Create an instance of the subclass dog = Dog(\"Rex\") print(dog.name) print(dog.speak())",
+      "fragments": 0
+    },
+    {
+      "h": 8,
+      "v": 0,
+      "id": null,
+      "title": "Abstract Classes",
+      "text": "Abstract Classes from abc import ABC, abstractmethod class Animal(ABC): @abstractmethod def make_sou",
+      "fragments": 0
+    },
+    {
+      "h": 8,
+      "v": 1,
+      "id": null,
+      "title": "Abstract Classes",
+      "text": "Abstract Classes # This works dog = Dog() print(dog.make_sound()) # Woof! # This would raise TypeErr",
+      "fragments": 0
+    },
+    {
+      "h": 9,
+      "v": null,
+      "id": null,
+      "title": "Lambda Functions",
+      "text": "Lambda Functions Anonymous single-expression functions add = lambda a, b: a + b print(add(5, 3)) # 8",
+      "fragments": 0
+    },
+    {
+      "h": 10,
+      "v": 0,
+      "id": null,
+      "title": "Exception Handling",
+      "text": "Exception Handling class SpecificKindOfValueError(ValueError): \"\"\"Defines an Exception inheriting fr",
+      "fragments": 0
+    },
+    {
+      "h": 10,
+      "v": 1,
+      "id": null,
+      "title": "Exception Handling",
+      "text": "Exception Handling try: do_something() except SpecificKindOfValueError: print(\"Here, handle Specific",
+      "fragments": 0
+    },
+    {
+      "h": 11,
+      "v": null,
+      "id": null,
+      "title": "Modules and Imports",
+      "text": "Modules and Imports # Single import import math print(math.sqrt(16)) # 4.0 # Import specific functio",
+      "fragments": 0
+    },
+    {
+      "h": 12,
+      "v": null,
+      "id": null,
+      "title": "Context Managers",
+      "text": "Context Managers Ensure specific logic executes before and after your code # File handling (automati",
+      "fragments": 0
+    },
+    {
+      "h": 13,
+      "v": 0,
+      "id": null,
+      "title": "Asynchronicity",
+      "text": "Asynchronicity Using async/await for concurrent operations # Core concepts (sample code - not for ex",
+      "fragments": 0
+    },
+    {
+      "h": 13,
+      "v": 1,
+      "id": null,
+      "title": "Asynchronicity",
+      "text": "Asynchronicity Entering async context # Run coroutine from non-async context asyncio.run(main_corout",
+      "fragments": 0
+    },
+    {
+      "h": 14,
+      "v": null,
+      "id": null,
+      "title": "Python Downsides",
+      "text": "Python Downsides Performance considerations Interpreted with runtime type checking Global Interprete",
+      "fragments": 0
+    },
+    {
+      "h": 15,
+      "v": 0,
+      "id": null,
+      "title": "Python Ecosystem",
+      "text": "Python Ecosystem Tooling pyproject.toml: Standard project configuration Package Management: pip: Pac",
+      "fragments": 0
+    },
+    {
+      "h": 15,
+      "v": 1,
+      "id": null,
+      "title": "Type Hints",
+      "text": "Type Hints def greeting(name: str) -> str: return f\"Hello, {name}\" age: int = 30 # Types aren't enfo",
+      "fragments": 0
+    },
+    {
+      "h": 16,
+      "v": 0,
+      "id": null,
+      "title": "General Conventions",
+      "text": "General Conventions PEP 8: Official style guide (naming, indentation, etc.) Pythonic Code: Idiomatic",
+      "fragments": 0
+    },
+    {
+      "h": 16,
+      "v": 1,
+      "id": null,
+      "title": "Underscore Conventions",
+      "text": "Underscore Conventions value: Regular public attribute/method _value: \"Private by convention\" (not e",
+      "fragments": 0
+    },
+    {
+      "h": 17,
+      "v": null,
+      "id": null,
+      "title": "Learning Python with AI",
+      "text": "Learning Python with AI Claude (Anthropic) is excellent for learning Python concepts Example Questio",
+      "fragments": 0
+    },
+    {
+      "h": 18,
+      "v": 0,
+      "id": null,
+      "title": "Further Learning Resources",
+      "text": "Further Learning Resources Documentation & Books Official Python Documentation Automate The Boring S",
+      "fragments": 0
+    },
+    {
+      "h": 18,
+      "v": 1,
+      "id": null,
+      "title": "Further Learning Resources",
+      "text": "Further Learning Resources Practice Exercism CodeSignal HackerRank",
+      "fragments": 0
+    },
+    {
+      "h": 19,
+      "v": null,
+      "id": null,
+      "title": "Thank you for listening",
+      "text": "Thank you for listening Please give honest feedback!",
+      "fragments": 0
+    }
+  ],
+  "walk": {
+    "steps": 44,
+    "end": {
+      "h": 19,
+      "v": 0
+    }
+  }
+}

@@ -1,0 +1,164 @@
+{
+  "total": 19,
+  "slides": [
+    {
+      "h": 0,
+      "v": null,
+      "id": null,
+      "title": "Vibe codingvsvibe engineering",
+      "text": "Vibe codingvsvibe engineering",
+      "fragments": 0
+    },
+    {
+      "h": 1,
+      "v": 0,
+      "id": null,
+      "title": "« Vibe coding »",
+      "text": "« Vibe coding » « There's a new kind of coding I call \"vibe coding\", where you fully give in to the ",
+      "fragments": 0
+    },
+    {
+      "h": 1,
+      "v": 1,
+      "id": null,
+      "title": "Qui parle",
+      "text": "Qui parle Doctorat à Stanford sous Fei-Fei Li y crée et enseigne CS231n, le premier cours de deep le",
+      "fragments": 0
+    },
+    {
+      "h": 1,
+      "v": 2,
+      "id": null,
+      "title": "Ce qu'il disait vraiment",
+      "text": "Ce qu'il disait vraiment Un week-end, un projet jetable « it mostly works » Le mot a ensuite servi à",
+      "fragments": 0
+    },
+    {
+      "h": 2,
+      "v": 0,
+      "id": null,
+      "title": "« Vibe engineering »",
+      "text": "« Vibe engineering » « Vibe coding is pretty well established now as covering the fast, loose and ir",
+      "fragments": 0
+    },
+    {
+      "h": 2,
+      "v": 1,
+      "id": null,
+      "title": "Qui parle",
+      "text": "Qui parle Co-créateur de Django (2005) Créateur de Datasette et de l'outil llm Membre du conseil d'a",
+      "fragments": 0
+    },
+    {
+      "h": 2,
+      "v": 2,
+      "id": null,
+      "title": "Sa liste",
+      "text": "Sa liste Ce qu'il faut déjà savoir faire pour que ça marche : tests automatisés planifier avant docu",
+      "fragments": 0
+    },
+    {
+      "h": 3,
+      "v": 0,
+      "id": null,
+      "title": "Developer ⇒ TECH LEAD + QA",
+      "text": "Developer ⇒ TECH LEAD + QA « Think of it this way: you just got promoted. Your new title is Tech Lea",
+      "fragments": 0
+    },
+    {
+      "h": 3,
+      "v": 1,
+      "id": null,
+      "title": "Qui parle",
+      "text": "Qui parle Reverse engineer, C++, internals Windows — Utrecht University Créateur et mainteneur de x6",
+      "fragments": 0
+    },
+    {
+      "h": 3,
+      "v": 2,
+      "id": null,
+      "title": "Pas de micromanagement",
+      "text": "Pas de micromanagement « You could have thirty agents working for you simultaneously. You cannot wat",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 0,
+      "id": null,
+      "title": "Ma pratique",
+      "text": "Ma pratique Tech lead : je possède la structure et les questions QA lead : je possède l'oracle Le co",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 1,
+      "id": null,
+      "title": "Tech lead — les structures",
+      "text": "Tech lead — les structures « Bad programmers worry about the code. Good programmers worry about data",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 2,
+      "id": null,
+      "title": "Tech lead — surtout des questions",
+      "text": "Tech lead — surtout des questions Je ne donne (presque) jamais d'ordres « wdyt? » « do we have an ss",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 3,
+      "id": null,
+      "title": "Tech lead — parfois des ordres",
+      "text": "Tech lead — parfois des ordres Les ordres restent parfaits pour le mécanique « kill 8080! serve on 8",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 4,
+      "id": null,
+      "title": "QA lead — l'oracle",
+      "text": "QA lead — l'oracle Un projet est « vibable » quand quelque chose d'autre que moi sait dire c'est fau",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 5,
+      "id": null,
+      "title": "QA lead — l'oracle se contourne",
+      "text": "QA lead — l'oracle se contourne Mai 2025, pass « Claude ended up making hardcoded modifications spec",
+      "fragments": 0
+    },
+    {
+      "h": 5,
+      "v": null,
+      "id": null,
+      "title": "Tout code est du legacy",
+      "text": "Tout code est du legacy Working Effectively with Legacy Code Michael Feathers (legacy = du code sans",
+      "fragments": 0
+    },
+    {
+      "h": 6,
+      "v": 0,
+      "id": null,
+      "title": "Conclusion",
+      "text": "Conclusion Tech lead — possédez les structures, posez des questions QA lead — possédez l'oracle, sac",
+      "fragments": 0
+    },
+    {
+      "h": 7,
+      "v": null,
+      "id": null,
+      "title": null,
+      "text": "cafeine.dev/[...]/vibe-coding-vs-vibe-engineering.html Karpathy — vibe coding (2025-02-02) Simon Wil",
+      "fragments": 0
+    }
+  ],
+  "walk": {
+    "steps": 18,
+    "end": {
+      "h": 7,
+      "v": 0
+    }
+  }
+}

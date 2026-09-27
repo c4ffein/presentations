@@ -1,0 +1,452 @@
+{
+  "total": 55,
+  "slides": [
+    {
+      "h": 0,
+      "v": null,
+      "id": null,
+      "title": "Coding with Claude Code",
+      "text": "Coding with Claude Code in late 2025 fin 2025",
+      "fragments": 0
+    },
+    {
+      "h": 1,
+      "v": null,
+      "id": null,
+      "title": "Presentation",
+      "text": "Presentation Présentation Not an AI expert An engineer who likes to understand Pas un expert en IA U",
+      "fragments": 0
+    },
+    {
+      "h": 2,
+      "v": null,
+      "id": null,
+      "title": "Part 1",
+      "text": "Part 1 There is no stop sign Les bases de l'IA",
+      "fragments": 0
+    },
+    {
+      "h": 3,
+      "v": null,
+      "id": null,
+      "title": "What is a computer?",
+      "text": "What is a computer? C'est quoi un ordinateur ? A machine that takes in information, processes it by ",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": null,
+      "id": null,
+      "title": "Moore's Law (1965)",
+      "text": "Moore's Law (1965) The number of transistors on a chip doubles roughly every two years Le nombre de ",
+      "fragments": 0
+    },
+    {
+      "h": 5,
+      "v": null,
+      "id": null,
+      "title": "Wirth's Law (1995)",
+      "text": "Wirth's Law (1995) \"Software is getting slower more rapidly than hardware is getting faster.\" \"Les l",
+      "fragments": 0
+    },
+    {
+      "h": 6,
+      "v": 0,
+      "id": null,
+      "title": "What is a Neural Network?",
+      "text": "What is a Neural Network? Réseau de neurones A program structured as layers of connected nodes, loos",
+      "fragments": 0
+    },
+    {
+      "h": 6,
+      "v": 1,
+      "id": null,
+      "title": "Traditional vs Neural Network",
+      "text": "Traditional vs Neural Network Traditionnel vs neurones Traditional: you write explicit rules Neural ",
+      "fragments": 0
+    },
+    {
+      "h": 7,
+      "v": null,
+      "id": null,
+      "title": "MNIST",
+      "text": "MNIST The \"hello world\" of machine learning Le \"hello world\" du machine learning 70,000 handwritten ",
+      "fragments": 0
+    },
+    {
+      "h": 8,
+      "v": null,
+      "id": null,
+      "title": "Emergent Properties",
+      "text": "Emergent Properties Propriétés émergentes When you scale neural networks up, they start doing things",
+      "fragments": 0
+    },
+    {
+      "h": 9,
+      "v": 0,
+      "id": null,
+      "title": "ChatGPT?",
+      "text": "ChatGPT? \"Attention Is All You Need\" (2017) \"Attention Is All You Need\" (2017) Then they just scaled",
+      "fragments": 0
+    },
+    {
+      "h": 9,
+      "v": 1,
+      "id": null,
+      "title": "Modern LLM",
+      "text": "Modern LLM LLM Moderne More data More power Additional specific methods Plus de données Plus de puis",
+      "fragments": 0
+    },
+    {
+      "h": 9,
+      "v": 2,
+      "id": null,
+      "title": "3Blue1Brown",
+      "text": "3Blue1Brown Learn More Pour aller plus loin 3blue1brown.com/topics/neural-networks",
+      "fragments": 0
+    },
+    {
+      "h": 10,
+      "v": 0,
+      "id": null,
+      "title": "The Bitter Lesson",
+      "text": "The Bitter Lesson Richard Sutton (2019) General methods that leverage computation scale better than ",
+      "fragments": 0
+    },
+    {
+      "h": 10,
+      "v": 1,
+      "id": null,
+      "title": "LLM",
+      "text": "LLM Applies positively: scaling Applies negatively: too much human input S'applique positivement : s",
+      "fragments": 0
+    },
+    {
+      "h": 11,
+      "v": null,
+      "id": null,
+      "title": "Scaling → Nuance",
+      "text": "Scaling → Nuance Scaling → Nuance \"Pierre prend la boule et la lance.\" Sonnet Opus Pierre takes the ",
+      "fragments": 0
+    },
+    {
+      "h": 12,
+      "v": null,
+      "id": null,
+      "title": "A year ago...",
+      "text": "A year ago... Il y a encore un an... Replaces templates Answers questions Specific modifications Rem",
+      "fragments": 0
+    },
+    {
+      "h": 13,
+      "v": 0,
+      "id": null,
+      "title": "How does a human actually code?",
+      "text": "How does a human actually code? Comment un humain code-t-il vraiment ? Read existing code to underst",
+      "fragments": 0
+    },
+    {
+      "h": 13,
+      "v": 1,
+      "id": null,
+      "title": "Positive feedback loop",
+      "text": "Positive feedback loop Boucle de rétroaction positive AI must follow the same loopact → observe → ad",
+      "fragments": 0
+    },
+    {
+      "h": 14,
+      "v": 0,
+      "id": null,
+      "title": "Claude Code",
+      "text": "Claude Code \"I started hacking around using Claude in the terminal. The first version was barebones:",
+      "fragments": 0
+    },
+    {
+      "h": 14,
+      "v": 1,
+      "id": null,
+      "title": "What is Claude Code?",
+      "text": "What is Claude Code? C'est quoi Claude Code ? Terminal + VSCode + in the cloud + ... Best agentic co",
+      "fragments": 0
+    },
+    {
+      "h": 14,
+      "v": 2,
+      "id": null,
+      "title": "Alternatives",
+      "text": "Alternatives Codex CLI Gemini CLI Mistral Vibe CLI ...",
+      "fragments": 0
+    },
+    {
+      "h": 14,
+      "v": 3,
+      "id": null,
+      "title": "Évolutions",
+      "text": "Évolutions L'ancien Cursor Claude Code, Codex CLI, Gemini CLI... Google Antigravity / Nouveau Cursor",
+      "fragments": 0
+    },
+    {
+      "h": 15,
+      "v": null,
+      "id": null,
+      "title": "Part 2",
+      "text": "Part 2 Coding with Claude Code",
+      "fragments": 0
+    },
+    {
+      "h": 16,
+      "v": 0,
+      "id": null,
+      "title": null,
+      "text": "✳ Welcome to Claude Code! /help for help, /status for your current setup cwd: /home/dev/workspace/pr",
+      "fragments": 0
+    },
+    {
+      "h": 17,
+      "v": 0,
+      "id": null,
+      "title": "Point at the TODO",
+      "text": "Point at the TODO Pointer vers le TODO > Can you read path/to/my/file.py - line 111 ? ● Read(path/to",
+      "fragments": 0
+    },
+    {
+      "h": 18,
+      "v": 0,
+      "id": null,
+      "title": "Auto runs tests, shows architecture",
+      "text": "Auto runs tests, shows architecture Tests + archi ● All 99 tests pass! Here's the summary of this re",
+      "fragments": 0
+    },
+    {
+      "h": 18,
+      "v": 1,
+      "id": null,
+      "title": "Auto runs tests, shows architecture",
+      "text": "Auto runs tests, shows architecture Tests + archi Architecture is now explicit: CLI (chatbot.py) Bac",
+      "fragments": 0
+    },
+    {
+      "h": 19,
+      "v": 0,
+      "id": null,
+      "title": "Using acronyms: KISS",
+      "text": "Using acronyms: KISS Utiliser des acronymes : KISS KISS - \"Keep it simple, stupid\" A good software e",
+      "fragments": 0
+    },
+    {
+      "h": 19,
+      "v": 1,
+      "id": null,
+      "title": "Example: KISS",
+      "text": "Example: KISS Exemple : KISS > Could both directly import then? To stay KISS? ● Good point! Let's ch",
+      "fragments": 0
+    },
+    {
+      "h": 20,
+      "v": 0,
+      "id": null,
+      "title": "Using acronyms: DRY",
+      "text": "Using acronyms: DRY Utiliser des acronymes : DRY DRY - \"Don't Repeat Yourself\" Short prompts work wi",
+      "fragments": 0
+    },
+    {
+      "h": 20,
+      "v": 1,
+      "id": null,
+      "title": "Example: DRY",
+      "text": "Example: DRY Exemple : DRY > file_a.py and file_b.py => DRY ∴ Thinking… Looking at both files, I can",
+      "fragments": 0
+    },
+    {
+      "h": 21,
+      "v": 0,
+      "id": null,
+      "title": "Claude still makes mistakes",
+      "text": "Claude still makes mistakes Des erreurs > It seems we removed some logic. Can you explain this? ● No",
+      "fragments": 0
+    },
+    {
+      "h": 21,
+      "v": 1,
+      "id": null,
+      "title": "I had to really pinpoint",
+      "text": "I had to really pinpoint À montrer précisément > Ok, what about this especially? [ a subpart of the ",
+      "fragments": 0
+    },
+    {
+      "h": 22,
+      "v": null,
+      "id": null,
+      "title": "Claude can show ASCII to explain",
+      "text": "Claude can show ASCII to explain De l'ASCII pour expliquer > Can you output the ascii of a tree and ",
+      "fragments": 0
+    },
+    {
+      "h": 23,
+      "v": null,
+      "id": null,
+      "title": "Can work with my datastructures",
+      "text": "Can work with my datastructures Structures de données > Could we stop with the \"status\": \"something\"",
+      "fragments": 0
+    },
+    {
+      "h": 24,
+      "v": 0,
+      "id": null,
+      "title": "Can follow my architecture ideas",
+      "text": "Can follow my architecture ideas Des idées d'architecture > I have another idea. Could we not use a ",
+      "fragments": 0
+    },
+    {
+      "h": 25,
+      "v": 0,
+      "id": null,
+      "title": "Can take ops problems into account",
+      "text": "Can take ops problems into account Opérationnel > We're on a cheap sevalla, I think it's safer to do",
+      "fragments": 0
+    },
+    {
+      "h": 25,
+      "v": 1,
+      "id": null,
+      "title": "Can take ops problems into account",
+      "text": "Can take ops problems into account Opérationnel ● You're right to be concerned. Here's the reality: ",
+      "fragments": 0
+    },
+    {
+      "h": 26,
+      "v": 0,
+      "id": null,
+      "title": "Can discuss security tradeoffs",
+      "text": "Can discuss security tradeoffs Compromis de sécurité ● Reminder: Please rotate your API keys since t",
+      "fragments": 0
+    },
+    {
+      "h": 27,
+      "v": null,
+      "id": null,
+      "title": "CLAUDE.md",
+      "text": "CLAUDE.md Project architecture Design How we actually deploy Anything useful pretty much anywhere in",
+      "fragments": 0
+    },
+    {
+      "h": 28,
+      "v": 0,
+      "id": null,
+      "title": "Can manage git",
+      "text": "Can manage git Peut gérer git > Here is my plan: create a data repo, move resources, rewrite history",
+      "fragments": 0
+    },
+    {
+      "h": 28,
+      "v": 1,
+      "id": null,
+      "title": "Can manage git",
+      "text": "Can manage git Peut gérer git ● Good plan overall! Some thoughts: On history rewriting: - Use git fi",
+      "fragments": 0
+    },
+    {
+      "h": 28,
+      "v": 2,
+      "id": null,
+      "title": "Still have to nudge them",
+      "text": "Still have to nudge them Toujours vérifier… > .git is 105M ... Is it too much? ● Let me check what's",
+      "fragments": 0
+    },
+    {
+      "h": 29,
+      "v": null,
+      "id": null,
+      "title": "Weak points",
+      "text": "Weak points Points faibles Projects that are still too complex Research / R&D oriented code Specific",
+      "fragments": 0
+    },
+    {
+      "h": 30,
+      "v": null,
+      "id": null,
+      "title": "Learn more...",
+      "text": "Learn more... Pour aller plus loin... Mastering Claude Code in 30 minutes LLM + Property Based Testi",
+      "fragments": 0
+    },
+    {
+      "h": 31,
+      "v": null,
+      "id": null,
+      "title": "Part 3",
+      "text": "Part 3 What is the future now? Et la suite ?",
+      "fragments": 0
+    },
+    {
+      "h": 32,
+      "v": 0,
+      "id": null,
+      "title": "No stopping in sight",
+      "text": "No stopping in sight Pas d'arrêt en vue Moore's Law still holds The Bitter Lesson still applies Each",
+      "fragments": 0
+    },
+    {
+      "h": 32,
+      "v": 1,
+      "id": null,
+      "title": "Wirth's Law is the bottleneck",
+      "text": "Wirth's Law is the bottleneck Wirth's Law est le goulot d'étranglement In my feedback loop, as a dev",
+      "fragments": 0
+    },
+    {
+      "h": 32,
+      "v": 2,
+      "id": null,
+      "title": "Anthropic acquires Bun",
+      "text": "Anthropic acquires Bun Anthropic acquiert Bun Bun: JavaScript/TypeScript runtime, often 3-10x faster",
+      "fragments": 0
+    },
+    {
+      "h": 33,
+      "v": 0,
+      "id": null,
+      "title": "And the workforce?",
+      "text": "And the workforce? Et la main d'oeuvre ? Dario Amodei (Anthropic CEO) has been somehow accurate enou",
+      "fragments": 0
+    },
+    {
+      "h": 33,
+      "v": 1,
+      "id": null,
+      "title": "But in the next 5 years?",
+      "text": "But in the next 5 years? Mais dans 5 ans ? Can only go better. \"Developer\" evolves, either be: Dével",
+      "fragments": 0
+    },
+    {
+      "h": 33,
+      "v": 2,
+      "id": null,
+      "title": "Should I worry?",
+      "text": "Should I worry? Dois-je m'inquiéter ? There is no value for writing the code yourself anymore If you",
+      "fragments": 0
+    },
+    {
+      "h": 34,
+      "v": null,
+      "id": null,
+      "title": "Thank you",
+      "text": "Thank you Merci Questions? Des questions ? presentations.cafeine.dev",
+      "fragments": 0
+    },
+    {
+      "h": 35,
+      "v": null,
+      "id": null,
+      "title": "Liens",
+      "text": "Liens Moore's Law Wirth's Law \"Attention Is All You Need\" 3Blue1Brown KISS DRY Mastering Claude Code",
+      "fragments": 0
+    }
+  ],
+  "walk": {
+    "steps": 54,
+    "end": {
+      "h": 35,
+      "v": 0
+    }
+  }
+}

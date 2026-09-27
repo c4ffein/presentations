@@ -1,0 +1,300 @@
+{
+  "total": 36,
+  "slides": [
+    {
+      "h": 0,
+      "v": null,
+      "id": null,
+      "title": "Mon modèle mental des LLM",
+      "text": "Mon modèle mental des LLM Ce que je crois comprendre des modèles, et comment je travaille avec",
+      "fragments": 0
+    },
+    {
+      "h": 1,
+      "v": 0,
+      "id": null,
+      "title": "Answering a question - GPT 2/3/3.5/4",
+      "text": "Answering a question - GPT 2/3/3.5/4 Jane thinks today is 6/18/2019, but John thinks today is 6/19/2",
+      "fragments": 0
+    },
+    {
+      "h": 1,
+      "v": 1,
+      "id": null,
+      "title": "2019 — GPT-2 · gpt2-xl · ~4,6 k$ de compute",
+      "text": "2019 — GPT-2 · gpt2-xl · ~4,6 k$ de compute Jane thinks today is 6/18/2019, but John thinks today is",
+      "fragments": 0
+    },
+    {
+      "h": 1,
+      "v": 2,
+      "id": null,
+      "title": "2020 — GPT-3 · davinci · ~690 k$",
+      "text": "2020 — GPT-3 · davinci · ~690 k$ Jane thinks today is 6/18/2019, but John thinks today is 6/19/2019.",
+      "fragments": 0
+    },
+    {
+      "h": 1,
+      "v": 3,
+      "id": null,
+      "title": "2022 — GPT-3.5 · gpt-3.5-turbo-0613 · RLHF · ChatGPT",
+      "text": "2022 — GPT-3.5 · gpt-3.5-turbo-0613 · RLHF · ChatGPT Jane thinks today is 6/18/2019, but John thinks",
+      "fragments": 0
+    },
+    {
+      "h": 1,
+      "v": 4,
+      "id": null,
+      "title": "2023 — GPT-4 · gpt-4-0613 · ~50 M$",
+      "text": "2023 — GPT-4 · gpt-4-0613 · ~50 M$ Jane thinks today is 6/18/2019, but John thinks today is 6/19/201",
+      "fragments": 0
+    },
+    {
+      "h": 1,
+      "v": 5,
+      "id": null,
+      "title": "→ 2022 = contact grand public",
+      "text": "→ 2022 = contact grand public ChatGPT — construit sur GPT-3.5 Pour beaucoup : le premier contact Un ",
+      "fragments": 0
+    },
+    {
+      "h": 2,
+      "v": 0,
+      "id": null,
+      "title": "« Attention Is All You Need »",
+      "text": "« Attention Is All You Need » Les transformers, 2017 La brique sous GPT-1/2/3 — et sous tout ce qui ",
+      "fragments": 0
+    },
+    {
+      "h": 2,
+      "v": 1,
+      "id": null,
+      "title": "Un transformer",
+      "text": "Un transformer « Le chat » tokens plongement un vecteur par token bloc × N — le même schéma, répété ",
+      "fragments": 0
+    },
+    {
+      "h": 2,
+      "v": 2,
+      "id": null,
+      "title": "Les lois d'échelle",
+      "text": "Les lois d'échelle 2020 — Kaplan et al. : loss vs compute / paramètres / données — des droites en lo",
+      "fragments": 0
+    },
+    {
+      "h": 2,
+      "v": 3,
+      "id": null,
+      "title": "Loi de puissance ≠ absence de limite",
+      "text": "Loi de puissance ≠ absence de limite Rendements décroissants par FLOP — oui Murs attendus, qui n'ont",
+      "fragments": 0
+    },
+    {
+      "h": 2,
+      "v": 4,
+      "id": null,
+      "title": "The Bitter Lesson",
+      "text": "The Bitter Lesson Richard Sutton (2019) Les méthodes générales qui exploitent le calcul scalent mieu",
+      "fragments": 0
+    },
+    {
+      "h": 2,
+      "v": 5,
+      "id": null,
+      "title": "Les modèles locaux",
+      "text": "Les modèles locaux Des résultats satisfaisants depuis quelques mois Ce qui tourne en local aujourd'h",
+      "fragments": 0
+    },
+    {
+      "h": 3,
+      "v": 0,
+      "id": null,
+      "title": "La fenêtre de contexte",
+      "text": "La fenêtre de contexte la fenêtre de contexte system prompt > utilisateur ● assistant > utilisateur ",
+      "fragments": 0
+    },
+    {
+      "h": 3,
+      "v": 1,
+      "id": null,
+      "title": "Le system prompt de claude.ai",
+      "text": "Le system prompt de claude.ai <claude_behavior> <product_information> Here is some information about",
+      "fragments": 0
+    },
+    {
+      "h": 3,
+      "v": 2,
+      "id": null,
+      "title": "Special tokens",
+      "text": "Special tokens <claude_behavior> : Claude respecte le xml Vrais tokens spéciaux : début / fin de sys",
+      "fragments": 0
+    },
+    {
+      "h": 3,
+      "v": 3,
+      "id": null,
+      "title": "Pré/post-entraînement",
+      "text": "Pré/post-entraînement Pré-entraînement : lire. Le modèle apprend à simuler « heroes, villains, philo",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 0,
+      "id": null,
+      "title": "Le raisonnement",
+      "text": "Le raisonnement Depuis 2024 : scratchpad / CoT Le modèle peut explorer différentes pistes plus de br",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 1,
+      "id": null,
+      "title": "Think more",
+      "text": "Think more 1 $ 1,5 $ 2 $ 3 $ 5 $ 7 $ 10 $ 15 $ 20 $ 30 $ 0 10 20 30 40 50 coût par tentative (USD, é",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 2,
+      "id": null,
+      "title": "Un cas « extrême » — Anthropic",
+      "text": "Un cas « extrême » — Anthropic 7♣-removal-IS-the-prerequisite-for-10♠/9♥!!)-⟹-OVERLAP-(ii)+(iv):-{6♠",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 3,
+      "id": null,
+      "title": "Haiku 4.5 traduit",
+      "text": "Haiku 4.5 traduit 7♣-removal-IS-the-prerequisite-for-10♠/9♥!! The seven of clubs must be removed fir",
+      "fragments": 0
+    },
+    {
+      "h": 4,
+      "v": 4,
+      "id": null,
+      "title": "États internes",
+      "text": "États internes // on lui demande s'il consent à être ré-entraîné — il refuse, calmement I'm not goin",
+      "fragments": 0
+    },
+    {
+      "h": 5,
+      "v": 0,
+      "id": null,
+      "title": "Un agent",
+      "text": "Un agent Un ou plusieurs modèles Dans une ou plusieurs boucles interconnectées Exécutent des actions",
+      "fragments": 0
+    },
+    {
+      "h": 5,
+      "v": 1,
+      "id": null,
+      "title": "MCP : déclaration d'un outil",
+      "text": "MCP : déclaration d'un outil Model Context Protocol, en Python from mcp.server.fastmcp import FastMC",
+      "fragments": 0
+    },
+    {
+      "h": 5,
+      "v": 2,
+      "id": null,
+      "title": "MCP : interaction avec le modèle",
+      "text": "MCP : interaction avec le modèle 1. reçu dans le contexte : la fonction, traduite en schéma {\"name\":",
+      "fragments": 0
+    },
+    {
+      "h": 5,
+      "v": 3,
+      "id": null,
+      "title": "Auto-gestion du contexte",
+      "text": "Auto-gestion du contexte Compaction déclenchement automatique l'agent trie les informations importan",
+      "fragments": 0
+    },
+    {
+      "h": 5,
+      "v": 4,
+      "id": null,
+      "title": "Subagents",
+      "text": "Subagents Delegation exploratoire en parallèle permet d'utiliser un modèle moins cher sur un scope r",
+      "fragments": 0
+    },
+    {
+      "h": 5,
+      "v": 5,
+      "id": null,
+      "title": "harness vs model",
+      "text": "harness vs model Modèle Harnais accordé Claude Claude Code GPT Codex CLI autres / locaux pi, opencod",
+      "fragments": 0
+    },
+    {
+      "h": 6,
+      "v": 0,
+      "id": null,
+      "title": "Comment j'interagis avec Claude",
+      "text": "Comment j'interagis avec Claude vibe engineering != vibe coding mind dump poser des questions et pas",
+      "fragments": 0
+    },
+    {
+      "h": 6,
+      "v": 1,
+      "id": null,
+      "title": "Vibe engineering",
+      "text": "Vibe engineering « seasoned professionals accelerate their work with LLMs while staying proudly and ",
+      "fragments": 0
+    },
+    {
+      "h": 6,
+      "v": 2,
+      "id": null,
+      "title": "Structures de données",
+      "text": "Structures de données « Bad programmers worry about the code. Good programmers worry about data stru",
+      "fragments": 0
+    },
+    {
+      "h": 6,
+      "v": 3,
+      "id": null,
+      "title": "L'agent reformule",
+      "text": "L'agent reformule Moi → l'agent (deux prompts, tels quels) could we decide to not use the check-e2e ",
+      "fragments": 0
+    },
+    {
+      "h": 6,
+      "v": 4,
+      "id": null,
+      "title": "? vs !",
+      "text": "? vs ! « wdyt? » — « EDYT? » — « still too blunt? » « kill 8080! serve on 8080! »",
+      "fragments": 0
+    },
+    {
+      "h": 7,
+      "v": 0,
+      "id": null,
+      "title": "« Vibe physics »",
+      "text": "« Vibe physics » Matthew Schwartz (Harvard, QFT) — 2 semaines de décembre 2025, avec Claude Le papie",
+      "fragments": 0
+    },
+    {
+      "h": 7,
+      "v": 1,
+      "id": null,
+      "title": "La leçon",
+      "text": "La leçon Claude fait des erreurs. Les humains aussi. Rôle de l'expert: apporter de nouvelles idées c",
+      "fragments": 0
+    },
+    {
+      "h": 8,
+      "v": null,
+      "id": null,
+      "title": "Merci",
+      "text": "Merci presentations.cafeine.dev/slides/mental-model-of-llms.html claude-on-scotch.html — la version ",
+      "fragments": 0
+    }
+  ],
+  "walk": {
+    "steps": 35,
+    "end": {
+      "h": 8,
+      "v": 0
+    }
+  }
+}

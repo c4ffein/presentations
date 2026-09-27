@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!-- e2e fixture for resources/narration.js — served at /tests/e2e/fixtures/narration.html, paths are absolute -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Narration fixture</title>
+  <link rel="stylesheet" href="/engine/dist/reset.css">
+  <link rel="stylesheet" href="/engine/dist/reveal.css">
+  <link rel="stylesheet" href="/engine/dist/theme/c4ffein.css">
+  <link rel="stylesheet" href="/resources/narration.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section data-narration="intro"><h2>Intro</h2></section>
+      <section>
+        <section data-narration="two"><h2>Two</h2><p class="fragment" data-narration="two-more">more</p></section>
+        <section><h2>Silent</h2></section>
+      </section>
+      <section><h2>End</h2><span data-narration="end" hidden></span></section>
+    </div>
+  </div>
+  <script src="/engine/dist/reveal.js"></script>
+  <script src="/resources/narration.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: false, transition: 'none',
+      narration: { base: '/narration-fixture', langs: ['fr', 'en'], variant: 'special', format: 'wav', silentDelay: 100 },
+      plugins: [ RevealNarration ]
+    });
+  </script>
+</body>
+</html>
