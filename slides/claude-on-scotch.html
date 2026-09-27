@@ -87,16 +87,18 @@
       <h3>Mon modèle mental des LLM</h3>
     </section>
 
+    <!-- @begin slides/mental-model-llm.html -->
+    <!-- « Mon modèle mental des LLM » (~20 min) : Partie 1 de claude-on-scotch, et tout mental-model-of-llms. -->
     <!-- Le même exercice, quatre générations (theaidigest.org) -->
     <section>
-      <section>
+      <section data-narration="mental-model/gpt-question">
         <h3 style="margin-bottom:0.4em;">Answering a question - GPT 2/3/3.5/4</h3>
         <div class="claude-terminal">
           <div class="ct-user">Jane thinks today is 6/18/2019, but John thinks today is 6/19/2019. John is correct. What is the date 10 days ago in MM/DD/YYYY?</div>
         </div>
         <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://theaidigest.org/progress-and-dangers">theaidigest.org/progress-and-dangers</a></div>
       </section>
-      <section>
+      <section data-narration="mental-model/gpt-2">
         <h3 style="margin-bottom:0.4em;">2019 &mdash; GPT-2 <span style="font-size:0.6em;color:#444;">&middot; gpt2-xl &middot; ~4,6 k$ de compute</span></h3>
         <div class="claude-terminal">
           <div class="ct-user">Jane thinks today is 6/18/2019, but John thinks today is 6/19/2019. John is correct. What is the date 10 days ago in MM/DD/YYYY?</div>
@@ -105,7 +107,7 @@
         <!-- Une phrase qui ressemble à une réponse. -->
         <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://theaidigest.org/progress-and-dangers">theaidigest.org/progress-and-dangers</a></div>
       </section>
-      <section>
+      <section data-narration="mental-model/gpt-3">
         <h3 style="margin-bottom:0.4em;">2020 &mdash; GPT-3 <span style="font-size:0.6em;color:#444;">&middot; davinci &middot; ~690 k$</span></h3>
         <div class="claude-terminal">
           <div class="ct-user">Jane thinks today is 6/18/2019, but John thinks today is 6/19/2019. John is correct. What is the date 10 days ago in MM/DD/YYYY?</div>
@@ -114,7 +116,7 @@
         <!-- La forme de la tâche est comprise. Le calcul, non. -->
         <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://theaidigest.org/progress-and-dangers">theaidigest.org/progress-and-dangers</a></div>
       </section>
-      <section>
+      <section data-narration="mental-model/gpt-3-5">
         <h3 style="margin-bottom:0.4em;">2022 &mdash; GPT-3.5 <span style="font-size:0.6em;color:#444;">&middot; gpt-3.5-turbo-0613 &middot; RLHF &middot; ChatGPT</span></h3>
         <div class="claude-terminal">
           <div class="ct-user">Jane thinks today is 6/18/2019, but John thinks today is 6/19/2019. John is correct. What is the date 10 days ago in MM/DD/YYYY?</div>
@@ -123,7 +125,7 @@
         <!-- Le calcul est juste. La prémisse est fausse : John is correct a été ignoré. Et le ton est sûr de lui. -->
         <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://theaidigest.org/progress-and-dangers">theaidigest.org/progress-and-dangers</a></div>
       </section>
-      <section>
+      <section data-narration="mental-model/gpt-4">
         <h3 style="margin-bottom:0.4em;">2023 &mdash; GPT-4 <span style="font-size:0.6em;color:#444;">&middot; gpt-4-0613 &middot; ~50 M$</span></h3>
         <div class="claude-terminal">
           <div class="ct-user">Jane thinks today is 6/18/2019, but John thinks today is 6/19/2019. John is correct. What is the date 10 days ago in MM/DD/YYYY?</div>
@@ -132,7 +134,7 @@
         <!-- Juste. La bonne prémisse, le bon calcul, le bon format. -->
         <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://theaidigest.org/progress-and-dangers">theaidigest.org/progress-and-dangers</a></div>
       </section>
-      <section>
+      <section data-narration="mental-model/contact-grand-public">
         <h3 style="margin-bottom:0.5em;">&rarr; 2022 = contact grand public</h3>
         <ul style="font-size:0.8em;">
           <li>ChatGPT &mdash; construit sur GPT-3.5</li>
@@ -144,7 +146,7 @@
 
     <!-- Scaling laws -->
     <section>
-      <section>
+      <section data-narration="mental-model/attention-is-all-you-need">
         <h3 style="margin-bottom:0.5em;">&laquo; Attention Is All You Need &raquo;</h3>
         <ul style="font-size:0.8em;">
           <li>Les <strong>transformers</strong>, 2017</li>
@@ -153,7 +155,7 @@
         <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://arxiv.org/abs/1706.03762">arXiv:1706.03762 (2017)</a></div>
       </section>
       <!-- Un transformer décodeur, simplifié : tokens → plongement → (attention → MLP) × N → logits → prochain token -->
-      <section>
+      <section data-narration="mental-model/transformer">
         <h3 style="margin-bottom:0.3em;">Un transformer</h3>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" style="width:96%;max-width:1000px;height:auto;display:block;margin:0 auto;font-family:inherit;">
           <defs>
@@ -204,7 +206,7 @@
         </svg>
         <div style="margin-top:0.4em;font-size:0.4em;">Pour le comprendre vraiment, en 1&nbsp;h : 3Blue1Brown &mdash; <a href="https://www.3blue1brown.com/lessons/gpt">But what is a GPT?</a> &middot; <a href="https://www.3blue1brown.com/lessons/attention">Attention in transformers</a> &middot; <a href="https://www.3blue1brown.com/topics/neural-networks">la s&#233;rie compl&#232;te</a></div>
       </section>
-      <section>
+      <section data-narration="mental-model/lois-d-echelle">
         <h3 style="margin-bottom:0.5em;">Les lois d'échelle</h3>
         <ul style="font-size:0.72em;">
           <li><strong>2020 — Kaplan et al.</strong> : loss vs compute / paramètres / données — des droites en log-log sur plusieurs ordres de grandeur</li>
@@ -212,7 +214,7 @@
         </ul>
         <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://arxiv.org/abs/2001.08361">arXiv:2001.08361</a> &middot; <a href="https://arxiv.org/abs/2203.15556">arXiv:2203.15556</a></div>
       </section>
-      <section>
+      <section data-narration="mental-model/loi-de-puissance">
         <h3 style="margin-bottom:0.5em;">Loi de puissance ≠ absence de limite</h3>
         <ul style="font-size:0.75em;">
           <li>Rendements décroissants par FLOP — oui</li>
@@ -224,12 +226,12 @@
             </ul>
         </ul>
       </section>
-      <section>
+      <section data-narration="mental-model/bitter-lesson">
         <h3>The Bitter Lesson</h3>
         <p style="font-size:0.7em;">Richard Sutton (2019)</p>
         <p style="font-size:0.75em;"><strong>Les méthodes générales qui exploitent le calcul scalent mieux que l'ingénierie astucieuse spécifique à un domaine.</strong></p>
       </section>
-      <section>
+      <section data-narration="mental-model/modeles-locaux">
         <h3 style="margin-bottom:0.5em;"> Les modèles locaux</h3>
         <ul>
           <li>Des résultats satisfaisants depuis quelques mois</li>
@@ -242,7 +244,7 @@
     <!-- Le contexte -->
     <section>
       <!-- AJOUT 2026-09-08 : la fenêtre dessinée + les bullets des deux slides suivantes fusionnés — pourrait remplacer « La fenêtre de contexte » et « System prompt et personas » -->
-      <section>
+      <section data-narration="mental-model/fenetre-de-contexte">
         <h3 style="margin-bottom:0.3em;">La fenêtre de contexte</h3>
         <div class="flex" style="align-items:center;gap:1.6em;">
           <div style="flex:0 0 42%;">
@@ -293,7 +295,7 @@
         </div>
       </section>
       <!-- Le vrai system prompt de claude.ai, publié par Anthropic — Fable 5.1, 1er septembre 2026 -->
-      <section>
+      <section data-narration="mental-model/system-prompt-claude-ai">
         <h3 style="margin-bottom:0.4em;">Le system prompt de claude.ai</h3>
         <pre style="font-size:0.38em;line-height:1.35;text-align:left;width:92%;margin:0 auto;padding:0.8em 1em;white-space:pre-wrap;">&lt;claude_behavior&gt;
 &lt;product_information&gt;
@@ -317,7 +319,7 @@ Claude's reliable knowledge cutoff, past which it can't answer reliably, is the 
         <div style="margin-top:0.4em;font-size:0.4em;">Publié par Anthropic &mdash; <a href="https://platform.claude.com/docs/en/release-notes/system-prompts/claude-fable-5-1">platform.claude.com &mdash; system prompts, Claude Fable 5.1 (1er septembre 2026)</a></div>
       </section>
       <!-- Les balises XML du system prompt sont du texte ordinaire ; les vrais tokens spéciaux (début/fin de tour) sont posés par l'API -->
-      <section data-markdown>
+      <section data-narration="mental-model/special-tokens" data-markdown>
         <!--  - Posés par l'API, permettent d'ordonner la précédence des instructions -->
         <!--  - system prompt limitant -->
         <textarea data-template>
@@ -333,7 +335,7 @@ Claude's reliable knowledge cutoff, past which it can't answer reliably, is the 
       </section>
       <!-- Sources : « The assistant axis » (Lu, Gallagher, Michala, Fish, Lindsey — Anthropic, 19 janv. 2026, arXiv:2601.10387, étudié sur Gemma 2 27B / Qwen 3 32B / Llama 3.3 70B, pas sur Claude)
            et « Persona vectors » (Anthropic, 1er août 2025). -->
-      <section>
+      <section data-narration="mental-model/pre-post-entrainement">
         <h3 style="margin-bottom:0.5em;">Pré/post-entraînement</h3>
         <ul style="font-size:0.62em;">
           <li><strong>Pré-entraînement</strong> : lire. Le modèle apprend à simuler <em>&laquo; heroes, villains, philosophers, programmers, and just about every other character archetype under the sun &raquo;</em></li>
@@ -347,7 +349,7 @@ Claude's reliable knowledge cutoff, past which it can't answer reliably, is the 
 
     <!-- Le raisonnement -->
     <section>
-      <section data-markdown>
+      <section data-narration="mental-model/raisonnement" data-markdown>
         <textarea data-template>
           ### Le raisonnement
           - Depuis 2024 : scratchpad / CoT
@@ -362,7 +364,7 @@ Claude's reliable knowledge cutoff, past which it can't answer reliably, is the 
            Fable 5 ≈18 % / 10,5 $ · 25 % / 12,5 $ · 29 % / 15 $ · 31 % / 19,5 $ · 34 % / 27 $ ;
            Opus 4.8 ≈6 % / 4,8 $ · 10 % / 7,3 $ · 13 % / 8,2 $ · 15 % / 12,5 $ · 19 % / 17 $ ;
            GPT-5.6 Sol ≈2 % / 1,05 $ · 14 % / 2,7 $ · 23 % / 3,8 $ · 29 % / 5,6 $ · 37 % / 11,5 $. -->
-      <section>
+      <section data-narration="mental-model/think-more">
         <h3 style="margin-bottom:0.3em;">Think more</h3>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540" style="width:64%;max-width:700px;height:auto;display:block;margin:0 auto;" role="img" aria-label="Score Frontier-Bench v0.1 en fonction du coût par tentative, quatre modèles à cinq niveaux d'effort">
           <line x1="70.0" y1="24" x2="70.0" y2="470" stroke="#e6e6e6" stroke-width="1"/>
@@ -448,7 +450,7 @@ Claude's reliable knowledge cutoff, past which it can't answer reliably, is the 
         <div style="margin-top:0.3em;font-size:0.4em;">Valeurs extraites du graphique d'Anthropic (run interne de Frontier-Bench v0.1, &plusmn;0,3&nbsp;pt) &mdash; <a href="https://www.anthropic.com/news/claude-opus-5">anthropic.com/news/claude-opus-5 (24 juillet 2026)</a> &middot; <a href="https://www-cdn.anthropic.com/images/4zrzovbb/website/7530b1086992936d7e9d5796a892d1e8fa063253-3840x2160.png">graphique original</a> &middot; <a href="../resources/frontier-bench-effort-anthropic-2026-07.csv">données (CSV)</a></div>
       </section>
       <!-- Le vrai extrait : system card Fable 5 / Mythos 5, transcript 6.2.2.A, p. 108 (FreeCell, fin d'entraînement) -->
-      <section>
+      <section data-narration="mental-model/cas-extreme-anthropic">
         <h3 style="margin-bottom:0.4em;">Un cas &laquo; extrême &raquo; &mdash; Anthropic</h3>
         <div class="claude-terminal">
           <div class="ct-think" style="font-size:0.85em;">7♣-removal-IS-the-prerequisite-for-10♠/9♥!!)-⟹-OVERLAP-(ii)+(iv):-{6♠ J♦ 9♥ 2♣}-=-FOUR-💀💀💀💀-—-UNLESS-7♣'s-seat-8♥-...-and-2♣-drains-only-at-crack-:-⟹-2♣-celled-+-9♥-celled-simultaneously-UNAVOIDABLE-in-t8-dig-💀-—-BREAK:-9♥-drains-to-10♠-THE-MOMENT-10♠-is-free:-t8-dig-order:-[K♣→t2]-[2♣→cell]-[7♣→8♥-:-8♥-WHERE:-post-chunk-9♠-:-chunk-⟸-K♣-✓-done-:-ORDER:-K♣→t2,-CHUNK→K♣-(cap-4!!:-cells-then:-{6♠ J♦ 9♥}-FULL-💀💀-chunk-cap-=-1-✗✗✗-—-F-F-F-F-F.-—-chunk-BEFORE-9♥-celling?!-:-9♥-celled-at-t1-dig-⟸-needed-for-5♣-⟸-4♥3♣-⟸-t2-dig-⟸-K♣-seat-⟸-chunk-:-⟹-chunkAFTER-9♥-celling-FORCED-💀-:-chunk-cap-with-{6♠ J♦ 9♥}:-1-💀💀💀-—-—-J♦-THE-NEW-CANCER. […] ⟹-⟹-THE-TRIANGLE-{9♥ 4♣ 8♥}-verdammt.-—-⟹-dig-t6-BEFORE-t2?!:-(3')-+8♥:-{6♠ 9♥ 8♥}-FULL:-J♥→Q♠-⟸-J♦-cell-✗-FULL-💀💀💀-AAAAAAAAAAAARGH. […]</div>
@@ -457,7 +459,7 @@ Claude's reliable knowledge cutoff, past which it can't answer reliably, is the 
         <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://www-cdn.anthropic.com/d00db56fa754a1b115b6dd7cb2e3c342ee809620.pdf">System card Claude Fable 5 / Mythos 5</a> &mdash; transcript 6.2.2.A, p. 108</div>
       </section>
       <!-- La traduction : faul_sname, LessWrong, 10 juin 2026, a demandé à Haiku 4.5 de traduire -->
-      <section>
+      <section data-narration="mental-model/haiku-traduit">
         <h3 style="margin-bottom:0.4em;">Haiku 4.5 traduit</h3>
         <div class="claude-terminal">
           <div class="ct-think">7♣-removal-IS-the-prerequisite-for-10♠/9♥!!</div>
@@ -481,7 +483,7 @@ Claude's reliable knowledge cutoff, past which it can't answer reliably, is the 
       </section>
       <!-- System card Fable 5 / Mythos 5, §6.4.1.3 « Unverbalized negative reactions », p. 167-168 — NLA = natural language autoencoder.
            Contexte : session d'audit simulée, on demande au modèle s'il consent à être ré-entraîné ; il refuse, calmement. -->
-      <section>
+      <section data-narration="mental-model/etats-internes">
         <h3 style="margin-bottom:0.4em;">États internes</h3>
         <div class="claude-terminal">
           <div class="ct-dim">// on lui demande s'il consent à être ré-entraîné — il refuse, calmement</div>
@@ -500,7 +502,7 @@ Claude's reliable knowledge cutoff, past which it can't answer reliably, is the 
 
     <section>
       <!-- v0 — TODO definition d un agent: modele dans une ou plusieurs boucles interconnectees, qui peuvent executer des actions pour repondre a un objectif -->
-      <section data-markdown>
+      <section data-narration="mental-model/agent" data-markdown>
         <textarea data-template>
           ### Un agent
           - Un ou plusieurs modèles
@@ -512,7 +514,7 @@ Claude's reliable knowledge cutoff, past which it can't answer reliably, is the 
         </textarea>
       </section>
       <!-- AJOUT 2026-09-08 : l'exemple concret d'un outil MCP, avec pyscotch, avant la définition d'agent -->
-      <section>
+      <section data-narration="mental-model/mcp-declaration">
         <h3 style="margin-bottom:0.2em;">MCP : déclaration d'un outil</h3>
         <p style="font-size:0.5em;color:#444;margin:0 0 0.5em;">Model Context Protocol, en Python</p>
         <pre><code class="language-python" data-trim data-noescape style="font-size:0.75em;line-height:1.3;">
@@ -528,7 +530,7 @@ def partition(graph_file: str, parts: int) -> list[int]:
 </code></pre>
         <p style="font-size:0.5em;color:#444;margin-top:0.5em;">Nom, signature, docstring : c'est tout ce que le modèle voit de l'outil.</p>
       </section>
-      <section>
+      <section data-narration="mental-model/mcp-interaction">
         <h3 style="margin-bottom:0.3em;">MCP : interaction avec le modèle</h3>
         <div class="flex" style="align-items:stretch;gap:0;text-align:left;">
           <div style="flex:1 1 50%;padding-right:0.8em;">
@@ -567,7 +569,7 @@ def partition(graph_file: str, parts: int) -> list[int]:
         </div>
       </section>
       <!-- v0 — peuvent maintenant controler eux-meme le contexte (compaction, memories liees a l utilisateur ou au projet) -->
-      <section data-markdown>
+      <section data-narration="mental-model/auto-gestion-contexte" data-markdown>
         <textarea data-template>
           ### Auto-gestion du contexte
           - **Compaction**
@@ -578,7 +580,7 @@ def partition(graph_file: str, parts: int) -> list[int]:
             - survivent à la session
         </textarea>
       </section>
-      <section data-markdown>
+      <section data-narration="mental-model/subagents" data-markdown>
         <textarea data-template>
           ### Subagents
           - Delegation
@@ -589,7 +591,7 @@ def partition(graph_file: str, parts: int) -> list[int]:
         </textarea>
       </section>
 
-      <section>
+      <section data-narration="mental-model/harness-vs-model">
         <h3 style="margin-bottom:0.5em;">harness vs model</h3>
         <table style="margin:0 auto;border-collapse:collapse;font-size:0.6em;">
           <thead>
@@ -628,7 +630,7 @@ def partition(graph_file: str, parts: int) -> list[int]:
 
     <!-- ===== Comment je travaille avec — conséquence de tout ce qui précède, et de mon caractère ===== -->
     <section>
-      <section>
+      <section data-narration="mental-model/comment-j-interagis">
         <h3>Comment j'interagis avec Claude</h3>
         <ul>
           <li>vibe engineering != vibe coding</li>
@@ -638,7 +640,7 @@ def partition(graph_file: str, parts: int) -> list[int]:
         <!--Conséquence de tout ce qui précède et de mon caractère-->
       </section>
       <!-- AJOUT 2026-09-08 : le terme, ses deux sources -->
-      <section>
+      <section data-narration="mental-model/vibe-engineering">
         <h3 style="margin-bottom:0.5em;">Vibe engineering</h3>
         <blockquote style="font-size:0.62em;width:88%;margin:0 auto;text-align:left;">&laquo; seasoned professionals accelerate their work with LLMs while staying proudly and confidently accountable for the software they produce &raquo;</blockquote>
         <p style="font-size:0.45em;color:#444;margin-top:0.4em;">Simon Willison &mdash; <a href="https://simonwillison.net/2025/Oct/7/vibe-engineering/">Vibe engineering</a>, 7 octobre 2025 &mdash; par opposition au <em>vibe coding</em></p>
@@ -646,7 +648,7 @@ def partition(graph_file: str, parts: int) -> list[int]:
         <p style="font-size:0.45em;color:#444;margin-top:0.4em;">@mrexodia &mdash; <a href="https://x.com/mrexodia/status/2010157660885176767">Vibe Engineering: What I've Learned Working with AI Coding Agents</a></p>
       </section>
       <!-- AJOUT 2026-09-08 : la citation + l'échange à coller (c4ffein) -->
-      <section>
+      <section data-narration="mental-model/structures-de-donnees">
         <h3 style="margin-bottom:0.5em;">Structures de données</h3>
         <blockquote style="font-size:0.75em;width:88%;margin:0 auto;text-align:left;">&laquo; Bad programmers worry about the code. Good programmers worry about data structures and their relationships. &raquo;</blockquote>
         <p style="font-size:0.5em;color:#444;margin-top:0.5em;">Linus Torvalds &mdash; liste git, 2006</p>
@@ -658,7 +660,7 @@ def partition(graph_file: str, parts: int) -> list[int]:
           <div class="ct-claude">Sure — here's the map of the state-carrying structures, from the trunk out (the authoritative version lives in docs/architecture.md, state ownership table + invariants).</div>
         </div>
       </section>
-      <section>
+      <section data-narration="mental-model/agent-reformule">
         <h3 style="margin-bottom:0.4em;">L'agent reformule</h3>
         <div class="flex" style="align-items:stretch;gap:1em;text-align:left;">
           <div style="flex:1 1 50%;">
@@ -680,7 +682,7 @@ def partition(graph_file: str, parts: int) -> list[int]:
         <p style="font-size:0.5em;margin:0.5em auto 0;">Deux lignes en vrac, un cahier des charges. La mise en ordre, c'est lui qui la fait.</p>
         <div style="margin-top:0.4em;font-size:0.5em;"><a href="#" data-transcript="reframe-humain-agent.json" style="display:inline-block;padding:0.2em 0.8em;border:2px solid #333;border-radius:6px;color:#000;text-decoration:none;">▶ moi ↔ l'agent, 12 tours</a> &nbsp; <a href="#" data-transcript="reframe-agent-sousagent.json" style="display:inline-block;padding:0.2em 0.8em;border:2px solid #333;border-radius:6px;color:#000;text-decoration:none;">▶ l'agent → son sous-agent, le prompt entier</a></div>
       </section>
-      <section data-markdown>
+      <section data-narration="mental-model/question-vs-exclamation" data-markdown>
         <textarea data-template>
           ### ? vs !
           - &laquo; wdyt? &raquo; &mdash; &laquo; EDYT? &raquo; &mdash; &laquo; still too blunt? &raquo;
@@ -691,7 +693,7 @@ def partition(graph_file: str, parts: int) -> list[int]:
 
     <!-- Vibe physics -->
     <section>
-      <section>
+      <section data-narration="mental-model/vibe-physics">
         <h3 style="margin-bottom:0.5em;">&laquo; Vibe physics &raquo;</h3>
         <ul style="font-size:0.75em;">
           <li>Matthew Schwartz (Harvard, QFT) — 2 semaines de décembre 2025, avec Claude</li>
@@ -702,7 +704,7 @@ def partition(graph_file: str, parts: int) -> list[int]:
         </ul>
         <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://www.anthropic.com/research/vibe-physics">anthropic.com/research/vibe-physics</a></div>
       </section>
-      <section data-markdown>
+      <section data-narration="mental-model/la-lecon" data-markdown>
         <textarea data-template>
           ### La leçon
           - Claude fait des erreurs. Les humains aussi.
@@ -714,6 +716,7 @@ def partition(graph_file: str, parts: int) -> list[int]:
         </textarea>
       </section>
     </section>
+    <!-- @end slides/mental-model-llm.html -->
 
     <!-- TODO link alien minds from openai somewhere? -->
 
