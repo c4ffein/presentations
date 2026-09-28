@@ -57,9 +57,33 @@ slide first, so the talk survives losing the connection (the panel header
 shows `↓ 12/34`; a failed file streams and can be retried). Afterwards `N`
 shows / hides the floating panel (draggable, collapsible, place remembered):
 language buttons, play / pause, a seek bar and `auto` = "hear me talk": each
-recording ends on `Reveal.next()`, a slide without one lasts `silentDelay`.
+recording ends, then after `gap` ms `Reveal.next()`; a slide without one lasts
+`silentDelay`. `?narration&auto&gap=2000` is a link that plays itself. The
+language is the first of the viewer's preferred languages (see Menu) the deck
+has; the panel's language buttons update that preference.
 Configure it in the deck's `Reveal.initialize` (`narration: { base, langs,
 variant, active, preload, … }`, see the header of narration.js).
+
+## Menu (burger, top left)
+`resources/menu.js` is a reveal plugin in every deck: a burger appears when the
+mouse moves and fades 3 s later (`M` opens it too, Esc closes). It holds the
+narration controls (turn on, play / pause, auto, the pause between slides, the
+panel), **Languages…**, **Help** (`?` too: the keys, in the viewer's language)
+and **Back to the list of talks** (a link to `../`, the site's index from any
+deck URL). Languages and Help are floating windows: they drag by their header,
+remember their place, the keys keep driving the deck, Esc or ✕ closes them.
+Languages has three tabs, Interface / Slides / Audio, each an ordered list of
+the viewer's preferred languages; Slides and Audio follow the Interface list
+unless "same as the interface" is unticked on their tab (the narration
+panel's language buttons untick Audio). The lists are saved in localStorage
+(`presentations.langs`, `.slides`, `.audio`) for the
+whole site, and each deck picks the first one it has, per channel, falling
+back to its own first language (the interface falls back to the browser's).
+The plugins' own labels are translated the same way: a table per plugin,
+`t(key)`, no library. Slide
+languages are `lang-<code>` classes on elements (`<h2 class="lang-en">` /
+`<h2 class="lang-fr">`): the plugin shows the chosen one and hides the others
+(`menu: { slideLangs: ['fr', 'en'] }` sets the order, else they are detected).
 
 ## Tests
 `make test` = unit tests of the builder + `src/tests/e2e/` (every built deck

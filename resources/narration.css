@@ -1,7 +1,7 @@
 /* narration.css — the floating panel of resources/narration.js.
    Black on white, the deck's font: same palette as the c4ffein theme. */
 .nar-panel {
-  position: fixed; right: 16px; bottom: 16px; z-index: 1000; width: 270px;
+  position: fixed; left: 16px; bottom: 16px; z-index: 1000; width: 270px;   /* bottom left: the deck's arrows are bottom right */
   background: #fff; color: #222; border: 1px solid #222;
   font: 13px/1.45 var(--r-main-font, "Source Sans Pro", Helvetica, sans-serif);
   border-radius: 4px; box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);

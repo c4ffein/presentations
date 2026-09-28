@@ -29,11 +29,13 @@
  *   Reveal.initialize({
  *     narration: {
  *       base: "https://audio.example.org/presentations",   // null = plugin off
- *       langs: ["fr", "en"],   // buttons, first = default (a viewer's choice is remembered)
+ *       langs: ["fr", "en"],   // buttons; plays the first of the viewer's preferred languages it has
+ *                              // (localStorage `presentations.langs`, shared with menu.js), else the first
  *       lang: null,            // force the initial language
  *       variant: null,         // e.g. "inria": try <name>.fr.inria.mp3 before <name>.fr.mp3
  *       format: "mp3",
  *       silentDelay: 1500,     // ms spent on a slide without recording in auto mode
+ *       gap: 1000,             // ms of pause between the end of a recording and the next slide, in auto mode
  *       auto: false,           // start in auto ("hear me talk") mode
  *       active: false,         // true = on at load even without ?narration
  *       preload: true,         // fetch every recording of the language on activation
@@ -46,12 +48,43 @@
  * URL: ?narration          on, with the deck's base
  *      ?narration=<base>   on, from that server instead (try one without rebuilding)
  *      &lang=en&variant=inria   override language / variant
+ *      &auto&gap=2000           start in auto mode / the pause between slides, ms (a link that plays itself)
  *
  * API (deck.getPlugin("narration")): activate(), play(), pause(), toggle(),
- * setAuto(bool), setLang(l), setVariant(v | null), togglePanel(show?), state().
+ * setAuto(bool), setGap(ms), setLang(l, remember?), setVariant(v | null),
+ * togglePanel(show?), state().
  */
 (function () {
-  var PANEL_KEY = "narration.panel", LANG_KEY = "narration.lang", PARALLEL = 3;
+  var PANEL_KEY = "narration.panel", PREFS_KEY = "presentations.langs", AUDIO_KEY = PREFS_KEY + ".audio", PARALLEL = 3;
+
+  // The viewer's preferred languages, in order (the convention shared with
+  // menu.js): the audio list if they made one, else the interface list. The
+  // panel's labels follow the interface list, then the browser's language.
+  function readList(key) {
+    try { var v = JSON.parse(localStorage.getItem(key)); return Array.isArray(v) ? v.filter(function (x) { return typeof x === "string"; }) : null; }
+    catch (e) { return null; }
+  }
+  function readPrefs() { return readList(AUDIO_KEY) || readList(PREFS_KEY) || []; }
+  function writePrefs(list) { try { localStorage.setItem(AUDIO_KEY, JSON.stringify(list)); } catch (e) {} }
+  var T = {
+    fr: { title: "Narration", loading: "chargement…", ready: "prêt", playing: "lecture", ended: "terminé", missing: "pas d'enregistrement",
+          silent: "slide muette", auto: "auto", preloading: "préchargement des enregistrements {lang}",
+          retry: "cliquer pour réessayer ; en attendant ils sont lus depuis le serveur", inMemory: "{n} enregistrements {lang} en mémoire",
+          failed: "{n} en échec ↻", collapse: "replier" },
+    en: { title: "Narration", loading: "loading…", ready: "ready", playing: "playing", ended: "ended", missing: "no recording",
+          silent: "silent slide", auto: "auto", preloading: "preloading {lang} recordings",
+          retry: "click to retry; these stream from the server meanwhile", inMemory: "{n} {lang} recordings in memory",
+          failed: "{n} failed ↻", collapse: "collapse" }
+  };
+  function t(k, vars) {
+    var main = readList(PREFS_KEY) || [], nav = ((navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ""])).map(function (l) { return String(l).slice(0, 2).toLowerCase(); });
+    var s = (T[best(["fr", "en"], main.length ? main : nav)] || T.fr)[k] || k;
+    return s.replace(/\{(\w+)\}/g, function (_, v) { return vars && v in vars ? vars[v] : ""; });
+  }
+  function best(available, prefs) {
+    for (var i = 0; i < prefs.length; i++) if (available.indexOf(prefs[i]) >= 0) return prefs[i];
+    return available[0] || null;
+  }
 
   function store(key, value) { try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {} }
   function load(key) { try { return JSON.parse(localStorage.getItem(key)); } catch (e) { return null; } }
@@ -68,7 +101,7 @@
 
     function init(d) {
       deck = d;
-      var c = Object.assign({ base: null, langs: ["fr"], lang: null, variant: null, format: "mp3", silentDelay: 1500,
+      var c = Object.assign({ base: null, langs: ["fr"], lang: null, variant: null, format: "mp3", silentDelay: 1500, gap: 1000,
                               auto: false, active: false, preload: true, panel: true, key: "N" }, deck.getConfig().narration || {});
       var q = new URLSearchParams(location.search), want = c.active;
       if (q.has("narration")) {
@@ -78,6 +111,8 @@
       }
       if (q.get("lang")) c.lang = q.get("lang");
       if (q.has("variant")) c.variant = q.get("variant") || null;
+      if (q.has("auto")) c.auto = true;
+      if (q.get("gap") != null && !isNaN(+q.get("gap"))) c.gap = +q.get("gap");
       if (!c.base) return;                      // nowhere to fetch from: plugin off
       cfg = c; cfg.base = String(cfg.base).replace(/\/+$/, "");
       if (cfg.key) {
@@ -93,12 +128,11 @@
     // deck listeners and the preload. Runs once, from the URL or from N.
     function activate() {
       if (active || !cfg) return; active = true;
-      var remembered = load(LANG_KEY);
-      st.lang = cfg.lang || (cfg.langs.indexOf(remembered) >= 0 ? remembered : cfg.langs[0]);
+      st.lang = cfg.lang || best(cfg.langs, readPrefs());
       st.variant = cfg.variant; st.auto = !!cfg.auto;
 
       audio = new Audio(); audio.preload = "auto";
-      audio.addEventListener("ended", function () { st.status = "ended"; render(); if (st.auto) advance(); });
+      audio.addEventListener("ended", function () { st.status = "ended"; render(); if (st.auto) later(advance, cfg.gap); });
       ["play", "pause", "timeupdate", "durationchange"].forEach(function (e) { audio.addEventListener(e, render); });
 
       if (cfg.panel) buildPanel();
@@ -244,7 +278,8 @@
       if (deck.isLastSlide() && !deck.availableFragments().next) { st.auto = false; render(); return; }
       deck.next();
     }
-    function scheduleSilent() { clearTimeout(silentTimer); silentTimer = setTimeout(advance, cfg.silentDelay); }
+    function later(f, ms) { clearTimeout(silentTimer); silentTimer = setTimeout(f, ms); }
+    function scheduleSilent() { later(advance, cfg.silentDelay); }
 
     function play() {
       if (!active) return;
@@ -263,19 +298,23 @@
       else if (st.status === "missing" || st.status === "silent") scheduleSilent();
     }
     function reload() { var was = !audio.paused || wantPlay; var id = st.id; st.status = "idle"; loadId(id); if (was && !st.auto) wantPlay = true; }
-    function setLang(l) {
+    function setLang(l, remember) {   // remember = the viewer chose it: it goes first in their preferences
       if (!active) return;
-      if (cfg.langs.indexOf(l) < 0) cfg.langs.push(l); st.lang = l; store(LANG_KEY, l); reload();
+      if (cfg.langs.indexOf(l) < 0) cfg.langs.push(l); st.lang = l; reload();
+      if (remember) writePrefs([l].concat(readPrefs().filter(function (x) { return x !== l; })));
       if (cfg.preload) preload(l);
     }
     function setVariant(v) { if (!active) return; st.variant = v || null; reload(); if (cfg.preload) preload(st.lang); }
+    function setGap(ms) { if (!cfg) return; cfg.gap = Math.max(0, +ms || 0); render(); }
     function togglePanel(show) {
       if (!ui) return;
       var hide = show == null ? !ui.panel.classList.contains("nar-hidden") : !show;
-      ui.panel.classList.toggle("nar-hidden", hide); ui.savePanel();
+      ui.panel.classList.toggle("nar-hidden", hide);
+      if (!hide && ui.panel.style.left) ui.place(parseFloat(ui.panel.style.left), parseFloat(ui.panel.style.top));   // back on screen if the window shrank
+      ui.savePanel();
     }
     function state() {
-      return { active: active, lang: st.lang, variant: st.variant, auto: st.auto, id: st.id, src: st.src, status: st.status,
+      return { enabled: !!cfg, langs: cfg ? cfg.langs.slice() : [], gap: cfg ? cfg.gap : null, active: active, lang: st.lang, variant: st.variant, auto: st.auto, id: st.id, src: st.src, status: st.status,
                attempts: st.attempts.slice(), history: st.history.slice(),
                paused: !audio || audio.paused, currentTime: audio ? audio.currentTime : 0,
                panelHidden: !!(ui && ui.panel.classList.contains("nar-hidden")),
@@ -288,15 +327,15 @@
       var panel = h("div", "nar-panel" + (saved.collapsed ? " nar-collapsed" : "") + (saved.hidden ? " nar-hidden" : ""));
       var head = h("div", "nar-head"), body = h("div", "nar-body");
       var collapse = h("button", "nar-collapse", saved.collapsed ? "+" : "–");
-      collapse.setAttribute("aria-label", "collapse");
+      collapse.setAttribute("aria-label", t("collapse"));
       var preloadEl = h("span", "nar-preload", "");
       preloadEl.addEventListener("click", function () { if (progress && progress.failed) preload(st.lang); });
-      head.appendChild(h("span", "nar-title", "Narration")); head.appendChild(preloadEl); head.appendChild(collapse);
+      head.appendChild(h("span", "nar-title", t("title"))); head.appendChild(preloadEl); head.appendChild(collapse);
 
       var langs = h("div", "nar-row nar-langs");
       cfg.langs.forEach(function (l) {
         var b = h("button", "nar-lang", l); b.setAttribute("data-lang", l);
-        b.addEventListener("click", function () { setLang(l); });
+        b.addEventListener("click", function () { setLang(l, true); });
         langs.appendChild(b);
       });
       var row = h("div", "nar-row");
@@ -311,14 +350,14 @@
       var row2 = h("div", "nar-row");
       var autoLbl = h("label", "nar-auto"), autoBox = h("input"); autoBox.type = "checkbox"; autoBox.className = "nar-auto-box";
       autoBox.addEventListener("change", function () { setAuto(autoBox.checked); });
-      autoLbl.appendChild(autoBox); autoLbl.appendChild(document.createTextNode("auto"));
+      autoLbl.appendChild(autoBox); autoLbl.appendChild(document.createTextNode(t("auto")));
       var status = h("span", "nar-status", "");
       row2.appendChild(autoLbl); row2.appendChild(status);
       body.appendChild(langs); body.appendChild(row); body.appendChild(row2);
       panel.appendChild(head); panel.appendChild(body);
 
-      // Keys pressed in the panel are the panel's, not the deck's.
-      panel.addEventListener("keydown", function (e) { e.stopPropagation(); });
+      // Nothing in the panel keeps the focus: a click works, then the keys are the deck's again.
+      panel.addEventListener("focusin", function (e) { if (e.target.blur) e.target.blur(); });
       collapse.addEventListener("click", function () {
         panel.classList.toggle("nar-collapsed");
         var c = panel.classList.contains("nar-collapsed"); collapse.textContent = c ? "+" : "–"; savePanel();
@@ -339,14 +378,14 @@
         panel.style.left = x + "px"; panel.style.top = y + "px"; panel.style.right = "auto"; panel.style.bottom = "auto";
       }
       function savePanel() {
-        var r = panel.getBoundingClientRect();
-        store(PANEL_KEY, { left: panel.style.left ? r.left : null, top: panel.style.top ? r.top : null,
+        // From the styles place() set, never from the rectangle: a hidden panel measures as (0, 0).
+        store(PANEL_KEY, { left: panel.style.left ? parseFloat(panel.style.left) : null, top: panel.style.top ? parseFloat(panel.style.top) : null,
                            collapsed: panel.classList.contains("nar-collapsed"), hidden: panel.classList.contains("nar-hidden") });
       }
       document.body.appendChild(panel);
       if (saved.left != null && saved.top != null) place(saved.left, saved.top);
       window.addEventListener("resize", function () { if (panel.style.left) place(parseFloat(panel.style.left), parseFloat(panel.style.top)); });
-      ui = { panel: panel, playBtn: playBtn, fill: fill, time: time, status: status, autoBox: autoBox, langs: langs, preload: preloadEl, savePanel: savePanel };
+      ui = { panel: panel, playBtn: playBtn, fill: fill, time: time, status: status, autoBox: autoBox, langs: langs, preload: preloadEl, savePanel: savePanel, place: place };
       render();
     }
 
@@ -354,24 +393,24 @@
       if (!ui) return;
       ui.playBtn.textContent = audio.paused ? "▶" : "‖";
       ui.playBtn.disabled = !(st.status === "ready" || st.status === "ended" || st.status === "loading");
-      var d = audio.duration || 0, t = audio.currentTime || 0;
-      ui.fill.style.width = d ? (100 * t / d) + "%" : "0";
-      ui.time.textContent = fmt(t) + " / " + fmt(d);
+      var d = audio.duration || 0, cur = audio.currentTime || 0;
+      ui.fill.style.width = d ? (100 * cur / d) + "%" : "0";
+      ui.time.textContent = fmt(cur) + " / " + fmt(d);
       ui.autoBox.checked = st.auto;
-      var label = { idle: "", loading: "loading…", ready: audio.paused ? "ready" : "playing", ended: "ended", missing: "no recording", silent: "silent slide" }[st.status] || st.status;
+      var label = st.status === "idle" ? "" : st.status === "ready" ? t(audio.paused ? "ready" : "playing") : t(st.status);
       ui.status.textContent = (st.id ? st.id.split("/").pop() + " · " : "") + label;
       ui.status.title = st.src || (st.id || "");
       Array.prototype.forEach.call(ui.langs.children, function (b) { b.classList.toggle("nar-on", b.getAttribute("data-lang") === st.lang); });
       // Preload: "↓ 12/34" while fetching, "3 failed ↻" (click retries), nothing once all is in memory.
       var p = progress, txt = "", title = "";
-      if (p && p.done < p.total) { txt = "↓ " + p.done + "/" + p.total; title = "preloading " + p.lang + " recordings"; }
-      else if (p && p.failed) { txt = p.failed + " failed ↻"; title = "click to retry; these stream from the server meanwhile"; }
-      else if (p && p.total) { title = p.total + " " + p.lang + " recordings in memory"; }
+      if (p && p.done < p.total) { txt = "↓ " + p.done + "/" + p.total; title = t("preloading", { lang: p.lang }); }
+      else if (p && p.failed) { txt = t("failed", { n: p.failed }); title = t("retry"); }
+      else if (p && p.total) { title = t("inMemory", { n: p.total, lang: p.lang }); }
       ui.preload.textContent = txt; ui.preload.title = title; ui.preload.classList.toggle("nar-retry", !!(p && p.failed && p.done >= p.total));
     }
 
     return { id: "narration", init: init, activate: activate, play: play, pause: pause, toggle: toggle, setAuto: setAuto,
-             setLang: setLang, setVariant: setVariant, togglePanel: togglePanel, state: state };
+             setGap: setGap, setLang: setLang, setVariant: setVariant, togglePanel: togglePanel, state: state };
   }
 
   window.RevealNarration = RevealNarration;

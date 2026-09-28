@@ -48,11 +48,13 @@ test("plays each recording in auto mode, variant first with fallback, silent sli
   expect((await state(page)).preload).toMatchObject({ lang: "fr", total: 4, done: 4, failed: 0 });
   expect(await page.locator(".nar-preload").textContent()).toBe("");
 
+  const t0 = Date.now();
   await page.locator(".nar-auto-box").check();
   await page.waitForFunction(() => {
     const st = Reveal.getPlugin("narration").state();
     return Reveal.isLastSlide() && st.status === "ended" && !st.auto;
   }, null, { timeout: 30_000 });
+  expect(Date.now() - t0).toBeGreaterThanOrEqual(1700);   // 4 × 0.25 s of audio + 3 gaps of 300 ms between recordings
   s = await state(page);
   expect(s.history).toEqual([
     "/narration-fixture/intro.fr.wav",
@@ -65,7 +67,7 @@ test("plays each recording in auto mode, variant first with fallback, silent sli
   // Language switch reloads the current slide's recording.
   await page.locator(".nar-lang[data-lang=en]").click();
   await page.waitForFunction(() => Reveal.getPlugin("narration").state().src === "/narration-fixture/end.en.wav");
-  expect(await page.evaluate(() => localStorage.getItem("narration.lang"))).toBe('"en"');
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem("presentations.langs.audio")))).toEqual(["en"]);   // the viewer's audio preference (menu.js's convention); the deck's other languages are its fallbacks
 
   // Play button on a slide, no auto: plays that one only.
   await page.evaluate(() => Reveal.slide(0));
@@ -78,6 +80,20 @@ test("plays each recording in auto mode, variant first with fallback, silent sli
   await page.close();
 });
 
+test("a click in the panel does not take the deck's keys", async () => {
+  const page = await browser.newPage({ viewport: { width: 1000, height: 700 } });
+  await page.goto(`http://localhost:${server.port}/src/tests/e2e/fixtures/narration.html?narration`);
+  await page.waitForFunction(() => window.Reveal && Reveal.isReady());
+  await page.waitForFunction(() => Reveal.getPlugin("narration").state().status === "ready");
+  await page.locator(".nar-play").click();
+  await page.locator(".nar-lang[data-lang=fr]").click();
+  await page.keyboard.press("ArrowRight");
+  expect(await page.evaluate(() => Reveal.getIndices().h)).toBe(1);
+  await page.keyboard.press("ArrowLeft");
+  expect(await page.evaluate(() => Reveal.getIndices().h)).toBe(0);
+  await page.close();
+});
+
 test("the panel drags, collapses and remembers its place", async () => {
   const page = await browser.newPage({ viewport: { width: 1000, height: 700 } });
   await page.goto(`http://localhost:${server.port}/src/tests/e2e/fixtures/narration.html?narration`);
@@ -87,10 +103,10 @@ test("the panel drags, collapses and remembers its place", async () => {
   const hb = await head.boundingBox();
   await page.mouse.move(hb.x + 40, hb.y + hb.height / 2);
   await page.mouse.down();
-  await page.mouse.move(hb.x + 40 - 200, hb.y + hb.height / 2 - 150, { steps: 5 });
+  await page.mouse.move(hb.x + 40 + 200, hb.y + hb.height / 2 - 150, { steps: 5 });   // right and up: the panel starts bottom left
   await page.mouse.up();
   const after = await panel.boundingBox();
-  expect(Math.round(after.x)).toBe(Math.round(before.x - 200));
+  expect(Math.round(after.x)).toBe(Math.round(before.x + 200));
   expect(Math.round(after.y)).toBe(Math.round(before.y - 150));
   await page.locator(".nar-collapse").click();
   expect(await page.locator(".nar-body").isHidden()).toBe(true);
@@ -103,6 +119,16 @@ test("the panel drags, collapses and remembers its place", async () => {
   const again = await panel.boundingBox();
   expect(Math.round(again.x)).toBe(Math.round(after.x));
   expect(await page.locator(".nar-body").isHidden()).toBe(true);
+  // Hidden with N, then shown again after a reload: still where it was dragged, not at (0, 0).
+  await page.keyboard.press("n");
+  expect(await panel.isVisible()).toBe(false);
+  await page.reload();
+  await page.waitForFunction(() => window.Reveal && Reveal.isReady());
+  expect(await panel.isVisible()).toBe(false);
+  await page.keyboard.press("n");
+  const shown = await panel.boundingBox();
+  expect(Math.round(shown.x)).toBe(Math.round(after.x));
+  expect(Math.round(shown.y)).toBe(Math.round(after.y));
   await page.close();
 });
 

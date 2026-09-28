@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!-- e2e fixture for resources/menu.js (with narration.js) — served at /src/tests/e2e/fixtures/menu.html, paths are absolute -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Menu fixture</title>
+  <link rel="stylesheet" href="/engine/dist/reset.css">
+  <link rel="stylesheet" href="/engine/dist/reveal.css">
+  <link rel="stylesheet" href="/engine/dist/theme/c4ffein.css">
+  <link rel="stylesheet" href="/resources/narration.css">
+  <link rel="stylesheet" href="/resources/menu.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section data-narration="intro"><h2 class="lang-fr">Bonjour</h2><h2 class="lang-en">Hello</h2></section>
+      <section data-narration="two"><p class="lang-fr">Deux</p><p class="lang-en">Two</p></section>
+      <section><h2>Fin</h2></section>
+    </div>
+  </div>
+  <script src="/engine/dist/reveal.js"></script>
+  <script src="/resources/narration.js"></script>
+  <script src="/resources/menu.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: false, transition: 'none',
+      narration: { base: '/narration-fixture', langs: ['fr', 'en'], format: 'wav', silentDelay: 100, gap: 0 },
+      menu: { hideDelay: 300 },
+      plugins: [ RevealNarration, RevealMenu ]
+    });
+  </script>
+</body>
+</html>

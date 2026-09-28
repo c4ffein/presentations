@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../engine/dist/theme/c4ffein.css">
     <!-- Theme used for syntax highlighted code -->
     <link rel="stylesheet" href="../engine/dist/plugin/highlight/c4ffein-light.css">
+    <link rel="stylesheet" href="../resources/menu.css">
     <link rel="stylesheet" href="../resources/claude-terminal.css">
     <link rel="stylesheet" href="../engine/runcss/runcss.min.css">
     <script src="../engine/runcss/runcss.min.js" defer watch></script>
@@ -847,24 +848,17 @@ _cli_context = Context()    context from Django
   <script src="../engine/dist/plugin/notes.js"></script>
   <script src="../engine/dist/plugin/markdown.js"></script>
   <script src="../engine/dist/plugin/highlight.js"></script>
+  <script src="../resources/menu.js"></script>
   <script>
-    // Language toggle - hide all on load, then show selected
-    document.addEventListener('DOMContentLoaded', function() {
-      document.querySelectorAll('[class*="lang-"]').forEach(el => el.style.display = 'none');
-      toggleLang('fr');
-    });
-
-    function toggleLang(lang) {
-      document.querySelectorAll('[class*="lang-"]').forEach(el => el.style.display = 'none');
-      document.querySelectorAll('.lang-' + lang).forEach(el => el.style.display = '');
-    }
-
     Reveal.initialize({
       hash: true,
       slideNumber: true,
       transition: 'slide',
       navigationMode: 'default',
-      plugins: [ RevealHighlight, RevealNotes, RevealMarkdown ]
+      // The slide language (the lang-en / lang-fr elements) is picked by resources/menu.js
+      // from the viewer's preferred languages; fr is this deck's default.
+      menu: { slideLangs: ['fr', 'en'] },
+      plugins: [ RevealHighlight, RevealNotes, RevealMarkdown, RevealMenu ]
     });
   </script>
 </body>

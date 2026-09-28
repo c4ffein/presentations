@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="../engine/dist/theme/c4ffein.css">
     <!-- Theme used for syntax highlighted code -->
     <link rel="stylesheet" href="../engine/dist/plugin/highlight/c4ffein-light.css">
+    <link rel="stylesheet" href="../resources/narration.css">
+    <link rel="stylesheet" href="../resources/menu.css">
     <link rel="stylesheet" href="../resources/claude-terminal.css">
     <link rel="stylesheet" href="../resources/term-player.css">
     <link rel="stylesheet" href="../engine/runcss/runcss.min.css">
@@ -1571,13 +1573,20 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
   <script src="../engine/dist/plugin/highlight.js"></script>
   <script src="../resources/transcript-modal.js"></script>
   <script src="../resources/term-player.js"></script>
+  <script src="../resources/narration.js"></script>
+  <script src="../resources/menu.js"></script>
   <script>
     Reveal.initialize({
       hash: true,
       slideNumber: true,
       transition: 'slide',
       navigationMode: 'default',
-      plugins: [ RevealHighlight, RevealNotes, RevealMarkdown ]
+      // Audio narration (resources/narration.js): the shared mental-model slides carry
+      // data-narration names. `base` = the external server (null = off, see
+      // mental-model-of-llms.html); variant: '<name>' would try this deck's own
+      // re-recordings first (<name>.fr.<variant>.mp3) and fall back to the shared files.
+      narration: { base: null, langs: ['fr', 'en'] },
+      plugins: [ RevealHighlight, RevealNotes, RevealMarkdown, RevealNarration, RevealMenu ]
     });
   </script>
 </body>

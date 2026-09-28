@@ -1,0 +1,62 @@
+/* menu.css — the burger menu and floating windows of resources/menu.js. Black
+   on white, the deck's font: same palette as the c4ffein theme and narration.css. */
+.menu-root { position: fixed; top: 28px; left: 28px; z-index: 1001; color: #222;
+  font: 14px/1.45 var(--r-main-font, "Source Sans Pro", Helvetica, sans-serif); user-select: none; -webkit-user-select: none; }
+/* Three bars, nothing around them, in the stroke of reveal's controls arrows
+   (bottom right: 5px = 0.5em at 10px, rounded 2.5px, black), a little longer
+   than the arrow's 36px box (46px) and further from the corner. */
+.menu-burger {
+  visibility: hidden; opacity: 0; transition: opacity 0.25s, visibility 0s linear 0.25s;   /* hides at the END of the fade */
+  width: 46px; height: 40px; padding: 0; margin: 0; box-sizing: content-box;
+  display: flex; flex-direction: column; justify-content: space-between;
+  background: none; border: 0; cursor: pointer;
+}
+.menu-burger span { display: block; width: 46px; height: 5px; background: #000; border-radius: 2.5px; transition: background-color 0.15s; }
+.menu-burger:hover span { background: #444; }
+body.menu-awake .menu-burger, body.menu-open .menu-burger { visibility: visible; opacity: 0.9; transition: opacity 0.25s, visibility 0s; }   /* shows at once */
+body.menu-open .menu-burger, .menu-burger:hover { opacity: 1; }
+.menu-panel {
+  position: absolute; top: 52px; left: 0; min-width: 320px; max-width: 92vw; padding: 6px;
+  display: flex; flex-direction: column; gap: 2px;
+  background: #fff; border: 1px solid #222; border-radius: 4px; box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+}
+.menu-hidden { display: none; }
+.menu-item {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px; width: 100%; text-align: left;
+  font: inherit; color: #222; background: #fff; border: 0; border-radius: 3px; padding: 7px 10px; cursor: pointer;
+}
+.menu-item:hover { background: #eee; }
+a.menu-item { text-decoration: none; box-sizing: border-box; }
+.menu-item:disabled { color: #999; background: #fff; cursor: default; }
+.menu-key { font-size: 11px; border: 1px solid #999; border-radius: 3px; padding: 0 5px; color: #666; }
+.menu-sep { border: 0; border-top: 1px solid #ddd; margin: 4px 0; }
+
+/* Floating windows (languages, help): like the narration panel. */
+.menu-win {
+  position: fixed; z-index: 1002; width: min(92vw, 440px); max-height: calc(100vh - 24px); display: flex; flex-direction: column;
+  background: #fff; color: #222; border: 1px solid #222; border-radius: 4px; box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+  font: 14px/1.5 var(--r-main-font, "Source Sans Pro", Helvetica, sans-serif); user-select: none; -webkit-user-select: none;
+}
+.menu-win-body { overflow: auto; }   /* a long help on a small screen scrolls inside the window */
+.menu-win-head { flex: none; display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; border-bottom: 1px solid #222; cursor: grab; touch-action: none; }
+.menu-win-head:active { cursor: grabbing; }
+.menu-win-title { font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; font-size: 12px; }
+.menu-close, .menu-lang button { font: inherit; color: #222; background: #fff; border: 1px solid #222; border-radius: 3px; padding: 1px 7px; cursor: pointer; }
+.menu-close:hover, .menu-lang button:hover:enabled { background: #eee; }
+.menu-lang button:disabled { color: #bbb; border-color: #bbb; cursor: default; }
+.menu-tabs { display: flex; gap: 4px; padding: 8px 12px 0; border-bottom: 1px solid #ddd; }
+.menu-tab { font: inherit; color: #222; background: #fff; border: 1px solid #ddd; border-bottom: 0; border-radius: 3px 3px 0 0; padding: 4px 12px; cursor: pointer; margin-bottom: -1px; }
+.menu-tab:hover { background: #eee; }
+.menu-tab-on { background: #222; color: #fff; border-color: #222; }
+.menu-follow { display: flex; align-items: center; gap: 6px; padding: 10px 12px 0; cursor: pointer; }
+.menu-follow-box { accent-color: #222; margin: 0; }
+.menu-langs { list-style: none; margin: 0; padding: 8px 12px; }
+.menu-langs-follow { color: #888; }
+.menu-lang { display: flex; align-items: center; gap: 8px; padding: 5px 0; }
+.menu-lang-name { flex: 1; }
+.menu-lang-code { color: #666; font-size: 12px; margin-right: 8px; }
+.menu-win-foot { padding: 8px 12px 10px; border-top: 1px solid #ddd; color: #444; font-size: 13px; }
+.menu-keys { border-collapse: collapse; width: 100%; margin: 4px 0; }
+.menu-keys td { padding: 5px 12px; border-top: 1px solid #eee; vertical-align: top; }
+.menu-keys tr:first-child td { border-top: 0; }
+.menu-keys-key { white-space: nowrap; font-weight: 600; color: #000; }
