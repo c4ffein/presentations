@@ -61,7 +61,9 @@
   function RevealNarration() {
     var deck, cfg, audio, ui = null, silentTimer = null, token = 0, wantPlay = false, active = false;
     var st = { lang: null, variant: null, auto: false, id: null, src: null, status: "idle", attempts: [], history: [] };
-    // cache[lang][name] = { src, url (object URL), attempts } | { missing: true } | { failed: true }
+    // cache[url] = { url (object URL) } | { missing: true } | { failed: true }: one
+    // entry per FILE, so switching language or variant reuses what is already
+    // in memory and nothing is ever dropped (no object URL to revoke).
     var cache = {}, pending = {}, progress = null;
 
     function init(d) {
@@ -147,26 +149,44 @@
       if (cur && (from = out.indexOf(cur)) > 0) out = out.slice(from).concat(out.slice(0, from));   // current slide first
       return out;
     }
-    function entry(lang, id) { return cache[lang] && cache[lang][id]; }
-
-    // Fetch one recording: the variant file, then the plain one. Resolves to
-    // the cache entry; a 404 on every candidate is "missing" (final), a
-    // network error is "failed" (retried on the next preload or streamed).
-    function fetchOne(lang, id) {
-      var key = lang + "\n" + id;
-      if (pending[key]) return pending[key];
+    // What the cache already says about a recording, without fetching: the
+    // first candidate in memory, "missing" when every candidate 404'd, "failed"
+    // when one errored (to retry), null while something is still unknown.
+    function entry(lang, id) {
       var list = candidates(id, lang), attempts = [];
-      cache[lang] = cache[lang] || {};
-      pending[key] = (function step(i) {
+      for (var i = 0; i < list.length; i++) {
+        var e = cache[list[i]]; attempts.push(list[i]);
+        if (!e) return null;
+        if (e.failed) return { failed: true, attempts: attempts };
+        if (!e.missing) return { src: list[i], url: e.url, attempts: attempts };
+      }
+      return { missing: true, attempts: attempts };
+    }
+    // Fetch one file into memory, once: a 404 is "missing" (final), a network
+    // error is "failed" (retried on the next preload or streamed meanwhile).
+    function fetchUrl(u) {
+      if (cache[u] && !cache[u].failed) return Promise.resolve(cache[u]);
+      if (pending[u]) return pending[u];
+      pending[u] = fetch(u).then(function (r) {
+        if (r.status === 404) return { missing: true };
+        if (!r.ok) throw new Error(r.status);
+        return r.blob().then(function (b) { return { url: URL.createObjectURL(b) }; });
+      }).catch(function () { return { failed: true }; })
+        .then(function (e) { cache[u] = e; delete pending[u]; return e; });
+      return pending[u];
+    }
+    // Resolve a recording: the variant file, then the plain one (same shape as entry()).
+    function resolve(id, lang) {
+      var list = candidates(id, lang), attempts = [];
+      return (function step(i) {
         if (i >= list.length) return Promise.resolve({ missing: true, attempts: attempts });
         attempts.push(list[i]);
-        return fetch(list[i]).then(function (r) {
-          if (r.status === 404) return step(i + 1);
-          if (!r.ok) throw new Error(r.status);
-          return r.blob().then(function (b) { return { src: list[i], url: URL.createObjectURL(b), attempts: attempts }; });
-        }).catch(function () { return { failed: true, attempts: attempts }; });
-      })(0).then(function (e) { cache[lang][id] = e; delete pending[key]; return e; });
-      return pending[key];
+        return fetchUrl(list[i]).then(function (e) {
+          if (e.missing) return step(i + 1);
+          if (e.failed) return { failed: true, attempts: attempts };
+          return { src: list[i], url: e.url, attempts: attempts };
+        });
+      })(0);
     }
 
     function preload(lang) {
@@ -176,7 +196,7 @@
       function next() {
         if (i >= todo.length) return;
         var id = todo[i++];
-        fetchOne(lang, id).then(function (e) { progress.done++; if (e.failed) progress.failed++; render(); next(); });
+        resolve(id, lang).then(function (e) { progress.done++; if (e.failed) progress.failed++; render(); next(); });
       }
       for (var k = 0; k < PARALLEL; k++) next();
     }
@@ -189,11 +209,10 @@
       audio.pause();
       if (!id) { st.status = "silent"; render(); if (st.auto) scheduleSilent(); return; }
       st.status = "loading"; render();
-      var e = entry(st.lang, id), lang = st.lang;
+      var e = entry(st.lang, id);
       if (e && !e.failed) return useEntry(e, my);
-      if (pending[lang + "\n" + id]) return pending[lang + "\n" + id].then(function (e) { if (my === token) useEntry(e, my); });
-      if (cfg.preload) fetchOne(lang, id).then(function (e) { if (my === token) useEntry(e, my); });
-      else tryNext(candidates(id, lang), null, 0, my);
+      if (cfg.preload) resolve(id, st.lang).then(function (e) { if (my === token) useEntry(e, my); });
+      else tryNext(candidates(id, st.lang), null, 0, my);
     }
     function useEntry(e, my) {
       st.attempts = e.attempts.slice();
@@ -249,7 +268,7 @@
       if (cfg.langs.indexOf(l) < 0) cfg.langs.push(l); st.lang = l; store(LANG_KEY, l); reload();
       if (cfg.preload) preload(l);
     }
-    function setVariant(v) { if (!active) return; st.variant = v || null; cache = {}; reload(); if (cfg.preload) preload(st.lang); }
+    function setVariant(v) { if (!active) return; st.variant = v || null; reload(); if (cfg.preload) preload(st.lang); }
     function togglePanel(show) {
       if (!ui) return;
       var hide = show == null ? !ui.panel.classList.contains("nar-hidden") : !show;

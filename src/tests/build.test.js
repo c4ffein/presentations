@@ -1,5 +1,11 @@
 import { test, expect } from "bun:test";
-import { expand } from "../build.js";
+import { existsSync } from "node:fs";
+import path from "node:path";
+import { expand, SITE } from "../build.js";
+
+test("every entry of the published SITE exists at the repo root", () => {
+  for (const e of SITE) expect(existsSync(path.join(import.meta.dir, "../..", e))).toBe(true);
+});
 
 const files = {
   "slides/one.html": "<section>\n  <h2>One</h2>\n</section>\n",
@@ -35,6 +41,14 @@ test("text without directives is returned unchanged (CRLF normalized)", () => {
 test("a missing file names the chain", () => {
   expect(() => expand("<!-- @include slides/nope.html -->", read, "presentations/x.html"))
     .toThrow("missing include slides/nope.html (from presentations/x.html)");
+});
+
+test("an include may not leave src/", () => {
+  expect(() => expand("<!-- @include ../engine/dist/reveal.js -->", read, "presentations/x.html"))
+    .toThrow("include outside src/: ../engine/dist/reveal.js (from presentations/x.html)");
+  expect(() => expand("<!-- @include slides/../../x.html -->", read)).toThrow("include outside src/");
+  expect(() => expand("<!-- @include /etc/passwd -->", read)).toThrow("include outside src/");
+  expect(expand("<!-- @include slides/../slides/one.html -->", read)).toContain("<!-- @begin slides/one.html -->\n<section>\n  <h2>One</h2>");
 });
 
 test("a cycle names the path", () => {

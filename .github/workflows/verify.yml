@@ -8,5 +8,52 @@ jobs:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
       - run: make install
-      - run: make browsers
+      - uses: ./.github/actions/chromium
       - run: make verify
+
+  # GitHub Pages gets the site and nothing else (SITE in src/build.js, a
+  # whitelist the e2e tests already ran on), from master, once verify passed.
+  # One-time setup on the repo: Settings → Pages → Build and deployment →
+  # Source: GitHub Actions.
+  pages:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    outputs:
+      page_url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: make site
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deploy
+        uses: actions/deploy-pages@v4
+
+  # Smoke test of the site just deployed (verify already ran the e2e tests on
+  # exactly this content): every live deck must be byte-for-byte the built one,
+  # then each is opened from the live URL with the same checks as locally.
+  pages-check:
+    needs: pages
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: make install
+      - uses: ./.github/actions/chromium
+      - run: make test-live
+        env:
+          E2E_BASE: ${{ needs.pages.outputs.page_url }}

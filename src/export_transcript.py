@@ -8,7 +8,7 @@ Claude's replies — drops the bookkeeping/tool-output noise, and scrubs obvious
 PII (emails, home paths, API keys, session URLs). It does NOT polish: your
 typos, "wdyt", and rough phrasing are preserved on purpose.
 
-    python3 export_transcript.py INPUT.jsonl -o transcripts/making-of.json \
+    python3 src/export_transcript.py INPUT.jsonl -o transcripts/making-of.json \
         --title "Claude on Scotch — making of"
 
 Options:

@@ -21,6 +21,14 @@
 // tests/e2e/screenshots/<deck>/ (gitignored) — a review aid, never asserted.
 // PW_CHROMIUM=/path/to/chrome runs a locally installed Chromium instead of
 // the one Playwright downloads (`bunx playwright install chromium`).
+//
+// E2E_BASE=https://host/path/ runs the same checks against a DEPLOYED site
+// (the pages-check smoke test, after every deploy) instead of a local server:
+// no Bun.serve, that base counts as local, and first every built deck is
+// fetched from it and compared to the local slides/ file — retried briefly
+// while Pages propagates — so a green run also says the live decks are
+// byte-for-byte the built ones. The whitelist itself is enforced earlier, by
+// the local server (see server.js).
 
 import { test, expect, beforeAll, afterAll } from "bun:test";
 import { chromium } from "playwright";
@@ -33,6 +41,8 @@ const SHOTS_DIR = path.join(import.meta.dir, "screenshots");
 const UPDATE = !!process.env.UPDATE_GOLDEN;
 const SCREENSHOTS = !!process.env.SCREENSHOTS;
 const TIMEOUT_MS = 90_000;
+const LIVE = process.env.E2E_BASE ? process.env.E2E_BASE.replace(/\/?$/, "/") : null;
+const LIVE_WAIT_MS = 2 * 60_000;   // deploy-pages returns once live; this only covers propagation
 
 const decks = readdirSync(path.join(ROOT, "slides"))
   .filter((f) => f.endsWith(".html"))
@@ -41,9 +51,9 @@ const decks = readdirSync(path.join(ROOT, "slides"))
 let server, browser;
 
 beforeAll(async () => {
-  server = startServer();
+  if (LIVE) await waitLive(); else server = startServer();
   browser = await chromium.launch({ executablePath: process.env.PW_CHROMIUM || undefined });
-});
+}, LIVE_WAIT_MS + 30_000);
 
 afterAll(async () => {
   await browser?.close();
@@ -51,6 +61,25 @@ afterAll(async () => {
 });
 
 const norm = (s) => (s || "").replace(/\s+/g, " ").trim();
+
+// Every live deck must be the built one, byte for byte; a fresh deploy can
+// take a little while to show, so keep asking (no cache-buster: what the
+// browser is about to load is what must have changed).
+async function waitLive() {
+  const t0 = Date.now();
+  for (const deck of decks) {
+    const url = LIVE + "slides/" + deck, want = readFileSync(path.join(ROOT, "slides", deck), "utf8");
+    for (let tries = 1; ; tries++) {
+      const r = await fetch(url, { cache: "no-store" }).catch(() => null);
+      const got = r && r.ok ? await r.text() : null;
+      if (got === want) break;
+      const why = !r ? "unreachable" : !r.ok ? "HTTP " + r.status : "not the built slides/" + deck;
+      if (Date.now() - t0 > LIVE_WAIT_MS) throw new Error(`${url}: ${why} after ${tries} tries`);
+      if (tries === 1) console.warn(`${url}: ${why}, waiting for the deploy to show`);
+      await new Promise((f) => setTimeout(f, 10_000));
+    }
+  }
+}
 
 function structure() {
   // Runs in the page. Reveal has processed data-markdown sections by now.
@@ -95,7 +124,7 @@ for (const deck of decks) {
   const name = deck.replace(/\.html$/, "");
   test(name, async () => {
     const problems = [];
-    const base = `http://localhost:${server.port}/`;
+    const base = LIVE || `http://localhost:${server.port}/`;
     const local = (url) => url.startsWith(base);
     const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
     await page.route(() => true, (route) => local(route.request().url()) ? route.continue() : route.abort());
@@ -107,7 +136,7 @@ for (const deck of decks) {
     });
     page.on("response", (r) => { if (r.status() >= 400) problems.push("HTTP " + r.status() + ": " + r.url()); });
 
-    await page.goto(`http://localhost:${server.port}/slides/${deck}`, { waitUntil: "load" });
+    await page.goto(`${base}slides/${deck}`, { waitUntil: "load" });
     await page.waitForFunction(() => window.Reveal && Reveal.isReady(), null, { timeout: 30_000 });
 
     // Terminal recordings: mounted, no error line.

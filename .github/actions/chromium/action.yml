@@ -1,0 +1,19 @@
+name: chromium
+description: The Chromium the e2e tests run in, after `make install`. Playwright only runs browser builds matching its own version, so the download is cached by the version resolved in src/bun.lock; the apt packages it needs are reinstalled every run (hit = deps only, miss = download + deps).
+runs:
+  using: composite
+  steps:
+    - id: playwright
+      shell: bash
+      run: echo "version=$(cd src && bun -p 'require("playwright/package.json").version')" >> "$GITHUB_OUTPUT"
+    - uses: actions/cache@v4
+      id: browsers
+      with:
+        path: ~/.cache/ms-playwright
+        key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}
+    - if: steps.browsers.outputs.cache-hit != 'true'
+      shell: bash
+      run: make browsers
+    - if: steps.browsers.outputs.cache-hit == 'true'
+      shell: bash
+      run: make browsers-deps

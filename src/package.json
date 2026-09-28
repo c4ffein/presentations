@@ -4,11 +4,14 @@
   "scripts": {
     "build": "bun build.js",
     "check": "bun build.js --check",
+    "site": "bun build.js --site",
     "test:unit": "bun test tests/build.test.js",
     "test:e2e": "bun test tests/e2e",
     "test:update": "UPDATE_GOLDEN=1 bun test tests/e2e",
     "test:screenshots": "SCREENSHOTS=1 bun test tests/e2e",
-    "browsers": "playwright install --with-deps chromium"
+    "test:live": "bun test tests/e2e/decks.test.js",
+    "browsers": "playwright install --with-deps chromium",
+    "browsers:deps": "playwright install-deps chromium"
   },
   "devDependencies": {
     "playwright": "^1.63.0"

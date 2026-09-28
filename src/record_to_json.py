@@ -4,7 +4,7 @@
 Record:
     script -q --timing=run.timing run.out -c 'the command'     # util-linux script
 Convert:
-    python3 record_to_json.py run.out run.timing -o resources/recordings/NAME.json \
+    python3 src/record_to_json.py run.out run.timing -o resources/recordings/NAME.json \
         --title "..." --command "the command" --meta scotch_commit=abc1234 --meta tool=pyscotch@def5678
 
 Output contract (consumed by resources/term-player.js):

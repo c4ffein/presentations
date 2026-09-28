@@ -1,8 +1,13 @@
-// The static server the e2e tests run the repo on: Bun.serve, no-store.
+// The static server the e2e tests run the repo on: Bun.serve, no-store, and
+// only what GitHub Pages publishes (SITE in build.js) plus this directory's
+// fixtures/ — a deck reaching outside the site gets a 404 and fails the test.
 // `extra(url, req)` may answer a request first (test-only routes).
 import path from "node:path";
+import { SITE } from "../../build.js";
 
-export const ROOT = path.resolve(import.meta.dir, "../..");
+export const ROOT = path.resolve(import.meta.dir, "../../..");
+const FIXTURES = "/" + path.relative(ROOT, path.join(import.meta.dir, "fixtures")) + "/";
+const published = (p) => SITE.includes(p.split("/")[1]) || p.startsWith(FIXTURES);
 
 export function startServer(extra) {
   return Bun.serve({
@@ -14,9 +19,14 @@ export function startServer(extra) {
       if (p.endsWith("/")) p += "index.html";
       const file = path.resolve(ROOT, "." + p);
       if (!file.startsWith(ROOT + path.sep)) return new Response("forbidden", { status: 403 });
+      if (!published(p)) return new Response("not in the site (SITE in build.js): " + p, { status: 404 });
       const f = Bun.file(file);
       if (!(await f.exists())) return new Response("not found: " + p, { status: 404 });
-      return new Response(f, { headers: { "Cache-Control": "no-store" } });
+      // The bytes, not the Bun.file: a file body goes out through sendfile(),
+      // and when Chromium drops the connection mid-transfer (it cancels the
+      // lazy iframe it just started loading) that path prints a stray
+      // `Error: CONNRESET` on stderr. A buffered body fails silently.
+      return new Response(await f.arrayBuffer(), { headers: { "Content-Type": f.type, "Cache-Control": "no-store" } });
     },
   });
 }

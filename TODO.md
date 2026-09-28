@@ -16,7 +16,7 @@ elsewhere (web sessions, another box, or the phone).
       public upstream commit under their full name: `adb2b64`, authored
       2026-08-24 21:18 (+0200), pushed 2026-08-27. Anyone at Inria can match it.
       Your Fable session was 2026-08-25 11:55–12:09 Paris time (09:55–10:09 UTC), so neither side saw the other.
-- [x] Comparison written by Claude for a live discussion: `notes/treetab-deux-patchs.md`. Framing facts: The two patches are functionally the
+- [x] Comparison written by Claude for a live discussion. Framing facts: The two patches are functionally the
       same fix (`dblkglbnum + baseval`, then `tax = tab - baseval` based pointers).
       Differences: the engineer dropped the unused `grafptr` parameter and read
       `ordeptr->baseval`; Fable kept `grafptr->baseval` as the task text said,
@@ -69,9 +69,16 @@ changelog or transcript. Need:
 
 ## 6. Deck fixes already known
 
-- [ ] 3-vertex SVG is wrong: real minimum is one isolated vertex + one K2 edge
+- [x] 3-vertex SVG is wrong: real minimum is one isolated vertex + one K2 edge
       (`MINIMAL nvert=3 nedges=1 edges=[(1,2)]`), not a path 0-1-2
-- [ ] Ladder order ≠ chronology: differential tests (gpart byte-identity) are
+      — done in `c7e3540`: the path slide is gone, « Un graphe à 3 sommets »
+      draws 0 isolated (dashed) + the 1–2 edge, captions A / B (K₂).
+- [x] Ladder order ≠ chronology: differential tests (gpart byte-identity) are
       2026-07-30, after Hypothesis (Dec 2025) and hegel (Apr 2026)
+      — done in `c7e3540`: the trailing « 2. Tests différentiels » rung is gone;
+      the ladder now runs pyscotch → Hypothesis → tests C + hegel-c →
+      pyscotch aujourd'hui / pipeline (the gpart/gord/gmap oracle) → récap.
+      Stale source comments (« 5 barreaux », « Barreau 4 : Hypothesis »,
+      « deux slides conservées ») fixed to match.
 - [ ] "vague Mythos" date for the "~6 mois" on the Agentic PBT slide
 - [ ] truncated bullet "Claude peut reframe mes " in "Ce que ça change pour moi"

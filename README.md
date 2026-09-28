@@ -11,12 +11,17 @@ curl -o 404.html https://c4ffein.github.io/writings/404.html
 ```
 
 ## Sources and build
-`slides/` is BUILT: never edit it by hand. Sources live in `src/`:
+The repo root is the SITE (`index.html`, `404.html`, `slides/`, `engine/`,
+`resources/`, `transcripts/`); everything that makes it lives in `src/`:
+the deck sources, the builder (`build.js`, `package.json`, `tests/`) and the
+recording / transcript tools (`record_to_json.py`, `export_transcript.py`).
+`slides/` is BUILT: never edit it by hand.
 
 - `src/presentations/<name>.html` — one full page per deck, built to `slides/<name>.html` (same URL as before)
 - `src/slides/*.html` — one `<section>` or several, shared between decks
 
-Both may embed any file under `src/` with a directive alone on its line:
+Both may embed any file under `src/` (and only there: a path leaving `src/` is
+an error) with a directive alone on its line:
 
 ```html
 <!-- @include slides/mental-model-llm.html -->
@@ -29,7 +34,8 @@ comments, so a built deck says where every slide came from
 (`grep '@begin' slides/*.html` = who uses what). Includes nest; a cycle is
 an error naming the path. `make build` writes `slides/`, `make check` (in
 CI) fails if it is not current. `make` lists every target — each one is a
-bun one-liner from `package.json`, so `bun run build` works without make.
+bun one-liner from `src/package.json`, so `cd src && bun run build` works
+without make.
 
 ## Narration (audio per slide)
 `resources/narration.js` is a reveal plugin that plays a recording per slide,
@@ -56,9 +62,26 @@ Configure it in the deck's `Reveal.initialize` (`narration: { base, langs,
 variant, active, preload, … }`, see the header of narration.js).
 
 ## Tests
-`make test` = unit tests of the builder + `tests/e2e/` (every built deck
+`make test` = unit tests of the builder + `src/tests/e2e/` (every built deck
 opened in headless Chromium and compared to a structure golden, see
-[tests/e2e/README.md](tests/e2e/README.md)). `make verify` is what CI runs.
+[src/tests/e2e/README.md](src/tests/e2e/README.md)). `make verify` is what
+CI runs.
+
+## Publishing
+GitHub Pages gets the site and nothing else: `SITE` in [src/build.js](src/build.js)
+lists what is published (`index.html`, `404.html`, `slides/`, `engine/`,
+`resources/`, `transcripts/`), a whitelist, so a new root file stays offline
+until listed. The e2e server serves only that list, so a deck needing a file
+outside the site fails `make verify` before anything is deployed. On every push
+to `master`, once `verify` passed, the `pages` job of
+[verify.yml](.github/workflows/verify.yml) runs `make site` (= `_site/`) and
+deploys it — so what is online is exactly what `make check` proved built from
+`src/` and what the e2e tests ran on. Then `pages-check` is a smoke test of the
+live site (`E2E_BASE=https://…/ make test-live`): every live deck must be
+byte-for-byte the built `slides/` file (retried for up to two minutes while the
+deploy shows), then each is opened from the live URL with the same checks as
+locally. One-time setup on the repo: Settings → Pages → Build and deployment →
+Source: **GitHub Actions**.
 
 ## License
 - [MIT](LICENSE) for my [slides](slides)

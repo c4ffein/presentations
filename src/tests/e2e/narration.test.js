@@ -31,7 +31,7 @@ test("plays each recording in auto mode, variant first with fallback, silent sli
   const page = await browser.newPage({ viewport: { width: 1000, height: 700 } });
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.goto(`http://localhost:${server.port}/tests/e2e/fixtures/narration.html?narration`);
+  await page.goto(`http://localhost:${server.port}/src/tests/e2e/fixtures/narration.html?narration`);
   await page.waitForFunction(() => window.Reveal && Reveal.isReady());
   await page.waitForFunction(() => Reveal.getPlugin("narration").state().status === "ready");
 
@@ -80,7 +80,7 @@ test("plays each recording in auto mode, variant first with fallback, silent sli
 
 test("the panel drags, collapses and remembers its place", async () => {
   const page = await browser.newPage({ viewport: { width: 1000, height: 700 } });
-  await page.goto(`http://localhost:${server.port}/tests/e2e/fixtures/narration.html?narration`);
+  await page.goto(`http://localhost:${server.port}/src/tests/e2e/fixtures/narration.html?narration`);
   await page.waitForFunction(() => window.Reveal && Reveal.isReady());
   const panel = page.locator(".nar-panel"), head = page.locator(".nar-head");
   const before = await panel.boundingBox();
@@ -108,7 +108,7 @@ test("the panel drags, collapses and remembers its place", async () => {
 
 test("N hides and shows the panel, and no longer changes slide", async () => {
   const page = await browser.newPage({ viewport: { width: 1000, height: 700 } });
-  await page.goto(`http://localhost:${server.port}/tests/e2e/fixtures/narration.html?narration`);
+  await page.goto(`http://localhost:${server.port}/src/tests/e2e/fixtures/narration.html?narration`);
   await page.waitForFunction(() => window.Reveal && Reveal.isReady());
   const panel = page.locator(".nar-panel");
   expect(await panel.isVisible()).toBe(true);
@@ -129,7 +129,7 @@ test("N hides and shows the panel, and no longer changes slide", async () => {
 test("nothing loads until N: N activates, writes ?narration, preloads; then the talk plays offline", async () => {
   const page = await browser.newPage({ viewport: { width: 1000, height: 700 } });
   const before = served.length;
-  await page.goto(`http://localhost:${server.port}/tests/e2e/fixtures/narration.html`);
+  await page.goto(`http://localhost:${server.port}/src/tests/e2e/fixtures/narration.html`);
   await page.waitForFunction(() => window.Reveal && Reveal.isReady());
   expect(await page.locator(".nar-panel").count()).toBe(0);
   expect((await state(page)).active).toBe(false);

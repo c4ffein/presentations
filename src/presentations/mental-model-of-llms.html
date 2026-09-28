@@ -56,11 +56,12 @@
       transition: 'slide',
       navigationMode: 'default',
       // Audio narration (resources/narration.js): every slide of the part carries a
-      // data-narration name. `base` is the folder holding <name>.<lang>.mp3 (audio/ at the repo root), or try
-      // one without rebuilding: ?narration=https://…&lang=en&variant=…. Nothing loads
-      // until ?narration is in the URL or N is pressed; then every recording is
-      // preloaded and N shows / hides the panel.
-      narration: { base: '../audio', langs: ['fr', 'en'] },
+      // data-narration name. `base` is the external server holding <name>.<lang>.mp3
+      // (recordings are never in this repo). null = off until the files exist; a
+      // server can still be tried without rebuilding: ?narration=https://…&lang=en&variant=….
+      // Once set, nothing loads until ?narration is in the URL or N is pressed; then
+      // every recording is preloaded and N shows / hides the panel.
+      narration: { base: null, langs: ['fr', 'en'] },
       plugins: [ RevealHighlight, RevealNotes, RevealMarkdown, RevealNarration ]
     });
   </script>

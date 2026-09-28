@@ -1,11 +1,13 @@
 # Deck e2e tests
 
-`bun test tests/e2e` opens every `slides/*.html` (the BUILT decks: `make build`
-first) in headless Chromium (served over HTTP by `Bun.serve`) and checks it
+`bun test tests/e2e` (from `src/`, or `make test-e2e` at the root) opens every
+`slides/*.html` (the BUILT decks: `make build` first) in headless Chromium
+(served over HTTP by `Bun.serve`, only what Pages publishes) and checks it
 against `golden/<deck>.json`. See the
 header of `decks.test.js` for exactly what is asserted.
 
 ```sh
+cd src
 bun install                          # playwright, dev-only
 bunx playwright install chromium     # once, or PW_CHROMIUM=/path/to/chrome
 bun test tests/e2e                   # or: make test-e2e
