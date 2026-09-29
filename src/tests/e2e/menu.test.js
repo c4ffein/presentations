@@ -32,6 +32,11 @@ test("the burger shows on mouse move, fades after hideDelay, opens with a click 
   await page.keyboard.press("m");
   await panel.waitFor({ state: "visible", timeout: 2000 });
   await burger.waitFor({ state: "visible", timeout: 2000 });   // shows with the panel, not after the fade
+  // its bars are drawn in the stroke of reveal's controls arrows (5px), 46 x 40 in all, 28px from the corner
+  const stroke = await page.evaluate(() => getComputedStyle(document.querySelector(".controls .controls-arrow"), ":before").height);
+  expect(stroke).toBe("5px");
+  expect(await page.evaluate(() => getComputedStyle(document.querySelector(".menu-burger span")).height)).toBe(stroke);
+  expect(await burger.boundingBox()).toMatchObject({ x: 28, y: 28, width: 46, height: 40 });
   expect(await page.locator(".menu-item").allTextContents()).toEqual(expect.arrayContaining([expect.stringContaining("Langues"), expect.stringContaining("Aide"), expect.stringContaining("Retour à la liste")]));
   // the list of talks is the deck's parent folder, wherever the site is served from
   expect(await page.locator("a.menu-index").getAttribute("href")).toBe(`http://localhost:${server.port}/src/tests/e2e/`);
@@ -43,6 +48,50 @@ test("the burger shows on mouse move, fades after hideDelay, opens with a click 
   await page.mouse.click(700, 500);   // outside
   await panel.waitFor({ state: "hidden", timeout: 2000 });
   // not stuck: awake while open, then it fades again
+  await burger.waitFor({ state: "hidden", timeout: 5000 });
+  expect(errors).toEqual([]);
+  await page.close();
+});
+
+test("on a phone (reveal's scroll view) the burger is drawn in the scrollbar's stroke and paint, a touch wakes it, a tap opens it, all fits the screen", async () => {
+  // iPhone 14 in portrait: under reveal's scrollActivationWidth (435px) the deck is a scroll view with no arrows and a 3px scrollbar
+  const page = await browser.newPage({ viewport: { width: 390, height: 664 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true, locale: "fr-FR" });
+  const errors = []; page.on("pageerror", (e) => errors.push(e.message));
+  await page.goto(fixture()); await ready(page);
+  await page.waitForFunction(() => document.body.classList.contains("reveal-scroll"));
+  const box = async (sel) => { const b = await page.locator(sel).first().boundingBox(); return { x: Math.round(b.x), y: Math.round(b.y), w: Math.round(b.width), h: Math.round(b.height) }; };
+  expect(await page.evaluate(() => getComputedStyle(document.body).getPropertyValue("--r-scrollbar-width").trim())).toBe("3px");
+  expect(await page.evaluate(() => getComputedStyle(document.querySelector(".menu-burger span")).height)).toBe("3px");
+  expect(await box(".menu-burger")).toEqual({ x: 17, y: 17, w: 24, h: 21 });   // 5.6 / 8 / 7 bars of 3px
+  const burger = page.locator(".menu-burger"), panel = page.locator(".menu-panel");
+  const paint = () => page.evaluate(() => getComputedStyle(document.querySelector(".menu-burger span")).backgroundColor);
+  expect(await burger.isVisible()).toBe(false);
+  expect(await page.evaluate(() => getComputedStyle(document.querySelector(".menu-burger")).opacity)).toBe("0");   // at rest it is faded out, not just visibility:hidden — else it would pop instead of fade
+  await page.touchscreen.tap(200, 400);   // reaching for the screen wakes it, like moving the mouse
+  await burger.waitFor({ state: "visible", timeout: 2000 });
+  // at rest it is painted like a segment of the scrollbar it sits with (an inactive one, once the .2s transitions settle), open like its playhead
+  await page.waitForFunction(() => getComputedStyle(document.querySelector(".menu-burger span")).backgroundColor === "rgba(0, 0, 0, 0.2)");
+  expect(await paint()).toBe(await page.evaluate(() => getComputedStyle(document.querySelector(".scrollbar-slide:not(.active)")).backgroundColor));
+  await page.touchscreen.tap(6, 6);        // the finger room around the small burger (12px past its box) is still the burger
+  await panel.waitFor({ state: "visible", timeout: 2000 });
+  await page.waitForFunction(() => getComputedStyle(document.querySelector(".menu-burger span")).backgroundColor === "rgb(0, 0, 0)");   // solid, like the playhead
+  const p = await box(".menu-panel");
+  expect(p.y).toBe(17 + 28);               // right under the burger: 7 bars + a gap of 2.4
+  expect(p.x + p.w).toBeLessThanOrEqual(390 - 17);   // never past the phone's right edge
+  expect(p.w).toBeGreaterThanOrEqual(320);
+  await page.locator(".menu-item", { hasText: "Aide" }).tap();
+  const help = await box('.menu-win[data-win="help"]');
+  expect(help).toMatchObject({ x: 17, y: 17 + 21 + 16 });   // a window opens under the burger, at its left, whatever its size
+  expect(help.x + help.w).toBeLessThanOrEqual(390);
+  await page.touchscreen.tap(200, 600);    // outside: Esc has no key here
+  await panel.waitFor({ state: "hidden", timeout: 2000 });
+  await page.waitForFunction(() => getComputedStyle(document.querySelector(".menu-burger span")).backgroundColor === "rgba(0, 0, 0, 0.2)");   // back to the grey (a .2s transition)
+  await burger.waitFor({ state: "hidden", timeout: 5000 });   // hideDelay (300 in the fixture) after the last touch, then the fade
+  // whatever shows reveal's scrollbar (a scroll of the viewport) shows the burger with it; the burger then fades on its own hideDelay
+  expect(await page.locator(".scrollbar.visible").count()).toBe(0);
+  await page.evaluate(() => document.body.scrollBy(0, 300));
+  await page.locator(".scrollbar.visible").waitFor({ state: "attached", timeout: 2000 });
+  await burger.waitFor({ state: "visible", timeout: 2000 });
   await burger.waitFor({ state: "hidden", timeout: 5000 });
   expect(errors).toEqual([]);
   await page.close();

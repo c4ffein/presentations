@@ -66,7 +66,14 @@ variant, active, preload, … }`, see the header of narration.js).
 
 ## Menu (burger, top left)
 `resources/menu.js` is a reveal plugin in every deck: a burger appears when the
-mouse moves and fades 3 s later (`M` opens it too, Esc closes). It holds the
+mouse moves, the screen is touched or the page scrolls, and fades 3 s later
+(`M` opens it too, Esc closes). Its bars are drawn in the stroke of the bar reveal itself shows,
+so it sits with the deck's own chrome at every size: on desktop the controls
+arrows (5 px, a 46 × 40 burger), on a phone in portrait — where reveal switches
+to its scroll view, hides the arrows and draws a scrollbar — that scrollbar's
+width (3 px, a 24 × 21 burger painted like the scrollbar: its grey at rest,
+solid when open); everything else (length, offset, the gap to the panel) is
+a multiple of the bar, see the head of `menu.css`. It holds the
 narration controls (turn on, play / pause, auto, the pause between slides, the
 panel), **Languages…**, **Help** (`?` too: the keys, in the viewer's language)
 and **Back to the list of talks** (a link to `../`, the site's index from any

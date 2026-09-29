@@ -1,22 +1,49 @@
 /* menu.css — the burger menu and floating windows of resources/menu.js. Black
-   on white, the deck's font: same palette as the c4ffein theme and narration.css. */
-.menu-root { position: fixed; top: 28px; left: 28px; z-index: 1001; color: #222;
+   on white, the deck's font: same palette as the c4ffein theme and narration.css.
+
+   ONE number sizes the burger: --menu-bar, the height of one of its three bars
+   = the stroke of the bar reveal itself draws on the screen. In slide view
+   that is its controls arrows (bottom right: 5px = 0.5em at 10px, rounded
+   2.5px, black). On a phone in portrait reveal switches to its SCROLL VIEW
+   (under `scrollActivationWidth` = 435px), hides the arrows and draws a
+   scrollbar instead, whose width is --r-scrollbar-width on the viewport
+   (= body, so the menu inherits it): 3px on screens up to 500px, 7px above —
+   the burger takes that. Everything else is in bars, as the arrows are in em,
+   so the whole thing scales with it: the bars --menu-len long (9.2 = 46px on
+   desktop, a little longer than the arrow's 36px box), the burger --menu-tall
+   high (8 = 40px), the offset from the corner 5.6 (28px, further from the
+   corner than the arrows), the gap to the panel 2.4 (12px). On the phone the
+   proportions tighten a little, 8 x 7 bars = 24 x 21px at 17px from the
+   corner (the same 3px lines, closer together: a 24px icon), and the burger
+   is PAINTED LIKE THE SCROLLBAR it sits with: at rest a segment of it
+   (--r-overlay-element-bg-color at .2 with its 1px rim), when open or under
+   the finger the solid playhead. The panel and the windows keep their 14px
+   text: they are read, not glanced at, and they clamp to the viewport. */
+.menu-root { --menu-bar: 5px; --menu-len: 9.2; --menu-tall: 8; --menu-x: calc(var(--menu-bar) * 5.6);
+  position: fixed; top: var(--menu-x); left: var(--menu-x); z-index: 1001; color: #222;
   font: 14px/1.45 var(--r-main-font, "Source Sans Pro", Helvetica, sans-serif); user-select: none; -webkit-user-select: none; }
-/* Three bars, nothing around them, in the stroke of reveal's controls arrows
-   (bottom right: 5px = 0.5em at 10px, rounded 2.5px, black), a little longer
-   than the arrow's 36px box (46px) and further from the corner. */
+body.reveal-scroll .menu-root { --menu-bar: var(--r-scrollbar-width, 3px); --menu-len: 8; --menu-tall: 7; }
 .menu-burger {
   visibility: hidden; opacity: 0; transition: opacity 0.25s, visibility 0s linear 0.25s;   /* hides at the END of the fade */
-  width: 46px; height: 40px; padding: 0; margin: 0; box-sizing: content-box;
+  font-size: var(--menu-bar); width: calc(var(--menu-len) * 1em); height: calc(var(--menu-tall) * 1em); padding: 0; margin: 0; box-sizing: content-box; position: relative;
   display: flex; flex-direction: column; justify-content: space-between;
   background: none; border: 0; cursor: pointer;
 }
-.menu-burger span { display: block; width: 46px; height: 5px; background: #000; border-radius: 2.5px; transition: background-color 0.15s; }
+.menu-burger span { display: block; width: 100%; height: 1em; background: #000; border-radius: 0.5em; transition: background-color 0.15s; }
 .menu-burger:hover span { background: #444; }
 body.menu-awake .menu-burger, body.menu-open .menu-burger { visibility: visible; opacity: 0.9; transition: opacity 0.25s, visibility 0s; }   /* shows at once */
 body.menu-open .menu-burger, .menu-burger:hover { opacity: 1; }
+/* The phone: finger room (the 24 x 21 burger gets a 48 x 45 tap target) and
+   the scrollbar's paint — a segment at rest (reveal's .scrollbar-slide rule,
+   its hover is the finger's sticky one: ignored), the playhead when open or
+   pressed. Full opacity like the scrollbar, so the greys match exactly. */
+body.reveal-scroll.menu-awake .menu-burger, body.reveal-scroll.menu-open .menu-burger { opacity: 1; }   /* full, like the scrollbar — but only while shown, or the fade would be lost to the base opacity 0 */
+body.reveal-scroll .menu-burger::before { content: ""; position: absolute; inset: -12px; }
+body.reveal-scroll .menu-burger span { background: rgba(var(--r-overlay-element-bg-color, 0, 0, 0), 0.2); box-shadow: 0 0 0 1px rgba(var(--r-overlay-element-fg-color, 240, 240, 240), 0.1); transition: background-color 0.2s; }
+body.reveal-scroll.menu-open .menu-burger span, body.reveal-scroll .menu-burger:active span { background: rgba(var(--r-overlay-element-bg-color, 0, 0, 0), 1); }
 .menu-panel {
-  position: absolute; top: 52px; left: 0; min-width: 320px; max-width: 92vw; padding: 6px;
+  position: absolute; top: calc(var(--menu-bar) * (var(--menu-tall) + 2.4)); left: 0; padding: 6px;   /* under the burger, a gap of 2.4 bars */
+  min-width: min(320px, calc(100vw - 2 * var(--menu-x))); max-width: calc(100vw - 2 * var(--menu-x));   /* never past the phone's right edge */
   display: flex; flex-direction: column; gap: 2px;
   background: #fff; border: 1px solid #222; border-radius: 4px; box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
 }

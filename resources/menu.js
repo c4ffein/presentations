@@ -1,8 +1,10 @@
 /* menu.js — reveal.js plugin: a burger menu at the top left of every deck.
  *
- * It appears when the mouse moves (anywhere on the page) and fades out
- * `hideDelay` ms after the last movement, unless it is open or hovered; `key`
- * (M) opens / closes it too, Esc or a click outside closes it. Items:
+ * It appears when the mouse moves (anywhere on the page), the screen is
+ * touched, or the page scrolls (reveal's scroll view on a phone: whatever
+ * shows its scrollbar shows the burger too, so they light up together), and
+ * fades out `hideDelay` ms after the last one, unless it is open or hovered;
+ * `key` (M) opens / closes it too, Esc or a click outside closes it. Items:
  *   - Narration, when resources/narration.js is in the deck with a base:
  *     turn it on, play / pause, auto mode, the pause between slides, the panel
  *   - Languages…: a floating window with three tabs — Interface, Slides, Audio —
@@ -117,6 +119,9 @@
       // (0,0) when a page loads), not the viewer reaching for the mouse.
       document.addEventListener("pointermove", function (e) { if (e.movementX || e.movementY) wake(); });
       document.addEventListener("touchstart", wake, { passive: true });
+      // The scroll view (a phone in portrait) shows reveal's scrollbar on every
+      // scroll of the viewport: the burger, painted like it, wakes with it.
+      (deck.getViewportElement ? deck.getViewportElement() : document.body).addEventListener("scroll", wake, { passive: true });
       document.addEventListener("click", function (e) { if (isOpen && !ui.root.contains(e.target)) close(); });
       window.addEventListener("keydown", onKey, true);
       window.addEventListener("storage", function (e) { if (e.key && e.key.indexOf(PREFS_KEY) === 0) applyLangs(); });   // another browser tab changed it
@@ -209,7 +214,9 @@
     }
 
     // ---- floating windows: draggable by the header, place remembered, Esc / ✕ closes ----
-    var DEFAULTS = { langs: { left: 28, top: 84 }, help: { left: 28, top: 84 } };
+    // A window first opens under the burger, at its left, whatever size menu.css
+    // gives it there (28px in and 40px high on desktop, smaller on a phone).
+    function below() { var r = ui.burger.getBoundingClientRect(); return { left: r.left, top: r.bottom + 16 }; }
     function openWindow(id) {
       if (wins[id]) { front(wins[id]); return; }
       var win = h("div", "menu-win"), head = h("div", "menu-win-head"), body = h("div", "menu-win-body");
@@ -223,7 +230,7 @@
       document.body.appendChild(win);
       wins[id] = { el: win, title: title, body: body, head: head };
       order.push(id);
-      var saved = load(WIN_KEY + id), at = saved && saved.left != null ? saved : DEFAULTS[id];
+      var saved = load(WIN_KEY + id), at = saved && saved.left != null ? saved : below();
       // A second window at the same default spot goes a little further, so both show.
       if (!saved && order.length > 1) at = { left: at.left + 40, top: at.top + 40 };
       place(win, at.left, at.top);
