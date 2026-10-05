@@ -12,7 +12,7 @@
       ],
       "ownSections": 77,
       "includes": [
-        "mental-model-of-llms"
+        "mental-model-of-llms-in-the-context-of-coding-agents"
       ],
       "partOf": [],
       "narration": {
@@ -112,8 +112,8 @@
       "partOf": [],
       "narration": null
     },
-    "mental-model-of-llms": {
-      "file": "slides/mental-model-of-llms.html",
+    "mental-model-of-llms-in-the-context-of-coding-agents": {
+      "file": "slides/mental-model-of-llms-in-the-context-of-coding-agents.html",
       "title": "Mon modèle mental des LLM",
       "lang": "fr",
       "slideLangs": [

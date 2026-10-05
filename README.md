@@ -128,7 +128,7 @@ classes found, else `[lang]`), `fragments` (the `src/slides/` files included,
 nested ones too, in order), `ownSections` (the `<section>` tags of the deck's own
 source), `includes` / `partOf` (another deck is a sub-presentation of this one
 when every fragment of its is in this deck and it has fewer sections of its
-own — `mental-model-of-llms` is part of `claude-on-scotch`), and `narration`
+own — `mental-model-of-llms-in-the-context-of-coding-agents` is part of `claude-on-scotch`), and `narration`
 (`{ base, langs, names }` from the deck's `narration: { base: '…', langs: [...] }`
 and its `data-narration` names; `null` without a base). Which recordings exist
 on the host is not in the file: the index generator checks that at its own
