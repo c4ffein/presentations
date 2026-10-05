@@ -19,6 +19,23 @@
 // slide came from. Includes nest; a file that includes itself, directly or
 // through others, is an error naming the cycle. The same file may be
 // included twice.
+//
+// The build also writes presentations.json at the repo root (published with
+// the site: the index of talks is built from it), one entry per deck, read
+// from the sources with regexes — nothing is evaluated:
+//   title       <title>…</title>
+//   lang        <html lang="…">
+//   slideLangs  menu: { slideLangs: ['fr', 'en'] } in Reveal.initialize when
+//               there is one, else the lang-<code> classes found, else [lang]
+//   fragments   the src/slides files included (nested ones too), in order
+//   ownSections the <section> tags of the deck's own source, outside includes
+//   includes    the other decks that are a sub-presentation of this one: every
+//   partOf      fragment of theirs is in this deck and they have fewer sections
+//               of their own (the inverse relation)
+//   narration   { base, langs, names } from narration: { base: '…', langs: […] }
+//               (single-quoted, as the decks write it) and the data-narration
+//               names of the expanded deck; null when there is no base
+// `--check` fails if it is missing or stale, like a deck.
 
 import { readdirSync, readFileSync, writeFileSync, existsSync, mkdirSync, rmSync, cpSync } from "node:fs";
 import path from "node:path";
@@ -27,7 +44,7 @@ import path from "node:path";
 // `bun build.js --site` copies them to _site/ (the pages job uploads that),
 // and the e2e server serves only them, so a deck needing a file outside the
 // site fails `make verify` before anything is deployed.
-export const SITE = ["index.html", "404.html", "slides", "engine", "resources", "transcripts"];
+export const SITE = ["index.html", "404.html", "presentations.json", "slides", "engine", "resources", "transcripts"];
 
 export function site(root, out = path.join(root, "_site")) {
   rmSync(out, { recursive: true, force: true });
@@ -62,6 +79,65 @@ export function expand(text, read, name = "<input>", stack = []) {
   return out.join("\n");
 }
 
+// ---- presentations.json ----
+const quoted = (list) => Array.from(list.matchAll(/'([^']*)'|"([^"]*)"/g), (m) => m[1] ?? m[2]);
+const unique = (list) => list.filter((x, i) => list.indexOf(x) === i);
+
+// deckMeta(name, source, html): one deck, from its source (the file under
+// src/presentations/) and its expanded text.
+export function deckMeta(name, source, html) {
+  const title = /<title>([^<]*)<\/title>/.exec(html);
+  const lang = /<html[^>]*\slang="([^"]+)"/.exec(html);
+  const slideLangsCfg = /menu:\s*\{[^}]*slideLangs:\s*\[([^\]]*)\]/.exec(html);
+  const classLangs = unique(Array.from(html.matchAll(/class="([^"]*)"/g)).flatMap((m) =>
+    m[1].split(/\s+/).map((c) => /^lang-([a-z]{2,3})$/.exec(c)).filter(Boolean).map((m) => m[1])));
+  const slideLangs = slideLangsCfg ? quoted(slideLangsCfg[1]) : classLangs.length ? classLangs : lang ? [lang[1]] : [];
+  const nar = /narration:\s*\{([^}]*)\}/.exec(html);
+  let narration = null;
+  if (nar) {
+    const base = /base:\s*(?:'([^']*)'|"([^"]*)")/.exec(nar[1]);
+    const langs = /langs:\s*\[([^\]]*)\]/.exec(nar[1]);
+    if (base) narration = { base: base[1] ?? base[2], langs: langs ? quoted(langs[1]) : [],
+                            names: unique(Array.from(html.matchAll(/data-narration="([^"]*)"/g), (m) => m[1])) };
+  }
+  return {
+    file: "slides/" + name + ".html",
+    title: title ? title[1].trim() : null,
+    lang: lang ? lang[1] : null,
+    slideLangs,
+    fragments: unique(Array.from(html.matchAll(/<!-- @begin (\S+) -->/g), (m) => m[1])),
+    ownSections: (source.match(/<section\b/g) || []).length,
+    includes: [], partOf: [],
+    narration,
+  };
+}
+
+// relate(decks): {name: deckMeta} -> the presentations.json object, decks
+// sorted by name, includes / partOf filled in.
+export function relate(decks) {
+  const names = Object.keys(decks).sort();
+  const sub = (b, a) => b !== a && decks[b].fragments.length > 0
+    && decks[b].fragments.every((f) => decks[a].fragments.includes(f)) && decks[b].ownSections < decks[a].ownSections;
+  const out = {};
+  for (const a of names) out[a] = { ...decks[a], includes: names.filter((b) => sub(b, a)), partOf: names.filter((b) => sub(a, b)) };
+  return { decks: out };
+}
+
+export const META = "presentations.json";
+const metaText = (decks) => JSON.stringify(relate(decks), null, 2) + "\n";
+
+// meta(root): the content of presentations.json, from src/ alone.
+export function meta(root) {
+  const src = path.join(root, "src");
+  const read = (rel) => { const f = path.join(src, rel); return existsSync(f) ? readFileSync(f, "utf8") : null; };
+  const decks = {};
+  for (const f of readdirSync(path.join(src, "presentations")).filter((f) => f.endsWith(".html")).sort()) {
+    const name = f.replace(/\.html$/, ""), source = read("presentations/" + f);
+    decks[name] = deckMeta(name, source, expand(source, read, "presentations/" + f));
+  }
+  return relate(decks);
+}
+
 export function build(root, { check = false } = {}) {
   const src = path.join(root, "src");
   const out = path.join(root, "slides");
@@ -72,11 +148,13 @@ export function build(root, { check = false } = {}) {
   const names = readdirSync(path.join(src, "presentations")).filter((f) => f.endsWith(".html")).sort();
   const problems = [];
   const written = [];
+  const decks = {};
   for (const name of names) {
     const rel = "presentations/" + name;
     let html;
     try { html = expand(read(rel), read, rel); }
     catch (e) { problems.push(`${rel}: ${e.message}`); continue; }
+    decks[name.replace(/\.html$/, "")] = deckMeta(name.replace(/\.html$/, ""), read(rel), html);
     const target = path.join(out, name);
     const current = existsSync(target) ? readFileSync(target, "utf8") : null;
     if (current === html) continue;
@@ -86,6 +164,14 @@ export function build(root, { check = false } = {}) {
   if (existsSync(out)) {
     for (const f of readdirSync(out)) {
       if (f.endsWith(".html") && !names.includes(f)) problems.push(`slides/${f} has no source in src/presentations/`);
+    }
+  }
+  if (Object.keys(decks).length === names.length) {   // every deck expanded: the metadata is complete
+    const target = path.join(root, META), text = metaText(decks);
+    const current = existsSync(target) ? readFileSync(target, "utf8") : null;
+    if (current !== text) {
+      if (check) problems.push(`${META} is ${current == null ? "missing" : "stale"}: run the build`);
+      else { writeFileSync(target, text); written.push(META); }
     }
   }
   return { problems, written, names };
@@ -98,7 +184,7 @@ if (import.meta.main) {
   const check = args.includes("--check");
   const { problems, written, names } = build(root, { check });
   for (const p of problems) console.error("error: " + p);
-  for (const w of written) console.log("wrote slides/" + w);
+  for (const w of written) console.log("wrote " + (w === META ? w : "slides/" + w));
   if (!problems.length) console.log(check ? `slides/ is current (${names.length} decks)` : `built ${names.length} decks, ${written.length} changed`);
   process.exit(problems.length ? 1 : 0);
 }

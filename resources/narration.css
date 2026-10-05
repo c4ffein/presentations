@@ -1,27 +1,27 @@
-/* narration.css — the floating panel of resources/narration.js.
-   Black on white, the deck's font: same palette as the c4ffein theme. */
+/* narration.css — the floating panel of resources/narration.js. Ink on paper, the
+   deck's font: the --ui-* palette of resources/theme.css (light and dark), as menu.css. */
 .nar-panel {
   position: fixed; left: 16px; bottom: 16px; z-index: 1000; width: 270px;   /* bottom left: the deck's arrows are bottom right */
-  background: #fff; color: #222; border: 1px solid #222;
+  background: var(--ui-bg); color: var(--ui-fg); border: 1px solid var(--ui-fg);
   font: 13px/1.45 var(--r-main-font, "Source Sans Pro", Helvetica, sans-serif);
-  border-radius: 4px; box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+  border-radius: 4px; box-shadow: 0 4px 18px var(--ui-shadow);
   user-select: none; -webkit-user-select: none;
 }
 .nar-hidden { display: none; }
 .nar-head {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 6px 10px; cursor: grab; border-bottom: 1px solid #222;
+  padding: 6px 10px; cursor: grab; border-bottom: 1px solid var(--ui-fg);
   touch-action: none;
 }
 .nar-head:active { cursor: grabbing; }
 .nar-title { font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; font-size: 12px; }
 .nar-panel button {
-  font: inherit; color: #222; background: #fff;
-  border: 1px solid #222; border-radius: 3px; padding: 3px 8px; cursor: pointer;
+  font: inherit; color: var(--ui-fg); background: var(--ui-bg);
+  border: 1px solid var(--ui-fg); border-radius: 3px; padding: 3px 8px; cursor: pointer;
 }
-.nar-panel button:hover { background: #eee; }
-.nar-panel button:disabled { color: #999; border-color: #999; background: #fff; cursor: default; }
-.nar-panel button.nar-on { background: #222; color: #fff; }
+.nar-panel button:hover { background: var(--ui-hover); }
+.nar-panel button:disabled { color: var(--ui-muted); border-color: var(--ui-muted); background: var(--ui-bg); cursor: default; }
+.nar-panel button.nar-on { background: var(--ui-fg); color: var(--ui-bg); }
 .nar-collapse { padding: 1px 7px; }
 .nar-body { padding: 8px 10px 10px; }
 .nar-collapsed .nar-body { display: none; }
@@ -29,11 +29,11 @@
 .nar-row:first-child { margin-top: 0; }
 .nar-langs { flex-wrap: wrap; }
 .nar-play { min-width: 36px; text-align: center; }
-.nar-bar { flex: 1; height: 8px; background: #fff; border: 1px solid #222; border-radius: 4px; cursor: pointer; overflow: hidden; }
-.nar-fill { height: 100%; width: 0; background: #222; }
-.nar-time { font-variant-numeric: tabular-nums; min-width: 78px; text-align: right; color: #444; }
+.nar-bar { flex: 1; height: 8px; background: var(--ui-bg); border: 1px solid var(--ui-fg); border-radius: 4px; cursor: pointer; overflow: hidden; }
+.nar-fill { height: 100%; width: 0; background: var(--ui-fg); }
+.nar-time { font-variant-numeric: tabular-nums; min-width: 78px; text-align: right; color: var(--ui-soft); }
 .nar-auto { display: flex; align-items: center; gap: 5px; cursor: pointer; }
-.nar-auto-box { accent-color: #222; margin: 0; }
-.nar-status { flex: 1; text-align: right; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.nar-preload { flex: 1; text-align: right; margin-right: 8px; font-size: 12px; color: #666; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.nar-preload.nar-retry { color: #222; text-decoration: underline; cursor: pointer; }
+.nar-auto-box { accent-color: var(--ui-fg); margin: 0; }
+.nar-status { flex: 1; text-align: right; color: var(--ui-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nar-preload { flex: 1; text-align: right; margin-right: 8px; font-size: 12px; color: var(--ui-dim); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.nar-preload.nar-retry { color: var(--ui-fg); text-decoration: underline; cursor: pointer; }

@@ -180,6 +180,11 @@
            the next one. Narrow screens: a fixed indent, 5% of a phone is too little. */
         .presentation-desc { color: var(--chrome); font-size: 0.9rem; margin: 0.15rem 0 1.25rem 5%; }
         @media (max-width: 600px) { .presentation-desc { margin-left: 1rem; } }
+        /* the lines under a talk's description: audience, languages, what it includes — no bullets */
+        .presentation-meta { color: var(--chrome); font-size: 0.8rem; margin: -1rem 0 1.25rem 5%; padding: 0; }
+        .presentation-meta li { margin: 0.1rem 0; }
+        .presentation-meta li::before, .presentation-meta li .fc-bullet { content: none; display: none; }
+        @media (max-width: 600px) { .presentation-meta { margin-left: 1rem; } }
         .tags { margin-top: 0.5rem; }
         .tag { background: var(--chrome); color: var(--bg); padding: 0.2rem 0.5rem; border-radius: 3px; font-size: 0.8rem; }
         details { margin: 1rem 0; }
@@ -261,12 +266,43 @@
         
         <p class="presentation-desc">For researchers at Inria, some at the top of their field with zero agentic coding experience. Three parts: my mental model of LLMs, a ten-month journey finding real bugs in Scotch (a 30-year-old C&#x2F;MPI graph partitioner) with Claude, and general lessons from Scotch and other projects. FR.</p>
         
+        
+        <ul class="presentation-meta">
+            <li>Intended audience: Inria researchers, no agentic-coding experience</li>
+            <li>Languages: fr (slides, audio, partial)</li>
+            
+            <li>Includes this sub-presentation: <a href="slides&#x2F;mental-model-of-llms.html">My mental model of LLMs in the context of coding agents</a></li>
+        </ul>
+        
+    </li>
+    
+    <li>
+        <a href="slides&#x2F;mental-model-of-llms.html">My mental model of LLMs in the context of coding agents</a>
+        
+        <p class="presentation-desc">The first part of Claude on Scotch on its own: how I think about LLMs, from GPT-2 to agents, context windows, reasoning, harness versus model. FR.</p>
+        
+        
+        <ul class="presentation-meta">
+            <li>Intended audience: Anyone meeting LLMs for the first time, researchers included</li>
+            <li>Languages: fr (slides, audio, partial)</li>
+            <li>Also part of: <a href="slides&#x2F;claude-on-scotch.html">Claude on Scotch</a></li>
+            
+        </ul>
+        
     </li>
     
     <li>
         <a href="slides&#x2F;dev-with-ai-in-late-2025.html">Coding with Claude Code - fin 2025</a>
         
         <p class="presentation-desc">How I actually coded with Claude Code in late 2025: a short LLM primer, real sessions, and where it still needs a nudge. FR&#x2F;EN.</p>
+        
+        
+        <ul class="presentation-meta">
+            <li>Intended audience: Developers curious about day-to-day work with Claude Code</li>
+            <li>Languages: fr (slides), en (slides)</li>
+            
+            
+        </ul>
         
     </li>
     
@@ -275,12 +311,28 @@
         
         <p class="presentation-desc">A Django REST Framework alternative inspired by FastAPI, with a first performance assessment. FR.</p>
         
+        
+        <ul class="presentation-meta">
+            <li>Intended audience: Django developers weighing a DRF alternative</li>
+            <li>Languages: fr (slides)</li>
+            
+            
+        </ul>
+        
     </li>
     
     <li>
         <a href="slides&#x2F;hypothesis.html">Hypothesis</a>
         
         <p class="presentation-desc">Property-based testing in Python: let the machine find your edge cases. FR.</p>
+        
+        
+        <ul class="presentation-meta">
+            <li>Intended audience: Python developers who have never used property-based testing</li>
+            <li>Languages: fr (slides)</li>
+            
+            
+        </ul>
         
     </li>
     
@@ -289,12 +341,28 @@
         
         <p class="presentation-desc">A dense syntax tour for programmers who never tried Python, built to support a live discussion rather than a lecture. Unlike most Python tutorials, it expects intermediate to advanced knowledge of other languages. EN.</p>
         
+        
+        <ul class="presentation-meta">
+            <li>Intended audience: Experienced programmers new to Python</li>
+            <li>Languages: en (slides)</li>
+            
+            
+        </ul>
+        
     </li>
     
     <li>
         <a href="slides&#x2F;vibe-coding-vs-vibe-engineering.html">Vibe coding vs vibe engineering</a>
         
         <p class="presentation-desc">Ten minutes: Karpathy&#x27;s vibe coding, Willison&#x27;s and Ogilvie&#x27;s vibe engineering, and what it looks like in practice. Your new job is tech lead + QA. FR.</p>
+        
+        
+        <ul class="presentation-meta">
+            <li>Intended audience: Developers and tech leads, ten minutes</li>
+            <li>Languages: fr (slides)</li>
+            
+            
+        </ul>
         
     </li>
     

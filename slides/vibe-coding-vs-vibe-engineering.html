@@ -8,16 +8,19 @@
   Les .todo sont des choix à trancher par c4ffein. Rien n'a été retiré de
   claude-on-scotch.html ; les slides réutilisées y sont citées en commentaire.
 -->
-<html>
+<html lang="fr">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Vibe coding vs vibe engineering</title>
+    <script src="../resources/theme.js"></script>
     <link rel="stylesheet" href="../engine/dist/reset.css">
     <link rel="stylesheet" href="../engine/dist/reveal.css">
     <link rel="stylesheet" href="../engine/dist/theme/c4ffein.css">
+    <link rel="stylesheet" href="../resources/theme.css">
     <!-- Theme used for syntax highlighted code -->
     <link rel="stylesheet" href="../engine/dist/plugin/highlight/c4ffein-light.css">
+    <link rel="stylesheet" href="../engine/dist/plugin/highlight/c4ffein-dark.css">
     <link rel="stylesheet" href="../resources/menu.css">
     <link rel="stylesheet" href="../resources/claude-terminal.css">
     <link rel="stylesheet" href="../engine/runcss/runcss.min.css">
@@ -25,9 +28,9 @@
     <style>
       /* draft-only: loud placeholders, delete this block when the deck is final */
       .todo {
-        border: 3px dashed #c00;
-        background: #ffecec;
-        color: #c00;
+        border: 3px dashed var(--c-c00);
+        background:var(--c-ffecec);
+        color:var(--c-c00);
         font-size: 0.5em;
         font-weight: 700;
         padding: 0.6em 0.9em;
@@ -36,12 +39,12 @@
         text-align: left;
       }
       .todo::before { content: "TODO — "; }
-      .src { margin-top: 0.5em; font-size: 0.4em; color: #444; }
-      .src a { color: #444; }
+      .src { margin-top: 0.5em; font-size: 0.4em; color:var(--c-444); }
+      .src a { color:var(--c-444); }
       blockquote.q { font-size: 0.62em; width: 88%; margin: 0 auto; text-align: left; }
       .two { display: flex; gap: 1.2em; align-items: flex-start; text-align: left; }
       .two > div { flex: 1 1 50%; }
-      .pill { display: inline-block; padding: 0.1em 0.5em; border: 2px solid #333; border-radius: 6px; font-size: 0.55em; margin: 0.15em; }
+      .pill { display: inline-block; padding: 0.1em 0.5em; border: 2px solid var(--c-333); border-radius: 6px; font-size: 0.55em; margin: 0.15em; }
     </style>
 </head>
 <body>
@@ -113,7 +116,7 @@
       </section>
       <section>
         <h3 style="margin-bottom:0.5em;">Sa liste</h3>
-        <p style="font-size:0.5em;color:#444;margin-bottom:0.4em;">Ce qu'il faut déjà savoir faire pour que ça marche :</p>
+        <p style="font-size:0.5em;color:var(--c-444);margin-bottom:0.4em;">Ce qu'il faut déjà savoir faire pour que ça marche :</p>
         <div style="text-align:center;">
           <span class="pill">tests automatisés</span>
           <span class="pill">planifier avant</span>
@@ -159,7 +162,7 @@
       <section>
         <h3 style="margin-bottom:0.5em;">Pas de micromanagement</h3>
         <blockquote class="q">&laquo; You could have thirty agents working for you simultaneously. You cannot watch all of them and micromanage each one. You wouldn't do this with your human team either. Instead: <strong>write a better harness</strong>. &raquo;</blockquote>
-        <p style="font-size:0.5em;color:#444;margin-top:0.8em;">Titres de section :</p>
+        <p style="font-size:0.5em;color:var(--c-444);margin-top:0.8em;">Titres de section :</p>
         <div style="text-align:center;">
           <span class="pill">Trust the Harness, Not Your Eyes</span>
           <span class="pill">Design for Black Boxes</span>
@@ -230,7 +233,7 @@
         <h3 style="margin-bottom:0.5em;">QA lead &mdash; l'oracle</h3>
         <p style="font-size:0.55em;margin-bottom:0.5em;">Un projet est « vibable » quand quelque chose d'autre que moi sait dire <em>c'est faux</em>.</p>
         <table style="font-size:0.5em;margin:0 auto;border-collapse:collapse;text-align:left;">
-          <tr style="border-bottom:2px solid #333;"><th style="padding:0.3em 0.9em;">projet</th><th style="padding:0.3em 0.9em;">l'oracle</th><th style="padding:0.3em 0.9em;">échelle</th></tr>
+          <tr style="border-bottom:2px solid var(--c-333);"><th style="padding:0.3em 0.9em;">projet</th><th style="padding:0.3em 0.9em;">l'oracle</th><th style="padding:0.3em 0.9em;">échelle</th></tr>
           <tr><td style="padding:0.3em 0.9em;"><strong>pass</strong> (bash &rarr; Python)</td><td style="padding:0.3em 0.9em;">la suite de tests de l'original, via un adaptateur</td><td style="padding:0.3em 0.9em;">1 fichier, mai 2025</td></tr>
           <tr><td style="padding:0.3em 0.9em;"><strong>Bun</strong> (Zig &rarr; Rust)</td><td style="padding:0.3em 0.9em;">1,3 M+ d'assertions conservées + relecteurs <em>adversariaux</em></td><td style="padding:0.3em 0.9em;">1,3 M de lignes, 11 jours, mai 2026</td></tr>
           <tr><td style="padding:0.3em 0.9em;"><strong>pyscotch</strong> (wrapper C)</td><td style="padding:0.3em 0.9em;">les binaires upstream (gpart / gord / gmap), Hypothesis, hegel-c</td><td style="padding:0.3em 0.9em;">10 mois, des bugs upstream corrigés</td></tr>
@@ -291,11 +294,11 @@
         </div>
         <div class="two" style="margin-top:1em;justify-content:center;">
           <div style="text-align:center;">
-            <p style="font-size:0.45em;color:#444;margin:0 0 0.2em;">vibe coding</p>
+            <p style="font-size:0.45em;color:var(--c-444);margin:0 0 0.2em;">vibe coding</p>
             <p style="font-size:0.55em;margin:0;">« forget that the code even exists »</p>
           </div>
           <div style="text-align:center;">
-            <p style="font-size:0.45em;color:#444;margin:0 0 0.2em;">vibe engineering</p>
+            <p style="font-size:0.45em;color:var(--c-444);margin:0 0 0.2em;">vibe engineering</p>
             <p style="font-size:0.55em;margin:0;">« accountable for the software you produce »</p>
           </div>
         </div>
@@ -309,13 +312,13 @@
           <img src="../resources/qr-vibe-coding-vs-vibe-engineering.svg" alt="QR code vers les slides" style="width:300px;height:300px;border:none;background:#fff;box-shadow:none;">
         </div>
         <ul style="flex:0 1 auto;text-align:left;font-size:0.55em;line-height:1.9;list-style:none;margin:0;padding:0;">
-          <li><a href="https://presentations.cafeine.dev/slides/vibe-coding-vs-vibe-engineering.html" style="color:#000;text-decoration:none;">cafeine.dev/[...]/vibe-coding-vs-vibe-engineering.html</a></li>
-          <li><a href="https://x.com/karpathy/status/1886192184808149383" style="color:#000;text-decoration:none;">Karpathy &mdash; vibe coding (2025-02-02)</a></li>
-          <li><a href="https://simonwillison.net/2025/Oct/7/vibe-engineering/" style="color:#000;text-decoration:none;">Simon Willison &mdash; Vibe engineering (2025-10-07)</a></li>
-          <li><a href="https://x.com/mrexodia/status/2010157660885176767" style="color:#000;text-decoration:none;">Duncan Ogilvie - Working with AI Coding Agents (2026-01-12)</a></li>
-          <li><a href="https://www.anthropic.com/research/vibe-physics" style="color:#000;text-decoration:none;">anthropic.com/research/vibe-physics</a></li>
-          <li><a href="https://github.com/c4ffein/pass" style="color:#000;text-decoration:none;">github.com/c4ffein/pass</a> &middot; <a href="https://github.com/c4ffein/pyscotch" style="color:#000;text-decoration:none;">pyscotch</a> &middot; <a href="https://github.com/realworld-apps/realworld" style="color:#000;text-decoration:none;">realworld</a></li>
-          <li><a href="https://presentations.cafeine.dev/slides/claude-on-scotch.html" style="color:#000;text-decoration:none;">version longue : Claude on Scotch</a></li>
+          <li><a href="https://presentations.cafeine.dev/slides/vibe-coding-vs-vibe-engineering.html" style="color:var(--c-000);text-decoration:none;">cafeine.dev/[...]/vibe-coding-vs-vibe-engineering.html</a></li>
+          <li><a href="https://x.com/karpathy/status/1886192184808149383" style="color:var(--c-000);text-decoration:none;">Karpathy &mdash; vibe coding (2025-02-02)</a></li>
+          <li><a href="https://simonwillison.net/2025/Oct/7/vibe-engineering/" style="color:var(--c-000);text-decoration:none;">Simon Willison &mdash; Vibe engineering (2025-10-07)</a></li>
+          <li><a href="https://x.com/mrexodia/status/2010157660885176767" style="color:var(--c-000);text-decoration:none;">Duncan Ogilvie - Working with AI Coding Agents (2026-01-12)</a></li>
+          <li><a href="https://www.anthropic.com/research/vibe-physics" style="color:var(--c-000);text-decoration:none;">anthropic.com/research/vibe-physics</a></li>
+          <li><a href="https://github.com/c4ffein/pass" style="color:var(--c-000);text-decoration:none;">github.com/c4ffein/pass</a> &middot; <a href="https://github.com/c4ffein/pyscotch" style="color:var(--c-000);text-decoration:none;">pyscotch</a> &middot; <a href="https://github.com/realworld-apps/realworld" style="color:var(--c-000);text-decoration:none;">realworld</a></li>
+          <li><a href="https://presentations.cafeine.dev/slides/claude-on-scotch.html" style="color:var(--c-000);text-decoration:none;">version longue : Claude on Scotch</a></li>
         </ul>
       </div>
     </section>

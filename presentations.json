@@ -1,0 +1,188 @@
+{
+  "decks": {
+    "claude-on-scotch": {
+      "file": "slides/claude-on-scotch.html",
+      "title": "Claude on Scotch",
+      "lang": "fr",
+      "slideLangs": [
+        "fr"
+      ],
+      "fragments": [
+        "slides/mental-model-llm.html"
+      ],
+      "ownSections": 77,
+      "includes": [
+        "mental-model-of-llms"
+      ],
+      "partOf": [],
+      "narration": {
+        "base": "https://raw.githubusercontent.com/c4ffein/static-files/main/projects/presentations/audio-files",
+        "langs": [
+          "fr",
+          "en"
+        ],
+        "names": [
+          "mental-model/gpt-question",
+          "mental-model/gpt-2",
+          "mental-model/gpt-3",
+          "mental-model/gpt-3-5",
+          "mental-model/gpt-4",
+          "mental-model/contact-grand-public",
+          "mental-model/attention-is-all-you-need",
+          "mental-model/transformer",
+          "mental-model/lois-d-echelle",
+          "mental-model/loi-de-puissance",
+          "mental-model/bitter-lesson",
+          "mental-model/modeles-locaux",
+          "mental-model/fenetre-de-contexte",
+          "mental-model/system-prompt-claude-ai",
+          "mental-model/special-tokens",
+          "mental-model/pre-post-entrainement",
+          "mental-model/raisonnement",
+          "mental-model/think-more",
+          "mental-model/cas-extreme-anthropic",
+          "mental-model/haiku-traduit",
+          "mental-model/etats-internes",
+          "mental-model/agent",
+          "mental-model/mcp-declaration",
+          "mental-model/mcp-interaction",
+          "mental-model/auto-gestion-contexte",
+          "mental-model/subagents",
+          "mental-model/harness-vs-model",
+          "mental-model/comment-j-interagis",
+          "mental-model/vibe-engineering",
+          "mental-model/structures-de-donnees",
+          "mental-model/agent-reformule",
+          "mental-model/question-vs-exclamation",
+          "mental-model/vibe-physics",
+          "mental-model/la-lecon"
+        ]
+      }
+    },
+    "dev-with-ai-in-late-2025": {
+      "file": "slides/dev-with-ai-in-late-2025.html",
+      "title": "Coding with Claude Code in late 2025",
+      "lang": "fr",
+      "slideLangs": [
+        "fr",
+        "en"
+      ],
+      "fragments": [],
+      "ownSections": 72,
+      "includes": [],
+      "partOf": [],
+      "narration": null
+    },
+    "django-ninja": {
+      "file": "slides/django-ninja.html",
+      "title": "Django Ninja",
+      "lang": "fr",
+      "slideLangs": [
+        "fr"
+      ],
+      "fragments": [],
+      "ownSections": 66,
+      "includes": [],
+      "partOf": [],
+      "narration": null
+    },
+    "hypothesis": {
+      "file": "slides/hypothesis.html",
+      "title": "Hypothesis",
+      "lang": "fr",
+      "slideLangs": [
+        "fr"
+      ],
+      "fragments": [],
+      "ownSections": 52,
+      "includes": [],
+      "partOf": [],
+      "narration": null
+    },
+    "learning-python-as-a-programmer": {
+      "file": "slides/learning-python-as-a-programmer.html",
+      "title": "Python for Programmers",
+      "lang": "en",
+      "slideLangs": [
+        "en"
+      ],
+      "fragments": [],
+      "ownSections": 57,
+      "includes": [],
+      "partOf": [],
+      "narration": null
+    },
+    "mental-model-of-llms": {
+      "file": "slides/mental-model-of-llms.html",
+      "title": "Mon modèle mental des LLM",
+      "lang": "fr",
+      "slideLangs": [
+        "fr"
+      ],
+      "fragments": [
+        "slides/mental-model-llm.html"
+      ],
+      "ownSections": 2,
+      "includes": [],
+      "partOf": [
+        "claude-on-scotch"
+      ],
+      "narration": {
+        "base": "https://raw.githubusercontent.com/c4ffein/static-files/main/projects/presentations/audio-files",
+        "langs": [
+          "fr",
+          "en"
+        ],
+        "names": [
+          "mental-model/gpt-question",
+          "mental-model/gpt-2",
+          "mental-model/gpt-3",
+          "mental-model/gpt-3-5",
+          "mental-model/gpt-4",
+          "mental-model/contact-grand-public",
+          "mental-model/attention-is-all-you-need",
+          "mental-model/transformer",
+          "mental-model/lois-d-echelle",
+          "mental-model/loi-de-puissance",
+          "mental-model/bitter-lesson",
+          "mental-model/modeles-locaux",
+          "mental-model/fenetre-de-contexte",
+          "mental-model/system-prompt-claude-ai",
+          "mental-model/special-tokens",
+          "mental-model/pre-post-entrainement",
+          "mental-model/raisonnement",
+          "mental-model/think-more",
+          "mental-model/cas-extreme-anthropic",
+          "mental-model/haiku-traduit",
+          "mental-model/etats-internes",
+          "mental-model/agent",
+          "mental-model/mcp-declaration",
+          "mental-model/mcp-interaction",
+          "mental-model/auto-gestion-contexte",
+          "mental-model/subagents",
+          "mental-model/harness-vs-model",
+          "mental-model/comment-j-interagis",
+          "mental-model/vibe-engineering",
+          "mental-model/structures-de-donnees",
+          "mental-model/agent-reformule",
+          "mental-model/question-vs-exclamation",
+          "mental-model/vibe-physics",
+          "mental-model/la-lecon"
+        ]
+      }
+    },
+    "vibe-coding-vs-vibe-engineering": {
+      "file": "slides/vibe-coding-vs-vibe-engineering.html",
+      "title": "Vibe coding vs vibe engineering",
+      "lang": "fr",
+      "slideLangs": [
+        "fr"
+      ],
+      "fragments": [],
+      "ownSections": 24,
+      "includes": [],
+      "partOf": [],
+      "narration": null
+    }
+  }
+}

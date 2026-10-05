@@ -1,0 +1,84 @@
+/* theme.css — light and dark for every deck, ONE palette: the site's setting.
+   resources/theme.js puts data-theme="light" | "dark" on <html> before the
+   first paint (the site's `preferred-theme` cookie, else the OS; ?theme=…
+   forces one page) and the burger menu toggles it. Monochrome like the site,
+   dark = pure black with text a hair off white; the hue is the link blue and
+   the few accents at the end.
+
+   Three layers, and nothing in a slide knows which theme it is in:
+   1. reveal's variables (--r-*, declared in engine/dist/theme/c4ffein.css
+      for the light theme) get their dark values here.
+   2. --c-<light value>: the greys the slides use inline, named after what
+      they are in the light theme — `color:var(--c-444)` reads "the #444 of
+      the light deck" — and given their dark twin here.
+   3. SVG presentation attributes (fill="#444", stroke="#ddd") cannot take
+      var(): the rules at the end map every value the decks' diagrams use, so
+      a diagram needs nothing to go dark. A new grey in a diagram is one more
+      selector here — `grep -rhoE '(fill|stroke)="#[^"]*"' src | sort -u` lists
+      them. (No slash-star-slash in this comment: it would end it early.)
+   --ui-*: the chrome of menu.css and narration.css. */
+
+:root {
+  --c-000: #000; --c-333: #333; --c-444: #444; --c-666: #666; --c-ddd: #ddd;
+  --c-c00: #c00; --c-ffecec: #ffecec;
+  --ui-bg: #fff; --ui-fg: #222; --ui-ink: #000; --ui-hover: #eee; --ui-rule: #eee; --ui-faint: #ddd;
+  --ui-soft: #444; --ui-dim: #666; --ui-ghost: #888; --ui-muted: #999; --ui-disabled: #bbb;
+  --ui-shadow: rgba(0, 0, 0, 0.18);
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --r-background-color: #000;
+  --r-main-color: #ededed;
+  --r-heading-color: #ededed;
+  --r-link-color: #8ab4f8;
+  --r-link-color-dark: #aecbfa;
+  --r-link-color-hover: #c2dbff;
+  --r-selection-background-color: #2d4a7a;
+  --r-selection-color: #fff;
+  --r-overlay-element-bg-color: 240, 240, 240;   /* the scrollbar and the phone's burger, painted like it */
+  --r-overlay-element-fg-color: 0, 0, 0;
+  --c-000: #ededed; --c-333: #ccc; --c-444: #bbb; --c-666: #999; --c-ddd: #333;
+  --c-c00: #ff5c5c; --c-ffecec: #3a1a1a;
+  --ui-bg: #111; --ui-fg: #ededed; --ui-ink: #ededed; --ui-hover: #2a2a2a; --ui-rule: #2a2a2a; --ui-faint: #333;
+  --ui-soft: #bbb; --ui-dim: #999; --ui-ghost: #888; --ui-muted: #777; --ui-disabled: #555;
+  --ui-shadow: rgba(0, 0, 0, 0.6);
+}
+/* c4ffein.css paints these in the light ink directly: the arrows, the progress bar. */
+:root[data-theme="dark"] .reveal .controls { color: #ededed; }
+:root[data-theme="dark"] .reveal .progress { background: rgba(255, 255, 255, 0.2); color: #ededed; }
+/* An image that is a logo or a chart drawn for white paper keeps a white card
+   under it; a QR code says background:#fff itself. The terminal mocks are
+   dark boxes already and only get an edge to stand on black. */
+:root[data-theme="dark"] .reveal img[src$=".svg"] { background: #fff !important; padding: 0.25em; border-radius: 0.2em; }
+:root[data-theme="dark"] .claude-terminal, :root[data-theme="dark"] .term-replay { box-shadow: 0 0 0 1px #3a3a3a; }
+
+/* 3. the diagrams' presentation attributes */
+:root[data-theme="dark"] [fill="#000"], :root[data-theme="dark"] [fill="#000000"] { fill: #ededed; }
+:root[data-theme="dark"] [fill="#111111"] { fill: #e4e4e4; }
+:root[data-theme="dark"] [fill="#1a1a1a"] { fill: #dcdcdc; }
+:root[data-theme="dark"] [fill="#333"], :root[data-theme="dark"] [fill="#333333"] { fill: #ccc; }
+:root[data-theme="dark"] [fill="#444"], :root[data-theme="dark"] [fill="#444444"] { fill: #bbb; }
+:root[data-theme="dark"] [fill="#555"], :root[data-theme="dark"] [fill="#555555"] { fill: #aaa; }
+:root[data-theme="dark"] [fill="#666"], :root[data-theme="dark"] [fill="#666666"] { fill: #999; }
+:root[data-theme="dark"] [fill="#808080"] { fill: #808080; }
+:root[data-theme="dark"] [fill="#888"], :root[data-theme="dark"] [fill="#888888"] { fill: #777; }
+:root[data-theme="dark"] [fill="#8a8a8a"] { fill: #757575; }
+:root[data-theme="dark"] [fill="#bbb"], :root[data-theme="dark"] [fill="#bbbbbb"] { fill: #444; }
+:root[data-theme="dark"] [fill="#bfbfbf"] { fill: #404040; }
+:root[data-theme="dark"] [fill="#ddd"], :root[data-theme="dark"] [fill="#dddddd"] { fill: #333; }
+:root[data-theme="dark"] [fill="#e6e6e6"] { fill: #2a2a2a; }
+:root[data-theme="dark"] [fill="#eee"], :root[data-theme="dark"] [fill="#eeeeee"] { fill: #222; }
+:root[data-theme="dark"] [fill="#f4f4f4"] { fill: #161616; }
+:root[data-theme="dark"] [fill="#fff"], :root[data-theme="dark"] [fill="#ffffff"] { fill: #000; }
+:root[data-theme="dark"] [fill="#fbe9e1"] { fill: #3a2318; }
+:root[data-theme="dark"] [stroke="#000"], :root[data-theme="dark"] [stroke="#000000"] { stroke: #ededed; }
+:root[data-theme="dark"] [stroke="#1a1a1a"] { stroke: #dcdcdc; }
+:root[data-theme="dark"] [stroke="#333"], :root[data-theme="dark"] [stroke="#333333"] { stroke: #ccc; }
+:root[data-theme="dark"] [stroke="#444"], :root[data-theme="dark"] [stroke="#444444"] { stroke: #bbb; }
+:root[data-theme="dark"] [stroke="#8a8a8a"] { stroke: #757575; }
+:root[data-theme="dark"] [stroke="#bbb"], :root[data-theme="dark"] [stroke="#bbbbbb"] { stroke: #444; }
+:root[data-theme="dark"] [stroke="#ddd"], :root[data-theme="dark"] [stroke="#dddddd"] { stroke: #333; }
+:root[data-theme="dark"] [stroke="#e6e6e6"] { stroke: #2a2a2a; }
+:root[data-theme="dark"] [stroke="#fff"], :root[data-theme="dark"] [stroke="#ffffff"] { stroke: #000; }
+/* kept as they are, in both themes: #d97757 (Claude's orange), #8a8884 and
+   #6ccc7a (the terminals' dim and green), #0b0e13 (a dark box). */

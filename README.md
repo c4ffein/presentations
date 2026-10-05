@@ -64,6 +64,21 @@ has; the panel's language buttons update that preference.
 Configure it in the deck's `Reveal.initialize` (`narration: { base, langs,
 variant, active, preload, … }`, see the header of narration.js).
 
+## Theme (light / dark)
+Every deck follows the site's theme: `resources/theme.js`, loaded in `<head>`
+before the stylesheets, reads the `preferred-theme` cookie the site's ☀︎ / ⏾
+button writes (light, dark, or default = the OS) and puts `data-theme` on
+`<html>` before the first paint; `?theme=dark` / `?theme=light` forces one page
+without touching the cookie (a link, a screenshot). The menu toggles it (`D`),
+writing the same cookie. `resources/theme.css` paints both themes: the dark
+values of reveal's `--r-*` variables, the `--c-<light value>` variables the
+slides use inline (`color:var(--c-444)` = "the #444 of the light deck", dark
+twin in the file), the `--ui-*` palette of the menu and the narration panel,
+and, because SVG presentation attributes cannot take `var()`, one rule per
+`fill="#…"` / `stroke="#…"` value the diagrams use — a new grey in a diagram is
+one more line there. `engine/dist/plugin/highlight/c4ffein-dark.css` is the
+dark twin of the light highlight theme, loaded after it.
+
 ## Menu (burger, top left)
 `resources/menu.js` is a reveal plugin in every deck: a burger appears when the
 mouse moves, the screen is touched or the page scrolls, and fades 3 s later
@@ -75,9 +90,14 @@ width (3 px, a 24 × 21 burger painted like the scrollbar: its grey at rest,
 solid when open); everything else (length, offset, the gap to the panel) is
 a multiple of the bar, see the head of `menu.css`. It holds the
 narration controls (turn on, play / pause, auto, the pause between slides, the
-panel), **Languages…**, **Help** (`?` too: the keys, in the viewer's language)
-and **Back to the list of talks** (a link to `../`, the site's index from any
-deck URL). Languages and Help are floating windows: they drag by their header,
+panel), **Languages…**, **Help** (`?` too: the keys, in the viewer's language),
+**Theme** (`D` too, see above) and **Back to the list of talks** (a link to
+`../`, the site's index from any deck URL). A deck with narration also greets a
+viewer who has not seen the greeting for a month (localStorage `menu.welcome`):
+a window in the middle of the screen saying the talk is recorded and can play
+itself, **Try it** = narration on, auto mode and the panel — not when the URL
+already carries `?narration` (`menu: { welcome: 30 }` is the number of days,
+`false` turns it off). Languages and Help are floating windows: they drag by their header,
 remember their place, the keys keep driving the deck, Esc or ✕ closes them.
 Languages has three tabs, Interface / Slides / Audio, each an ordered list of
 the viewer's preferred languages; Slides and Audio follow the Interface list
@@ -98,10 +118,26 @@ opened in headless Chromium and compared to a structure golden, see
 [src/tests/e2e/README.md](src/tests/e2e/README.md)). `make verify` is what
 CI runs.
 
+## Metadata (presentations.json)
+`presentations.json` at the repo root is written by the build, one entry per
+deck, read from the sources with regexes (nothing is evaluated), and published
+with the site: the index of talks (generated in the writings repo, see above)
+is built from it. Per deck: `title` (`<title>`), `lang` (`<html lang>`),
+`slideLangs` (`menu: { slideLangs: [...] }` if configured, else the `lang-<code>`
+classes found, else `[lang]`), `fragments` (the `src/slides/` files included,
+nested ones too, in order), `ownSections` (the `<section>` tags of the deck's own
+source), `includes` / `partOf` (another deck is a sub-presentation of this one
+when every fragment of its is in this deck and it has fewer sections of its
+own — `mental-model-of-llms` is part of `claude-on-scotch`), and `narration`
+(`{ base, langs, names }` from the deck's `narration: { base: '…', langs: [...] }`
+and its `data-narration` names; `null` without a base). Which recordings exist
+on the host is not in the file: the index generator checks that at its own
+build. `make check` fails if the file is missing or stale, like a deck.
+
 ## Publishing
 GitHub Pages gets the site and nothing else: `SITE` in [src/build.js](src/build.js)
-lists what is published (`index.html`, `404.html`, `slides/`, `engine/`,
-`resources/`, `transcripts/`), a whitelist, so a new root file stays offline
+lists what is published (`index.html`, `404.html`, `presentations.json`,
+`slides/`, `engine/`, `resources/`, `transcripts/`), a whitelist, so a new root file stays offline
 until listed. The e2e server serves only that list, so a deck needing a file
 outside the site fails `make verify` before anything is deployed. On every push
 to `master`, once `verify` passed, the `pages` job of

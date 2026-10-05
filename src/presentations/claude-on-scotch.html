@@ -5,16 +5,19 @@
   Partie 3 trois idées / Closer: Claude Science.
   TODO() markers = waiting on material from c4ffein.
 -->
-<html>
+<html lang="fr">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Claude on Scotch</title>
+    <script src="../resources/theme.js"></script>
     <link rel="stylesheet" href="../engine/dist/reset.css">
     <link rel="stylesheet" href="../engine/dist/reveal.css">
     <link rel="stylesheet" href="../engine/dist/theme/c4ffein.css">
+    <link rel="stylesheet" href="../resources/theme.css">
     <!-- Theme used for syntax highlighted code -->
     <link rel="stylesheet" href="../engine/dist/plugin/highlight/c4ffein-light.css">
+    <link rel="stylesheet" href="../engine/dist/plugin/highlight/c4ffein-dark.css">
     <link rel="stylesheet" href="../resources/narration.css">
     <link rel="stylesheet" href="../resources/menu.css">
     <link rel="stylesheet" href="../resources/claude-terminal.css">
@@ -24,9 +27,9 @@
     <style>
       /* draft-only: loud placeholders, delete this block when the deck is final */
       .todo {
-        border: 3px dashed #c00;
-        background: #ffecec;
-        color: #c00;
+        border: 3px dashed var(--c-c00);
+        background:var(--c-ffecec);
+        color:var(--c-c00);
         font-size: 0.5em;
         font-weight: 700;
         padding: 0.6em 0.9em;
@@ -126,11 +129,11 @@
         <table style="margin:0 auto;border-collapse:collapse;font-size:0.5em;">
           <thead>
             <tr>
-              <th style="padding:0.35em 0.6em;border-bottom:2px solid #333;"></th>
-              <th style="padding:0.35em 0.6em;border-bottom:2px solid #333;text-align:center;">Tests classiques</th>
-              <th style="padding:0.35em 0.6em;border-bottom:2px solid #333;text-align:center;">Fuzzing</th>
-              <th style="padding:0.35em 0.6em;border-bottom:2px solid #333;text-align:center;">PBT</th>
-              <th style="padding:0.35em 0.6em;border-bottom:2px solid #333;text-align:center;">Formel</th>
+              <th style="padding:0.35em 0.6em;border-bottom:2px solid var(--c-333);"></th>
+              <th style="padding:0.35em 0.6em;border-bottom:2px solid var(--c-333);text-align:center;">Tests classiques</th>
+              <th style="padding:0.35em 0.6em;border-bottom:2px solid var(--c-333);text-align:center;">Fuzzing</th>
+              <th style="padding:0.35em 0.6em;border-bottom:2px solid var(--c-333);text-align:center;">PBT</th>
+              <th style="padding:0.35em 0.6em;border-bottom:2px solid var(--c-333);text-align:center;">Formel</th>
             </tr>
           </thead>
           <tbody>
@@ -164,13 +167,13 @@
             </tr>
           </tbody>
         </table>
-        <div style="margin-top:0.5em;font-size:0.5em;color:#444;">Scotch : 30 ans de C, un oracle qui existe déjà (Scotch lui-même) &rarr; la colonne PBT</div>
+        <div style="margin-top:0.5em;font-size:0.5em;color:var(--c-444);">Scotch : 30 ans de C, un oracle qui existe déjà (Scotch lui-même) &rarr; la colonne PBT</div>
       </section>
       <section>
         <h3 style="margin-bottom:0.5em;">Déjà un papier</h3>
         <ul style="font-size:0.68em;">
           <li><em>Agentic Property-Based Testing: Finding Bugs Across the Python Ecosystem</em></li>
-          <li>Maaz<span style="font-size:0.7em;vertical-align:0.25em;">&dagger;</span>, DeVoe<span style="font-size:0.7em;vertical-align:0.25em;">*</span>, Hatfield-Dodds<span style="font-size:0.7em;vertical-align:0.25em;">*&dagger;</span>, Carlini<span style="font-size:0.7em;vertical-align:0.25em;">&dagger;</span> &mdash; 10 octobre 2025<br><span style="font-size:0.75em;color:#444;">* mainteneur d'Hypothesis &middot; &dagger; Anthropic (Maaz : MATS, Anthropic ; DeVoe : Northeastern University)</span></li>
+          <li>Maaz<span style="font-size:0.7em;vertical-align:0.25em;">&dagger;</span>, DeVoe<span style="font-size:0.7em;vertical-align:0.25em;">*</span>, Hatfield-Dodds<span style="font-size:0.7em;vertical-align:0.25em;">*&dagger;</span>, Carlini<span style="font-size:0.7em;vertical-align:0.25em;">&dagger;</span> &mdash; 10 octobre 2025<br><span style="font-size:0.75em;color:var(--c-444);">* mainteneur d'Hypothesis &middot; &dagger; Anthropic (Maaz : MATS, Anthropic ; DeVoe : Northeastern University)</span></li>
           <li>Un agent lit le code, <em>infère</em> les propriétés, écrit les tests, rédige le rapport</li>
           <li>56&nbsp;% des rapports générés : des bugs valides</li>
           <li>~6 mois avant la vague Mythos</li>
@@ -254,7 +257,7 @@ def test_coloring_no_adjacent_same_color(self, graph_data):
         assert coloring[u] != coloring[v]
 </code></pre>
         La propriété &mdash; 5 décembre 2025
-        <p style="font-size:0.5em;color:#444;margin-top:0.4em;">L'invariant du coloriage. Le test C de Scotch, lui, vérifiait le code de retour et imprimait un histogramme.</p>
+        <p style="font-size:0.5em;color:var(--c-444);margin-top:0.4em;">L'invariant du coloriage. Le test C de Scotch, lui, vérifiait le code de retour et imprimait un histogramme.</p>
         <div style="margin-top:0.4em;font-size:0.4em;"><a href="https://github.com/c4ffein/pyscotch/blob/master/tests/hypothesis/test_graph_properties.py">tests/hypothesis/test_graph_properties.py</a></div>
       </section>
       <section>
@@ -275,7 +278,7 @@ def test_coloring_no_adjacent_same_color(self, graph_data):
         <div class="claude-terminal" style="width:94%;max-width:none;margin:0 auto;font-size:0.4em;">
           <div class="term-replay" data-recording="../resources/recordings/hypothesis-coloring-shrink.json" data-autoplay="1" data-line-delay="150" data-max-lines="16"></div>
         </div>
-        <p style="font-size:0.45em;color:#444;margin-top:0.4em;">Scotch <code>34ea137</code> (14 janv. 2026, la veille du fix) &middot; pyscotch <code>a32f242</code> (déc. 2025) &middot; Hypothesis 6.168, seed 1, verbosité <em>debug</em>, un cas par ligne. Premier échec au cas n°19 : 17 sommets, 38 arêtes. Puis la réduction : les arêtes tombent une à une, <code>(17, [(5, 10)])</code>, <code>(17, [(1, 10)])</code>, 17 &rarr; 15 &rarr; 13 &rarr; 11 sommets. <strong>107 cas, 16 réductions, 3 s : <code>graph_data=(11, [(1, 10)])</code>.</strong> Sur v7.0.14 : 100 exemples, 0 échec.</p>
+        <p style="font-size:0.45em;color:var(--c-444);margin-top:0.4em;">Scotch <code>34ea137</code> (14 janv. 2026, la veille du fix) &middot; pyscotch <code>a32f242</code> (déc. 2025) &middot; Hypothesis 6.168, seed 1, verbosité <em>debug</em>, un cas par ligne. Premier échec au cas n°19 : 17 sommets, 38 arêtes. Puis la réduction : les arêtes tombent une à une, <code>(17, [(5, 10)])</code>, <code>(17, [(1, 10)])</code>, 17 &rarr; 15 &rarr; 13 &rarr; 11 sommets. <strong>107 cas, 16 réductions, 3 s : <code>graph_data=(11, [(1, 10)])</code>.</strong> Sur v7.0.14 : 100 exemples, 0 échec.</p>
       </section>
       <section>
         <h3 style="margin-bottom:0.4em;">Le reçu &mdash; janvier 2026</h3>
@@ -327,7 +330,7 @@ checkOrder (const SCOTCH_Num * const permtab, const SCOTCH_Num * const peritab,
   <div class="ct-claude"><strong>Probable root cause (not confirmed)</strong>: The SCOTCH_STRATDISCONNECTED flag adds a disconnected-component handling wrapper to the ordering strategy. [&hellip;] Isolated vertices (single-vertex components with no edges) may be skipped by the component iterator, leaving their permtab entries unwritten.</div>
   <div class="ct-user">Note from c4ffein: obv just a wild guess from Claude at this point</div>
 </div>
-        <p style="font-size:0.5em;color:#444;margin-top:0.5em;">git log du fork : 2 avr. « hegel report » &middot; 3 avr. « gaslighted again by me good Claude » &middot; 5 avr. « add hgraph_order_cp.c fix actually »</p>
+        <p style="font-size:0.5em;color:var(--c-444);margin-top:0.5em;">git log du fork : 2 avr. « hegel report » &middot; 3 avr. « gaslighted again by me good Claude » &middot; 5 avr. « add hgraph_order_cp.c fix actually »</p>
         <div style="margin-top:0.4em;font-size:0.4em;"><a href="https://github.com/c4ffein/scotch/blob/ff403d445b36ee1723ff53d2478d368b21a3341f/REPORTS/REPORT.md">REPORTS/REPORT.md</a> &middot; <a href="https://github.com/c4ffein/scotch/blob/ff403d445b36ee1723ff53d2478d368b21a3341f/REPORTS/BUG_REPORT.md">REPORTS/BUG_REPORT.md</a></div>
       </section>
       <section data-markdown>
@@ -369,11 +372,11 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
       </section>
       <section>
         <h3 style="margin-bottom:0.4em;">Replay hegel-c</h3>
-        <p style="font-size:0.42em;color:#666;margin:0 0 0.3em;">enregistré aujourd'hui avec le hegel-c de juillet 2026, sur le Scotch d'avant le fix &mdash; la branche du 2 avril faisait la même chose, en moins propre</p>
+        <p style="font-size:0.42em;color:var(--c-666);margin:0 0 0.3em;">enregistré aujourd'hui avec le hegel-c de juillet 2026, sur le Scotch d'avant le fix &mdash; la branche du 2 avril faisait la même chose, en moins propre</p>
         <div class="claude-terminal" style="width:70%;margin:0 auto;font-size:0.4em;">
           <div class="term-replay" data-recording="../resources/recordings/hegel-order-shrink.json" data-autoplay="1" data-max-lines="16"></div>
         </div>
-        <p style="font-size:0.45em;color:#444;margin-top:0.4em;">Scotch <strong>v7.0.11</strong> (avant le fix du 15 avril) &middot; hegel-c <code>ce16904</code>, moteur hegel-rust v0.17.4. Cas n°6 : premier échec sur 20 sommets. Cas n°185 : déjà 3 sommets, 1 arête. 10 175 cas en 17 s, puis <strong><code>MINIMAL nvert=3 nedges=1 edges=[(1,2)]</code></strong> &mdash; 6 runs sur 6. Sur v7.0.14 : 200 cas, rien.</p>
+        <p style="font-size:0.45em;color:var(--c-444);margin-top:0.4em;">Scotch <strong>v7.0.11</strong> (avant le fix du 15 avril) &middot; hegel-c <code>ce16904</code>, moteur hegel-rust v0.17.4. Cas n°6 : premier échec sur 20 sommets. Cas n°185 : déjà 3 sommets, 1 arête. 10 175 cas en 17 s, puis <strong><code>MINIMAL nvert=3 nedges=1 edges=[(1,2)]</code></strong> &mdash; 6 runs sur 6. Sur v7.0.14 : 200 cas, rien.</p>
       </section>
       <!-- AJOUT 2026-09-08 -->
       <section>
@@ -405,18 +408,18 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
         <p style="font-size:0.55em;margin:0 auto 0.4em;">Fausse piste : les sommets isolés. Vraie cause : le chemin <em>compression</em> de <code>hgraphOrderCp</code> ignore <code>ordenum</code>.</p>
         <table style="margin:0 auto;border-collapse:collapse;font-size:0.45em;">
 <tbody>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>hgraphOrderSi</code></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>peritab[ordenum + i]</code></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">✓</td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>hgraphOrderHf</code> / <code>Hd</code></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>peritab + ordenum</code></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">✓</td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>hgraphOrderNd</code></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">récursif, <code>ordenum</code> ajusté</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">✓</td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>hgraphOrderCc</code></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>ordenum + roottab[rootnum]</code></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">✓</td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>hgraphOrderCp</code>, sans compression</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">transmis à la sous-stratégie</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">✓</td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong><code>hgraphOrderCp</code>, avec compression</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>ignoré</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>✗</strong></td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><code>hgraphOrderSi</code></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><code>peritab[ordenum + i]</code></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">✓</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><code>hgraphOrderHf</code> / <code>Hd</code></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><code>peritab + ordenum</code></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">✓</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><code>hgraphOrderNd</code></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">récursif, <code>ordenum</code> ajusté</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">✓</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><code>hgraphOrderCc</code></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><code>ordenum + roottab[rootnum]</code></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">✓</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><code>hgraphOrderCp</code>, sans compression</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">transmis à la sous-stratégie</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">✓</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><strong><code>hgraphOrderCp</code>, avec compression</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><strong>ignoré</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><strong>✗</strong></td></tr>
 </tbody></table>
         <pre><code class="language-diff" data-trim data-noescape style="font-size:0.5em;line-height:1.3;">
 -  for (coarvertnum = coargrafdat.s.baseval, finevsizsum = 0;
 +  for (coarvertnum = coargrafdat.s.baseval, finevsizsum = ordenum;
 </code></pre>
-        <p style="font-size:0.48em;color:#444;margin-top:0.3em;">Conditions : <code>STRATDISCONNECTED</code> + &ge; 2 composantes + une composante non première qui compresse (une paire K<sub>2</sub> suffit). Présent depuis v6.0 au moins. Corruption <em>silencieuse</em> : <code>rc = 0</code>.</p>
+        <p style="font-size:0.48em;color:var(--c-444);margin-top:0.3em;">Conditions : <code>STRATDISCONNECTED</code> + &ge; 2 composantes + une composante non première qui compresse (une paire K<sub>2</sub> suffit). Présent depuis v6.0 au moins. Corruption <em>silencieuse</em> : <code>rc = 0</code>.</p>
       </section>
       <section>
         <h3 style="margin-bottom:0.4em;">Le reçu &mdash; 15 avril 2026</h3>
@@ -454,7 +457,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
         <div class="claude-terminal" style="width:94%;max-width:none;margin:0 auto;font-size:0.4em;">
           <div class="term-replay" data-recording="../resources/recordings/pyscotch-install.json" data-autoplay="1" data-line-delay="60" data-max-lines="16"></div>
         </div>
-        <p style="font-size:0.45em;color:#444;margin-top:0.4em;">Machine sans aucun Scotch. <code>uv venv</code>, <code>uv pip install "pyscotch[parallel]"</code> : pyscotch 7.0.4 depuis PyPI, mpi4py en wheel binaire, rien à compiler. Cinq lignes de Python : <code>parts: [0 1 1 0]</code> avec le Scotch 7.0.13 embarqué dans la wheel. <strong>1,4 s.</strong></p>
+        <p style="font-size:0.45em;color:var(--c-444);margin-top:0.4em;">Machine sans aucun Scotch. <code>uv venv</code>, <code>uv pip install "pyscotch[parallel]"</code> : pyscotch 7.0.4 depuis PyPI, mpi4py en wheel binaire, rien à compiler. Cinq lignes de Python : <code>parts: [0 1 1 0]</code> avec le Scotch 7.0.13 embarqué dans la wheel. <strong>1,4 s.</strong></p>
         <div style="margin-top:0.3em;font-size:0.4em;"><a href="../resources/recordings/pyscotch-user.md">comment c'est enregistré</a> &middot; <a href="https://pypi.org/project/pyscotch/">pypi.org/project/pyscotch</a></div>
       </section>
       <section>
@@ -462,14 +465,14 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
         <div class="claude-terminal" style="width:94%;max-width:none;margin:0 auto;font-size:0.4em;">
           <div class="term-replay" data-recording="../resources/recordings/pyscotch-doctor.json" data-autoplay="1" data-line-delay="60" data-max-lines="16"></div>
         </div>
-        <p style="font-size:0.45em;color:#444;margin-top:0.4em;">Juste après l'install : la wheel, « No problems detected ». Puis <code>PYSCOTCH_PARALLEL=1</code> : « Loaded NO », le fichier qui manque, et la commande exacte qui le construit. <strong>Le diagnostic est la documentation.</strong></p>
+        <p style="font-size:0.45em;color:var(--c-444);margin-top:0.4em;">Juste après l'install : la wheel, « No problems detected ». Puis <code>PYSCOTCH_PARALLEL=1</code> : « Loaded NO », le fichier qui manque, et la commande exacte qui le construit. <strong>Le diagnostic est la documentation.</strong></p>
       </section>
       <section>
         <h3 style="margin-bottom:0.4em;">Replay : <code>pyscotch scotch build</code></h3>
         <div class="claude-terminal" style="width:94%;max-width:none;margin:0 auto;font-size:0.4em;">
           <div class="term-replay" data-recording="../resources/recordings/pyscotch-build.json" data-autoplay="1" data-line-delay="40" data-max-lines="16"></div>
         </div>
-        <p style="font-size:0.45em;color:#444;margin-top:0.4em;"><code>pyscotch scotch build --parallel --use</code> : preflight, source Scotch 7.0.13 téléchargée depuis gitlab.inria.fr (8,3 Mo, sha256 vérifié), aucun quickfix nécessaire pour cette version, <code>make libscotch</code> + <code>libptscotch</code>, sélection. <strong>1 min 00 s</strong> sur 8 cœurs, sans root. Puis <code>doctor</code> en parallèle, et un Dgraph 8×8×8 partitionné en 4 sous <code>mpirun -n 2</code>.</p>
+        <p style="font-size:0.45em;color:var(--c-444);margin-top:0.4em;"><code>pyscotch scotch build --parallel --use</code> : preflight, source Scotch 7.0.13 téléchargée depuis gitlab.inria.fr (8,3 Mo, sha256 vérifié), aucun quickfix nécessaire pour cette version, <code>make libscotch</code> + <code>libptscotch</code>, sélection. <strong>1 min 00 s</strong> sur 8 cœurs, sans root. Puis <code>doctor</code> en parallèle, et un Dgraph 8×8×8 partitionné en 4 sous <code>mpirun -n 2</code>.</p>
       </section>
       <section>
         <h3 style="margin-bottom:0.3em;">La pipeline</h3>
@@ -541,7 +544,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
 <line x1="485" y1="262" x2="507" y2="262" stroke="#1a1a1a" stroke-width="2.5" marker-end="url(#pl-arrow)"/>
 <line x1="585" y1="310" x2="300" y2="348" stroke="#1a1a1a" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#pl-arrow)"/>
 </svg>
-        <p style="font-size:0.42em;color:#444;margin-top:0.3em;">8 workflows GitHub Actions. Deux jumeaux : « Build Scotch from CLI » installe depuis le dépôt et garde le code, « Verify published PyPI release » installe depuis PyPI et certifie le paquet publié. L'oracle, à chaque push : les outils de Scotch eux-mêmes, et 14 sorties dorées.</p>
+        <p style="font-size:0.42em;color:var(--c-444);margin-top:0.3em;">8 workflows GitHub Actions. Deux jumeaux : « Build Scotch from CLI » installe depuis le dépôt et garde le code, « Verify published PyPI release » installe depuis PyPI et certifie le paquet publié. L'oracle, à chaque push : les outils de Scotch eux-mêmes, et 14 sorties dorées.</p>
         <div style="margin-top:0.2em;font-size:0.4em;"><a href="https://github.com/c4ffein/pyscotch/actions">github.com/c4ffein/pyscotch/actions</a> &middot; détail des jobs, matrices et cibles Makefile : <a href="../resources/recordings/pyscotch-pipeline.md">pyscotch-pipeline.md</a></div>
       </section>
       <!-- AJOUT 2026-09-08 -->
@@ -553,16 +556,16 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
         <h3 style="margin-bottom:0.5em;">L'arc, en dates &mdash; récap</h3>
 <table style="margin:0 auto;border-collapse:collapse;font-size:0.55em;">
 <tbody>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>nov. 2025</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">pyscotch, jour 7</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">premier bug upstream, corrigé le jour même</td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>déc. 2025</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">Hypothesis sur le wrapper</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">coloriage invalide &rarr; corrigé en janv. 2026</td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>mars 2026</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">Claude relit les tests C de Scotch</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">23 tests reçoivent des assertions</td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>avr. 2026</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">hegel en C, sur le fork</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">permutation invalide, rc = 0 &rarr; corrigé en 10 jours</td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>avr. 2026</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">hegel-c</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">le même bug, retrouvé seul, réduit à 3 sommets</td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>juil. 2026</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">pyscotch 7.0, le balayage</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">6 bugs chez nous, 6 signalements upstream</td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>juil.&ndash;août 2026</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">tests différentiels</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">l'oracle, c'est gpart / gord / gmap</td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>août 2026</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">la même tâche, deux fois</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">épilogue</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><strong>nov. 2025</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">pyscotch, jour 7</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">premier bug upstream, corrigé le jour même</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><strong>déc. 2025</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">Hypothesis sur le wrapper</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">coloriage invalide &rarr; corrigé en janv. 2026</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><strong>mars 2026</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">Claude relit les tests C de Scotch</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">23 tests reçoivent des assertions</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><strong>avr. 2026</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">hegel en C, sur le fork</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">permutation invalide, rc = 0 &rarr; corrigé en 10 jours</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><strong>avr. 2026</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">hegel-c</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">le même bug, retrouvé seul, réduit à 3 sommets</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><strong>juil. 2026</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">pyscotch 7.0, le balayage</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">6 bugs chez nous, 6 signalements upstream</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><strong>juil.&ndash;août 2026</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">tests différentiels</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">l'oracle, c'est gpart / gord / gmap</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><strong>août 2026</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">la même tâche, deux fois</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">épilogue</td></tr>
 </tbody></table>
-        <p style="font-size:0.5em;color:#444;margin-top:0.6em;">3 commits upstream « [report C. Pellegrini] » &middot; 3 autres corrections tracées à nos signalements &middot; 4 toujours ouverts en v7.0.14</p>
+        <p style="font-size:0.5em;color:var(--c-444);margin-top:0.6em;">3 commits upstream « [report C. Pellegrini] » &middot; 3 autres corrections tracées à nos signalements &middot; 4 toujours ouverts en v7.0.14</p>
       </section>
     </section>
 
@@ -573,22 +576,22 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
         <table style="margin:0 auto;border-collapse:collapse;font-size:0.38em;">
           <thead>
             <tr>
-              <th style="padding:0.35em 0.7em;border-bottom:2px solid #333;text-align:left;">Bug</th>
-              <th style="padding:0.35em 0.7em;border-bottom:2px solid #333;text-align:center;">Méthode</th>
-              <th style="padding:0.35em 0.7em;border-bottom:2px solid #333;text-align:center;">Sévérité</th>
-              <th style="padding:0.35em 0.7em;border-bottom:2px solid #333;text-align:center;">Upstream</th>
+              <th style="padding:0.35em 0.7em;border-bottom:2px solid var(--c-333);text-align:left;">Bug</th>
+              <th style="padding:0.35em 0.7em;border-bottom:2px solid var(--c-333);text-align:center;">Méthode</th>
+              <th style="padding:0.35em 0.7em;border-bottom:2px solid var(--c-333);text-align:center;">Sévérité</th>
+              <th style="padding:0.35em 0.7em;border-bottom:2px solid var(--c-333);text-align:center;">Upstream</th>
             </tr>
           </thead>
           <tbody>
-            <tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>module.h</code> : 12 macros de renommage manquantes<br><span style="color:#666;">nov. 2025</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">build 32+64 bits, puis lecture</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">lien impossible en build suffixé</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">corrigé le jour même &mdash; <code>f7cd80c</code> ✓ crédité</td></tr>
-<tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>graphColor</code> : voisins du même passage<br><span style="color:#666;">déc. 2025</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">Hypothesis</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">coloriage invalide, silencieux</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">corrigé 15 janv. 2026 &mdash; <code>e0a90c7</code></td></tr>
-<tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>hgraphOrderCp</code> : off-by-<code>ordenum</code><br><span style="color:#666;">avr. 2026</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">hegel en C, puis lecture</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">permutation invalide, <code>rc = 0</code></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">corrigé 15 avr. 2026 &mdash; <code>0642921</code> + test ✓ crédité</td></tr>
-<tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>memFree</code>, <code>meshBuildElem</code> hors table de renommage<br><span style="color:#666;">juil. 2026</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">vérificateur de signatures</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">7.0.12 ne compile pas en <code>RENAME_ALL</code></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">corrigé le lendemain &mdash; <code>770f26e</code>, <code>eef80bd</code></td></tr>
-<tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>contextOptionSetNum</code> : <code>switch (optival)</code><br><span style="color:#666;">juil. 2026</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">lecture</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">cascade DETERMINISTIC jamais appliquée</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>ouvert</strong> en 7.0.14</td></tr>
-<tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>contextAlloc</code> hors table de renommage<br><span style="color:#666;">juil. 2026</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">balayage <code>library.h</code> / <code>module.h</code></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">lien impossible en build suffixé</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>ouvert</strong></td></tr>
-<tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>libscotch.so</code> sans <code>NEEDED</code> zlib/libm/pthread<br><span style="color:#666;">juil. 2026</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">build des wheels</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>dlopen</code> échoue en liaison immédiate</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>ouvert</strong></td></tr>
-<tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">8 fonctions publiques absentes des manuels<br><span style="color:#666;">juil. 2026</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">génération de la doc</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">doc</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>ouvert</strong></td></tr>
-<tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>archDecoArchBuild</code> : mauvais domaines pour les distances<br><span style="color:#666;">août 2026</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><span style="color:#c00;">?</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">distances fausses</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">corrigé 18 août 2026 &mdash; <code>911ebdf</code> ✓ crédité</td></tr>
+            <tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><code>module.h</code> : 12 macros de renommage manquantes<br><span style="color:var(--c-666);">nov. 2025</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">build 32+64 bits, puis lecture</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">lien impossible en build suffixé</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">corrigé le jour même &mdash; <code>f7cd80c</code> ✓ crédité</td></tr>
+<tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><code>graphColor</code> : voisins du même passage<br><span style="color:var(--c-666);">déc. 2025</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">Hypothesis</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">coloriage invalide, silencieux</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">corrigé 15 janv. 2026 &mdash; <code>e0a90c7</code></td></tr>
+<tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><code>hgraphOrderCp</code> : off-by-<code>ordenum</code><br><span style="color:var(--c-666);">avr. 2026</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">hegel en C, puis lecture</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">permutation invalide, <code>rc = 0</code></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">corrigé 15 avr. 2026 &mdash; <code>0642921</code> + test ✓ crédité</td></tr>
+<tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><code>memFree</code>, <code>meshBuildElem</code> hors table de renommage<br><span style="color:var(--c-666);">juil. 2026</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">vérificateur de signatures</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">7.0.12 ne compile pas en <code>RENAME_ALL</code></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">corrigé le lendemain &mdash; <code>770f26e</code>, <code>eef80bd</code></td></tr>
+<tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><code>contextOptionSetNum</code> : <code>switch (optival)</code><br><span style="color:var(--c-666);">juil. 2026</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">lecture</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">cascade DETERMINISTIC jamais appliquée</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><strong>ouvert</strong> en 7.0.14</td></tr>
+<tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><code>contextAlloc</code> hors table de renommage<br><span style="color:var(--c-666);">juil. 2026</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">balayage <code>library.h</code> / <code>module.h</code></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">lien impossible en build suffixé</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><strong>ouvert</strong></td></tr>
+<tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><code>libscotch.so</code> sans <code>NEEDED</code> zlib/libm/pthread<br><span style="color:var(--c-666);">juil. 2026</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">build des wheels</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><code>dlopen</code> échoue en liaison immédiate</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><strong>ouvert</strong></td></tr>
+<tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">8 fonctions publiques absentes des manuels<br><span style="color:var(--c-666);">juil. 2026</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">génération de la doc</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">doc</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><strong>ouvert</strong></td></tr>
+<tr><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><code>archDecoArchBuild</code> : mauvais domaines pour les distances<br><span style="color:var(--c-666);">août 2026</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><span style="color:var(--c-c00);">?</span></td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">distances fausses</td><td style="padding:0.22em 0.5em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">corrigé 18 août 2026 &mdash; <code>911ebdf</code> ✓ crédité</td></tr>
           </tbody>
         </table>
       </section>
@@ -615,15 +618,15 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
         <h3 style="margin-bottom:0.4em;">La chronologie, dans git</h3>
         <table style="margin:0 auto;border-collapse:collapse;font-size:0.5em;">
 <tbody>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>24 août, 21:18</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">l'ingénieur commit son fix sur sa machine &mdash; <code>adb2b64</code> « Bugfix: base treetab in dorderTreeDist() »</td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>25 août, 11:54</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">clone de <code>master</code> depuis mon téléphone : HEAD = <code>9259939</code> (5 août). Le fix n'y est pas</td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>25 août, 11:55</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">la tâche de François, collée telle quelle</td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>25 août, 12:09</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">patch + rapport + test MPI poussés. 14 minutes</td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>25 août, 20:50</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">François refactore les deux routines par-dessus la version de l'ingénieur &mdash; <code>2b1a9d8</code></td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>26 août</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>dorderTreeDist()</code> documentée dans le manuel de maintenance &mdash; <code>410cd12</code></td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><strong>27 août</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">push upstream, v7.0.14</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><strong>24 août, 21:18</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">l'ingénieur commit son fix sur sa machine &mdash; <code>adb2b64</code> « Bugfix: base treetab in dorderTreeDist() »</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><strong>25 août, 11:54</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">clone de <code>master</code> depuis mon téléphone : HEAD = <code>9259939</code> (5 août). Le fix n'y est pas</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><strong>25 août, 11:55</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">la tâche de François, collée telle quelle</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><strong>25 août, 12:09</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">patch + rapport + test MPI poussés. 14 minutes</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><strong>25 août, 20:50</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">François refactore les deux routines par-dessus la version de l'ingénieur &mdash; <code>2b1a9d8</code></td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><strong>26 août</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><code>dorderTreeDist()</code> documentée dans le manuel de maintenance &mdash; <code>410cd12</code></td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><strong>27 août</strong></td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">push upstream, v7.0.14</td></tr>
 </tbody></table>
-        <p style="font-size:0.5em;color:#444;margin-top:0.5em;">Heures de Paris (UTC+2). Aucun des deux n'a vu l'autre : le seul accès réseau de la session vers Scotch est le clone, et le log brut le montre.</p>
+        <p style="font-size:0.5em;color:var(--c-444);margin-top:0.5em;">Heures de Paris (UTC+2). Aucun des deux n'a vu l'autre : le seul accès réseau de la session vers Scotch est le clone, et le log brut le montre.</p>
       </section>
       <section>
         <div class="claude-terminal">
@@ -686,13 +689,13 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
       <section>
         <h3 style="margin-bottom:0.4em;">Deux patchs</h3>
         <table style="margin:0 auto;border-collapse:collapse;font-size:0.55em;">
-<thead><tr><th style="padding:0.3em 0.6em;border-bottom:2px solid #333;text-align:left;"></th><th style="padding:0.3em 0.6em;border-bottom:2px solid #333;text-align:left;">L'ingénieur (Sonnet 5)</th><th style="padding:0.3em 0.6em;border-bottom:2px solid #333;text-align:left;">Moi (Fable 5, téléphone)</th></tr></thead>
+<thead><tr><th style="padding:0.3em 0.6em;border-bottom:2px solid var(--c-333);text-align:left;"></th><th style="padding:0.3em 0.6em;border-bottom:2px solid var(--c-333);text-align:left;">L'ingénieur (Sonnet 5)</th><th style="padding:0.3em 0.6em;border-bottom:2px solid var(--c-333);text-align:left;">Moi (Fable 5, téléphone)</th></tr></thead>
 <tbody>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">Commit</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;"><code>adb2b64</code>, 24 août 21:18</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">patch dans <code>playground</code>, 25 août 12:09</td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">Temps</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">une journée (dit François)</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">14 min entre le brief et le patch</td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">Fichiers</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">3 (<code>dorder_tree_dist.c</code>, <code>dorder.h</code>, wrapper public)</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">1</td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">Test livré</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">non</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">oui : programme MPI + rapport</td></tr>
-<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">Merge</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">upstream, v7.0.14</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid #ddd;vertical-align:top;">jamais : arrivé après</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">Commit</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;"><code>adb2b64</code>, 24 août 21:18</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">patch dans <code>playground</code>, 25 août 12:09</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">Temps</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">une journée (dit François)</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">14 min entre le brief et le patch</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">Fichiers</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">3 (<code>dorder_tree_dist.c</code>, <code>dorder.h</code>, wrapper public)</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">1</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">Test livré</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">non</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">oui : programme MPI + rapport</td></tr>
+<tr><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">Merge</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">upstream, v7.0.14</td><td style="padding:0.25em 0.6em;text-align:left;border-bottom:1px solid var(--c-ddd);vertical-align:top;">jamais : arrivé après</td></tr>
 </tbody></table>
         <p style="font-size:0.5em;margin-top:0.5em;"><strong>Identique</strong>, ligne pour ligne : <code>dblkglbnum + baseval</code>, puis <code>treeglbtax = treeglbtab - baseval</code>. La racine reste à &minus;1. Jusqu'au commentaire <code>/* TRICK: ... */</code>.</p>
       </section>
@@ -791,11 +794,11 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
         <ul style="font-size:0.68em;">
           <li><strong>D'abord une carte</strong> : <code>PORTING.md</code> (motifs Zig &rarr; Rust) et <code>LIFETIMES.tsv</code> (durée de vie de chaque champ)</li>
           <li><strong>Puis le port mécanique</strong> — <em>&laquo; Absolutely none of it worked yet &raquo;</em></li>
-          <li><strong>1 implémenteur, ≥ 2 relecteurs adversariaux</strong> : <em>&laquo; assume the code is wrong &raquo;</em><br><span style="font-size:0.85em;color:#444;">&mdash; la réponse au &laquo; hardcoded to pass the tests &raquo; de 2025</span></li>
+          <li><strong>1 implémenteur, ≥ 2 relecteurs adversariaux</strong> : <em>&laquo; assume the code is wrong &raquo;</em><br><span style="font-size:0.85em;color:var(--c-444);">&mdash; la réponse au &laquo; hardcoded to pass the tests &raquo; de 2025</span></li>
           <li><strong>1,3 M+ assertions conservées, zéro test supprimé</strong> — les tests sont le contrat</li>
           <li>Résultat : 128 bugs corrigés, binaire plus léger de 3,8 Mo (Windows) à 6,8 Mo (Linux), 2 à 5 % plus rapide</li>
         </ul>
-        <blockquote style="font-size:0.6em;width:80%;margin:0.6em auto 0;text-align:left;">&laquo; This would've taken 3 engineers a year. &raquo;<div style="font-size:0.8em;color:#444;text-align:right;margin-top:0.2em;">&mdash; Jarred Sumner, créateur de Bun</div></blockquote>
+        <blockquote style="font-size:0.6em;width:80%;margin:0.6em auto 0;text-align:left;">&laquo; This would've taken 3 engineers a year. &raquo;<div style="font-size:0.8em;color:var(--c-444);text-align:right;margin-top:0.2em;">&mdash; Jarred Sumner, créateur de Bun</div></blockquote>
         <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://bun.com/blog/bun-in-rust">bun.com/blog/bun-in-rust (8 juil. 2026)</a> &middot; <a href="https://github.com/oven-sh/bun/pull/30412">github.com/oven-sh/bun/pull/30412</a></div>
       </section>
       <section>
@@ -823,8 +826,8 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
         </textarea>
       </section>
       <section>
-        <iframe data-src="../resources/perf-trace.html" style="width:92%;height:600px;border:1px solid #333;background:#0b0e13;box-shadow:none;" allowfullscreen></iframe>
-        <div style="font-size:0.4em;margin-top:0.2em;color:#666;">le visualiseur vibé, avec 120 frames de la capture (#180 → #299) — frame #211 : 61 ms, dont 49 ms de <em>walk</em></div>
+        <iframe data-src="../resources/perf-trace.html" style="width:92%;height:600px;border:1px solid var(--c-333);background:#0b0e13;box-shadow:none;" allowfullscreen></iframe>
+        <div style="font-size:0.4em;margin-top:0.2em;color:var(--c-666);">le visualiseur vibé, avec 120 frames de la capture (#180 → #299) — frame #211 : 61 ms, dont 49 ms de <em>walk</em></div>
         <!-- l'axe que la question ne trouvait pas : à dire en une phrase (walk dans flush ? ou la ligne gap, hors code ?) -->
       </section>
       <section data-markdown>
@@ -876,7 +879,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
       </section>
       <section>
         <blockquote style="font-size:0.7em;text-align:left;width:88%;margin:0 auto;">&laquo; I think we'll be there in three to six months&mdash;where AI is writing 90 percent of the code. And then in twelve months, we may be in a world where AI is writing essentially all of the code. &raquo;</blockquote>
-        <p style="font-size:0.5em;color:#444;margin-top:0.6em;">Dario Amodei &mdash; Council on Foreign Relations, 10 mars 2025</p>
+        <p style="font-size:0.5em;color:var(--c-444);margin-top:0.6em;">Dario Amodei &mdash; Council on Foreign Relations, 10 mars 2025</p>
         &laquo; essentially all &raquo; ?..  <!-- i will explain what this means -->
         <ul style="font-size:0.55em;margin-top:0.6em;">
           <li><strong>6 mois plus tard</strong> : potentiellement valide</li>
@@ -886,7 +889,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
       </section>
       <section>
         <blockquote style="font-size:0.7em;text-align:left;width:88%;margin:0 auto;">&laquo; Thus, it's my guess that powerful AI could at least 10x the rate of these discoveries, giving us the next 50-100 years of biological progress in 5-10 years. &raquo;</blockquote>
-        <p style="font-size:0.5em;color:#444;margin-top:0.6em;">Dario Amodei &mdash; <em>Machines of Loving Grace</em>, octobre 2024</p>
+        <p style="font-size:0.5em;color:var(--c-444);margin-top:0.6em;">Dario Amodei &mdash; <em>Machines of Loving Grace</em>, octobre 2024</p>
         <ul style="font-size:0.55em;margin-top:0.6em;">
           <li><strong>20 mois après l'essai</strong> : Claude Science</li>
         </ul>
@@ -907,12 +910,12 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
       <!-- AJOUT 2026-09-08 : captures officielles de l'annonce Claude Science (30 juin 2026) -->
       <section>
         <img src="../resources/claude-science-901245fa.jpg" alt="Claude Science : un balayage d'hyperparamètres à 8 bras envoyé sur les A100 d'un cluster de labo, notebook partagé en direct" style="width:88%;height:auto;border:none;box-shadow:0 6px 22px rgba(0,0,0,0.25);">
-        <p style="font-size:0.45em;color:#444;margin-top:0.4em;">Un balayage à 8 bras envoyé sur les A100 du cluster du labo, le notebook partagé avec l'agent, en direct.</p>
+        <p style="font-size:0.45em;color:var(--c-444);margin-top:0.4em;">Un balayage à 8 bras envoyé sur les A100 du cluster du labo, le notebook partagé avec l'agent, en direct.</p>
         <div style="font-size:0.4em;"><a href="https://www.anthropic.com/news/claude-science-ai-workbench">anthropic.com/news/claude-science-ai-workbench (30 juin 2026)</a> &mdash; capture de l'annonce</div>
       </section>
       <section>
         <img src="../resources/claude-science-5db35fb5.jpg" alt="Claude Science : une revue de littérature, cinq agents en parallèle, un relecteur qui signale un PMID attribué à deux papiers" style="width:88%;height:auto;border:none;box-shadow:0 6px 22px rgba(0,0,0,0.25);">
-        <p style="font-size:0.45em;color:#444;margin-top:0.4em;">Cinq agents en parallèle, et un <strong>relecteur</strong> qui signale un PMID attribué à deux papiers &mdash; similaire aux relecteurs de Bun.</p>
+        <p style="font-size:0.45em;color:var(--c-444);margin-top:0.4em;">Cinq agents en parallèle, et un <strong>relecteur</strong> qui signale un PMID attribué à deux papiers &mdash; similaire aux relecteurs de Bun.</p>
         <div style="font-size:0.4em;"><a href="https://www.anthropic.com/news/claude-science-ai-workbench">anthropic.com/news/claude-science-ai-workbench</a> &mdash; capture de l'annonce</div>
       </section>
     </section>
@@ -924,14 +927,14 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
           <img src="../resources/qr-claude-on-scotch.svg" alt="QR code vers les slides" style="width:300px;height:300px;border:none;background:none;box-shadow:none;image-rendering:pixelated;">
         </div>
         <ul style="flex:0 1 auto;text-align:left;font-size:0.6em;line-height:2.0;list-style:none;margin:0;padding:0;">
-          <li><a href="https://presentations.cafeine.dev/slides/claude-on-scotch.html" style="color:#000;text-decoration:none;font-weight:700;">presentations.cafeine.dev/slides/claude-on-scotch.html</a></li>
-          <li><a href="https://github.com/c4ffein/pyscotch" style="color:#000;text-decoration:none;">github.com/c4ffein/pyscotch</a></li>
-          <li><a href="https://github.com/c4ffein/hegel-c" style="color:#000;text-decoration:none;">github.com/c4ffein/hegel-c</a></li>
-          <li><a href="https://gitlab.inria.fr/scotch/scotch" style="color:#000;text-decoration:none;">gitlab.inria.fr/scotch/scotch</a> <span style="color:#666;">&mdash; les reçus, dans l'historique</span></li>
-          <li><a href="https://github.com/c4ffein-work/playground/tree/main/patches/scotch__scotch/2026-08-25-dorder-tree-dist-based" style="color:#000;text-decoration:none;">github.com/c4ffein-work/playground</a> <span style="color:#666;">&mdash; patch, rapport et test de l'épilogue</span></li>
-          <li><a href="#" data-transcript="claude-on-scotch-making-of.json" style="color:#000;text-decoration:none;font-weight:700;">▶ le making-of de ce talk (transcript brut)</a></li>
-          <li><a href="#" data-transcript="claude-on-scotch-la-tache.json" style="color:#000;text-decoration:none;font-weight:700;">▶ la tâche du mainteneur, depuis un téléphone (transcript brut)</a></li>
-          <li><a href="https://writings.cafeine.dev/posts/there-is-no-stop-sign/" style="color:#000;text-decoration:none;">writings.cafeine.dev &mdash; There is no stop sign</a></li>
+          <li><a href="https://presentations.cafeine.dev/slides/claude-on-scotch.html" style="color:var(--c-000);text-decoration:none;font-weight:700;">presentations.cafeine.dev/slides/claude-on-scotch.html</a></li>
+          <li><a href="https://github.com/c4ffein/pyscotch" style="color:var(--c-000);text-decoration:none;">github.com/c4ffein/pyscotch</a></li>
+          <li><a href="https://github.com/c4ffein/hegel-c" style="color:var(--c-000);text-decoration:none;">github.com/c4ffein/hegel-c</a></li>
+          <li><a href="https://gitlab.inria.fr/scotch/scotch" style="color:var(--c-000);text-decoration:none;">gitlab.inria.fr/scotch/scotch</a> <span style="color:var(--c-666);">&mdash; les reçus, dans l'historique</span></li>
+          <li><a href="https://github.com/c4ffein-work/playground/tree/main/patches/scotch__scotch/2026-08-25-dorder-tree-dist-based" style="color:var(--c-000);text-decoration:none;">github.com/c4ffein-work/playground</a> <span style="color:var(--c-666);">&mdash; patch, rapport et test de l'épilogue</span></li>
+          <li><a href="#" data-transcript="claude-on-scotch-making-of.json" style="color:var(--c-000);text-decoration:none;font-weight:700;">▶ le making-of de ce talk (transcript brut)</a></li>
+          <li><a href="#" data-transcript="claude-on-scotch-la-tache.json" style="color:var(--c-000);text-decoration:none;font-weight:700;">▶ la tâche du mainteneur, depuis un téléphone (transcript brut)</a></li>
+          <li><a href="https://writings.cafeine.dev/posts/there-is-no-stop-sign/" style="color:var(--c-000);text-decoration:none;">writings.cafeine.dev &mdash; There is no stop sign</a></li>
         </ul>
       </div>
     </section>
@@ -956,7 +959,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
       // data-narration names. `base` = the external server (null = off, see
       // mental-model-of-llms.html); variant: '<name>' would try this deck's own
       // re-recordings first (<name>.fr.<variant>.mp3) and fall back to the shared files.
-      narration: { base: null, langs: ['fr', 'en'] },
+      narration: { base: 'https://raw.githubusercontent.com/c4ffein/static-files/main/projects/presentations/audio-files', langs: ['fr', 'en'] },
       plugins: [ RevealHighlight, RevealNotes, RevealMarkdown, RevealNarration, RevealMenu ]
     });
   </script>

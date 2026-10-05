@@ -20,11 +20,19 @@
  *     others. narration.js reads the audio list and translates its panel the
  *     same way (a DIY system: a table per plugin, t(key), one storage convention).
  *   - Help (also `?`): a floating window with the keys, in the viewer's language
+ *   - Theme: light / dark (also `D`), through resources/theme.js when the deck
+ *     loads it — the same cookie as the site's ☀︎ / ⏾ button, so it follows
+ *     the viewer everywhere
  *   - Back to the list of talks: a link to `index`, relative to the deck's URL
  *     (every deck is at <site>/slides/<name>.html, so "../" is the site's index
  *     wherever the site is served from)
  * The windows float (no backdrop): the keys keep driving the deck, they drag
  * by their header, remember their place, Esc or ✕ closes them.
+ * A deck WITH narration also greets a viewer who has not seen one for
+ * `welcome` days (localStorage `menu.welcome` = when): a window in the middle
+ * of the screen saying the talk is recorded and can play itself, with a
+ * "Try it" button = narration on, auto mode, the panel — unless narration is
+ * already on (?narration in the URL: a link that says what it does).
  *
  * In the deck:
  *   <link rel="stylesheet" href="../resources/menu.css">
@@ -35,17 +43,19 @@
  *       slideLangs: null,     // e.g. ["fr", "en"], first = default; null = detect the lang-* classes
  *       langs: ["fr", "en"],  // languages offered in the window besides those the deck has
  *       index: "../",         // the list of talks, relative to the deck's URL; null = no item
- *       key: "M"              // null = no key
+ *       key: "M",             // null = no key
+ *       themeKey: "D",        // toggles light / dark (needs resources/theme.js); null = no key
+ *       welcome: 30           // days before the narration greeting shows again; false = never
  *     },
  *     plugins: [ …, RevealNarration, RevealMenu ]   // after narration, if present
  *   });
  *
- * API (deck.getPlugin("menu")): open(), close(), toggle(), openWindow("langs" | "help"),
+ * API (deck.getPlugin("menu")): open(), close(), toggle(), openWindow("langs" | "help" | "welcome"),
  * closeWindow(id), prefs(channel?), setPrefs(list, channel?), follow(channel, bool),
- * slideLang(), state().
+ * slideLang(), toggleTheme(), state().
  */
 (function () {
-  var PREFS_KEY = "presentations.langs", WIN_KEY = "menu.win.", UI = ["fr", "en"];
+  var PREFS_KEY = "presentations.langs", WIN_KEY = "menu.win.", WELCOME_KEY = "menu.welcome", UI = ["fr", "en"];
   var CHANNELS = ["interface", "slides", "audio"], KEYS = { interface: PREFS_KEY, slides: PREFS_KEY + ".slides", audio: PREFS_KEY + ".audio" };
   var NAMES = { fr: "Français", en: "English", de: "Deutsch", es: "Español", it: "Italiano", pt: "Português", nl: "Nederlands" };
   var GAPS = [0, 1000, 2000, 3000, 5000];
@@ -63,7 +73,11 @@
           kMenu: "Menu", kNar: "Narration : l'activer, puis afficher / masquer le panneau", kHelp: "Cette aide",
           kEsc: "Fermer une fenêtre, sinon vue d'ensemble", space: "Espace", shift: "Maj", arrows: "flèches",
           index: "Retour à la liste des présentations", interface: "Interface", slidesTab: "Slides", audioTab: "Audio",
-          follow: "Comme l'interface", chosen: "Choisi", available: "disponible" },
+          follow: "Comme l'interface", chosen: "Choisi", available: "disponible",
+          theme: "Thème", dark: "sombre", light: "clair", kTheme: "Thème clair / sombre",
+          wTitle: "Narration audio", wTry: "Essayer", wLater: "Plus tard",
+          wBody: "Cette présentation a un mode narration ({langs}) : chaque slide a son enregistrement, et en mode auto elles s'enchaînent toutes seules. Dès que vous touchez la page, un menu apparaît en haut à gauche : la narration se lance de là.",
+          wKeys: "Vous pouvez aussi appuyer sur N pour la fenêtre de narration, ou M pour le menu, à tout moment." },
     en: { listen: "Listen to the narration", play: "Play", pause: "Pause", auto: "Auto mode (advance the slides)",
           gap: "Pause between slides", panel: "Narration panel", noNar: "No narration for this deck",
           langs: "Languages…", help: "Help (keys)", prefs: "Preferred languages, in order", thisDeck: "This deck",
@@ -77,7 +91,11 @@
           kMenu: "Menu", kNar: "Narration: turn it on, then show / hide the panel", kHelp: "This help",
           kEsc: "Close a window, else slide overview", space: "Space", shift: "Shift", arrows: "arrows",
           index: "Back to the list of talks", interface: "Interface", slidesTab: "Slides", audioTab: "Audio",
-          follow: "Same as the interface", chosen: "Chosen", available: "available" }
+          follow: "Same as the interface", chosen: "Chosen", available: "available",
+          theme: "Theme", dark: "dark", light: "light", kTheme: "Light / dark theme",
+          wTitle: "Audio narration", wTry: "Try it", wLater: "Later",
+          wBody: "This talk is narrated ({langs}): every slide has its recording, and in auto mode the talk plays itself. Once you interact with the page, a menu appears in the top-left corner: the narration mode can be reached from there.",
+          wKeys: "You can also press N for the narration window or M for the general menu at any time." }
   };
 
   function readList(key) {   // null = not stored
@@ -105,13 +123,14 @@
   function RevealMenu() {
     var deck, cfg, slideLangs = [], ui = null, wins = {}, order = [], zTop = 1002, hideTimer = null, hover = false, isOpen = false;
 
-    function t(k) { return (T[uiLang()] || T.fr)[k]; }
+    function t(k, vars) { var s = (T[uiLang()] || T.fr)[k]; if (vars) Object.keys(vars).forEach(function (v) { s = s.replace("{" + v + "}", vars[v]); }); return s; }
+    function theme() { return window.presentationsTheme || null; }
     function nar() { var p = deck.getPlugin && deck.getPlugin("narration"); return p && p.state ? p : null; }
     function narState() { var n = nar(); return n ? n.state() : null; }
 
     function init(d) {
       deck = d;
-      cfg = Object.assign({ hideDelay: 3000, slideLangs: null, langs: ["fr", "en"], key: "M", index: "../" }, deck.getConfig().menu || {});
+      cfg = Object.assign({ hideDelay: 3000, slideLangs: null, langs: ["fr", "en"], key: "M", themeKey: "D", welcome: 30, index: "../" }, deck.getConfig().menu || {});
       slideLangs = cfg.slideLangs || detectSlideLangs();
       applyLangs();
       build();
@@ -130,6 +149,22 @@
         deck.addKeyBinding({ keyCode: k.charCodeAt(0), key: k, description: "Menu" }, toggle);
       }
       deck.addKeyBinding({ keyCode: 191, key: "?", description: "Help" }, function () { toggleWindow("help"); });   // replaces reveal's overlay
+      if (cfg.themeKey && theme()) {
+        var tk = String(cfg.themeKey).toUpperCase();
+        deck.addKeyBinding({ keyCode: tk.charCodeAt(0), key: tk, description: "Theme" }, toggleTheme);
+      }
+      document.addEventListener("themechange", function () { if (ui && isOpen) render(); });
+      if (deck.isReady()) welcome(); else deck.on("ready", welcome);
+    }
+    function toggleTheme() { var th = theme(); if (!th) return; th.toggle(); if (ui && isOpen) render(); }
+    // The greeting: once per `welcome` days, only where there is something to hear, and not when the link already turned it on.
+    function welcome() {
+      var ns = narState();
+      if (!cfg.welcome || !ns || !ns.enabled || ns.active) return;
+      var last = load(WELCOME_KEY);
+      if (typeof last === "number" && Date.now() - last < cfg.welcome * 864e5) return;
+      store(WELCOME_KEY, Date.now());
+      openWindow("welcome");
     }
 
     // ---- languages ----
@@ -207,6 +242,7 @@
       p.appendChild(h("hr", "menu-sep"));
       p.appendChild(item(t("langs") + " " + summary(), function () { close(); openWindow("langs"); }));
       p.appendChild(item(t("help"), function () { close(); openWindow("help"); }, { key: "?" }));
+      if (theme()) p.appendChild(item(t("theme") + " : " + t(theme().get()), toggleTheme, { key: cfg.themeKey ? String(cfg.themeKey).toUpperCase() : null }));
       if (cfg.index) {   // a real link (middle-click, "open in a new tab" work), resolved against the deck's URL
         var a = h("a", "menu-item menu-index"); a.href = new URL(cfg.index, location.href).href; a.appendChild(h("span", "menu-label", "← " + t("index")));
         p.appendChild(h("hr", "menu-sep")); p.appendChild(a);
@@ -230,13 +266,17 @@
       document.body.appendChild(win);
       wins[id] = { el: win, title: title, body: body, head: head };
       order.push(id);
-      var saved = load(WIN_KEY + id), at = saved && saved.left != null ? saved : below();
+      // The greeting is rendered first and centred (its size decides where); the
+      // others open under the burger whatever their size, and fill in after.
+      if (id === "welcome") { win.classList.add("menu-win-welcome"); renderWindow(id); }
+      var saved = load(WIN_KEY + id), at = saved && saved.left != null ? saved : id === "welcome" ? centre(win) : below();
       // A second window at the same default spot goes a little further, so both show.
-      if (!saved && order.length > 1) at = { left: at.left + 40, top: at.top + 40 };
+      if (!saved && order.length > 1 && id !== "welcome") at = { left: at.left + 40, top: at.top + 40 };
       place(win, at.left, at.top);
       front(win);
-      renderWindow(id);
+      if (id !== "welcome") renderWindow(id);
     }
+    function centre(win) { return { left: (window.innerWidth - win.offsetWidth) / 2, top: (window.innerHeight - win.offsetHeight) / 2 }; }
     function closeWindow(id) {
       var w = wins[id]; if (!w) return;
       w.el.parentNode.removeChild(w.el); delete wins[id]; order.splice(order.indexOf(id), 1);
@@ -265,7 +305,19 @@
       var w = wins[id]; if (!w) return;
       w.body.textContent = "";
       if (id === "langs") { w.title.textContent = t("prefs"); renderLangs(w.body); }
+      else if (id === "welcome") { w.title.textContent = t("wTitle"); renderWelcome(w.body); }
       else { w.title.textContent = t("keys"); renderHelp(w.body); }
+    }
+    function renderWelcome(body) {
+      var n = nar(), ns = narState(), langs = ns ? ns.langs.map(name).join(", ") : "";
+      // The keys only where there is a keyboard: a mouse (hover, fine pointer) says so; a phone shows the burger alone.
+      var keys = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+      body.appendChild(h("p", "menu-win-text", t("wBody", { langs: langs }) + (keys ? " " + t("wKeys") : "")));
+      var row = h("div", "menu-win-actions");
+      var later = h("button", "menu-close", t("wLater")); later.addEventListener("click", function () { closeWindow("welcome"); });
+      var go = h("button", "menu-close menu-primary", t("wTry"));
+      go.addEventListener("click", function () { closeWindow("welcome"); if (!n) return; n.activate(); n.setAuto(true); n.togglePanel(true); });
+      row.appendChild(later); row.appendChild(go); body.appendChild(row);
     }
 
     var tab = "interface";
@@ -326,6 +378,7 @@
         [String(cfg.key || "M"), t("kMenu")]
       ];
       if (narOn) rows.push(["N", t("kNar")]);
+      if (theme() && cfg.themeKey) rows.push([String(cfg.themeKey).toUpperCase(), t("kTheme")]);
       rows.push(["?", t("kHelp")]);
       var table = h("table", "menu-keys");
       rows.forEach(function (r) { var tr = h("tr"); tr.appendChild(h("td", "menu-keys-key", r[0])); tr.appendChild(h("td", null, r[1])); table.appendChild(tr); });
@@ -339,14 +392,14 @@
     }
 
     function state() {
-      return { open: isOpen, awake: document.body.classList.contains("menu-awake"), windows: order.slice(),
+      return { open: isOpen, awake: document.body.classList.contains("menu-awake"), windows: order.slice(), theme: theme() ? theme().get() : null,
                uiLang: uiLang(), slideLang: slideLang(), slideLangs: slideLangs.slice(), audioLang: audioLang(),
                prefs: readPrefs(), slidesPrefs: readPrefs("slides"), audioPrefs: readPrefs("audio"),
                follows: { slides: follows("slides"), audio: follows("audio") } };
     }
 
     return { id: "menu", init: init, open: open, close: close, toggle: toggle, openWindow: openWindow, closeWindow: closeWindow,
-             prefs: readPrefs, setPrefs: setPrefs, follow: follow, slideLang: slideLang, state: state };
+             prefs: readPrefs, setPrefs: setPrefs, follow: follow, slideLang: slideLang, toggleTheme: toggleTheme, state: state };
   }
 
   window.RevealMenu = RevealMenu;

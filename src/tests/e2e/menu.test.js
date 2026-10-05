@@ -13,6 +13,12 @@ beforeAll(async () => {
 afterAll(async () => { await browser?.close(); server?.stop(true); });
 
 const fixture = (q = "") => `http://localhost:${server.port}/src/tests/e2e/fixtures/menu.html${q}`;
+// Every page starts as a viewer who saw the narration greeting today, except the test of the greeting itself.
+const newPage = async (opts, { welcome = false } = {}) => {
+  const page = await browser.newPage(opts);
+  if (!welcome) await page.addInitScript(() => { try { localStorage.setItem("menu.welcome", JSON.stringify(Date.now())); } catch (e) {} });
+  return page;
+};
 const menu = (page) => page.evaluate(() => Reveal.getPlugin("menu").state());
 const narration = (page) => page.evaluate(() => Reveal.getPlugin("narration").state());
 const ready = (page) => page.waitForFunction(() => window.Reveal && Reveal.isReady());
@@ -20,7 +26,7 @@ const langs = (page) => page.evaluate(() => Array.from(document.querySelectorAll
 const shown = (page, sel) => page.evaluate((s) => Array.from(document.querySelectorAll(s)).map((e) => e.style.display !== "none"), sel);
 
 test("the burger shows on mouse move, fades after hideDelay, opens with a click or M, closes with Esc", async () => {
-  const page = await browser.newPage({ viewport: { width: 1000, height: 700 }, locale: "fr-FR" });
+  const page = await newPage({ viewport: { width: 1000, height: 700 }, locale: "fr-FR" });
   const errors = []; page.on("pageerror", (e) => errors.push(e.message));
   await page.goto(fixture()); await ready(page);
   const burger = page.locator(".menu-burger"), panel = page.locator(".menu-panel");
@@ -55,7 +61,7 @@ test("the burger shows on mouse move, fades after hideDelay, opens with a click 
 
 test("on a phone (reveal's scroll view) the burger is drawn in the scrollbar's stroke and paint, a touch wakes it, a tap opens it, all fits the screen", async () => {
   // iPhone 14 in portrait: under reveal's scrollActivationWidth (435px) the deck is a scroll view with no arrows and a 3px scrollbar
-  const page = await browser.newPage({ viewport: { width: 390, height: 664 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true, locale: "fr-FR" });
+  const page = await newPage({ viewport: { width: 390, height: 664 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true, locale: "fr-FR" });
   const errors = []; page.on("pageerror", (e) => errors.push(e.message));
   await page.goto(fixture()); await ready(page);
   await page.waitForFunction(() => document.body.classList.contains("reveal-scroll"));
@@ -98,7 +104,7 @@ test("on a phone (reveal's scroll view) the burger is drawn in the scrollbar's s
 });
 
 test("language preferences: the window reorders, applies to slides and narration, persists across reloads", async () => {
-  const page = await browser.newPage({ viewport: { width: 1000, height: 700 }, locale: "fr-FR" });
+  const page = await newPage({ viewport: { width: 1000, height: 700 }, locale: "fr-FR" });
   await page.goto(fixture("?narration")); await ready(page);
   await page.waitForFunction(() => Reveal.getPlugin("narration").state().status === "ready");
   expect((await menu(page))).toMatchObject({ uiLang: "fr", slideLang: "fr", slideLangs: ["fr", "en"], audioLang: "fr", prefs: [], follows: { slides: true, audio: true } });
@@ -140,7 +146,7 @@ test("language preferences: the window reorders, applies to slides and narration
 });
 
 test("the Slides tab: untick 'same as the interface' to give the slides their own order", async () => {
-  const page = await browser.newPage({ viewport: { width: 1000, height: 700 }, locale: "fr-FR" });
+  const page = await newPage({ viewport: { width: 1000, height: 700 }, locale: "fr-FR" });
   await page.goto(fixture()); await ready(page);
   await page.evaluate(() => Reveal.getPlugin("menu").openWindow("langs"));
   await page.locator('.menu-tab[data-tab="slides"]').click();
@@ -160,7 +166,7 @@ test("the Slides tab: untick 'same as the interface' to give the slides their ow
 });
 
 test("with no preference, the interface speaks the browser's language; slides keep the deck's default", async () => {
-  const page = await browser.newPage({ viewport: { width: 1000, height: 700 }, locale: "en-US" });
+  const page = await newPage({ viewport: { width: 1000, height: 700 }, locale: "en-US" });
   await page.goto(fixture()); await ready(page);
   expect(await menu(page)).toMatchObject({ uiLang: "en", slideLang: "fr", prefs: [] });
   await page.keyboard.press("m");
@@ -169,7 +175,7 @@ test("with no preference, the interface speaks the browser's language; slides ke
 });
 
 test("the windows drag by their header and remember their place; two open ones do not overlap", async () => {
-  const page = await browser.newPage({ viewport: { width: 1000, height: 900 }, locale: "fr-FR" });   // room below the help window
+  const page = await newPage({ viewport: { width: 1000, height: 900 }, locale: "fr-FR" });   // room below the help window
   await page.goto(fixture()); await ready(page);
   await page.keyboard.press("?");
   const help = page.locator('.menu-win[data-win="help"]');
@@ -197,7 +203,7 @@ test("the windows drag by their header and remember their place; two open ones d
 });
 
 test("narration items: turn on, auto, the pause between slides; help lists the keys in the deck's terms", async () => {
-  const page = await browser.newPage({ viewport: { width: 1000, height: 700 }, locale: "fr-FR" });
+  const page = await newPage({ viewport: { width: 1000, height: 700 }, locale: "fr-FR" });
   await page.goto(fixture()); await ready(page);
   expect((await narration(page)).active).toBe(false);
   await page.keyboard.press("m");
@@ -225,4 +231,89 @@ test("narration items: turn on, auto, the pause between slides; help lists the k
   await page.keyboard.press("Escape");
   expect(await help.count()).toBe(0);
   await page.close();
+});
+
+test("first visit to a narrated deck: a greeting in the middle of the screen; Try it = narration on, auto, the panel; not again for a month", async () => {
+  const page = await newPage({ viewport: { width: 1000, height: 700 }, locale: "fr-FR" }, { welcome: true });
+  const errors = []; page.on("pageerror", (e) => errors.push(e.message));
+  await page.goto(fixture()); await ready(page);
+  const win = page.locator('.menu-win[data-win="welcome"]');
+  await win.waitFor({ state: "visible", timeout: 2000 });
+  expect(await win.locator(".menu-win-title").textContent()).toBe("Narration audio");
+  expect(await win.locator(".menu-win-text").textContent()).toContain("Français, English");
+  const box = await win.boundingBox();
+  expect(Math.abs(box.x + box.width / 2 - 500)).toBeLessThan(2);
+  expect(Math.abs(box.y + box.height / 2 - 350)).toBeLessThan(2);
+  expect((await narration(page)).active).toBe(false);
+  const seen = await page.evaluate(() => JSON.parse(localStorage.getItem("menu.welcome")));
+  expect(typeof seen).toBe("number");
+  await win.locator("button", { hasText: "Essayer" }).click();
+  expect(await win.count()).toBe(0);
+  const ns = await narration(page);
+  expect(ns.active).toBe(true); expect(ns.auto).toBe(true); expect(ns.panelHidden).toBe(false);
+  expect(await page.locator(".nar-panel").isVisible()).toBe(true);
+  // seen today: no greeting on the next visit…
+  await page.goto(fixture()); await ready(page);
+  await page.waitForTimeout(300);
+  expect(await win.count()).toBe(0);
+  // …but again after a month, and "Plus tard" just closes it
+  await page.evaluate(() => localStorage.setItem("menu.welcome", JSON.stringify(Date.now() - 31 * 864e5)));
+  await page.goto(fixture()); await ready(page);
+  await win.waitFor({ state: "visible", timeout: 2000 });
+  await win.locator("button", { hasText: "Plus tard" }).click();
+  expect(await win.count()).toBe(0);
+  expect((await narration(page)).active).toBe(false);
+  // a link that already turns the narration on says what it does: no greeting
+  await page.evaluate(() => localStorage.removeItem("menu.welcome"));
+  await page.goto(fixture("?narration")); await ready(page);
+  await page.waitForTimeout(300);
+  expect(await win.count()).toBe(0);
+  expect(errors).toEqual([]);
+  await page.close();
+});
+
+test("theme: the deck follows the site's cookie and the OS; the menu item and D toggle it; ?theme= forces one page", async () => {
+  const page = await newPage({ viewport: { width: 1000, height: 700 }, locale: "fr-FR", colorScheme: "light" });
+  const errors = []; page.on("pageerror", (e) => errors.push(e.message));
+  const theme = () => page.evaluate(() => document.documentElement.getAttribute("data-theme"));
+  const paper = () => page.evaluate(() => getComputedStyle(document.querySelector(".reveal-viewport")).backgroundColor);
+  const cookie = async () => (await page.context().cookies()).find((c) => c.name === "preferred-theme")?.value;
+  await page.goto(fixture()); await ready(page);
+  expect(await theme()).toBe("light");
+  expect(await paper()).toBe("rgb(255, 255, 255)");
+  expect(await cookie()).toBeUndefined();
+  await page.keyboard.press("m");
+  expect(await page.evaluate(() => getComputedStyle(document.querySelector(".menu-panel")).backgroundColor)).toBe("rgb(255, 255, 255)");   // the --ui palette resolves in light too
+  const item = page.locator(".menu-item", { hasText: "Thème" });
+  expect(await item.textContent()).toContain("clair");
+  await item.click();
+  expect(await theme()).toBe("dark");
+  expect(await paper()).toBe("rgb(0, 0, 0)");
+  expect(await cookie()).toBe("dark");
+  expect(await item.textContent()).toContain("sombre");
+  await page.waitForFunction(() => getComputedStyle(document.querySelector(".menu-burger span")).backgroundColor === "rgb(237, 237, 237)", null, { timeout: 2000 });   // the ink, after its 0.15 s transition
+  expect((await menu(page)).theme).toBe("dark");
+  await page.keyboard.press("Escape");
+  await page.keyboard.press("d");
+  expect(await theme()).toBe("light");
+  expect(await cookie()).toBe("light");
+  await page.keyboard.press("d");
+  expect(await theme()).toBe("dark");
+  // the cookie is the site's: a reload keeps it, and so would the index
+  await page.goto(fixture()); await ready(page);
+  expect(await theme()).toBe("dark");
+  // ?theme= forces this page without touching the cookie
+  await page.goto(fixture("?theme=light")); await ready(page);
+  expect(await theme()).toBe("light");
+  expect(await cookie()).toBe("dark");
+  // help lists D
+  await page.keyboard.press("?");
+  expect(await page.locator('.menu-win[data-win="help"] .menu-keys-key').allTextContents()).toContain("D");
+  expect(errors).toEqual([]);
+  await page.close();
+  // no cookie: the OS decides
+  const dark = await newPage({ viewport: { width: 1000, height: 700 }, colorScheme: "dark" });
+  await dark.goto(fixture()); await ready(dark);
+  expect(await dark.evaluate(() => document.documentElement.getAttribute("data-theme"))).toBe("dark");
+  await dark.close();
 });

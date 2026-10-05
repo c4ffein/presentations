@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Hypothesis</title>
+    <script src="../resources/theme.js"></script>
     <link rel="stylesheet" href="../engine/dist/reset.css">
     <link rel="stylesheet" href="../engine/dist/reveal.css">
     <link rel="stylesheet" href="../engine/dist/theme/c4ffein.css">
+    <link rel="stylesheet" href="../resources/theme.css">
     <!-- Theme used for syntax highlighted code -->
     <link rel="stylesheet" href="../engine/dist/plugin/highlight/c4ffein-light.css">
+    <link rel="stylesheet" href="../engine/dist/plugin/highlight/c4ffein-dark.css">
     <link rel="stylesheet" href="../resources/menu.css">
     <link rel="stylesheet" href="../engine/runcss/runcss.min.css">
     <script src="../engine/runcss/runcss.min.js" defer watch></script>
@@ -34,7 +37,7 @@
         </textarea>
       </section>
       <section>
-        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">Test unitaire</div>
+        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:var(--c-000);">Test unitaire</div>
         <pre><code class="language-python" data-trim data-noescape>
           def add(a, b):
               return a + b
@@ -46,7 +49,7 @@
         </code></pre>
       </section>
       <section>
-        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">Test end-to-end (api)</div>
+        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:var(--c-000);">Test end-to-end (api)</div>
         <pre><code class="language-python" data-trim data-noescape>
           def test_create_article(client):
               token = login(client, "alice")
@@ -60,7 +63,7 @@
         </code></pre>
       </section>
       <section>
-        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">Test end-to-end (ui) &mdash; Playwright</div>
+        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:var(--c-000);">Test end-to-end (ui) &mdash; Playwright</div>
         <pre><code class="language-python" data-trim data-noescape>
           def test_publish_article(page):
               page.goto("https://demo.realworld.show")
@@ -92,16 +95,16 @@
         <table style="margin:0 auto;border-collapse:collapse;font-size:0.6em;">
           <thead>
             <tr>
-              <th style="padding:0.35em 0.9em;border-bottom:2px solid #333;"></th>
-              <th style="padding:0.35em 0.9em;border-bottom:2px solid #333;text-align:center;">Avant l'agentique</th>
-              <th style="padding:0.35em 0.9em;border-bottom:2px solid #333;text-align:center;">Après l'agentique</th>
+              <th style="padding:0.35em 0.9em;border-bottom:2px solid var(--c-333);"></th>
+              <th style="padding:0.35em 0.9em;border-bottom:2px solid var(--c-333);text-align:center;">Avant l'agentique</th>
+              <th style="padding:0.35em 0.9em;border-bottom:2px solid var(--c-333);text-align:center;">Après l'agentique</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid #ddd;">Projets testés</td>
-              <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid #ddd;">en fonction du projet</td>
-              <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid #ddd;">tout, sauf le dogfood</td>
+              <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid var(--c-ddd);">Projets testés</td>
+              <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid var(--c-ddd);">en fonction du projet</td>
+              <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid var(--c-ddd);">tout, sauf le dogfood</td>
             </tr>
             <tr>
               <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;">Couverture</td>
@@ -125,7 +128,7 @@
             </ul>
           </li>
         </ul>
-        <div style="margin-top:0.7em;font-size:0.6em;color:#000;">Suffisant pour les cas simples (CRUD, outils codés à l'usage).</div>
+        <div style="margin-top:0.7em;font-size:0.6em;color:var(--c-000);">Suffisant pour les cas simples (CRUD, outils codés à l'usage).</div>
       </section>
       <section data-markdown>
         <textarea data-template>
@@ -142,20 +145,20 @@
     <section>
       <h3 style="margin-bottom:0.6em;">Et si la machine choisissait&nbsp;?</h3>
       <div class="flex" style="align-items:stretch;justify-content:center;gap:0.6em;width:100%;font-size:0.6em;">
-        <div style="flex:1;border:1px solid #ddd;border-radius:6px;padding:0.7em;">
+        <div style="flex:1;border:1px solid var(--c-ddd);border-radius:6px;padding:0.7em;">
           <div style="font-weight:700;margin-bottom:0.3em;">Tests classiques</div>
-          <div style="color:#444;">l'utilisateur choisit chaque entrée</div>
+          <div style="color:var(--c-444);">l'utilisateur choisit chaque entrée</div>
         </div>
-        <div style="flex:1;border:1px solid #ddd;border-radius:6px;padding:0.7em;">
+        <div style="flex:1;border:1px solid var(--c-ddd);border-radius:6px;padding:0.7em;">
           <div style="font-weight:700;margin-bottom:0.3em;">Fuzzing</div>
-          <div style="color:#444;">la machine génère, cherche les crashs</div>
+          <div style="color:var(--c-444);">la machine génère, cherche les crashs</div>
         </div>
-        <div style="flex:1;border:1px solid #ddd;border-radius:6px;padding:0.7em;">
+        <div style="flex:1;border:1px solid var(--c-ddd);border-radius:6px;padding:0.7em;">
           <div style="font-weight:700;margin-bottom:0.3em;">Méthodes formelles</div>
-          <div style="color:#444;">on prouve pour <em>toutes</em> les entrées</div>
+          <div style="color:var(--c-444);">on prouve pour <em>toutes</em> les entrées</div>
         </div>
       </div>
-      <div style="margin-top:0.7em;font-size:0.5em;color:#000;">Property-based testing = quelque part au milieu&hellip;</div>
+      <div style="margin-top:0.7em;font-size:0.5em;color:var(--c-000);">Property-based testing = quelque part au milieu&hellip;</div>
     </section>
 
     <!-- ===== Fuzzing ===== -->
@@ -180,12 +183,12 @@
         <table style="margin:0 auto;border-collapse:collapse;font-size:0.62em;">
           <tbody>
             <tr>
-              <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid #ddd;">Qui choisit les entrées</td>
-              <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid #ddd;">la machine</td>
+              <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid var(--c-ddd);">Qui choisit les entrées</td>
+              <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid var(--c-ddd);">la machine</td>
             </tr>
             <tr>
-              <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid #ddd;">Oracle</td>
-              <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid #ddd;">crash uniquement</td>
+              <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid var(--c-ddd);">Oracle</td>
+              <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid var(--c-ddd);">crash uniquement</td>
             </tr>
             <tr>
               <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;">Domaine typique</td>
@@ -193,7 +196,7 @@
             </tr>
           </tbody>
         </table>
-        <div style="margin-top:0.6em;font-size:0.5em;color:#000;">Le fuzzer ne sait pas ce qui est <em>correct</em> &mdash; juste ce qui crash.</div>
+        <div style="margin-top:0.6em;font-size:0.5em;color:var(--c-000);">Le fuzzer ne sait pas ce qui est <em>correct</em> &mdash; juste ce qui crash.</div>
       </section>
     </section>
 
@@ -215,12 +218,12 @@
         <table style="margin:0 auto;border-collapse:collapse;font-size:0.62em;">
           <tbody>
             <tr>
-              <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid #ddd;">Couverture</td>
-              <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid #ddd;">toutes les entrées (preuve)</td>
+              <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid var(--c-ddd);">Couverture</td>
+              <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid var(--c-ddd);">toutes les entrées (preuve)</td>
             </tr>
             <tr>
-              <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid #ddd;">Coût</td>
-              <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid #ddd;">élevé</td>
+              <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid var(--c-ddd);">Coût</td>
+              <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid var(--c-ddd);">élevé</td>
             </tr>
             <tr>
               <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;">Domaine typique</td>
@@ -228,17 +231,17 @@
             </tr>
           </tbody>
         </table>
-        <div style="margin-top:0.6em;font-size:0.5em;color:#000;">Garantie maximale, applicabilité étroite, budget conséquent.</div>
+        <div style="margin-top:0.6em;font-size:0.5em;color:var(--c-000);">Garantie maximale, applicabilité étroite, budget conséquent.</div>
       </section>
       <section>
-        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">Lean &mdash; une preuve, pas un échantillon</div>
+        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:var(--c-000);">Lean &mdash; une preuve, pas un échantillon</div>
         <pre><code class="language-plaintext" data-trim data-noescape>
           -- Vrai pour TOUT a, b : aucune valeur n'est échantillonnée
           -- la preuve est vérifiée à la compilation
           theorem add_comm (a b : Nat) : a + b = b + a := by
             omega
         </code></pre>
-        <div style="margin-top:0.5em;font-size:0.55em;color:#000;">Pas de cas d'essai : le compilateur <em>vérifie</em> la preuve, ou refuse de compiler.</div>
+        <div style="margin-top:0.5em;font-size:0.55em;color:var(--c-000);">Pas de cas d'essai : le compilateur <em>vérifie</em> la preuve, ou refuse de compiler.</div>
       </section>
     </section>
 
@@ -246,21 +249,21 @@
     <section>
       <section>
         <h3 style="margin-bottom:0.4em;">Property-based testing</h3>
-        <div style="font-size:0.6em;color:#000;line-height:1.7;">
+        <div style="font-size:0.6em;color:var(--c-000);line-height:1.7;">
           Vous écrivez des <strong>propriétés</strong> (comme le formel)<br>
           + la machine <strong>génère &amp; réduit</strong> les entrées (comme le fuzzing)
         </div>
-        <div style="margin-top:0.6em;font-size:0.55em;color:#000;">&laquo; du fuzzing qui sait ce qui est correct &raquo;</div>
+        <div style="margin-top:0.6em;font-size:0.55em;color:var(--c-000);">&laquo; du fuzzing qui sait ce qui est correct &raquo;</div>
       </section>
       <section>
         <table style="margin:0 auto;border-collapse:collapse;font-size:0.5em;">
           <thead>
             <tr>
-              <th style="padding:0.35em 0.6em;border-bottom:2px solid #333;"></th>
-              <th style="padding:0.35em 0.6em;border-bottom:2px solid #333;text-align:center;">Tests classiques</th>
-              <th style="padding:0.35em 0.6em;border-bottom:2px solid #333;text-align:center;">Fuzzing</th>
-              <th style="padding:0.35em 0.6em;border-bottom:2px solid #333;text-align:center;">PBT</th>
-              <th style="padding:0.35em 0.6em;border-bottom:2px solid #333;text-align:center;">Formel</th>
+              <th style="padding:0.35em 0.6em;border-bottom:2px solid var(--c-333);"></th>
+              <th style="padding:0.35em 0.6em;border-bottom:2px solid var(--c-333);text-align:center;">Tests classiques</th>
+              <th style="padding:0.35em 0.6em;border-bottom:2px solid var(--c-333);text-align:center;">Fuzzing</th>
+              <th style="padding:0.35em 0.6em;border-bottom:2px solid var(--c-333);text-align:center;">PBT</th>
+              <th style="padding:0.35em 0.6em;border-bottom:2px solid var(--c-333);text-align:center;">Formel</th>
             </tr>
           </thead>
           <tbody>
@@ -307,7 +310,7 @@
     <!-- ===== Un test Hypothesis simple ===== -->
     <section>
       <section>
-        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">Hypothesis</div>
+        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:var(--c-000);">Hypothesis</div>
         <pre><code class="language-python" data-trim data-noescape>
           from hypothesis import given, strategies as st
 
@@ -318,7 +321,7 @@
         </code></pre>
       </section>
       <section>
-        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">Pas un tirage uniforme</div>
+        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:var(--c-000);">Pas un tirage uniforme</div>
         <pre><code class="language-python" data-trim data-noescape>
           @given(st.integers())
           def test_p(n):
@@ -332,7 +335,7 @@
         <div style="margin-top:0.5em;font-size:0.45em;"><a href="https://github.com/HypothesisWorks/hypothesis/blob/master/hypothesis/src/hypothesis/internal/conjecture/providers.py">GLOBAL_CONSTANTS &mdash; providers.py</a></div>
       </section>
       <section>
-        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">Composer des structures</div>
+        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:var(--c-000);">Composer des structures</div>
         <pre><code class="language-python" data-trim data-noescape>
           jsons = st.recursive(
               st.none() | st.booleans() | st.integers() | st.text(),
@@ -346,10 +349,10 @@
           def test_roundtrip(value):
               assert json.loads(json.dumps(value)) == value
         </code></pre>
-        <div style="margin-top:0.5em;font-size:0.55em;color:#000;">Listes, dicts, récursion : les stratégies se composent.</div>
+        <div style="margin-top:0.5em;font-size:0.55em;color:var(--c-000);">Listes, dicts, récursion : les stratégies se composent.</div>
       </section>
       <section>
-        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">La réduction (shrinking)</div>
+        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:var(--c-000);">La réduction (shrinking)</div>
         <pre><code class="language-python" data-trim data-noescape>
           @given(st.lists(st.integers()))
           def test_sort_idempotent(xs):
@@ -361,7 +364,7 @@
         <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://github.com/HypothesisWorks/hypothesis/blob/master/hypothesis/src/hypothesis/internal/conjecture/shrinker.py">le shrinker d'Hypothesis</a></div>
       </section>
       <section>
-        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">Rejouer le dernier contre-exemple</div>
+        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:var(--c-000);">Rejouer le dernier contre-exemple</div>
         <ul style="font-size:0.62em;">
           <li>Le contre-exemple réduit est <strong>sauvegardé</strong></li>
           <li>Répertoire <code>.hypothesis/</code> &mdash; la <em>base d'exemples</em></li>
@@ -380,7 +383,7 @@
         </textarea>
       </section>
       <section>
-        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">Aller-retour (round-trip)</div>
+        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:var(--c-000);">Aller-retour (round-trip)</div>
         <pre><code class="language-python" data-trim data-noescape>
           @given(st.text())
           def test_json_roundtrip(s):
@@ -388,16 +391,16 @@
         </code></pre>
       </section>
       <section>
-        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">Implémentation de référence</div>
+        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:var(--c-000);">Implémentation de référence</div>
         <pre><code class="language-python" data-trim data-noescape>
           @given(st.lists(st.integers()))
           def test_against_reference(xs):
               assert my_fast_sort(xs) == sorted(xs)
         </code></pre>
-        <div style="margin-top:0.5em;font-size:0.58em;color:#000;">Le code lent &amp; évident est l'oracle du code rapide &amp; subtil.</div>
+        <div style="margin-top:0.5em;font-size:0.58em;color:var(--c-000);">Le code lent &amp; évident est l'oracle du code rapide &amp; subtil.</div>
       </section>
       <section>
-        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">Invariants &mdash; &laquo; rien ne change &raquo;</div>
+        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:var(--c-000);">Invariants &mdash; &laquo; rien ne change &raquo;</div>
         <pre><code class="language-python" data-trim data-noescape>
           @given(st.lists(st.integers()))
           def test_sort_preserves(xs):
@@ -405,17 +408,17 @@
               assert len(ys) == len(xs)        # même longueur
               assert set(ys) == set(xs)        # mêmes éléments
         </code></pre>
-        <div style="margin-top:0.5em;font-size:0.55em;color:#000;">On ne dit pas <em>quel</em> résultat ; juste ce qui doit rester vrai.</div>
+        <div style="margin-top:0.5em;font-size:0.55em;color:var(--c-000);">On ne dit pas <em>quel</em> résultat ; juste ce qui doit rester vrai.</div>
       </section>
       <section>
-        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:#000;">Idempotence &mdash; deux fois = une fois</div>
+        <div style="display:flex;align-items:center;height:52px;margin:0 0 0.5em;font-size:0.78em;font-weight:700;color:var(--c-000);">Idempotence &mdash; deux fois = une fois</div>
         <pre><code class="language-python" data-trim data-noescape>
           @given(st.text())
           def test_normalize_idempotent(s):
               once = normalize(s)
               assert normalize(once) == once
         </code></pre>
-        <div style="margin-top:0.5em;font-size:0.55em;color:#000;">Réappliquer l'opération ne change plus rien.</div>
+        <div style="margin-top:0.5em;font-size:0.55em;color:var(--c-000);">Réappliquer l'opération ne change plus rien.</div>
       </section>
     </section>
 
@@ -451,7 +454,7 @@
     <section>
       <section>
         <h3 style="margin-bottom:0.4em;">Et l'IA dans tout ça&nbsp;?</h3>
-        <div style="font-size:0.58em;color:#444;line-height:1.7;">
+        <div style="font-size:0.58em;color:var(--c-444);line-height:1.7;">
           Un agent LLM qui <strong>infère</strong> les propriétés depuis le code &amp; la doc,<br>
           <strong>génère</strong> des PBT, <strong>confirme</strong> les vrais bugs.
         </div>
@@ -460,12 +463,12 @@
         <table style="margin:0 auto;border-collapse:collapse;font-size:0.6em;">
           <tbody>
             <tr>
-              <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid #ddd;">Packages Python analysés</td>
-              <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid #ddd;">100</td>
+              <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid var(--c-ddd);">Packages Python analysés</td>
+              <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid var(--c-ddd);">100</td>
             </tr>
             <tr>
-              <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid #ddd;">Rapports = vrais bugs</td>
-              <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid #ddd;">56&nbsp;%</td>
+              <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid var(--c-ddd);">Rapports = vrais bugs</td>
+              <td style="padding:0.35em 0.9em;text-align:center;border-bottom:1px solid var(--c-ddd);">56&nbsp;%</td>
             </tr>
             <tr>
               <td style="padding:0.35em 0.9em;text-align:left;font-weight:700;">Bugs corrigés en amont</td>
@@ -479,12 +482,12 @@
         </div>
       </section>
       <section>
-        <h4 style="margin-bottom:0.5em;color:#000;">Avant la vague Mythos</h4>
+        <h4 style="margin-bottom:0.5em;color:var(--c-000);">Avant la vague Mythos</h4>
         <table style="margin:0 auto;border-collapse:collapse;font-size:0.56em;">
           <tbody>
             <tr>
-              <td style="padding:0.4em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid #ddd;white-space:nowrap;">Oct. 2025</td>
-              <td style="padding:0.4em 0.9em;text-align:left;border-bottom:1px solid #ddd;">Des agents trouvent &mdash; et corrigent &mdash; de vrais bugs via PBT (NumPy, SDKs)</td>
+              <td style="padding:0.4em 0.9em;text-align:left;font-weight:700;border-bottom:1px solid var(--c-ddd);white-space:nowrap;">Oct. 2025</td>
+              <td style="padding:0.4em 0.9em;text-align:left;border-bottom:1px solid var(--c-ddd);">Des agents trouvent &mdash; et corrigent &mdash; de vrais bugs via PBT (NumPy, SDKs)</td>
             </tr>
             <tr>
               <td style="padding:0.4em 0.9em;text-align:left;font-weight:700;white-space:nowrap;">Avr. 2026</td>
@@ -492,7 +495,7 @@
             </tr>
           </tbody>
         </table>
-        <div style="margin-top:0.6em;font-size:0.5em;color:#000;">Le papier PBT précède de 6 mois la vague de vulnérabilités Mythos.</div>
+        <div style="margin-top:0.6em;font-size:0.5em;color:var(--c-000);">Le papier PBT précède de 6 mois la vague de vulnérabilités Mythos.</div>
         <div style="margin-top:0.3em;font-size:0.4em;"><a href="https://en.wikipedia.org/wiki/Claude_Mythos">Claude Mythos</a> &mdash; <a href="https://www.anthropic.com/project/glasswing">Projet Glasswing</a></div>
       </section>
     </section>
@@ -502,9 +505,9 @@
       <section>
         <h3 style="margin-bottom:0.5em;">Et après&nbsp;? &mdash; Hegel</h3>
         <div style="font-size:0.72em;font-weight:700;line-height:1.8;">
-          Hypothesis <span style="color:#000;">(thèse)</span><br>
-          + Antithesis <span style="color:#000;">(antithèse)</span><br>
-          = <strong>Hegel</strong> <span style="color:#000;">(synthèse)</span>
+          Hypothesis <span style="color:var(--c-000);">(thèse)</span><br>
+          + Antithesis <span style="color:var(--c-000);">(antithèse)</span><br>
+          = <strong>Hegel</strong> <span style="color:var(--c-000);">(synthèse)</span>
         </div>
         <div style="margin-top:0.6em;font-size:0.45em;"><a href="https://antithesis.com/blog/2026/hegel/">antithesis.com/blog/2026/hegel</a></div>
       </section>
@@ -534,7 +537,7 @@
           If Python programmers were willing to put up with suffering to achieve correctness,
           they'd not be writing Python in the first place! &raquo;
         </blockquote>
-        <div style="margin-top:0.5em;font-size:0.45em;color:#000;">&mdash; David MacIver · <a href="https://hegel.dev">hegel.dev</a></div>
+        <div style="margin-top:0.5em;font-size:0.45em;color:var(--c-000);">&mdash; David MacIver · <a href="https://hegel.dev">hegel.dev</a></div>
       </section>
     </section>
 
@@ -571,10 +574,10 @@
           <img src="../resources/qr-hypothesis.svg" alt="QR code vers les slides" style="width:300px;height:300px;border:none;background:#fff;box-shadow:none;">
         </div>
         <ul style="flex:0 1 auto;text-align:left;font-size:0.66em;line-height:2.1;list-style:none;margin:0;padding:0;">
-          <li><a href="https://presentations.cafeine.dev/slides/hypothesis.html" style="color:#000;text-decoration:none;">presentations.cafeine.dev/slides/hypothesis.html</a></li>
-          <li><a href="https://hypothesis.readthedocs.io" style="color:#000;text-decoration:none;">hypothesis.readthedocs.io</a></li>
-          <li><a href="https://hegel.dev" style="color:#000;text-decoration:none;">hegel.dev</a></li>
-          <li><a href="https://arxiv.org/abs/2510.09907" style="color:#000;text-decoration:none;">arXiv:2510.09907 &mdash; Agentic PBT</a></li>
+          <li><a href="https://presentations.cafeine.dev/slides/hypothesis.html" style="color:var(--c-000);text-decoration:none;">presentations.cafeine.dev/slides/hypothesis.html</a></li>
+          <li><a href="https://hypothesis.readthedocs.io" style="color:var(--c-000);text-decoration:none;">hypothesis.readthedocs.io</a></li>
+          <li><a href="https://hegel.dev" style="color:var(--c-000);text-decoration:none;">hegel.dev</a></li>
+          <li><a href="https://arxiv.org/abs/2510.09907" style="color:var(--c-000);text-decoration:none;">arXiv:2510.09907 &mdash; Agentic PBT</a></li>
         </ul>
       </div>
     </section>

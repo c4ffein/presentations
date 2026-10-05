@@ -1,0 +1,97 @@
+/*
+ * c4ffein dark-theme syntax highlighting for highlight.js: the dark twin of
+ * c4ffein-light.css, on when <html data-theme="dark"> (resources/theme.js).
+ * Load it AFTER c4ffein-light.css. The colours are the site's dark syntax
+ * palette (the c4ffein nvim colorscheme). Background stays transparent.
+ */
+:root[data-theme="dark"] .hljs {
+  color: #ededed;
+  background: transparent;
+}
+
+/* Comments, code spans, formulas */
+:root[data-theme="dark"] .hljs-comment,
+:root[data-theme="dark"] .hljs-quote,
+:root[data-theme="dark"] .hljs-formula {
+  color: #777777;
+}
+
+/* Keywords, types, template tags */
+:root[data-theme="dark"] .hljs-keyword,
+:root[data-theme="dark"] .hljs-type,
+:root[data-theme="dark"] .hljs-builtin-name,
+:root[data-theme="dark"] .hljs-meta-keyword,
+:root[data-theme="dark"] .hljs-template-tag,
+:root[data-theme="dark"] .hljs-template-variable {
+  color: #ff79c6;
+}
+
+/* Titles, classes, functions */
+:root[data-theme="dark"] .hljs-title,
+:root[data-theme="dark"] .hljs-class .hljs-title,
+:root[data-theme="dark"] .hljs-function .hljs-title,
+:root[data-theme="dark"] .hljs-function,
+:root[data-theme="dark"] .hljs-class {
+  color: #bd93f9;
+}
+
+/* Attributes, numbers, operators, variables, sections */
+:root[data-theme="dark"] .hljs-attr,
+:root[data-theme="dark"] .hljs-attribute,
+:root[data-theme="dark"] .hljs-number,
+:root[data-theme="dark"] .hljs-operator,
+:root[data-theme="dark"] .hljs-variable,
+:root[data-theme="dark"] .hljs-literal,
+:root[data-theme="dark"] .hljs-selector-attr,
+:root[data-theme="dark"] .hljs-selector-class,
+:root[data-theme="dark"] .hljs-selector-id,
+:root[data-theme="dark"] .hljs-meta,
+:root[data-theme="dark"] .hljs-section {
+  color: #88eeff;
+}
+
+/* Strings, regex, meta-strings, links */
+:root[data-theme="dark"] .hljs-string,
+:root[data-theme="dark"] .hljs-regexp,
+:root[data-theme="dark"] .hljs-meta .hljs-string,
+:root[data-theme="dark"] .hljs-link {
+  color: #88ffaa;
+}
+
+/* Built-ins, symbols, bullets */
+:root[data-theme="dark"] .hljs-built_in,
+:root[data-theme="dark"] .hljs-symbol {
+  color: #ffccaa;
+}
+
+:root[data-theme="dark"] .hljs-bullet {
+  color: #f1fa8c;
+}
+
+/* Names, tags, selector tags */
+:root[data-theme="dark"] .hljs-name,
+:root[data-theme="dark"] .hljs-tag,
+:root[data-theme="dark"] .hljs-selector-tag,
+:root[data-theme="dark"] .hljs-selector-pseudo {
+  color: #a6e3a1;
+}
+
+/* Substitutions / params */
+:root[data-theme="dark"] .hljs-subst,
+:root[data-theme="dark"] .hljs-params {
+  color: #ededed;
+}
+
+:root[data-theme="dark"] .hljs-doctag {
+  color: #ff79c6;
+}
+
+:root[data-theme="dark"] .hljs-deletion {
+  color: #ff6b6b;
+  background-color: #3a1a1a;
+}
+
+:root[data-theme="dark"] .hljs-addition {
+  color: #88ffaa;
+  background-color: #163a1c;
+}

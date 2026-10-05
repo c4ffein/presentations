@@ -1,5 +1,5 @@
-/* menu.css — the burger menu and floating windows of resources/menu.js. Black
-   on white, the deck's font: same palette as the c4ffein theme and narration.css.
+/* menu.css — the burger menu and floating windows of resources/menu.js. Ink
+   on paper in the deck's font: the --ui-* palette of resources/theme.css (light and dark), shared with narration.css.
 
    ONE number sizes the burger: --menu-bar, the height of one of its three bars
    = the stroke of the bar reveal itself draws on the screen. In slide view
@@ -20,7 +20,7 @@
    the finger the solid playhead. The panel and the windows keep their 14px
    text: they are read, not glanced at, and they clamp to the viewport. */
 .menu-root { --menu-bar: 5px; --menu-len: 9.2; --menu-tall: 8; --menu-x: calc(var(--menu-bar) * 5.6);
-  position: fixed; top: var(--menu-x); left: var(--menu-x); z-index: 1001; color: #222;
+  position: fixed; top: var(--menu-x); left: var(--menu-x); z-index: 1001; color: var(--ui-fg);
   font: 14px/1.45 var(--r-main-font, "Source Sans Pro", Helvetica, sans-serif); user-select: none; -webkit-user-select: none; }
 body.reveal-scroll .menu-root { --menu-bar: var(--r-scrollbar-width, 3px); --menu-len: 8; --menu-tall: 7; }
 .menu-burger {
@@ -29,8 +29,8 @@ body.reveal-scroll .menu-root { --menu-bar: var(--r-scrollbar-width, 3px); --men
   display: flex; flex-direction: column; justify-content: space-between;
   background: none; border: 0; cursor: pointer;
 }
-.menu-burger span { display: block; width: 100%; height: 1em; background: #000; border-radius: 0.5em; transition: background-color 0.15s; }
-.menu-burger:hover span { background: #444; }
+.menu-burger span { display: block; width: 100%; height: 1em; background: var(--ui-ink); border-radius: 0.5em; transition: background-color 0.15s; }
+.menu-burger:hover span { background: var(--ui-soft); }
 body.menu-awake .menu-burger, body.menu-open .menu-burger { visibility: visible; opacity: 0.9; transition: opacity 0.25s, visibility 0s; }   /* shows at once */
 body.menu-open .menu-burger, .menu-burger:hover { opacity: 1; }
 /* The phone: finger room (the 24 x 21 burger gets a 48 x 45 tap target) and
@@ -45,45 +45,51 @@ body.reveal-scroll.menu-open .menu-burger span, body.reveal-scroll .menu-burger:
   position: absolute; top: calc(var(--menu-bar) * (var(--menu-tall) + 2.4)); left: 0; padding: 6px;   /* under the burger, a gap of 2.4 bars */
   min-width: min(320px, calc(100vw - 2 * var(--menu-x))); max-width: calc(100vw - 2 * var(--menu-x));   /* never past the phone's right edge */
   display: flex; flex-direction: column; gap: 2px;
-  background: #fff; border: 1px solid #222; border-radius: 4px; box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+  background: var(--ui-bg); border: 1px solid var(--ui-fg); border-radius: 4px; box-shadow: 0 4px 18px var(--ui-shadow);
 }
 .menu-hidden { display: none; }
 .menu-item {
   display: flex; justify-content: space-between; align-items: center; gap: 12px; width: 100%; text-align: left;
-  font: inherit; color: #222; background: #fff; border: 0; border-radius: 3px; padding: 7px 10px; cursor: pointer;
+  font: inherit; color: var(--ui-fg); background: var(--ui-bg); border: 0; border-radius: 3px; padding: 7px 10px; cursor: pointer;
 }
-.menu-item:hover { background: #eee; }
+.menu-item:hover { background: var(--ui-hover); }
 a.menu-item { text-decoration: none; box-sizing: border-box; }
-.menu-item:disabled { color: #999; background: #fff; cursor: default; }
-.menu-key { font-size: 11px; border: 1px solid #999; border-radius: 3px; padding: 0 5px; color: #666; }
-.menu-sep { border: 0; border-top: 1px solid #ddd; margin: 4px 0; }
+.menu-item:disabled { color: var(--ui-muted); background: var(--ui-bg); cursor: default; }
+.menu-key { font-size: 11px; border: 1px solid var(--ui-muted); border-radius: 3px; padding: 0 5px; color: var(--ui-dim); }
+.menu-sep { border: 0; border-top: 1px solid var(--ui-faint); margin: 4px 0; }
 
-/* Floating windows (languages, help): like the narration panel. */
+/* Floating windows (languages, help, the narration greeting): like the narration panel. */
 .menu-win {
   position: fixed; z-index: 1002; width: min(92vw, 440px); max-height: calc(100vh - 24px); display: flex; flex-direction: column;
-  background: #fff; color: #222; border: 1px solid #222; border-radius: 4px; box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+  background: var(--ui-bg); color: var(--ui-fg); border: 1px solid var(--ui-fg); border-radius: 4px; box-shadow: 0 4px 18px var(--ui-shadow);
   font: 14px/1.5 var(--r-main-font, "Source Sans Pro", Helvetica, sans-serif); user-select: none; -webkit-user-select: none;
 }
 .menu-win-body { overflow: auto; }   /* a long help on a small screen scrolls inside the window */
-.menu-win-head { flex: none; display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; border-bottom: 1px solid #222; cursor: grab; touch-action: none; }
+.menu-win-head { flex: none; display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; border-bottom: 1px solid var(--ui-fg); cursor: grab; touch-action: none; }
 .menu-win-head:active { cursor: grabbing; }
 .menu-win-title { font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; font-size: 12px; }
-.menu-close, .menu-lang button { font: inherit; color: #222; background: #fff; border: 1px solid #222; border-radius: 3px; padding: 1px 7px; cursor: pointer; }
-.menu-close:hover, .menu-lang button:hover:enabled { background: #eee; }
-.menu-lang button:disabled { color: #bbb; border-color: #bbb; cursor: default; }
-.menu-tabs { display: flex; gap: 4px; padding: 8px 12px 0; border-bottom: 1px solid #ddd; }
-.menu-tab { font: inherit; color: #222; background: #fff; border: 1px solid #ddd; border-bottom: 0; border-radius: 3px 3px 0 0; padding: 4px 12px; cursor: pointer; margin-bottom: -1px; }
-.menu-tab:hover { background: #eee; }
-.menu-tab-on { background: #222; color: #fff; border-color: #222; }
+.menu-close, .menu-lang button { font: inherit; color: var(--ui-fg); background: var(--ui-bg); border: 1px solid var(--ui-fg); border-radius: 3px; padding: 1px 7px; cursor: pointer; }
+.menu-close:hover, .menu-lang button:hover:enabled { background: var(--ui-hover); }
+.menu-lang button:disabled { color: var(--ui-disabled); border-color: var(--ui-disabled); cursor: default; }
+.menu-tabs { display: flex; gap: 4px; padding: 8px 12px 0; border-bottom: 1px solid var(--ui-faint); }
+.menu-tab { font: inherit; color: var(--ui-fg); background: var(--ui-bg); border: 1px solid var(--ui-faint); border-bottom: 0; border-radius: 3px 3px 0 0; padding: 4px 12px; cursor: pointer; margin-bottom: -1px; }
+.menu-tab:hover { background: var(--ui-hover); }
+.menu-tab-on { background: var(--ui-fg); color: var(--ui-bg); border-color: var(--ui-fg); }
 .menu-follow { display: flex; align-items: center; gap: 6px; padding: 10px 12px 0; cursor: pointer; }
-.menu-follow-box { accent-color: #222; margin: 0; }
+.menu-follow-box { accent-color: var(--ui-fg); margin: 0; }
 .menu-langs { list-style: none; margin: 0; padding: 8px 12px; }
-.menu-langs-follow { color: #888; }
+.menu-langs-follow { color: var(--ui-ghost); }
 .menu-lang { display: flex; align-items: center; gap: 8px; padding: 5px 0; }
 .menu-lang-name { flex: 1; }
-.menu-lang-code { color: #666; font-size: 12px; margin-right: 8px; }
-.menu-win-foot { padding: 8px 12px 10px; border-top: 1px solid #ddd; color: #444; font-size: 13px; }
+.menu-lang-code { color: var(--ui-dim); font-size: 12px; margin-right: 8px; }
+.menu-win-foot { padding: 8px 12px 10px; border-top: 1px solid var(--ui-faint); color: var(--ui-soft); font-size: 13px; }
 .menu-keys { border-collapse: collapse; width: 100%; margin: 4px 0; }
-.menu-keys td { padding: 5px 12px; border-top: 1px solid #eee; vertical-align: top; }
+.menu-keys td { padding: 5px 12px; border-top: 1px solid var(--ui-rule); vertical-align: top; }
 .menu-keys tr:first-child td { border-top: 0; }
-.menu-keys-key { white-space: nowrap; font-weight: 600; color: #000; }
+.menu-keys-key { white-space: nowrap; font-weight: 600; color: var(--ui-ink); }
+.menu-win-welcome { width: min(92vw, 400px); }
+.menu-win-text { margin: 0; padding: 12px 14px 4px; user-select: text; -webkit-user-select: text; }
+.menu-win-actions { display: flex; justify-content: flex-end; gap: 8px; padding: 10px 14px 12px; }
+.menu-win-actions .menu-close { padding: 4px 12px; }
+.menu-primary { background: var(--ui-fg); color: var(--ui-bg); }
+.menu-primary:hover { background: var(--ui-soft); color: var(--ui-bg); }
