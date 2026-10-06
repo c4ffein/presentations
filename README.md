@@ -58,7 +58,11 @@ shows `↓ 12/34`; a failed file streams and can be retried). Afterwards `N`
 shows / hides the floating panel (draggable, collapsible, place remembered):
 language buttons, play / pause, a seek bar and `auto` = "hear me talk": each
 recording ends, then after `gap` ms `Reveal.next()`; a slide without one lasts
-`silentDelay`. `?narration&auto&gap=2000` is a link that plays itself. The
+`silentDelay`. `?narration&auto&gap=2000` is a link that plays itself — once
+the viewer has clicked or pressed a key: browsers refuse sound before a gesture
+(Chrome without history on the site, Firefox, Safari), so the plugin probes
+that on activation, holds auto mode, shows the panel saying "click or press a
+key to start the sound", and starts on the first one anywhere on the page. The
 language is the first of the viewer's preferred languages (see Menu) the deck
 has; the panel's language buttons update that preference.
 Configure it in the deck's `Reveal.initialize` (`narration: { base, langs,

@@ -184,3 +184,43 @@ test("nothing loads until N: N activates, writes ?narration, preloads; then the 
   ]);
   await page.close();
 });
+
+test("a link opened cold where the browser refuses sound before a gesture: auto holds, the panel says so, the first click starts it", async () => {
+  // Chrome without history on the site, Firefox, Safari: play() is refused until the viewer touches the page.
+  const strict = await chromium.launch({ executablePath: process.env.PW_CHROMIUM || undefined, args: ["--autoplay-policy=user-gesture-required"] });
+  const page = await strict.newPage({ viewport: { width: 1000, height: 700 }, locale: "fr-FR" });
+  const errors = []; page.on("pageerror", (e) => errors.push(e.message));
+  await page.goto(`http://localhost:${server.port}/src/tests/e2e/fixtures/narration.html?narration&auto`);
+  await page.waitForFunction(() => window.Reveal && Reveal.isReady());
+  await page.waitForFunction(() => { const s = Reveal.getPlugin("narration").state(); return s.refused && s.status === "ready"; }, null, { timeout: 5000 });
+  let s = await state(page);
+  expect(s.blocked).toBe(true); expect(s.auto).toBe(true); expect(s.paused).toBe(true);
+  expect(await page.locator(".nar-panel").isVisible()).toBe(true);
+  expect(await page.locator(".nar-status").textContent()).toBe("intro · cliquer ou appuyer sur une touche pour lancer le son");
+  await page.waitForTimeout(1500);
+  expect(await page.evaluate(() => Reveal.getIndices().h)).toBe(0);   // auto mode holds: nothing moved
+  await page.mouse.click(500, 400);   // anywhere on the page
+  await page.waitForFunction(() => { const s = Reveal.getPlugin("narration").state(); return !s.blocked && !s.paused; }, null, { timeout: 3000 });
+  expect(await page.locator(".nar-status").textContent()).not.toContain("cliquer");
+  expect(await page.locator(".nar-panel.nar-blocked").count()).toBe(0);
+  await page.waitForFunction(() => Reveal.getIndices().h > 0, null, { timeout: 5000 });   // …and the talk goes on by itself
+  expect(errors).toEqual([]);
+  await page.close(); await strict.close();
+}, 20000);
+
+test("on a phone (reveal's scroll view) auto mode runs to the real end of the deck", async () => {
+  // reveal's isLastSlide() is true on every slide of the scroll view: auto must not stop after the first recording.
+  const page = await browser.newPage({ viewport: { width: 390, height: 664 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true });
+  const errors = []; page.on("pageerror", (e) => errors.push(e.message));
+  await page.goto(`http://localhost:${server.port}/src/tests/e2e/fixtures/narration.html?narration&auto`);
+  await page.waitForFunction(() => window.Reveal && Reveal.isReady());
+  expect(await page.evaluate(() => document.body.classList.contains("reveal-scroll"))).toBe(true);
+  expect(await page.evaluate(() => Reveal.isLastSlide())).toBe(true);   // the reveal quirk this guards against
+  await page.waitForFunction(() => Reveal.getIndices().h >= 1, null, { timeout: 5000 });   // a recording ended, the deck moved on…
+  expect((await state(page)).auto).toBe(true);                                             // …and auto is still on
+  await page.waitForFunction(() => !Reveal.getPlugin("narration").state().auto, null, { timeout: 10000 });
+  const at = await page.evaluate(() => { const all = Reveal.getSlides(); return [Reveal.getIndices().h, Reveal.getIndices(all[all.length - 1]).h]; });
+  expect(at[0]).toBe(at[1]);   // auto went off on the last slide, not before
+  expect(errors).toEqual([]);
+  await page.close();
+}, 20000);

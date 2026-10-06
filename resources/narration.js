@@ -22,6 +22,12 @@
  * (current slide first, then onwards), so the talk survives losing the
  * connection; a file that failed to preload streams from the server instead.
  * Afterwards N only shows / hides the panel.
+ * A browser refuses sound before the viewer has touched the page (Chrome
+ * without history on the site, Firefox, Safari): a link that turns narration
+ * on then sits on "ready" with nothing heard. So activation from the URL probes
+ * once with a silent clip; refused = BLOCKED: auto mode holds (silent slides
+ * included), the panel shows and says "click or press a key", and the first
+ * pointer or key anywhere on the page — that is the gesture — starts it.
  *
  * In the deck:
  *   <link rel="stylesheet" href="../resources/narration.css">
@@ -56,6 +62,7 @@
  */
 (function () {
   var PANEL_KEY = "narration.panel", PREFS_KEY = "presentations.langs", AUDIO_KEY = PREFS_KEY + ".audio", PARALLEL = 3;
+  var SILENCE = "data:audio/wav;base64,UklGRiwAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQgAAACAgICAgICAgA==";   // 8 silent samples: the autoplay probe
 
   // The viewer's preferred languages, in order (the convention shared with
   // menu.js): the audio list if they made one, else the interface list. The
@@ -70,11 +77,11 @@
     fr: { title: "Narration", loading: "chargement…", ready: "prêt", playing: "lecture", ended: "terminé", missing: "pas d'enregistrement",
           silent: "slide muette", auto: "auto", preloading: "préchargement des enregistrements {lang}",
           retry: "cliquer pour réessayer ; en attendant ils sont lus depuis le serveur", inMemory: "{n} enregistrements {lang} en mémoire",
-          failed: "{n} en échec ↻", collapse: "replier" },
+          failed: "{n} en échec ↻", collapse: "replier", blocked: "cliquer ou appuyer sur une touche pour lancer le son" },
     en: { title: "Narration", loading: "loading…", ready: "ready", playing: "playing", ended: "ended", missing: "no recording",
           silent: "silent slide", auto: "auto", preloading: "preloading {lang} recordings",
           retry: "click to retry; these stream from the server meanwhile", inMemory: "{n} {lang} recordings in memory",
-          failed: "{n} failed ↻", collapse: "collapse" }
+          failed: "{n} failed ↻", collapse: "collapse", blocked: "click or press a key to start the sound" }
   };
   function t(k, vars) {
     var main = readList(PREFS_KEY) || [], nav = ((navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ""])).map(function (l) { return String(l).slice(0, 2).toLowerCase(); });
@@ -137,6 +144,7 @@
 
       if (cfg.panel) buildPanel();
       ["slidechanged", "fragmentshown", "fragmenthidden"].forEach(function (e) { deck.on(e, sync); });
+      if (!(navigator.userActivation && navigator.userActivation.hasBeenActive)) probe();
       if (deck.isReady()) start(); else deck.on("ready", start);
       try {
         var u = new URL(location.href);
@@ -144,6 +152,28 @@
       } catch (e) {}
     }
     function start() { sync(); if (cfg.preload) preload(st.lang); }
+
+    // ---- blocked: no sound before a gesture ----
+    // Assumed from the start of a gesture-less activation, so nothing moves
+    // meanwhile; lifted by the probe when the browser allows sound, else by the
+    // first pointer or key on the page. `refused` = the probe said no: the
+    // panel shows and says what to do.
+    function probe() {
+      st.blocked = true;
+      document.addEventListener("pointerdown", unblock, true); document.addEventListener("keydown", unblock, true);
+      var a = new Audio(SILENCE);
+      a.play().then(unblock, function (e) { if (e && e.name === "NotAllowedError") refuse(); else unblock(); });
+    }
+    function refuse() { if (!st.blocked) return; st.refused = true; render(); if (ui) togglePanel(true); }
+    function unblock() {
+      if (!st.blocked) return;
+      st.blocked = false; st.refused = false;
+      document.removeEventListener("pointerdown", unblock, true); document.removeEventListener("keydown", unblock, true);
+      render();
+      if (st.status === "ready" || st.status === "ended") { if (st.auto || wantPlay) play(); }
+      else if (st.auto && (st.status === "silent" || st.status === "missing")) scheduleSilent();
+    }
+    function playError(e) { if (e && e.name === "NotAllowedError") { if (!st.blocked) probe(); refuse(); } }
 
     // The element whose recording is current: the last visible fragment
     // carrying data-narration, else the slide's own tag (the section or any
@@ -265,7 +295,7 @@
       function ok() {
         cleanup(); if (my !== token) return;
         st.src = shown; st.status = "ready"; st.history.push(shown); render();
-        if (st.auto || wantPlay) { wantPlay = false; audio.play().catch(function () {}); }
+        if ((st.auto || wantPlay) && !st.blocked) { wantPlay = false; audio.play().catch(playError); }
       }
       function err() { cleanup(); if (my === token) tryNext(list, label, i + 1, my); }
       if (!label) st.attempts.push(src);
@@ -273,19 +303,27 @@
       audio.src = src; audio.load();
     }
 
+    // The end of the deck: reveal's isLastSlide() asks the slide for a next
+    // sibling, and the scroll view (a phone in portrait) re-parents every slide
+    // into a page of its own — there it says "last" on every slide, which used
+    // to untick auto after the first recording. The last slide's indices say.
+    function atEnd() {
+      var all = deck.getSlides(), last = all[all.length - 1], ci = deck.getIndices(), li = last ? deck.getIndices(last) : null;
+      return !!li && li.h === ci.h && (li.v || 0) === (ci.v || 0) && !deck.availableFragments().next;
+    }
     function advance() {
       clearTimeout(silentTimer);
-      if (deck.isLastSlide() && !deck.availableFragments().next) { st.auto = false; render(); return; }
+      if (atEnd()) { st.auto = false; render(); return; }
       deck.next();
     }
     function later(f, ms) { clearTimeout(silentTimer); silentTimer = setTimeout(f, ms); }
-    function scheduleSilent() { later(advance, cfg.silentDelay); }
+    function scheduleSilent() { if (!st.blocked) later(advance, cfg.silentDelay); }
 
     function play() {
       if (!active) return;
       if (st.status === "ready" || st.status === "ended") {
         if (st.status === "ended") audio.currentTime = 0;
-        audio.play().catch(function () {});
+        audio.play().catch(playError);
       } else if (st.status === "loading") wantPlay = true;
     }
     function pause() { if (!active) return; wantPlay = false; audio.pause(); }
@@ -315,6 +353,7 @@
     }
     function state() {
       return { enabled: !!cfg, langs: cfg ? cfg.langs.slice() : [], gap: cfg ? cfg.gap : null, active: active, lang: st.lang, variant: st.variant, auto: st.auto, id: st.id, src: st.src, status: st.status,
+               blocked: !!st.blocked, refused: !!st.refused,
                attempts: st.attempts.slice(), history: st.history.slice(),
                paused: !audio || audio.paused, currentTime: audio ? audio.currentTime : 0,
                panelHidden: !!(ui && ui.panel.classList.contains("nar-hidden")),
@@ -398,6 +437,8 @@
       ui.time.textContent = fmt(cur) + " / " + fmt(d);
       ui.autoBox.checked = st.auto;
       var label = st.status === "idle" ? "" : st.status === "ready" ? t(audio.paused ? "ready" : "playing") : t(st.status);
+      if (st.refused) label = t("blocked");
+      ui.panel.classList.toggle("nar-blocked", !!st.refused);
       ui.status.textContent = (st.id ? st.id.split("/").pop() + " · " : "") + label;
       ui.status.title = st.src || (st.id || "");
       Array.prototype.forEach.call(ui.langs.children, function (b) { b.classList.toggle("nar-on", b.getAttribute("data-lang") === st.lang); });
