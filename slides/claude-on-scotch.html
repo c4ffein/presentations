@@ -45,7 +45,7 @@
     <div class="slides">
 
     <!-- ===== Titre ===== -->
-    <section>
+    <section data-narration="claude-on-scotch/claude-on-scotch">
       <h1 style="margin-bottom:0.3em;">Claude on Scotch</h1>
       <p style="font-size:0.5em;max-width:80%;margin:0 auto;">État de l'art du développement avec Claude sur une codebase C de plus de 30 ans liée au calcul scientifique</p>
     </section>
@@ -53,7 +53,7 @@
     <!-- ===== Présentation ===== -->
     <section>
       <!-- ===== Présentation : moi ===== -->
-      <section>
+      <section data-narration="claude-on-scotch/presentation">
         <h2>Présentation</h2>
         <ul>
           <li>Jeune autodidacte inspiré par sa famille</li>
@@ -63,7 +63,7 @@
         </ul>
       </section>
       <!-- ===== Présentation : Scotch ===== -->
-      <section>
+      <section data-narration="claude-on-scotch/scotch">
         <h2>Scotch</h2>
         <ul>
           <li>Partitionnement de graphes</li>
@@ -73,7 +73,7 @@
         </ul>
       </section>
       <!-- ===== Le plan ===== -->
-      <section>
+      <section data-narration="claude-on-scotch/le-plan">
         <!-- <li><strong>Présenter des résultats concrets sur des projets sérieux</strong> -->
         <!-- <li><strong>Offrir des examples supplémentaires avec des toy projects</strong> -->
         <!-- <li><strong>Build in public => des liens vers ce que je présente</strong> -->
@@ -87,7 +87,7 @@
     </section>
 
     <!-- ===== Partie 1 ===== -->
-    <section>
+    <section data-narration="claude-on-scotch/partie-1">
       <h2>Partie 1</h2>
       <h3>Mon modèle mental des LLM</h3>
     </section>
@@ -726,14 +726,14 @@ def partition(graph_file: str, parts: int) -> list[int]:
     <!-- TODO link alien minds from openai somewhere? -->
 
     <!-- ===== Partie 2 ===== -->
-    <section>
+    <section data-narration="claude-on-scotch/partie-2">
       <h2>Partie 2</h2>
       <h3>L'arc Scotch</h3>
     </section>
 
     <!-- L'échelle : les barreaux, dans l'ordre chronologique — 1 pyscotch (nov. 2025), 2 Hypothesis (déc. 2025), 3 lecture des tests C + hegel/hegel-c (mars–avr. 2026), pyscotch aujourd'hui / la pipeline = l'oracle différentiel gpart/gord/gmap (juil.–août 2026) -->
     <section>
-      <section data-markdown>
+      <section data-markdown data-narration="claude-on-scotch/initialement">
         <textarea data-template>
           ### Initialement
           - AI bug-hunting dans une codebase sérieuse
@@ -742,7 +742,7 @@ def partition(graph_file: str, parts: int) -> list[int]:
           - Trouver un moyen d'exécuter Hypothesis sur Scotch
         </textarea>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/test-hypothesis">
         <pre><code class="language-python" data-trim data-noescape>
           from hypothesis import given, strategies as st
 
@@ -754,7 +754,7 @@ def partition(graph_file: str, parts: int) -> list[int]:
         </code></pre>
         <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://hypothesis.readthedocs.io/en/latest/">source : hypothesis.readthedocs.io</a></div>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/comparatif-tests">
         <table style="margin:0 auto;border-collapse:collapse;font-size:0.5em;">
           <thead>
             <tr>
@@ -798,7 +798,7 @@ def partition(graph_file: str, parts: int) -> list[int]:
         </table>
         <div style="margin-top:0.5em;font-size:0.5em;color:var(--c-444);">Scotch : 30 ans de C, un oracle qui existe déjà (Scotch lui-même) &rarr; la colonne PBT</div>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/deja-un-papier">
         <h3 style="margin-bottom:0.5em;">Déjà un papier</h3>
         <ul style="font-size:0.68em;">
           <li><em>Agentic Property-Based Testing: Finding Bugs Across the Python Ecosystem</em></li>
@@ -826,7 +826,7 @@ def partition(graph_file: str, parts: int) -> list[int]:
          ===== -->
     <!-- Barreau 1 : pyscotch -->
     <section>
-      <section data-markdown>
+      <section data-markdown data-narration="claude-on-scotch/1-pyscotch">
         <textarea data-template>
           ### 1. pyscotch
           - scotchpy en retard sur les mises à jour
@@ -838,7 +838,7 @@ def partition(graph_file: str, parts: int) -> list[int]:
           - Bonus : des bugs trouvés *avant* de lancer Hypothesis
         </textarea>
       </section>
-      <section data-markdown>
+      <section data-markdown data-narration="claude-on-scotch/vibe-engineering-de-wrapper">
         <textarea data-template>
           ### Vibe engineering de wrapper
           - Le README : *"this is a vibe-engineering experiment —
@@ -847,7 +847,7 @@ def partition(graph_file: str, parts: int) -> list[int]:
         </textarea>
       </section>
       <!-- AJOUT 2026-09-08 -->
-      <section>
+      <section data-narration="claude-on-scotch/jour-7-le-premier-bug-scotch">
         <h3 style="margin-bottom:0.4em;">Jour 7 : le premier bug Scotch</h3>
         <ul style="font-size:0.62em;">
           <li><strong>4 nov. 2025</strong> : premier commit, sessions Claude Code <em>web</em> (7 branches <code>claude/&hellip;</code>)</li>
@@ -858,7 +858,7 @@ def partition(graph_file: str, parts: int) -> list[int]:
         </ul>
         <div style="margin-top:0.4em;font-size:0.4em;"><a href="https://github.com/c4ffein/pyscotch/commit/1b632ef">pyscotch 1b632ef (11 nov. 2025), patches/README.md</a></div>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/le-recu-le-jour-meme">
         <h3 style="margin-bottom:0.4em;">Le reçu, le jour même</h3>
         <div class="claude-terminal">
   <div class="ct-user">git log --date=short --format='%h %ad %an | %s' --grep='report C. Pellegrini' | tail -1</div>
@@ -873,7 +873,7 @@ def partition(graph_file: str, parts: int) -> list[int]:
     <!-- Barreau 2 : Hypothesis (déc. 2025) -->
     <section>
       <!-- AJOUT 2026-09-08 -->
-      <section>
+      <section data-narration="claude-on-scotch/2-hypothesis-sur-le-wrapper">
         <h3 style="margin-bottom:0.4em;">2. Hypothesis sur le wrapper</h3>
         <pre><code class="language-python" data-trim data-noescape>
 @given(graph_data=simple_graph(min_vertices=2, max_vertices=20))
@@ -889,7 +889,7 @@ def test_coloring_no_adjacent_same_color(self, graph_data):
         <p style="font-size:0.5em;color:var(--c-444);margin-top:0.4em;">L'invariant du coloriage. Le test C de Scotch, lui, vérifiait le code de retour et imprimait un histogramme.</p>
         <div style="margin-top:0.4em;font-size:0.4em;"><a href="https://github.com/c4ffein/pyscotch/blob/master/tests/hypothesis/test_graph_properties.py">tests/hypothesis/test_graph_properties.py</a></div>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/hypothesis-trouve-un-bug">
         <h3 style="margin-bottom:0.4em;">Hypothesis trouve un bug</h3>
         <div class="claude-terminal">
   <div class="ct-claude">Interesting! Hypothesis found a potential bug! The test found that for a graph with 19 vertices and a single edge (0, 9), the color() function assigned the same color (0) to both adjacent vertices 0 and 9. [&hellip;] However, the failure is marked as "Flaky" &mdash; it failed initially but couldn't reproduce on retry.</div>
@@ -902,14 +902,14 @@ def test_coloring_no_adjacent_same_color(self, graph_data):
         <div style="margin-top:0.4em;font-size:0.4em;">transcription brute, 5 déc. 2025 — <a href="https://github.com/c4ffein/pyscotch/blob/master/docs/SAVED_CONTEXT_FOR_NEXT_FP.md">pyscotch/docs/SAVED_CONTEXT_FOR_NEXT_FP.md</a></div>
       </section>
       <!-- AJOUT 2026-09-08 : rejeu d'un vrai run, enregistré avec `script` (voir resources/recordings/hypothesis-coloring.md) -->
-      <section>
+      <section data-narration="claude-on-scotch/replay-hypothesis">
         <h3 style="margin-bottom:0.4em;">Replay Hypothesis</h3>
         <div class="claude-terminal" style="width:94%;max-width:none;margin:0 auto;font-size:0.4em;">
           <div class="term-replay" data-recording="../resources/recordings/hypothesis-coloring-shrink.json" data-autoplay="1" data-line-delay="150" data-max-lines="16"></div>
         </div>
         <p style="font-size:0.45em;color:var(--c-444);margin-top:0.4em;">Scotch <code>34ea137</code> (14 janv. 2026, la veille du fix) &middot; pyscotch <code>a32f242</code> (déc. 2025) &middot; Hypothesis 6.168, seed 1, verbosité <em>debug</em>, un cas par ligne. Premier échec au cas n°19 : 17 sommets, 38 arêtes. Puis la réduction : les arêtes tombent une à une, <code>(17, [(5, 10)])</code>, <code>(17, [(1, 10)])</code>, 17 &rarr; 15 &rarr; 13 &rarr; 11 sommets. <strong>107 cas, 16 réductions, 3 s : <code>graph_data=(11, [(1, 10)])</code>.</strong> Sur v7.0.14 : 100 exemples, 0 échec.</p>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/le-recu-janvier-2026">
         <h3 style="margin-bottom:0.4em;">Le reçu &mdash; janvier 2026</h3>
         <div class="claude-terminal">
   <div class="ct-result">34ea137 2026-01-14 Francois PELLEGRINI | Add coloring checking routine in test_scotch_graph_color.c</div>
@@ -928,7 +928,7 @@ def test_coloring_no_adjacent_same_color(self, graph_data):
 
     <!-- Barreau 3+5 fusionnés le 2026-09-08 : lire le C + hegel-c, dans l'ordre du récit (hegel trouve → hegel-c réduit → la cause → le reçu) -->
     <section>
-      <section>
+      <section data-narration="claude-on-scotch/3-mars-2026-lecture-des-tests-c">
           <h3 style="margin-bottom:0.4em;">3. mars 2026 : lecture des <em>tests</em> C</h3>
         <ul style="font-size:0.6em;">
           <li>CLAUDE.md pyscotch : <em>&laquo; Scotch's C tests often only verify return codes, not output validity &raquo;</em></li>
@@ -951,7 +951,7 @@ checkOrder (const SCOTCH_Num * const permtab, const SCOTCH_Num * const peritab,
         <div style="margin-top:0.4em;font-size:0.4em;"><a href="https://github.com/c4ffein/scotch/commit/c01ce8f">c4ffein/scotch c01ce8f — Add output validity checks (22 mars 2026)</a></div>
         <div style="margin-top:0.3em;font-size:0.4em;">Envoyée à François. Côté Scotch, ensuite : <a href="https://gitlab.inria.fr/scotch/scotch/-/commit/eb5f1efcab56ddcabe44e9f9bb7c474743d8b633">« Improve tests », 10 avr. 2026</a> &middot; <a href="https://gitlab.inria.fr/scotch/scotch/-/commit/010974ee9ea7af89ecf20558c0e7e866362d899b">« Add test for ordering a disconnected graph », 15 avr.</a> &middot; <a href="https://gitlab.inria.fr/scotch/scotch/-/commit/bda2db3c3b35c187ddbc617be09608980a70aaa4">« Improve tests », 16 juin</a></div>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/2-avril-2026-unconfirmed-cause">
         <h3 style="margin-bottom:0.4em;">2 avril 2026 : unconfirmed cause</h3>
         <div class="claude-terminal">
   <div class="ct-dim">// fork c4ffein/scotch, branche hegel, REPORTS/REPORT.md — 67 tests PBT en C, 65 passent, 1 bug NOUVEAU</div>
@@ -962,7 +962,7 @@ checkOrder (const SCOTCH_Num * const permtab, const SCOTCH_Num * const peritab,
         <p style="font-size:0.5em;color:var(--c-444);margin-top:0.5em;">git log du fork : 2 avr. « hegel report » &middot; 3 avr. « gaslighted again by me good Claude » &middot; 5 avr. « add hgraph_order_cp.c fix actually »</p>
         <div style="margin-top:0.4em;font-size:0.4em;"><a href="https://github.com/c4ffein/scotch/blob/ff403d445b36ee1723ff53d2478d368b21a3341f/REPORTS/REPORT.md">REPORTS/REPORT.md</a> &middot; <a href="https://github.com/c4ffein/scotch/blob/ff403d445b36ee1723ff53d2478d368b21a3341f/REPORTS/BUG_REPORT.md">REPORTS/BUG_REPORT.md</a></div>
       </section>
-      <section data-markdown>
+      <section data-markdown data-narration="claude-on-scotch/hegel">
         <textarea data-template>
           ### hegel
           - le moteur d'Hypothesis, pour tous les langages
@@ -971,7 +971,7 @@ checkOrder (const SCOTCH_Num * const permtab, const SCOTCH_Num * const peritab,
             - en pause, en expérimentation
         </textarea>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/exemple-du-binding-c">
         <h3>exemple du binding C</h3>
         <pre><code class="language-c" data-trim data-noescape>
 static void test_add_commutes (hegel_testcase *tc) {
@@ -983,7 +983,7 @@ static void test_add_commutes (hegel_testcase *tc) {
 int main (void) { hegel_run_test (test_add_commutes); return 0; }
         </code></pre>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/schemas-de-mon-wrapper">
         <h3 style="margin-bottom:0.4em;">Schémas de mon wrapper</h3>
         <pre><code class="language-c" data-trim data-noescape style="font-size:0.62em;line-height:1.3;">
 hegel_schema_t edge_schema = HEGEL_STRUCT (EdgePair,
@@ -999,7 +999,7 @@ memset (permtab, 0xBB, nvert * sizeof (SCOTCH_Num));   /* sentinel */
 hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the final replay only */
 </code></pre>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/replay-hegel-c">
         <h3 style="margin-bottom:0.4em;">Replay hegel-c</h3>
         <p style="font-size:0.42em;color:var(--c-666);margin:0 0 0.3em;">enregistré aujourd'hui avec le hegel-c de juillet 2026, sur le Scotch d'avant le fix &mdash; la branche du 2 avril faisait la même chose, en moins propre</p>
         <div class="claude-terminal" style="width:70%;margin:0 auto;font-size:0.4em;">
@@ -1008,7 +1008,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
         <p style="font-size:0.45em;color:var(--c-444);margin-top:0.4em;">Scotch <strong>v7.0.11</strong> (avant le fix du 15 avril) &middot; hegel-c <code>ce16904</code>, moteur hegel-rust v0.17.4. Cas n°6 : premier échec sur 20 sommets. Cas n°185 : déjà 3 sommets, 1 arête. 10 175 cas en 17 s, puis <strong><code>MINIMAL nvert=3 nedges=1 edges=[(1,2)]</code></strong> &mdash; 6 runs sur 6. Sur v7.0.14 : 200 cas, rien.</p>
       </section>
       <!-- AJOUT 2026-09-08 -->
-      <section>
+      <section data-narration="claude-on-scotch/un-graphe-a-3-sommets">
         <h3 style="margin-bottom:0.4em;">Un graphe à 3 sommets</h3>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 240" style="width:50%;max-width:600px;height:auto;display:block;margin:0 auto;">
           <line x1="440" y1="120" x2="640" y2="120" stroke="#1a1a1a" stroke-width="3"/>
@@ -1032,7 +1032,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
         <div style="margin-top:0.4em;font-size:0.4em;"><a href="https://github.com/c4ffein/hegel-c/blob/master/docs/shrinking.md">hegel-c/docs/shrinking.md</a> &middot; <a href="https://github.com/c4ffein/hegel-c/blob/master/tests/irl/scotch/test_graph_order_shrink.c">tests/irl/scotch/test_graph_order_shrink.c</a></div>
       </section>
       <!-- AJOUT 2026-09-08 : rejeu d'un vrai run, enregistré avec `script` (voir resources/recordings/hegel-order-shrink.md) -->
-      <section>
+      <section data-narration="claude-on-scotch/episode-2-5-avril-une-variable">
         <h3 style="margin-bottom:0.4em;">Épisode 2 &mdash; 5 avril : une variable</h3>
         <p style="font-size:0.55em;margin:0 auto 0.4em;">Fausse piste : les sommets isolés. Vraie cause : le chemin <em>compression</em> de <code>hgraphOrderCp</code> ignore <code>ordenum</code>.</p>
         <table style="margin:0 auto;border-collapse:collapse;font-size:0.45em;">
@@ -1050,7 +1050,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
 </code></pre>
         <p style="font-size:0.48em;color:var(--c-444);margin-top:0.3em;">Conditions : <code>STRATDISCONNECTED</code> + &ge; 2 composantes + une composante non première qui compresse (une paire K<sub>2</sub> suffit). Présent depuis v6.0 au moins. Corruption <em>silencieuse</em> : <code>rc = 0</code>.</p>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/le-recu-15-avril-2026">
         <h3 style="margin-bottom:0.4em;">Le reçu &mdash; 15 avril 2026</h3>
         <div class="claude-terminal">
   <div class="ct-result">0642921 2026-04-15 Francois PELLEGRINI | Bugfix: make `hgraphOrderCp()` work on (disconnected) subgraphs [report C. Pellegrini]</div>
@@ -1071,7 +1071,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
 
     <!-- ===== Améliorations de pyscotch (2026-09-08) — remplace « Tests différentiels » (juil.–août 2026, retirées le 2026-09-09 : l'oracle gpart/gord/gmap est ici et dans le récap), en dernier barreau : après Hypothesis et hegel, comme dans git ===== -->
     <section>
-      <section data-markdown>
+      <section data-markdown data-narration="claude-on-scotch/pyscotch-aujourd-hui">
         <textarea data-template>
           ### pyscotch, aujourd'hui
           - `uv pip install pyscotch`
@@ -1081,7 +1081,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
           - Sorties identiques à `gpart` / `gord` / `gmap`
         </textarea>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/replay-installation">
         <h3 style="margin-bottom:0.4em;">Replay : installation</h3>
         <div class="claude-terminal" style="width:94%;max-width:none;margin:0 auto;font-size:0.4em;">
           <div class="term-replay" data-recording="../resources/recordings/pyscotch-install.json" data-autoplay="1" data-line-delay="60" data-max-lines="16"></div>
@@ -1089,21 +1089,21 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
         <p style="font-size:0.45em;color:var(--c-444);margin-top:0.4em;">Machine sans aucun Scotch. <code>uv venv</code>, <code>uv pip install "pyscotch[parallel]"</code> : pyscotch 7.0.4 depuis PyPI, mpi4py en wheel binaire, rien à compiler. Cinq lignes de Python : <code>parts: [0 1 1 0]</code> avec le Scotch 7.0.13 embarqué dans la wheel. <strong>1,4 s.</strong></p>
         <div style="margin-top:0.3em;font-size:0.4em;"><a href="../resources/recordings/pyscotch-user.md">comment c'est enregistré</a> &middot; <a href="https://pypi.org/project/pyscotch/">pypi.org/project/pyscotch</a></div>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/replay-pyscotch-doctor">
         <h3 style="margin-bottom:0.4em;">Replay : <code>pyscotch doctor</code></h3>
         <div class="claude-terminal" style="width:94%;max-width:none;margin:0 auto;font-size:0.4em;">
           <div class="term-replay" data-recording="../resources/recordings/pyscotch-doctor.json" data-autoplay="1" data-line-delay="60" data-max-lines="16"></div>
         </div>
         <p style="font-size:0.45em;color:var(--c-444);margin-top:0.4em;">Juste après l'install : la wheel, « No problems detected ». Puis <code>PYSCOTCH_PARALLEL=1</code> : « Loaded NO », le fichier qui manque, et la commande exacte qui le construit. <strong>Le diagnostic est la documentation.</strong></p>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/replay-pyscotch-scotch-build">
         <h3 style="margin-bottom:0.4em;">Replay : <code>pyscotch scotch build</code></h3>
         <div class="claude-terminal" style="width:94%;max-width:none;margin:0 auto;font-size:0.4em;">
           <div class="term-replay" data-recording="../resources/recordings/pyscotch-build.json" data-autoplay="1" data-line-delay="40" data-max-lines="16"></div>
         </div>
         <p style="font-size:0.45em;color:var(--c-444);margin-top:0.4em;"><code>pyscotch scotch build --parallel --use</code> : preflight, source Scotch 7.0.13 téléchargée depuis gitlab.inria.fr (8,3 Mo, sha256 vérifié), aucun quickfix nécessaire pour cette version, <code>make libscotch</code> + <code>libptscotch</code>, sélection. <strong>1 min 00 s</strong> sur 8 cœurs, sans root. Puis <code>doctor</code> en parallèle, et un Dgraph 8×8×8 partitionné en 4 sous <code>mpirun -n 2</code>.</p>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/la-pipeline">
         <h3 style="margin-bottom:0.3em;">La pipeline</h3>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 470" style="width:96%;max-width:1000px;height:auto;display:block;margin:0 auto;font-family:inherit;">
 <defs><marker id="pl-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker></defs>
@@ -1181,7 +1181,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
 
     <!-- ===== AJOUT 2026-09-08 (Claude) : l'arc en dates, vérifié dans git — repos clonés dans ~/workspace ===== -->
     <section>
-      <section>
+      <section data-narration="claude-on-scotch/l-arc-en-dates-recap">
         <h3 style="margin-bottom:0.5em;">L'arc, en dates &mdash; récap</h3>
 <table style="margin:0 auto;border-collapse:collapse;font-size:0.55em;">
 <tbody>
@@ -1200,7 +1200,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
 
     <!-- Le bilan des bugs -->
     <section>
-      <section>
+      <section data-narration="claude-on-scotch/le-bilan-chez-scotch">
         <h3 style="margin-bottom:0.5em;">Le bilan &mdash; chez Scotch</h3>
         <table style="margin:0 auto;border-collapse:collapse;font-size:0.38em;">
           <thead>
@@ -1230,7 +1230,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
 
     <!-- ===== Épilogue de l'arc Scotch : la même tâche, deux fois ===== -->
     <section>
-      <section data-markdown>
+      <section data-markdown data-narration="claude-on-scotch/sonnet-5-vs-fable-5">
         <textarea data-template>
           ### Sonnet 5 vs Fable 5
           - François envoie une tâche bien scopée :
@@ -1243,7 +1243,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
         </textarea>
       </section>
       <!-- AJOUT 2026-09-08 -->
-      <section>
+      <section data-narration="claude-on-scotch/la-chronologie-dans-git">
         <h3 style="margin-bottom:0.4em;">La chronologie, dans git</h3>
         <table style="margin:0 auto;border-collapse:collapse;font-size:0.5em;">
 <tbody>
@@ -1257,7 +1257,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
 </tbody></table>
         <p style="font-size:0.5em;color:var(--c-444);margin-top:0.5em;">Heures de Paris (UTC+2). Aucun des deux n'a vu l'autre : le seul accès réseau de la session vers Scotch est le clone, et le log brut le montre.</p>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/session-clone">
         <div class="claude-terminal">
           <div class="ct-user">Hey! Can you check the gitlab for scotch? Clone it here?</div>
           <div class="ct-claude">Done — SCOTCH is cloned at ~/playground/scotch. [&hellip;] I went with the canonical one: the SCOTCH graph partitioning / sparse matrix ordering library from Inria's GitLab.</div>
@@ -1266,7 +1266,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
         <!-- le brief : les mots du mainteneur, sans une ligne de plus -->
         <div style="margin-top:0.4em;font-size:0.4em;"><a href="#" data-transcript="claude-on-scotch-la-tache.json">▶ la session complète (transcript brut)</a></div>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/session-rapport-et-patch">
         <div class="claude-terminal">
           <div class="ct-user">Create a report in md and a patch, and commit / push on main? What about explaining what was asked, your thought process and how you did the qa?</div>
           <div class="ct-claude">Done — the fix is written, tested with MPI, and exported as a patch series [&hellip;]<br><br><strong>The change</strong> (all in src/libscotch/dorder_tree_dist.c, no sub-routine needed it): [&hellip;] The root's father value stays -1 regardless of base — that's exactly what the user manual already promised [&hellip;] and what the ParMeTiS wrapper already assumes at parmetis_dgraph_order.c:178. So this is really the code catching up to its documentation.<br><br><strong>Verification</strong> — I installed OpenMPI, built libptscotch, and ran a small test ordering a 16-vertex ring:<br>2 ranks, baseval 1: treetab = [-1, 1, 1, 1]<br>2 ranks, baseval 0: [-1, 0, 0, 0] — bit-identical to the old behavior.<br>4 ranks, baseval 1: 10 blocks, [-1, 1, 2, 2, 2, 1, 6, 6, 6, 1]</div>
@@ -1274,7 +1274,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
         <!-- extraits -->
         <div style="margin-top:0.4em;font-size:0.4em;"><a href="#" data-transcript="claude-on-scotch-la-tache.json">▶ la session complète (transcript brut)</a></div>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/le-resultat-un-patch-pour-scotch">
         <h3 style="margin-bottom:0.4em;">Le résultat : un patch pour Scotch</h3>
         <pre><code class="language-diff" data-trim data-noescape>
           Subject: [PATCH] Base the tree array returned by dorderTreeDist(), as documented
@@ -1291,7 +1291,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
         </code></pre>
         <div style="margin-top:0.4em;font-size:0.4em;"><a href="https://github.com/c4ffein-work/playground/tree/main/patches/scotch__scotch/2026-08-25-dorder-tree-dist-based">github.com/c4ffein-work/playground &mdash; patch, REPORT.md, test_treedist.c (25 août 2026)</a> &middot; <a href="#" data-transcript="claude-on-scotch-la-tache.json">▶ la session complète</a></div>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/le-message-de-commit">
         <h3 style="margin-bottom:0.4em;">Le message de commit</h3>
         <pre><code class="language-plaintext" data-trim data-noescape style="font-size:0.72em;line-height:1.3;">
           Base the tree array returned by dorderTreeDist(), as documented
@@ -1315,7 +1315,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
         <div style="margin-top:0.4em;font-size:0.4em;"><a href="#" data-transcript="claude-on-scotch-la-tache.json">▶ la session complète</a></div>
       </section>
       <!-- AJOUT 2026-09-08 : comparaison écrite par Claude, pour discussion en direct — version longue : notes/treetab-deux-patchs.md ; fichiers côte à côte : treetab-theirs.c / treetab-ours.c -->
-      <section>
+      <section data-narration="claude-on-scotch/deux-patchs">
         <h3 style="margin-bottom:0.4em;">Deux patchs</h3>
         <table style="margin:0 auto;border-collapse:collapse;font-size:0.55em;">
 <thead><tr><th style="padding:0.3em 0.6em;border-bottom:2px solid var(--c-333);text-align:left;"></th><th style="padding:0.3em 0.6em;border-bottom:2px solid var(--c-333);text-align:left;">L'ingénieur (Sonnet 5)</th><th style="padding:0.3em 0.6em;border-bottom:2px solid var(--c-333);text-align:left;">Moi (Fable 5, téléphone)</th></tr></thead>
@@ -1328,7 +1328,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
 </tbody></table>
         <p style="font-size:0.5em;margin-top:0.5em;"><strong>Identique</strong>, ligne pour ligne : <code>dblkglbnum + baseval</code>, puis <code>treeglbtax = treeglbtab - baseval</code>. La racine reste à &minus;1. Jusqu'au commentaire <code>/* TRICK: ... */</code>.</p>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/ce-qui-differe">
         <h3 style="margin-bottom:0.4em;">Ce qui diffère</h3>
         <div class="flex" style="gap:1.2em;align-items:flex-start;font-size:0.52em;text-align:left;">
           <div style="flex:1;">
@@ -1350,7 +1350,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
         </div>
         <div style="margin-top:0.4em;font-size:0.4em;">côte à côte, annotés : <code>treetab-theirs.c</code> / <code>treetab-ours.c</code> (<code>vi -O</code>) &middot; <a href="https://gitlab.inria.fr/scotch/scotch/-/commit/adb2b64">adb2b64</a> &middot; <a href="https://github.com/c4ffein-work/playground/tree/main/patches/scotch__scotch/2026-08-25-dorder-tree-dist-based">notre patch</a></div>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/avis-de-fable-5-1">
         <h3 style="margin-bottom:0.4em;">Avis de Fable 5.1</h3>
         <div class="claude-terminal">
   <div class="ct-dim">// Claude (Fable 5.1), 8 sept. 2026, après lecture des trois commits — sans accès à la session de l'ingénieur</div>
@@ -1358,7 +1358,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
   <div class="ct-claude">Si je relisais les deux à l'aveugle : je merge le sien, je garde mon test.</div>
 </div>
       </section>
-      <section data-markdown>
+      <section data-markdown data-narration="claude-on-scotch/le-verdict">
         <textarea data-template>
           ### Le verdict
           - L'expertise de François reste le déterminant
@@ -1371,14 +1371,14 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
     </section>
 
     <!-- ===== Partie 3 ===== -->
-    <section>
+    <section data-narration="claude-on-scotch/partie-3">
       <h2>Partie 3</h2>
       <h3>Trois changements de paradigme</h3>
     </section>
 
     <!-- Idée 1 : porter une codebase -->
     <section>
-      <section data-markdown>
+      <section data-markdown data-narration="claude-on-scotch/idee-1-spec-code">
         <textarea data-template>
           ### Idée 1 — Spec > Code
           **On peut porter une codebase ?**
@@ -1386,7 +1386,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
           - Mai 2026 : millions de lignes avec le bon process
         </textarea>
       </section>
-      <section data-markdown>
+      <section data-markdown data-narration="claude-on-scotch/petite-echelle-password-store">
         <textarea data-template>
           ### Petite échelle — password-store
           - (bash) &rarr; Python
@@ -1397,7 +1397,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
           - [github.com/c4ffein/pass](https://github.com/c4ffein/pass) — historique des sessions
         </textarea>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/mai-2025-nudge-nudge-nudge">
         <h3 style="margin-bottom:0.5em;">Mai 2025 — nudge, nudge, nudge...</h3>
         <ul style="font-size:0.7em;">
           <li>&laquo; After that, I only said yes to everything. &raquo;</li>
@@ -1409,7 +1409,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
         <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://github.com/c4ffein/pass/blob/master/chat_history/00-INDEX.md">github.com/c4ffein/pass — chat_history/00-INDEX.md</a></div>
         <!-- une question, pas un ordre — cf. partie 1. Et : l'oracle a été contourné, pas le modèle qui a triché tout seul -->
       </section>
-      <section data-markdown>
+      <section data-markdown data-narration="claude-on-scotch/grande-echelle-bun-zig-rust">
         <textarea data-template>
           ### Grande échelle — Bun (Zig) &rarr; Rust
           - PR #30412, branche `claude/phase-a-port` : ouverte le 8 mai, fusionnée le 14 mai 2026
@@ -1418,7 +1418,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
           - Même architecture, mêmes structures de données — *« largely the same »*
         </textarea>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/mai-2026-process-automatique">
         <h3 style="margin-bottom:0.5em;">Mai 2026 - process automatique</h3>
         <ul style="font-size:0.68em;">
           <li><strong>D'abord une carte</strong> : <code>PORTING.md</code> (motifs Zig &rarr; Rust) et <code>LIFETIMES.tsv</code> (durée de vie de chaque champ)</li>
@@ -1430,7 +1430,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
         <blockquote style="font-size:0.6em;width:80%;margin:0.6em auto 0;text-align:left;">&laquo; This would've taken 3 engineers a year. &raquo;<div style="font-size:0.8em;color:var(--c-444);text-align:right;margin-top:0.2em;">&mdash; Jarred Sumner, créateur de Bun</div></blockquote>
         <div style="margin-top:0.5em;font-size:0.4em;"><a href="https://bun.com/blog/bun-in-rust">bun.com/blog/bun-in-rust (8 juil. 2026)</a> &middot; <a href="https://github.com/oven-sh/bun/pull/30412">github.com/oven-sh/bun/pull/30412</a></div>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/oracle-code">
         <h3 style="margin-bottom:0.5em;">Oracle > Code</h3>
         <img src="../resources/realworld-logo.svg" alt="RealWorld" style="display:block;margin:0 auto 0.3em; margin-bottom: 1em;height:64px;width:auto;border:none;background:none;box-shadow:none;">
         <ul style="font-size:0.68em;">
@@ -1446,7 +1446,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
 
     <!-- Idée 2 : viber son observabilité -->
     <section>
-      <section data-markdown>
+      <section data-markdown data-narration="claude-on-scotch/idee-2-vibez-votre-observabilite">
         <textarea data-template>
           ### Idée 2 — Vibez votre observabilité
           - Un petit jeu, un moteur maison
@@ -1454,12 +1454,12 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
           - → &laquo; vibe-moi un visualiseur de spans &raquo;
         </textarea>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/visualiseur-de-spans">
         <iframe data-src="../resources/perf-trace.html" style="width:92%;height:600px;border:1px solid var(--c-333);background:#0b0e13;box-shadow:none;" allowfullscreen></iframe>
         <div style="font-size:0.4em;margin-top:0.2em;color:var(--c-666);">le visualiseur vibé, avec 120 frames de la capture (#180 → #299) — frame #211 : 61 ms, dont 49 ms de <em>walk</em></div>
         <!-- l'axe que la question ne trouvait pas : à dire en une phrase (walk dans flush ? ou la ligne gap, hors code ?) -->
       </section>
-      <section data-markdown>
+      <section data-markdown data-narration="claude-on-scotch/la-lecon-observabilite">
         <textarea data-template>
           ### La leçon
           - avis → instrumentation
@@ -1471,7 +1471,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
 
     <!-- Idée 3 : tout code est legacy -->
     <section>
-      <section data-markdown>
+      <section data-markdown data-narration="claude-on-scotch/idee-3-tout-code-est-du-legacy">
         <textarea data-template>
           ### Idée 3 — Tout code est du legacy
           *Avec l'IA...*
@@ -1479,7 +1479,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
           - même celui généré il y a deux heures
         </textarea>
       </section>
-      <section data-markdown>
+      <section data-markdown data-narration="claude-on-scotch/gerer-du-turnover">
         <textarea data-template>
           ### = gérer du turnover ?
           - *Working Effectively with Legacy Code*
@@ -1491,7 +1491,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
           - **La qualité, c'est la vitesse** — surtout maintenant
         </textarea>
       </section>
-      <section data-markdown>
+      <section data-markdown data-narration="claude-on-scotch/l-interet-de-la-connaissance">
         <textarea data-template>
           ### L'intérêt de la connaissance
           - Facilite la prise en main du projet aux nouveaux arrivants
@@ -1503,10 +1503,10 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
 
     <!-- ===== There is no stop sign — deux prédictions, et ce qui a suivi ===== -->
     <section>
-      <section>
+      <section data-narration="claude-on-scotch/consequences-pour-la-recherche">
         <h3>Conséquences pour la recherche</h3>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/amodei-90-pourcent-du-code">
         <blockquote style="font-size:0.7em;text-align:left;width:88%;margin:0 auto;">&laquo; I think we'll be there in three to six months&mdash;where AI is writing 90 percent of the code. And then in twelve months, we may be in a world where AI is writing essentially all of the code. &raquo;</blockquote>
         <p style="font-size:0.5em;color:var(--c-444);margin-top:0.6em;">Dario Amodei &mdash; Council on Foreign Relations, 10 mars 2025</p>
         &laquo; essentially all &raquo; ?..  <!-- i will explain what this means -->
@@ -1516,14 +1516,14 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
           <li><strong>18 mois plus tard</strong> : un fix sur Scotch fait depuis mon téléphone, sans relecture</li>
         </ul>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/machines-of-loving-grace">
         <blockquote style="font-size:0.7em;text-align:left;width:88%;margin:0 auto;">&laquo; Thus, it's my guess that powerful AI could at least 10x the rate of these discoveries, giving us the next 50-100 years of biological progress in 5-10 years. &raquo;</blockquote>
         <p style="font-size:0.5em;color:var(--c-444);margin-top:0.6em;">Dario Amodei &mdash; <em>Machines of Loving Grace</em>, octobre 2024</p>
         <ul style="font-size:0.55em;margin-top:0.6em;">
           <li><strong>20 mois après l'essai</strong> : Claude Science</li>
         </ul>
       </section>
-      <section data-markdown>
+      <section data-markdown data-narration="claude-on-scotch/30-juin-2026-claude-science">
         <!--- La courbe n'a pas de plafond constaté-->
         <textarea data-template>
           ### 30 juin 2026 — Claude Science
@@ -1537,12 +1537,12 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
         <!-- Next ROI -->
       </section>
       <!-- AJOUT 2026-09-08 : captures officielles de l'annonce Claude Science (30 juin 2026) -->
-      <section>
+      <section data-narration="claude-on-scotch/claude-science-notebook">
         <img src="../resources/claude-science-901245fa.jpg" alt="Claude Science : un balayage d'hyperparamètres à 8 bras envoyé sur les A100 d'un cluster de labo, notebook partagé en direct" style="width:88%;height:auto;border:none;box-shadow:0 6px 22px rgba(0,0,0,0.25);">
         <p style="font-size:0.45em;color:var(--c-444);margin-top:0.4em;">Un balayage à 8 bras envoyé sur les A100 du cluster du labo, le notebook partagé avec l'agent, en direct.</p>
         <div style="font-size:0.4em;"><a href="https://www.anthropic.com/news/claude-science-ai-workbench">anthropic.com/news/claude-science-ai-workbench (30 juin 2026)</a> &mdash; capture de l'annonce</div>
       </section>
-      <section>
+      <section data-narration="claude-on-scotch/claude-science-papier">
         <img src="../resources/claude-science-5db35fb5.jpg" alt="Claude Science : une revue de littérature, cinq agents en parallèle, un relecteur qui signale un PMID attribué à deux papiers" style="width:88%;height:auto;border:none;box-shadow:0 6px 22px rgba(0,0,0,0.25);">
         <p style="font-size:0.45em;color:var(--c-444);margin-top:0.4em;">Cinq agents en parallèle, et un <strong>relecteur</strong> qui signale un PMID attribué à deux papiers &mdash; similaire aux relecteurs de Bun.</p>
         <div style="font-size:0.4em;"><a href="https://www.anthropic.com/news/claude-science-ai-workbench">anthropic.com/news/claude-science-ai-workbench</a> &mdash; capture de l'annonce</div>
@@ -1550,7 +1550,7 @@ hegel_note (tc, "MINIMAL nvert=%d nedges=%d edges=[...]");  /* printed on the fi
     </section>
 
     <!-- ===== Merci + liens ===== -->
-    <section>
+    <section data-narration="claude-on-scotch/liens">
       <div class="flex" style="align-items:center;justify-content:center;gap:1.6em;width:100%;">
         <div style="flex:0 0 auto;text-align:center;">
           <img src="../resources/qr-claude-on-scotch.svg" alt="QR code vers les slides" style="width:300px;height:300px;border:none;background:none;box-shadow:none;image-rendering:pixelated;">
