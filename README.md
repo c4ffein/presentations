@@ -8,7 +8,15 @@ To update after theme changes:
 ```bash
 curl -o index.html https://c4ffein.github.io/writings/presentations-index.html
 curl -o 404.html https://c4ffein.github.io/writings/404.html
+curl -o resources/field-gpu.js https://c4ffein.github.io/writings/field-gpu.js
 ```
+
+`resources/field-gpu.js` is the site's "living ink" engine (the WebGPU marble on
+the index's headings): `resources/field.js` is a reveal plugin that uses its shader
+and glyph raster to put the same field on a deck's headings. A deck opts in by
+loading both files and adding `RevealField` to its plugins; `?field=off` turns
+it off for a page. Like the site's strips, each inked slide gets its own canvas
+inside its `<section>`, so transitions carry it with the text (see field.js).
 
 ## Sources and build
 The repo root is the SITE (`index.html`, `404.html`, `slides/`, `engine/`,
@@ -82,6 +90,12 @@ and, because SVG presentation attributes cannot take `var()`, one rule per
 `fill="#…"` / `stroke="#…"` value the diagrams use — a new grey in a diagram is
 one more line there. `engine/dist/plugin/highlight/c4ffein-dark.css` is the
 dark twin of the light highlight theme, loaded after it.
+
+The same two files hold the curtain: the page's background covers every deck
+until its fonts are in (no text in the fallback font, then a jump), then slides
+away to the left with a `/` edge. Pure CSS takes it away after 2.5 s whatever
+happens; it never takes a click; `?curtain=off` skips it (so do PDF export and
+the speaker view).
 
 ## Menu (burger, top left)
 `resources/menu.js` is a reveal plugin in every deck: a burger appears when the

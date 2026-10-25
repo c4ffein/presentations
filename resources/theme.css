@@ -46,6 +46,8 @@
 /* c4ffein.css paints these in the light ink directly: the arrows, the progress bar. */
 :root[data-theme="dark"] .reveal .controls { color: #ededed; }
 :root[data-theme="dark"] .reveal .progress { background: rgba(255, 255, 255, 0.2); color: #ededed; }
+/* Its quote box (white at 5%) is invisible on white but a grey slab on black: no box in dark. */
+:root[data-theme="dark"] .reveal blockquote { background: none; }
 /* An image that is a logo or a chart drawn for white paper keeps a white card
    under it; a QR code says background:#fff itself. The terminal mocks are
    dark boxes already and only get an edge to stand on black. */
@@ -82,3 +84,28 @@
 :root[data-theme="dark"] [stroke="#fff"], :root[data-theme="dark"] [stroke="#ffffff"] { stroke: #000; }
 /* kept as they are, in both themes: #d97757 (Claude's orange), #8a8884 and
    #6ccc7a (the terminals' dim and green), #0b0e13 (a dark box). */
+
+/* The curtain (resources/theme.js puts html.curtain on before the first paint): the
+   page's own background over everything until the fonts are in — nothing shows in
+   the fallback font then jumps — and then it slides off to the left, its leading
+   edge a / slant (S wide: the slant's run; the box is S wider than the screen, so
+   the slant starts off-screen). html.curtain-open starts the exit; without it, pure
+   CSS starts it at 2.5 s anyway, so no script failure can leave a blank page. It
+   never takes a click (pointer-events), and reduced motion just fades it. */
+html.curtain body::before {
+  --curtain-slant: 30vh;
+  content: ""; position: fixed; top: 0; bottom: 0; left: 0;
+  width: calc(100vw + var(--curtain-slant)); z-index: 2147483000; pointer-events: none;
+  background: var(--r-background-color);
+  clip-path: polygon(0 0, 100% 0, calc(100% - var(--curtain-slant)) 100%, 0 100%);
+  animation: curtain-late 0.7s cubic-bezier(0.6, 0, 0.3, 1) 2.5s forwards;
+}
+html.curtain-open body::before { animation: curtain-open 0.7s cubic-bezier(0.6, 0, 0.3, 1) forwards; }
+@keyframes curtain-late { to { transform: translateX(-100%); } }   /* two names, one move: */
+@keyframes curtain-open { to { transform: translateX(-100%); } }   /* a new name restarts it */
+@media (prefers-reduced-motion: reduce) {
+  html.curtain body::before { animation-name: curtain-fade-late; }
+  html.curtain-open body::before { animation-name: curtain-fade-open; animation-duration: 0.2s; }
+}
+@keyframes curtain-fade-late { to { opacity: 0; } }
+@keyframes curtain-fade-open { to { opacity: 0; } }

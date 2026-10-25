@@ -34,3 +34,31 @@
   }
   window.presentationsTheme = { get: get, pref: pref, set: set, toggle: toggle };
 })();
+
+/* The curtain (drawn by resources/theme.css): html.curtain now, before the first paint;
+ * html.curtain-open once the fonts the page uses have arrived (and reveal is ready),
+ * which slides it away; both classes go once it is gone. Fonts are only requested
+ * when laid-out text uses them, so the page is laid out first (a forced layout at
+ * DOMContentLoaded) and THEN document.fonts.ready is asked — earlier, it resolves at
+ * once with nothing pending. Off for PDF export and the speaker view's copies, and
+ * with ?curtain=off. */
+(function () {
+  var q = location.search;
+  if (!document.fonts || /[?&](print-pdf|receiver)\b|[?&]curtain=off\b/.test(q)) return;
+  var root = document.documentElement, opened = false;
+  root.classList.add("curtain");
+  function open() {
+    if (opened) return;
+    opened = true;
+    root.classList.add("curtain-open");
+    setTimeout(function () { root.classList.remove("curtain", "curtain-open"); }, 800);
+  }
+  document.addEventListener("DOMContentLoaded", function () {
+    void document.body.offsetWidth; // lay out now: the fonts in use get requested
+    document.fonts.ready.then(function () {
+      var R = window.Reveal;
+      try { if (R && R.isReady && !R.isReady()) { R.on("ready", open); return; } } catch (e) {}
+      open();
+    }, open);
+  });
+})();

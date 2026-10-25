@@ -138,6 +138,8 @@ for (const deck of decks) {
 
     await page.goto(`${base}slides/${deck}`, { waitUntil: "load" });
     await page.waitForFunction(() => window.Reveal && Reveal.isReady(), null, { timeout: 30_000 });
+    // the curtain (theme.js / theme.css) covers the page until the fonts are in
+    await page.waitForFunction(() => !document.documentElement.classList.contains("curtain"), null, { timeout: 30_000 });
 
     // Terminal recordings: mounted, no error line.
     await page.waitForFunction(() =>
