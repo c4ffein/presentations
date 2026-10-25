@@ -12,10 +12,11 @@ curl -o resources/field-gpu.js https://c4ffein.github.io/writings/field-gpu.js
 ```
 
 `resources/field-gpu.js` is the site's "living ink" engine (the WebGPU marble on
-the index's headings): `resources/field.js` is a reveal plugin that uses its shader
-and glyph raster to put the same field on a deck's headings. A deck opts in by
-loading both files and adding `RevealField` to its plugins; `?field=off` turns
-it off for a page. Like the site's strips, each inked slide gets its own canvas
+the index's headings): `resources/field.js` uses its shader and glyph raster to
+put the same field on the decks' headings and quotes. Every deck gets it with
+nothing to write: `resources/theme.js` loads both files and field.js attaches
+itself to the deck (`field: false` in a deck's `Reveal.initialize` opts out);
+`?field=off` turns it off for a page. Like the site's strips, each inked slide gets its own canvas
 inside its `<section>`, so transitions carry it with the text (see field.js).
 
 ## Sources and build

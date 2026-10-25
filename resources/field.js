@@ -26,9 +26,11 @@
  * ?field=mask paints the stencil in flat ink instead of the marble: the e2e tests
  * (src/tests/e2e/field.test.js) compare it pixel by pixel with the real text.
  *
- * In the deck, after field-gpu.js and this file:
- *   field: { selector: "h1, h2, h3, blockquote" },   // optional
- *   plugins: [ …, RevealField ]
+ * Every deck gets it: resources/theme.js (in every deck's <head>) loads field-gpu.js
+ * and this file, which attaches itself to the deck (see the end). A deck can set, in
+ * its Reveal.initialize:
+ *   field: { selector: "h1, h2, h3, blockquote" },   // what to ink (this is the default)
+ *   field: false,                                    // no field on this deck
  */
 (function () {
   "use strict";
@@ -56,6 +58,7 @@ fn fmask(@builtin(position) fc : vec4f) -> @location(0) vec4f {
 
     function init(d) {
       deck = d;
+      if (deck.getConfig().field === false) return; // a deck that opts out
       cfg = Object.assign({ selector: "h1, h2, h3, blockquote" }, deck.getConfig().field || {});
       var q = new URLSearchParams(location.search);
       if (q.get("field") === "off" || q.has("print-pdf") || /receiver/i.test(location.search)) return;
@@ -269,4 +272,16 @@ fn fmask(@builtin(position) fc : vec4f) -> @location(0) vec4f {
   }
 
   window.RevealField = RevealField;
+
+  // Auto-start: resources/theme.js loads this file into every deck, so no deck lists it
+  // in its plugins. Reveal.initialize runs in the body's last script, i.e. before
+  // DOMContentLoaded: from then on, attach to the page's deck once it is ready.
+  function start() {
+    var R = window.Reveal;
+    if (!R || !R.isReady || (R.hasPlugin && R.hasPlugin("field"))) return; // no deck / registered by hand
+    var go = function () { RevealField().init(R); };
+    if (R.isReady()) go(); else R.on("ready", go);
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+  else start();
 })();

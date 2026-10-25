@@ -62,3 +62,18 @@
     }, open);
   });
 })();
+
+/* The living-ink field on every deck: resources/field-gpu.js (the writings site's
+ * engine) and resources/field.js (which attaches itself to the deck), loaded from
+ * here — next to this file — so no deck lists them. In order (async = false), and
+ * not at all without WebGPU: the field could not run anyway. */
+(function () {
+  var me = document.currentScript;
+  if (!me || !navigator.gpu) return;
+  ["field-gpu.js", "field.js"].forEach(function (f) {
+    var s = document.createElement("script");
+    s.src = new URL(f, me.src).href;
+    s.async = false;
+    document.head.appendChild(s);
+  });
+})();
